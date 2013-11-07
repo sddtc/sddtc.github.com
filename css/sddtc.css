@@ -1,0 +1,22 @@
+body {
+    background: url(http://mediacdn.disqus.com/1352501630/img/pattern.png);
+    -webkit-animation: flashbg 10s infinite cubic-bezier(0, 0, 1, 1);
+}
+
+@-webkit-keyframes flashbg{
+    0%{background-position-y:0%;}
+    100%{background-position-y:-100%}
+}
+
+.content {
+    text-align: center;
+    font-size: 35px;
+    margin-top: 100px;
+}
+
+a {
+    text-decoration: none;
+    color:  #8E8E8E;
+}
+
+
