@@ -6,7 +6,7 @@ $(document).ready(function () {
   var w = parseInt($('.container p').css("width"));
   var max = (nbP - 1) * w;
   $("ul li[data-num='1']").addClass('active');
-  $('.step span').html('Step 1');
+  $('.step span').html('No 1');
   
   $('body').on('click','.btn', function(){
     var margL = parseInt($('.slider-turn').css('margin-left'));
@@ -20,7 +20,7 @@ $(document).ready(function () {
       $('ul li.active').addClass('true').removeClass('active');
       var x = -margL/w +1;
       $('ul li[data-num="'+x+'"]').addClass('active');
-      $('.step span').html("Step "+x);
+      $('.step span').html("No "+x);
     }
     else  {}
   });
