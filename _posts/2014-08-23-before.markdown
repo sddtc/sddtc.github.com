@@ -1,0 +1,8 @@
+---
+layout: post
+title: "2014 and before"
+date: 2014-08-23 00:00:00
+categories: sddtc chip
+---
+
+
