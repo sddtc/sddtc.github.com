@@ -1,6 +1,20 @@
-sddtc.github.com
+homura and lovelive
 ================
 
-coding就像弹钢琴
+曾经以为敲击键盘的感觉一定就像弹琴一样  
+直到后来买了一个ukulele 发现和弦的指法   
+那种把整个手都放在四根弦上还要不断的变换  
+还真是和敲击键盘两码事  
 
-https://sddtc.github.com
+homura是魔法少女小圆里面的一个角色，好喜欢那种感觉  
+lovelive是我14年遇到的，最棒的组合  
+于是今年依然是重新租了主机  
+就像一位触触讲的那样  
+真心从二级域名、个人wordpress自己搭建博客到如今用jekyll管理  
+成长的路略苦略闷  
+但结果还是失败的话  
+只能说你什么都不是啊~  
+
+欢迎光临寒舍
+[蜕](http://homuralovelive.com)
+
