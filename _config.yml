@@ -10,3 +10,8 @@ github_username:  sddtc
 
 # Build settings
 markdown: kramdown
+
+# Comment settings
+disqus:
+  config: true
+  id: homuralovelive
