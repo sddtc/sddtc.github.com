@@ -1,8 +1,9 @@
 ---
+layout: post
 title: "mysql-2-sqoop"
-layout: ""
 date: "2015-03-16"
-catogories: "chip"
+categories: sddtc chip
 ---
 
 今天我们学习了=。＝
+mysql-hdfs-hive的一个流
