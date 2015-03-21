@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "too many thtings"
+title: "too many things"
 date: "2015-03-19"
 gelories: sddtc chip
 ---
