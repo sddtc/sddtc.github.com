@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "six month"
+title: "six months"
 date: "2015-03-22"
 categories: sddtc chip
 ---
