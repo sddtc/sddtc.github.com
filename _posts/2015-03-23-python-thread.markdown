@@ -2,7 +2,7 @@
 layout: post
 title: "python thread"
 date: "2015-03-23"
-categories: python sddtc
+categories: sddtc python
 ---
 
 "Unhandled exception in thread started by 
