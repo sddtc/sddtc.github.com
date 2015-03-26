@@ -15,6 +15,5 @@ lovelive是我14年遇到的，最棒的组合
 但结果还是失败的话  
 只能说你什么都不是啊~  
 
-欢迎光临寒舍
 [蜕](http://homuralovelive.com)
 
