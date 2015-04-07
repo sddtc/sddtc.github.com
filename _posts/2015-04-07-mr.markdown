@@ -1,0 +1,7 @@
+---
+layout: post
+title: mr
+categories: chip sddtc
+---
+
+start by mr.
