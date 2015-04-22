@@ -1,15 +1,30 @@
-# Site settings
-title: 大蜕
-email: changhbaga@gmail.com
-description: > # this means to ignore newlines until "baseurl:"
-  认识自己,放下自己.
-baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://homuralovelive.com" # the base hostname & protocol for your site
-twitter_username: sddtc_
-github_username:  sddtc
-
-# Build settings
+# General Jekyll Config
 markdown: kramdown
+pygments: true
+url: http://homuralovelive.com
+lsi: false
+exclude: [LICENSE, CNAME, README.md, .gitignore]
+
+# Theme customization - please change from the defaults!
+theme:
+  # Color for top bar, links, etc
+  highlight_color: '#F9D109'
+
+  # Profile links on the left sidebar, leave blank to ignore
+  social:
+    github: sddtc
+    twitter: sddtc_
+
+  # "Hi, I'm _______"
+  name: 大蜕
+  email: changhbaga@gmail.com
+  tagline: "love a baka ye"
+
+  # Google Analytics key, leave blank to ignore
+  #google_analytics_key: 
+  #google_analytics_domain: 
+  # Toggle "Postings are my own" disclaimer in footer
+  show_disclaimer: true
 
 # Comment settings
 disqus:

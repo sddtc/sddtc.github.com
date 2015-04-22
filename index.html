@@ -1,21 +1,22 @@
 ---
 layout: default
+title: blog, notes, and book writeups.
 ---
 
-<div class="home">
-
-  <h1 class="page-heading">碎片</h1>
-
-  <ul class="post-list">
+<div id="home">
+  <h2><i class="fa fa-bookmark"></i> Blog Posts</h2>
+  <ul id="blog-posts" class="posts">
     {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-      </li>
+      {% unless post.categories contains 'tutorial' %}
+        <li><span>{{ post.date | date_to_string }} &raquo;</span><a class="post-link" href="{{ post.url }}">{{ post.title }}</a></li>
+      {% endunless %}
     {% endfor %}
   </ul>
 
+  <h2><i class="fa fa-pagelines"></i> Chip</h2>
+  <ul id="tutorial-posts" class="posts">
+    {% for post in site.categories.chip %}
+      <li><span>{{ post.date | date_to_string }} &raquo;</span><a class="post-link" href="{{ post.url }}">{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
 </div>
