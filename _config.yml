@@ -21,8 +21,8 @@ theme:
   tagline: "love a baka ye"
 
   # Google Analytics key, leave blank to ignore
-  #google_analytics_key: 
-  #google_analytics_domain: 
+  google_analytics_key: UA-46032200-2
+  google_analytics_domain: homuralovelive.com
   # Toggle "Postings are my own" disclaimer in footer
   show_disclaimer: true
 
