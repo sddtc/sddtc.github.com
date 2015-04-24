@@ -1,11 +1,11 @@
 ##关于  
 
-大蜕 java开发工程师 喜欢google
-动漫、宅、coder和基三
+大蜕  
+java开发工程师    
+动漫、宅、coder和基三  
 生人勿近 
 
 ---
 * 博客: [homuralovelive.com](http://homuralovelive.com)
 * 邮箱: changhbaga[AT]gmail.com
-* 手机: 0x459B4A468
 * 其他: ♥ [Github](http://github.com/sddtc) ☺ [Twitter](http://twitter.com/sddtc_) ☺ [G+](https://plus.google.com/u/0/112768245818888919813)
