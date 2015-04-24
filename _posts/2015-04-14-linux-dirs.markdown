@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "nohup"
-categories: sddtc work
+categories: sddtc tech
 ---
 
 1.nohup java -classpath $CLASS_PATH ${jarpath} &  

@@ -2,7 +2,7 @@
 layout: post
 title: "datanode相关的问题"
 date: "2015-04-20"
-categories: sddtc work
+categories: sddtc tech
 ---
 
 今天遇到了一个关于cdh集群的hadoop问题

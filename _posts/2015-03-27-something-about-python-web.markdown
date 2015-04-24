@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "something about python web"
-categories: sddtc python
+categories: sddtc tech
 ---
 ## 以下引用的是对于洪强宁关于豆瓣架构的回答：  
 本刊记者：还有一个问题,，有一种说法，认为Python比较慢，在性能方面会不会有问题？
