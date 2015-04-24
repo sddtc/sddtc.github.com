@@ -18,14 +18,14 @@ title: blog, notes, and book writeups.
 	 {% endfor %}
   </ul>
 
-  <h2><i class="fa fa-gamepad"></i> jx3</h2>
+  <h2><i class="fa fa-gamepad"></i> Jx3</h2>
   <ul id="jx3-posts" class="posts">
     {% for post in site.categories.jx3 %}
       <li><span>{{ post.date | date_to_string }} &raquo;</span><a class="post-link" href="{{ post.url }}">{{ post.title }}</a></li>
     {% endfor %}
   </ul>
 
-  <h2><i class="fa fa-desktop"></i> About Work</h2>
+  <h2><i class="fa fa-desktop"></i> Work</h2>
   <ul id="desktop-posts" class="posts">
       {% for post in site.categories.work %}
 	    <li><span>{{ post.date | date_to_string }} &raquo;</span><a class="post-link" href="{{ post.url }}">{{ post.title }}</a></li>
