@@ -2,7 +2,7 @@
 layout: post
 title: 'feel not good'
 date: '2015-03-25'
-categories: sddtc chip
+categories: sddtc love
 ---
 
 第一次想控制感冒

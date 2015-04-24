@@ -2,7 +2,7 @@
 layout: post
 title: "too many things"
 date: "2015-03-19"
-gelories: sddtc chip
+gelories: sddtc work
 ---
 
 事情好多

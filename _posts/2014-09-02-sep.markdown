@@ -2,7 +2,7 @@
 layout: post
 title: "sep"
 date: 2014-09-02 23:00:00
-categories: sddtc chip
+categories: sddtc jx3
 ---
 
 累到想吐。  

@@ -2,7 +2,7 @@
 layout: post
 title: "happy new year,2015"
 date: 2015-03-15 20:19:00
-categories: sddtc chip
+categories: sddtc work
 ---
 
 

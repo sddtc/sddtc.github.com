@@ -2,7 +2,7 @@
 layout: post
 title: "hi"
 date: 2014-11-17 20:00:00
-categories: sddtc chip
+categories: sddtc love
 ---
 
 打脸星人诞生于深蓝色的月夜  
