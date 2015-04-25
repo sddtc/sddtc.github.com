@@ -5,11 +5,11 @@ categories: sddtc tech
 ---
 
 > How Many Maps?  
-> The number of maps is usually driven by the total size of the inputs, that is, the total number of blocks of the input files.  
+* The number of maps is usually driven by the total size of the inputs, that is, the total number of blocks of the input files.  
+* The right level of parallelism for maps seems to be around 10-100 maps per-node, although it has been set up to 300 maps for very cpu-light map tasks. Task setup takes a while, so it is best if the maps take at least a minute to execute.  
+* Thus, if you expect 10TB of input data and have a blocksize of 128MB, you'll end up with 82,000 maps, unless Configuration.set(MRJobConfig.NUM_MAPS, int) (which only provides a hint to the framework) is used to set it even higher.  
 
-> The right level of parallelism for maps seems to be around 10-100 maps per-node, although it has been set up to 300 maps for very cpu-light map tasks. Task setup takes a while, so it is best if the maps take at least a minute to execute.  
+一次mr需要多少个map取决于文件大小和文件块大小
 
-> Thus, if you expect 10TB of input data and have a blocksize of 128MB, you'll end up with 82,000 maps, unless Configuration.set(MRJobConfig.NUM_MAPS, int) (which only provides a hint to the framework) is used to set it even higher.  
-
-所以说一次mr需要多少个map取决于文件大小和文件块大小
-
+> How to get the input file name in the mapper in a Hadoop program?
+<code>String fileName = ((FileSplit) context.getInputSplit()).getPath().getName(); </code>
