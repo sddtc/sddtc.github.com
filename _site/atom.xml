@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>The blog of 大蜕</title>
+ <link href="http://homuralovelive.com/atom.xml" rel="self"/>
+ <link href="http://homuralovelive.com"/>
+ <updated>2015-04-26T23:53:59+08:00</updated>
+ <id>http://homuralovelive.com</id>
+ <author>
+   <name>大蜕</name>
+   <email>changhbaga@gmail.com</email>
+ </author>
+
+ 
+ <entry>
+   <title>datanode相关的问题</title>
+   <link href="http://homuralovelive.com/sddtc/tech/2015/04/20/datanode-prob.html"/>
+   <updated>2015-04-20T00:00:00+08:00</updated>
+   <id>http://homuralovelive.com/sddtc/tech/2015/04/20/datanode-prob</id>
+   <content type="html">&lt;p&gt;今天遇到了一个关于cdh集群的hadoop问题
+其中一个datanode的存储空间突然接近满溢，还没查出来问题
+日志有报错
+比其它datanode多出来将近150G
+应该是日志中一台报错之后，数据均衡分布出现了偏差
+start-balance.sh脚本没找到&lt;/p&gt;
+
+&lt;p&gt;问题解决…&lt;br /&gt;
+机器添加hadoop之后，没有进行balance，以至于出现这种磁盘分配不均的问题&lt;br /&gt;
+cdh的hdfs命令可以进行dn的blk均衡move&lt;br /&gt;
+&lt;code&gt;sudo -u hdfs hdfs balancer -threshold 5&lt;/code&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>nohup</title>
+   <link href="http://homuralovelive.com/sddtc/tech/2015/04/14/linux-dirs.html"/>
+   <updated>2015-04-14T00:00:00+08:00</updated>
+   <id>http://homuralovelive.com/sddtc/tech/2015/04/14/linux-dirs</id>
+   <content type="html">&lt;p&gt;1.nohup java -classpath $CLASS_PATH ${jarpath} &amp;amp;&lt;br /&gt;
+nohup代表后台运行 &lt;br /&gt;
+2.du -h –max-depth=1&lt;br /&gt;
+查看磁盘使用情况&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>hadoop-map-reduce</title>
+   <link href="http://homuralovelive.com/sddtc/tech/2015/04/07/mr.html"/>
+   <updated>2015-04-07T00:00:00+08:00</updated>
+   <id>http://homuralovelive.com/sddtc/tech/2015/04/07/mr</id>
+   <content type="html">&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;How Many Maps?&lt;/strong&gt;  &lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The number of maps is usually driven by the total size of the inputs, that is, the total number of blocks of the input files.  &lt;/li&gt;
+  &lt;li&gt;The right level of parallelism for maps seems to be around 10-100 maps per-node, although it has been set up to 300 maps for very cpu-light map tasks. Task setup takes a while, so it is best if the maps take at least a minute to execute.  &lt;/li&gt;
+  &lt;li&gt;Thus, if you expect 10TB of input data and have a blocksize of 128MB, you’ll end up with 82,000 maps, unless Configuration.set(MRJobConfig.NUM_MAPS, int) (which only provides a hint to the framework) is used to set it even higher.  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;一次mr需要多少个map取决于文件大小和文件块大小&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;How to get the input file name in the mapper in a Hadoop program?&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code&gt;String fileName = ((FileSplit) context.getInputSplit()).getPath().getName(); &lt;/code&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>something about python web</title>
+   <link href="http://homuralovelive.com/sddtc/tech/2015/03/27/something-about-python-web.html"/>
+   <updated>2015-03-27T00:00:00+08:00</updated>
+   <id>http://homuralovelive.com/sddtc/tech/2015/03/27/something-about-python-web</id>
+   <content type="html">&lt;h2 id=&quot;section&quot;&gt;以下引用的是对于洪强宁关于豆瓣架构的回答：&lt;/h2&gt;
+&lt;p&gt;本刊记者：还有一个问题,，有一种说法，认为Python比较慢，在性能方面会不会有问题？
+洪强宁：这个问题可以分两个方面说，首先，说Python慢，这是和编译语言比，比如与C,C++，Java比，在动态语言中，它并不慢，它比Ruby要快， 它和Perl性能相当。如果选择动态语言的话，Python并不是很慢。另一方面，如果做网站开发，语言的不是速度的瓶颈，比如我把我们现在用Python写的程序全部用C写，程序当然会快一点，但是改变不是很大。Web网站一般会有很多对IO的操作，比如对数据库的访问，对硬盘的访问响应用户的请求，80%，90%你的时间都花在IO上，语言的速度，相对而言，不是那么重要。也可以这样说，网站的性能主要取决于架构设计的是否合理。因为网站需要响应大量的并发的请求，如果你的设计的不好，即使你用C写的，也可能无法应付。所以更多的考虑是在架构设计上，要使架构体系不会产生速度瓶颈。&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>feel not good</title>
+   <link href="http://homuralovelive.com/sddtc/love/2015/03/25/feel-sad.html"/>
+   <updated>2015-03-25T00:00:00+08:00</updated>
+   <id>http://homuralovelive.com/sddtc/love/2015/03/25/feel-sad</id>
+   <content type="html">&lt;p&gt;第一次想控制感冒
+不知道爱情会不会让人想要，控制更多。&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>python thread</title>
+   <link href="http://homuralovelive.com/sddtc/tech/2015/03/23/python-thread.html"/>
+   <updated>2015-03-23T00:00:00+08:00</updated>
+   <id>http://homuralovelive.com/sddtc/tech/2015/03/23/python-thread</id>
+   <content type="html">&lt;p&gt;“Unhandled exception in thread started by 
+Error in sys.excepthook:&lt;br /&gt;
+Original exception was:”&lt;br /&gt;
+问题在于主线程结束时子线程还未结束，解决办法就是让主线程阻塞足够的时间让子线程运行完再结束自己  &lt;/p&gt;
+
+&lt;p&gt;Python中对多线程有两种启动方法： 
+一种是thread模块的start_new_thread方法，在线程中运行一个函数，但获得函数返回值极为困难，Python官方不推荐 &lt;br /&gt;
+另一种是集成threading模块的Thread类，然后重写run方法，类似于Java的Runnable接口定义，灵活性较高 &lt;br /&gt;
+import thread &lt;br /&gt;
+#Python的线程sleep方法并不是在thread模块中，反而是在time模块下&lt;br /&gt;
+=====================================&lt;br /&gt;
+解决：启动线程之后，必须调用time.sleep休眠足够长的时间，使主线程等待所有子线程返回结果，如果主线程比子线程早结束，就会抛出这个异常 &lt;br /&gt;
+具体的跟Python的多线程机制有关，参见http://bestchenwu.iteye.com/blog/1063401 &lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>six months</title>
+   <link href="http://homuralovelive.com/sddtc/love/2015/03/22/six-months.html"/>
+   <updated>2015-03-22T00:00:00+08:00</updated>
+   <id>http://homuralovelive.com/sddtc/love/2015/03/22/six-months</id>
+   <content type="html">&lt;p&gt;半年＝。＝&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>too many things</title>
+   <link href="http://homuralovelive.com/sddtc/work/2015/03/19/too-many-things.html"/>
+   <updated>2015-03-19T00:00:00+08:00</updated>
+   <id>http://homuralovelive.com/sddtc/work/2015/03/19/too-many-things</id>
+   <content type="html">&lt;p&gt;事情好多
+想法更多
+只想一件一件 笨笨的，缓慢的，真正的捋清楚&lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>happy new year,2015</title>
+   <link href="http://homuralovelive.com/sddtc/work/2015/03/16/happy-new-year.html"/>
+   <updated>2015-03-16T04:19:00+08:00</updated>
+   <id>http://homuralovelive.com/sddtc/work/2015/03/16/happy-new-year</id>
+   <content type="html">&lt;p&gt;遇见了很多很重要的人&lt;br /&gt;
+甚至像导师那样&lt;br /&gt;
+其实我也喜欢认真又努力的人&lt;br /&gt;
+那种美和气质  &lt;/p&gt;
+
+&lt;p&gt;要做的事情还很多&lt;br /&gt;
+要努力的，也很多  &lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>mysql-2-sqoop</title>
+   <link href="http://homuralovelive.com/sddtc/chip/2015/03/16/mysql-2-sqoop.html"/>
+   <updated>2015-03-16T00:00:00+08:00</updated>
+   <id>http://homuralovelive.com/sddtc/chip/2015/03/16/mysql-2-sqoop</id>
+   <content type="html">&lt;p&gt;今天我们学习了=。＝
+mysql-hdfs-hive的一个流&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>蜕酱－timeline</title>
+   <link href="http://homuralovelive.com/sddtc/chip/2014/11/20/timeline.html"/>
+   <updated>2014-11-20T06:00:00+08:00</updated>
+   <id>http://homuralovelive.com/sddtc/chip/2014/11/20/timeline</id>
+   <content type="html">&lt;p&gt;已经过了年轻！任性！的阶段，只能有钱了。。吧。。&lt;br /&gt;
+如果谁也不相信的话。。就相信自己，相信自己的判断&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>hi</title>
+   <link href="http://homuralovelive.com/sddtc/love/2014/11/18/hi.html"/>
+   <updated>2014-11-18T04:00:00+08:00</updated>
+   <id>http://homuralovelive.com/sddtc/love/2014/11/18/hi</id>
+   <content type="html">&lt;p&gt;打脸星人诞生于深蓝色的月夜&lt;br /&gt;
+怎么都睡不着的那天&lt;br /&gt;
+发了一句‘你睡了么’就嘎然而止的夜晚&lt;br /&gt;
+人头狗自由自在的生活&lt;br /&gt;
+情绪悄然发芽&lt;/p&gt;
+
+&lt;p&gt;那时候的我是一个傲娇到死的人&lt;br /&gt;
+太过压抑的日子&lt;br /&gt;
+太过潇洒的生活&lt;br /&gt;
+当你开始喜欢一个人&lt;br /&gt;
+也是这个世界开始倾斜的时候&lt;/p&gt;
+
+&lt;p&gt;因为拥有了一只哈士奇&lt;br /&gt;
+拥有了太多。&lt;/p&gt;
+
+&lt;p&gt;以上&lt;br /&gt;
+by 喜欢上了军爷的白大炮&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>sep</title>
+   <link href="http://homuralovelive.com/sddtc/jx3/2014/09/03/sep.html"/>
+   <updated>2014-09-03T07:00:00+08:00</updated>
+   <id>http://homuralovelive.com/sddtc/jx3/2014/09/03/sep</id>
+   <content type="html">&lt;p&gt;累到想吐。&lt;br /&gt;
+每天过的都很充实，却有点混乱。&lt;br /&gt;
+晚上有时候在茶馆打打架，之前都是一个人的。&lt;br /&gt;
+昨天晚上果果和小液子陪我，很幸福。。毕竟两个奶，强力到仿佛有了16w的血量［想太多&lt;br /&gt;
+好像一直都喜欢自己玩，或者高冷的混混野团，轻松许多，大不了撕破脸上个818还能火一把噗&lt;br /&gt;
+有时候觉得大家玩游戏的意义变得浑浊很多&lt;br /&gt;
+有时候也觉得自己蛮任性  &lt;br /&gt;
+虽然我是个田螺，机动性很差，但昨晚也干掉了那个大藏剑好几次&lt;br /&gt;
+在复活点和一个丐太互相对打了很多次，以至于后来他近聊做了个摸了摸我的头的表情2333&lt;br /&gt;
+这种不同阵营打出感情想必是抖M才会做出的事&lt;br /&gt;
+我只享受胜利的喜悦［。&lt;br /&gt;
+其它的事情，就留给仿佛有时差的自己吧&lt;br /&gt;
+帮会已经有44个人了，不知不觉的&lt;br /&gt;
+有的人退出了帮会&lt;br /&gt;
+为了一些事情&lt;br /&gt;
+有的人专注的下本&lt;br /&gt;
+有的人情缘&lt;br /&gt;
+有的人做什么都可以的样子&lt;br /&gt;
+大家会不会忘记了初衷呢&lt;br /&gt;
+加入了更多有趣的人应该也会更有意思吧&lt;br /&gt;
+只是不能理解很多人玩游戏的方式，也许因为自己对这个游戏的感情不同，就更觉得那种玩法是种亵渎&lt;br /&gt;
+看完了世初最新的剧场版&lt;br /&gt;
+最后想说一句，不论是什么样的感情&lt;br /&gt;
+对我好的人，一定会真心的回馈。&lt;br /&gt;
+啊哈，这周事情有点多&lt;br /&gt;
+好好计划&lt;br /&gt;
+才有未来&lt;br /&gt;
+这句话挺棒的&lt;/p&gt;
+</content>
+ </entry>
+ 
+</feed>
