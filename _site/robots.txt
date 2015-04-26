@@ -1,4 +1,0 @@
-Sitemap: http://sddtc.github.com/sitemap.xml
-
-User-agent: *
-Disallow: /assets/images/
