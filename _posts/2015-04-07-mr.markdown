@@ -15,3 +15,8 @@ categories: sddtc tech
 > **How to get the input file name in the mapper in a Hadoop program?**
 
 <code>String fileName = ((FileSplit) context.getInputSplit()).getPath().getName(); </code>
+
+> **hive建表**
+
+* hive建表时默认的分隔符是'\001',若在建表的时候没有指明分隔符，load文件的时候文件的分隔符需要是'\001'的，若文件分隔符不是'\001'，程序不会报错，但表查询的结果会全部为'NULL'.
+* 用vi编辑器Ctrl+v然后Ctrl+a就可以通过键盘输入'\001'.
