@@ -5,7 +5,7 @@ date: "2015-04-27"
 categories: sddtc chip
 ---
 
-语言的世界有很多有趣的哲学
+语言的世界有很多有趣的哲学  
 <code>
 The most simplistic protocol in the world is not 'Hello, World!' but DISCARD. It's a protocol which discards any received data without any response.
 </code>
