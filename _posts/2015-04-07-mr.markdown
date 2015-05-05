@@ -20,3 +20,6 @@ categories: sddtc tech
 
 * hive建表时默认的分隔符是'\001',若在建表的时候没有指明分隔符，load文件的时候文件的分隔符需要是'\001'的，若文件分隔符不是'\001'，程序不会报错，但表查询的结果会全部为'NULL'.
 * 用vi编辑器Ctrl+v然后Ctrl+a就可以通过键盘输入'\001'.
+
+hive修改表字段类型(例如：column_name int -> string)  
+<code>alter table xxx change column_name column_name string</code>
