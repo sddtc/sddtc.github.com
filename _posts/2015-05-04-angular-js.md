@@ -9,22 +9,28 @@ categories: sddtc tech
 
 ```javascript    
 transFn = function(data) {  
-	    return $.param(data);  
+    return $.param(data);  
 };  
+
 postCfg = {  
-	    headers : {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'},  
-				  	transformRequest: transFn  
+    headers : {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'},  
+  	transformRequest: transFn  
 };  
+
 ```    
 * 返回值http-status，success回调函数将status参数添加上即可   
+
 ```javascript
 $http.post(url, param, postCfg).success(function(response, status){  
-	    $scope.result = response;  
-	 	})；  
+    $scope.result = response;  
+});  
+
 ```    
+
 * error处理，链式回调函数处理    
-```javascritp
+
+```javascript
 .error(function(){
-	    ...
-		});
+    ...
+});
 ```
