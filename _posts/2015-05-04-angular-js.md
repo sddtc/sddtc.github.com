@@ -7,7 +7,7 @@ categories: sddtc tech
 
 * post请求，需要transFn方法   
 
-```    
+```javascript    
 transFn = function(data) {  
 	    return $.param(data);  
 };  
@@ -17,13 +17,13 @@ postCfg = {
 };  
 ```    
 * 返回值http-status，success回调函数将status参数添加上即可   
-```    
+```javascript
 $http.post(url, param, postCfg).success(function(response, status){  
 	    $scope.result = response;  
 	 	})；  
 ```    
 * error处理，链式回调函数处理    
-```
+```javascritp
 .error(function(){
 	    ...
 		});
