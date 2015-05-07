@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "jekyll highlight"
+categories: sddtc work
 ---
 
 jekyll语法高亮之pygments系列：  
