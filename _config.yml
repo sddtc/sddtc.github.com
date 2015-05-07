@@ -4,6 +4,7 @@ pygments: true
 url: http://homuralovelive.com
 lsi: false
 exclude: [LICENSE, CNAME, README.md, .gitignore]
+highlighter: pygments
 
 # Theme customization - please change from the defaults!
 theme:
