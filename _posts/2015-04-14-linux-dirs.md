@@ -1,15 +1,21 @@
 ---
 layout: post
-title: "nohup"
+title: linux-dirs
 categories: sddtc tech
+tags: [linux, directive]
 ---
 
-```
+nohup代表后台运行
+```vim
 nohup java -classpath $CLASS_PATH ${jarpath} &
 ```
-nohup代表后台运行   
 
-```
+查看磁盘使用情况
+```vim
 du -h --max-depth=1
 ```
-查看磁盘使用情况
+
+解压
+```vim
+tar -xzf kafka_2.x.x.x.tgz
+```
