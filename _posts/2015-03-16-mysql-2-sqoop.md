@@ -1,9 +1,16 @@
 ---
 layout: post
-title: "mysql-2-sqoop"
+title: "mysql,sqoop相关的整理"
 date: "2015-03-16"
-categories: sddtc chip
+categories: sddtc tech
 ---
 
-今天我们学习了=。＝
-mysql-hdfs-hive的一个流
+1.查看mysql的连接数的实际操作
+```sql
+mysqladmin -uxxx -pxxx processlist
+```
+
+2.查看当前mysql连接数(Threads既是连接数)
+```sql
+mysqladmin -uxxx -pxxxx status
+```
