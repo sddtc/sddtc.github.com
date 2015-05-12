@@ -34,3 +34,19 @@ $http.post(url, param, postCfg).success(function(response, status){
     ...
 });
 ```
+
+* Angular 实现tableA删除行，行消失，tableB添加行，行出现  
+删除,splice方法  
+
+```javascript
+    var index = $scope.myConfigList.indexOf(mine);
+	    if (index !== -1) {
+		    $scope.myConfigList.splice(index, 1);
+		}
+```
+
+添加,push方法即可  
+
+```javascript
+$scope.systemConfigList.push(mine);
+```
