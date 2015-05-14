@@ -50,3 +50,10 @@ $http.post(url, param, postCfg).success(function(response, status){
 ```javascript
 $scope.systemConfigList.push(mine);
 ```
+
+* foreach  
+---javascript
+angular.forEach(objToIterator, function(value, key){
+
+});
+```
