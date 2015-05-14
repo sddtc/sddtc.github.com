@@ -52,7 +52,7 @@ $scope.systemConfigList.push(mine);
 ```
 
 * foreach  
----javascript
+```javascript
 angular.forEach(objToIterator, function(value, key){
 
 });
