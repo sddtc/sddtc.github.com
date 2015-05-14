@@ -51,9 +51,8 @@ $http.post(url, param, postCfg).success(function(response, status){
 $scope.systemConfigList.push(mine);
 ```
 
-* foreach  
-```javascript
-angular.forEach(objToIterator, function(value, key){
+* foreach相关  
 
-});
+```javascript
+angular.forEach(objToIterator, function(value, key){});
 ```
