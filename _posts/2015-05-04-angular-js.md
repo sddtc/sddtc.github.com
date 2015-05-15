@@ -27,12 +27,13 @@ $http.post(url, param, postCfg).success(function(response, status){
 
 ```    
 
-* error处理，链式回调函数处理    
+* error,finally 处理，链式回调函数处理    
 
 ```javascript
 .error(function(){
-    ...
-});
+})
+.finally(function(){
+};
 ```
 
 * Angular 实现tableA删除行，行消失，tableB添加行，行出现  
@@ -55,4 +56,13 @@ $scope.systemConfigList.push(mine);
 
 ```javascript
 angular.forEach(objToIterator, function(value, key){});
+```
+
+* 操作dom的div,添加div的id  
+
+```javascript
+var divId = obj.widgetRender.substr(1, obj.widgetRender.length);
+$scope.div = obj.divContent;
+$scope.div = angular.element($scope.div).attr('id', divId);
+angular.element(document.getElementById('dashboardDiv')).append($scope.div);
 ```
