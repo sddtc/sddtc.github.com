@@ -19,3 +19,8 @@ du -h --max-depth=1
 ```vim
 tar -xzf kafka_2.x.x.x.tgz
 ```
+
+马上使/etc/profile文件生效  
+```vim
+sh /etc/profile
+```
