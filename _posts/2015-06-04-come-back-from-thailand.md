@@ -2,7 +2,7 @@
 layout: post
 title: "come back from thailand"
 date: "2015-06-04"
-categorieds: sddtc chip
+categories: sddtc chip
 ---
 
 泰国归来  
