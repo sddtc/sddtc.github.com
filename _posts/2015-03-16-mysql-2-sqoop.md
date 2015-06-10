@@ -6,11 +6,11 @@ categories: sddtc tech
 ---
 
 1.查看mysql的连接数的实际操作
-```sql
-mysqladmin -uxxx -pxxx processlist
+```vim
+mysqladmin -uxxx -p processlist
 ```
 
 2.查看当前mysql连接数(Threads既是连接数)
-```sql
-mysqladmin -uxxx -pxxxx status
+```vim
+mysqladmin -uxxx -p status
 ```
