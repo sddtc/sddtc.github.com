@@ -16,3 +16,28 @@ mysqladmin -uxxx -p processlist
 ```vim
 mysqladmin -uxxx -p status
 ```
+
+3.修改mysql的库、表、客户端的字符编码格式  
+a.停止mysql服务  
+b.修改my.cnf文件
+
+```vim
+[client]
+default-character-set=utf8
+
+[mysql]
+default-character-set=utf8
+
+
+[mysqld]
+collation-server = utf8_unicode_ci
+init-connect='SET NAMES utf8'
+character-set-server = utf8
+```
+
+c.启动mysql服务  
+d.验证是否修改成功  
+
+```vim
+show variables like 'character%';
+```
