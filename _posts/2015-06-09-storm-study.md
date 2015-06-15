@@ -11,3 +11,7 @@ categories: sddtc tech
 
 * topology 拓扑结构，Storm的一个任务单元  
 * define field(s) 定义域，由spout或bolt提供，被bolt接收  
+
+本地运行storm,kafka,zookeeper  
+storm的lib包下面需要放zookeeper.jar  
+
