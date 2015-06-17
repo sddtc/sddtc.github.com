@@ -49,3 +49,9 @@ b.如有权限问题，最好先查看mysql都有哪些已知用户
 ```vim
 select * from mysql.user;
 ```
+
+4.mysql赋权命令:  
+
+```vim
+grant all PRIVILEGES on *.* to root@'cdh5-slave'  identified by '${your password}' with grant option;
+```
