@@ -41,3 +41,11 @@ d.验证是否修改成功
 ```vim
 show variables like 'character%';
 ```
+
+3.sqoop集群迁移之后,mysql与hdfs之间的import导表操作可能会报没权限错误  
+a.需要给mysql添加新hdfs用户  
+b.如有权限问题，最好先查看mysql都有哪些已知用户  
+
+```vim
+select * from mysql.user;
+```
