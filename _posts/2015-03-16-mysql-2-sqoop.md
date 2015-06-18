@@ -55,3 +55,9 @@ select * from mysql.user;
 ```vim
 grant all PRIVILEGES on *.* to root@'cdh5-slave'  identified by '${your password}' with grant option;
 ```
+
+5.sqoop的import命令(mysql--->hdfs)  
+
+```vim
+sqoop import --connect %s --username %s --password %s --query %s --target-dir %s -m 1 --as-textfile --fields-terminated-by '\001' --null-string '\\N' --null-non-string '\\N'
+```
