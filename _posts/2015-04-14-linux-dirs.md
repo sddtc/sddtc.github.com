@@ -47,3 +47,8 @@ nc 服务器IP 4444 < kafka-demo-0.0.1-SNAPSHOT-bin.zip
 
 服务器到本地命令反过来即可  
 
+统计文件行数  
+
+```vim
+wc -l filename
+```
