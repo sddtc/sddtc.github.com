@@ -22,11 +22,32 @@ categories: sddtc tech
 
 You can get the FileSystem by the following way:
 
-```
+```java
 Configuration conf = new Configuration();
 Path path = new Path(stringPath);
 FileSystem fs = FileSystem.get(path.toUri(), conf);
 
 ```
 
-You do not need to judge if the path starts with hdfs:// or file://. This API will do the work.
+You do not need to judge if the path starts with hdfs:// or file://. This API will do the work.  
+
+**Kafka常用查看topic的命令**  
+
+查看某个topic的信息  
+
+```vim
+bin/kafka-topics.sh --describe --zookeeper IP1:2181,IP2:2181,IP3:2181 --topic TOPICNAME
+```
+ 
+作为consumer从beginning处消费  
+
+```vim
+bin/kafka-console-consumer.sh --from-beginning --topic TOPICNAME --zookeeper IP1:2181,IP2:2181,IP3:2181
+```
+
+list当前的topics  
+
+```vim
+bin/kafka-topics.sh --list --zookeeper IP1:2181,IP2:2181,IP3:2181
+```
+
