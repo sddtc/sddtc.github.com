@@ -52,3 +52,11 @@ nc 服务器IP 4444 < kafka-demo-0.0.1-SNAPSHOT-bin.zip
 ```vim
 wc -l filename
 ```
+
+查看linux内核，查看当前的版本内核  
+
+```vim 
+dpkg --get-selections|grep linux        //带有image的为系统内核
+uname -a          //查看系统当前使用内核
+```
+
