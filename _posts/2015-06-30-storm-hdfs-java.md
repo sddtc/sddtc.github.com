@@ -51,3 +51,6 @@ list当前的topics
 bin/kafka-topics.sh --list --zookeeper IP1:2181,IP2:2181,IP3:2181
 ```
 
+*storm-hdfs* 可以写入本地，只要fsurl指定前缀为file://  
+另外它的流是org.apache.hadoop.fs.FSDataOutputStream  
+
