@@ -48,7 +48,7 @@ mysql>set @@global.query_cache_size=1000000;
 4.query\_cache\_limit 控制缓存结果最大值:当你查询缓存数结果数据超过这个值就不会进行缓存。缺省为1M，也就是超过了1M查询结果就不会缓存  
 
 ```
-mysql>select @@global.query\_cache\_limit;
+mysql>select @@global.query_cache_limit;
 ```
 
 通过以上四步，打开了查询缓存  
