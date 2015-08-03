@@ -91,7 +91,7 @@ Qcache\_total\_blocks：Query Cache 中总的 Block 数量
 查询缓存命中率的计算公式是：Qcache\_hits/(Qcache\_hits + Com\_select)  
 
 ```
-mysql> show status like '%Com_select%';
+mysql> show global status like '%Com_select%';
 ```
 
 
