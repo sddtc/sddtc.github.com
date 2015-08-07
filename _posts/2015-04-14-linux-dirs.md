@@ -59,4 +59,3 @@ wc -l filename
 dpkg --get-selections|grep linux        //带有image的为系统内核
 uname -a          //查看系统当前使用内核
 ```
-
