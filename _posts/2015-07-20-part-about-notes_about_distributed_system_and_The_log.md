@@ -3,6 +3,7 @@ layout: post
 date: 2015-07-20
 title: 关于The Log的摘要
 categories: sddtc tech
+tags: [log]
 ---
 
 实际上，对数据进行有效利用，很符合马斯洛的层次需求理论。  

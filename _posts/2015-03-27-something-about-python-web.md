@@ -2,6 +2,7 @@
 layout: post
 title: "something about python web"
 categories: sddtc tech
+tags: [python]
 ---
 #### 以下引用的是对于洪强宁关于豆瓣架构的回答：  
 

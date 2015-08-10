@@ -3,6 +3,7 @@ layout: post
 title: "storm-study"
 date: "2015-06-09"
 categories: sddtc tech
+tags: [storm]
 ---
 
 * spout 龙卷，读取原始数据为bolt提供数据  

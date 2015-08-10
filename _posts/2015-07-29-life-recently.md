@@ -3,6 +3,7 @@ layout: post
 title: "life recently"
 date: "2015-07-29"
 categories: sddtc work
+tags: [life]
 ---
 
 最近都没有很频繁的更新，实在忍不下去啦，稍微总结一下最近做的事  

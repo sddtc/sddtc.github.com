@@ -3,6 +3,7 @@ layout: post
 title: "angularJs"
 date: "2015-05-04"
 categories: sddtc tech
+tags: [angularJs]
 ---
 
 * post请求，需要transFn方法   

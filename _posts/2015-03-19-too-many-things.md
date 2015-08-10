@@ -3,6 +3,7 @@ layout: post
 title: "too many things"
 date: "2015-03-19"
 categories: sddtc work
+tags: [boring, life]
 ---
 
 事情好多

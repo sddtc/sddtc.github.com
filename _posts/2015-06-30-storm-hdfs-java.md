@@ -3,6 +3,7 @@ layout: post
 title: "storm-hdfs-java"
 date: "2015-06-30"
 categories: sddtc tech
+tags: [storm, kafka]
 ---
 
 - transient

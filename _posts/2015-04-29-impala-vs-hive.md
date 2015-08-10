@@ -3,6 +3,7 @@ layout: post
 title: "Impala vs Hive"
 date: "2015-04-29"
 categories: sddtc tech
+tags: [impala, hive]
 ---
 
 <h4>Impala相对于Hive所使用的优化技术</h4>

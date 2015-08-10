@@ -3,6 +3,7 @@ layout: post
 title: "mysql基本的简单缓存配置"
 date: "2015-07-31"
 categories: sddtc tech
+tags: [mysql, cache]
 ---
 
 背景:  
