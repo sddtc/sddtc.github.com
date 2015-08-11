@@ -57,6 +57,24 @@ select * from mysql.user;
 grant all PRIVILEGES on *.* to root@'cdh5-slave'  identified by '${your password}' with grant option;
 ```
 
+4.1.mysql添加一个server:  
+
+```vim
+
+CREATE SERVER servername  FOREIGN DATA WRAPPER mysql
+OPTIONS
+	(
+		HOST 'xx.xx.xx.xx',
+		DATABASE 'dbname',
+		USER 'username',
+		PASSWORD 'password'
+	);
+
+```
+
+
+* * *
+
 5.sqoop的import命令(mysql--->hdfs)  
 
 ```vim
