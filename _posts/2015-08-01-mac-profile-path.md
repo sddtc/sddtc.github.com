@@ -25,8 +25,8 @@ Mac OS X 10.3之后默认的是Bourne Shell。
  2./etc/bashrc（一般在这个文件中添加系统级环境变量）  
  全局（公有）配置，bash shell执行时，不管是何种方式，都会读取此文件。    
  
- 3.~/.bash_profile  （一般在这个文件中添加用户级环境变量）  
-（注：Linux 里面是 .bashrc 而 Mac 是 .bash_profile）  
+ 3.~/.bash\_profile  （一般在这个文件中添加用户级环境变量）  
+（注：Linux 里面是 .bashrc 而 Mac 是 .bash\_profile）  
  若bash shell是以login方式执行时，才会读取此文件。该文件仅仅执行一次!  
  默认情况下,他设置一些环境变量  
  设置终端配色  
