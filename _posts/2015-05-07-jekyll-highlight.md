@@ -3,6 +3,7 @@ layout: post
 title: "jekyll highlight"
 date: "2015-05-07"
 categories: sddtc work
+tags: [jekyll, python]
 ---
 
 jekyll语法高亮之pygments系列：    

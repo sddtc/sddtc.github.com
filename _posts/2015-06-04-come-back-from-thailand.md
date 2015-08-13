@@ -3,6 +3,7 @@ layout: post
 title: "come back from thailand"
 date: "2015-06-04"
 categories: sddtc chip
+tags: [life]
 ---
 
 泰国归来  

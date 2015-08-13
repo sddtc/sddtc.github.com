@@ -3,6 +3,7 @@ layout: post
 title: "mac的配置文件相关"
 date: "2015-08-01"
 categories: sddtc work
+tags: [mac, config]
 ---
 
 #### Mac启动加载文件位置:可设置环境变量

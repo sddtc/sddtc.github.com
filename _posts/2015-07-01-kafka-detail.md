@@ -3,6 +3,7 @@ layout: post
 title: "kafka深度解析"
 date: "2015-07-01"
 categories: sddtc tech
+tags: [kafka]
 ---
 
 ##### 背景介绍  

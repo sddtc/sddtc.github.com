@@ -3,6 +3,7 @@ layout: post
 title: "mysql,sqoop相关的整理"
 date: "2015-03-16"
 categories: sddtc tech
+tags: [mysql, sqoop]
 ---
 
 1.查看mysql的连接数的实际操作  
@@ -55,6 +56,24 @@ select * from mysql.user;
 ```vim
 grant all PRIVILEGES on *.* to root@'cdh5-slave'  identified by '${your password}' with grant option;
 ```
+
+4.1.mysql添加一个server:  
+
+```vim
+
+CREATE SERVER servername  FOREIGN DATA WRAPPER mysql
+OPTIONS
+	(
+		HOST 'xx.xx.xx.xx',
+		DATABASE 'dbname',
+		USER 'username',
+		PASSWORD 'password'
+	);
+
+```
+
+
+* * *
 
 5.sqoop的import命令(mysql--->hdfs)  
 

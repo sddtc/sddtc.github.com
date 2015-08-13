@@ -2,6 +2,7 @@
 layout: post
 title: "序列化与反序列化的选型"
 categories: sddtc tech
+tags: [java]
 ---
 
 ##选型建议
