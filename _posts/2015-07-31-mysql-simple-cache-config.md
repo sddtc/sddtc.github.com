@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "mysql基本的简单缓存配置"
+title: "mysql基本缓存配置"
 date: "2015-07-31"
 categories: sddtc tech
 tags: [mysql, cache]
@@ -118,7 +118,9 @@ query\_cache\_min\_res\_unit的配置是一柄”双刃剑”，默认是4KB，�
 
 * * *  
 
-该文章转自[mysql查询缓存打开、设置、参数查询、性能变量意思](http://blog.sina.com.cn/s/blog_75ad10100101by7j.html)
+该文章转自[mysql查询缓存打开、设置、参数查询、性能变量意思](http://blog.sina.com.cn/s/blog_75ad10100101by7j.html)  
+
+另一篇优化详解[myql优化，启动mysql缓存机制，实现命中率100%](http://blog.csdn.net/wulantian/article/details/11043121)
 
 
 
