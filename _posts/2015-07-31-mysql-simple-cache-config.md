@@ -81,12 +81,12 @@ mysql>show status like 'Qcache%';
 mysql>show status like '%key_read%';
 ```  
 
-Key_reads 代表命中磁盘的请求个数， Key_read_requests 是总数。命中磁盘的读请求数除以读请求总数就是不中比率 —— 在本例中每 1,000 个请求，大约有 0.6 个没有命中内存。如果每 1,000 个请求中命中磁盘的数目超过 1 个，就应该考虑增大关键字缓冲区了。
+Key\_reads 代表命中磁盘的请求个数， Key\_read\_requests 是总数。命中磁盘的读请求数除以读请求总数就是不中比率 —— 在本例中每 1,000 个请求，大约有 0.6 个没有命中内存。如果每 1,000 个请求中命中磁盘的数目超过 1 个，就应该考虑增大关键字缓冲区了。
 
 
 6.key\_buffer\_size 这个参数是用来设置索引块（index blocks）缓存的大小，它被所有线程共享，严格说是它决定了数据库索引处理的速度，尤其是索引读的速度。  
 
-innodb_buffer_pool_size 这个参数和MyISAM的key_buffer_size有相似之处，但也是有差别的。这个参数主要缓存innodb表的索引，数据，插入数据时的缓冲。为Innodb加速优化首要参数。  
+innodb\_buffer\_pool\_size 这个参数和MyISAM的key\_buffer\_size有相似之处，但也是有差别的。这个参数主要缓存innodb表的索引，数据，插入数据时的缓冲。为Innodb加速优化首要参数。  
 
 
 * * *  
