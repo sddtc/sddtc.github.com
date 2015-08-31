@@ -4,58 +4,27 @@ title: linux-dirs
 categories: sddtc tech
 tags: [linux, directive]
 ---
-
-nohup代表后台运行  
-
-```vim
-nohup java -classpath $CLASS_PATH ${jarpath} &
-```
-
-查看磁盘使用情况  
+ 
 
 ```vim
-du -h --max-depth=1
-```
 
-解压  
-
-```vim
-tar -xzf kafka_2.x.x.x.tgz
-```
-
-马上使/etc/profile文件生效  
-
-```vim
+//nohup代表后台运行
+nohup java -classpath $CLASS_PATH ${jarpath} &  
+//查看磁盘使用情况
+du -h --max-depth=1  
+tar -xzf kafka_2.x.x.x.tgz //解压
+//马上使/etc/profile文件生效
 source /etc/profile
-```
-
-利用nc进行文件的传输，用于本地和服务器之间  
-
-本地上传文件到服务器:  
-
-服务器端:  
-
-```vim
-nc -l 4444 > kafka-demo-0.0.1-SNAPSHOT-bin.zip
-```
-
-本地:
-
-```vim
-nc 服务器IP 4444 < kafka-demo-0.0.1-SNAPSHOT-bin.zip 
-```
-
-服务器到本地命令反过来即可  
-
-统计文件行数  
-
-```vim
-wc -l filename
-```
-
-查看linux内核，查看当前的版本内核  
-
-```vim 
-dpkg --get-selections|grep linux        //带有image的为系统内核
+//利用nc进行文件的传输，用于本地和服务器之间
+nc -l 4444 > kafka-demo-0.0.1-SNAPSHOT-bin.zip 
+//本地上传文件到服务器
+nc server-IP 4444 < kafka-demo-0.0.1-SNAPSHOT-bin.zip 
+wc -l filename //统计文件行数
+dpkg --get-selections|grep linux       //带有image的为系统内核
 uname -a          //查看系统当前使用内核
+
 ```
+
+####sed相关的知识  
+[耗子的博客](http://coolshell.cn/articles/9104.html) 
+
