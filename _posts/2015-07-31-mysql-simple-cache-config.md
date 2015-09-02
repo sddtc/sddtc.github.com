@@ -43,7 +43,7 @@ mysql>select @@global.query_cache_size;
 这一步,服务器应该是默认值0,因此可以判断,服务器没有正确开启查询缓存,接下来就简单啦,赋值～然而也并没有那么简单,想到我们的服务器上面有多个项目在跑,内存的分配显然不能太过大手笔,因此大家就自己估量不要影响其它,另外，默认是0也是mysql5.0下出现的,6应该不是如此  
 
 ```
-mysql>set @@global.query_cache_size=1000000;
+mysql>set @@global.query_cache_size=5242880;
 ```
 
 4.query\_cache\_limit 控制缓存结果最大值:当你查询缓存数结果数据超过这个值就不会进行缓存。缺省为1M，也就是超过了1M查询结果就不会缓存  
@@ -85,6 +85,12 @@ Key\_reads 代表命中磁盘的请求个数， Key\_read\_requests 是总数。
 
 
 6.key\_buffer\_size 这个参数是用来设置索引块（index blocks）缓存的大小，它被所有线程共享，严格说是它决定了数据库索引处理的速度，尤其是索引读的速度。  
+
+
+```
+mysql>select @@global.key_buffer_size;
+
+```  
 
 innodb\_buffer\_pool\_size 这个参数和MyISAM的key\_buffer\_size有相似之处，但也是有差别的。这个参数主要缓存innodb表的索引，数据，插入数据时的缓冲。为Innodb加速优化首要参数。  
 
