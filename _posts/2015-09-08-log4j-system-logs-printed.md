@@ -11,11 +11,11 @@ tags: [log4j]
 Log4j由三个重要的组件构成：日志信息的优先级，日志信息的输出目的地，日志信息的输出格式。  
 
 其中，Log4j提供的appender有以下几种：   
-     org.apache.log4j.ConsoleAppender（控制台），   
-　　  org.apache.log4j.FileAppender（文件），   
-　　  org.apache.log4j.DailyRollingFileAppender（每天产生一个日志文件），  
-　　  org.apache.log4j.RollingFileAppender（文件大小到达指定尺寸的时候产生一个新的文件），   
-　　  org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）    
+org.apache.log4j.ConsoleAppender（控制台），   
+org.apache.log4j.FileAppender（文件），   
+org.apache.log4j.DailyRollingFileAppender（每天产生一个日志文件），  
+org.apache.log4j.RollingFileAppender（文件大小到达指定尺寸的时候产生一个新的文件），   
+org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）    
 　　
 
 ```vim
