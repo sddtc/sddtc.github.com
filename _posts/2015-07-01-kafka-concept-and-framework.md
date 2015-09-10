@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "kafka深度解析"
+title: "kafka概念详解与架构特性"
 date: "2015-07-01"
 categories: sddtc tech
 tags: [kafka]
