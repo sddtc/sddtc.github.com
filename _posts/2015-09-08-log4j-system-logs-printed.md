@@ -70,13 +70,17 @@ log4j.appender.demoOneAppender.layout.ConversionPattern=[%-5p][%d{yyyy-MM-dd HH:
 //把重要的业务日志异步批量写入数据库
 log4j.logger.business=INFO,db 
 log4j.appender.db=org.apache.log4j.jdbc.JDBCAppender
-//#注意：bufferSize可以缓存日志，设置为>1后，缓存满后再插入数据库。但如果程序终结有可能缓存未输出。需要在程序结束前调用LogManager.shutdown()
+//#注意：bufferSize可以缓存日志，设置为>1后，缓存满后再插入数据库。但如果程序终结有可能缓存未输出。
+//需要在程序结束前调用LogManager.shutdown()
 log4j.appender.db.BufferSize=100
 log4j.appender.db.URL=jdbc://
 log4j.appender.db.driver= 
 log4j.appender.db.user=root 
 log4j.appender.db.password= 
-log4j.appender.db.sql=INSERT INTO log4j_log (PRIORITY,LOGDATE,CLASS,METHOD,MSG) VALUES('%p','%d{yyyy-MM-dd HH:mm:ss}','%C','%M','%m') 
+log4j.appender.db.sql=
+	INSERT INTO 
+	log4j_log (PRIORITY,LOGDATE,CLASS,METHOD,MSG) 
+	VALUES('%p','%d{yyyy-MM-dd HH:mm:ss}','%C','%M','%m') 
 log4j.appender.db.layout=org.apache.log4j.PatternLayout
 
 
