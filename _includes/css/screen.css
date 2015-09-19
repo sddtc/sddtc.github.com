@@ -9,7 +9,7 @@ html, body {
 
 body {
   font-size: 16px;
-  background-color: rgb(252, 245, 245);
+  background-color: #000;
   color: #222222;
   line-height: 24px;
   margin: 0;
@@ -17,7 +17,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #181818;
+  color: #AD0;
   font-family: "open sans", sans-serif;
   font-weight: 600;
 }
@@ -45,6 +45,7 @@ h3 {
 ul {
   margin: 1em 0;
   list-style: disc;
+  color: #0F0;
 }
 
 a {
@@ -92,7 +93,7 @@ ul.posts span {
 }
 
 ul.posts .post-link {
-  color: #0894D6;
+  color: #0F0;
 }
 
 .meta {
@@ -114,13 +115,14 @@ nav h1, nav h2 {
 nav hr {
   margin-top: 10px;
   margin-bottom: 15px;
-  border: dotted #ddd;
+  border: dotted #0F0;
   border-width: 1px 0 0;
 }
 
 #social {
   margin-bottom: 10px;
   font-size: 13px;
+  color: #0F0;
 }
 
 #post pre {
@@ -161,7 +163,7 @@ nav hr {
 
 .content {
   font: 400 16px/22px "open sans", sans-serif;
-  border-left: 1px solid #DDD;
+  border-left: 1px solid #0F0;
   padding-left: 40px;
   padding-top: 25px;
   min-height: 400px;
@@ -173,8 +175,8 @@ nav hr {
 
 .footer {
   font-size: 80%;
-  color: #666;
-  border-top: 4px solid #EEE;
+  color: #0F0;
+  border-top: 4px solid #0F0;
   overflow: hidden;
 }
 
@@ -255,4 +257,8 @@ i.fa-hn {
   text-align: center;
   font-size: smaller;
   padding-bottom: 10px
+}
+
+p {
+  color: #0F0;
 }
