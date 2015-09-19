@@ -55,7 +55,7 @@ a {
 
 a:hover {
   color: {{ site.theme.highlight_color }};
-  text-decoration: underline;
+  font-weight:bold;
 }
 
 a:visited {
