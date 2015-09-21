@@ -146,7 +146,7 @@ query\_cache\_min\_res\_unit的配置是一柄”双刃剑”，默认是4KB，�
 * * *
 
 背景:  
-  执行一个用到了索引的sql，表150w数据，行为是copy，但是processlist显示<strong>writing to net<strong>,觉得很奇怪，继而查询解决方案，发现了一个参数，设置之后该状态消失  
+  执行一个用到了索引的sql，表150w数据，行为是copy，但是processlist显示writing to net,觉得很奇怪，继而查询解决方案，发现了一个参数，设置之后该状态消失  
   
 主要参数：  
 max\_allowed\_packet 说明:mysql根据配置文件会限制server接受的数据包大小  
