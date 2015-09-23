@@ -2,7 +2,7 @@
 layout: post
 title: "Insertion Sort List小记"
 date: "2015-09-23"
-categories: sddtc work
+categories: sddtc tech
 tags: [algorithms]
 ---
 
