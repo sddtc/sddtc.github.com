@@ -1,4 +1,3 @@
-
 ---
 layout: post
 title: "Insertion Sort List小记"
