@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Impala vs Hive"
+title: "蜕酱的Impala小课堂"
 date: "2015-04-29"
 categories: sddtc tech
 tags: [impala, hive]
@@ -40,6 +40,7 @@ Hive: 复杂的批处理查询任务，数据转换任务。
 Impala：实时数据分析，因为不支持UDF，能处理的问题域有一定的限制，与Hive配合使用,对Hive的结果数据集进行实时分析。
 
 ####impala分区  
+
 
 ```
 
