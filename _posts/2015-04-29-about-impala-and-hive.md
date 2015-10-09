@@ -47,6 +47,8 @@ Impala：实时数据分析，因为不支持UDF，能处理的问题域有一�
 slave:21000 > alter table p1 add partition(dt='2015-09-14');
 slave:21000 > alter table p1 drop if exists patition(dt='2015-09-14')
 
+alter table test add columns (docnt INTEGER);
+
 ```
 
 
