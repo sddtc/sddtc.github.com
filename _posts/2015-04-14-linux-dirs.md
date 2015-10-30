@@ -47,6 +47,11 @@ hdfs dfs -get ${hdfsFilePath} ${localPath}
 hdfs dfs -copyToLocal ${hdfsFilePath} ${localPath}
 
 
+//显示文件夹下所有文件的大小，按照M展示，并按照[数字]排序取出最大的前10  
+du -s folder/* | sort -rn | head
+//2
+du -sh folder/* | sort -rn | head
+
 ```
 
 ####sed相关的知识  
