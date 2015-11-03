@@ -17,9 +17,11 @@ tags: [python, scrapy]
 3.下载zip，解压到自己的目录  
 发现里面有个setup.py文件  
 执行:
+
 ```
 sudo python setup.py install  
 ```
+
 安装完成  
 4.在命令行运行scrapy的时候报错  
 查了下原因，后来解决，解决网址(http://stackoverflow.com/questions/17911345/scrapy-unable-to-create-a-project)，命令如下：  
