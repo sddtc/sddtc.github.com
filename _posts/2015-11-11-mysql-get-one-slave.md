@@ -61,7 +61,8 @@ Master_SSL_Verify_Server_Cert: No
 Last_IO_Errno: 0
 Last_IO_Error: 
 Last_SQL_Errno: 1548
-Last_SQL_Error: Error 'Cannot load from mysql.proc. The table is probably corrupted' on query. Default database: 'xxx'. Query: 'drop PROCEDURE if exists `xxxx`.`proc_xxx`
+Last_SQL_Error: Error 'Cannot load from mysql.proc. The table is probably corrupted' on query. 
+Default database: 'xxx'. Query: 'drop PROCEDURE if exists `xxxx`.`proc_xxx`
 
 
 ```
