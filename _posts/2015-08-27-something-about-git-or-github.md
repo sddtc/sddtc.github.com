@@ -21,5 +21,15 @@ tags: [github, command]
 git rm --cached .idea/
 ```  
 
-然后再次git status查看状态，.idea文件夹不再显示状态。
+然后再次git status查看状态，.idea文件夹不再显示状态。  
+
+### 本地修改，但更新强制覆盖本地  
+
+
+```
+
+git fetch --all  
+git reset --hard origin/master
+
+```
 
