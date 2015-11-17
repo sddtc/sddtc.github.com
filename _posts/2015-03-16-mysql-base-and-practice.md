@@ -6,7 +6,7 @@ categories: sddtc tech
 tags: [mysql]
 ---
 
-**1.基本操作**   
+###1.基本操作   
  
 
 ```
@@ -68,9 +68,26 @@ drop server if exist ${servername}
 * * * 
 
 
-**2.mysql索引使用**  
+###2.mysql索引使用  
 
 *场景一*：  
 
-发现一个现象:'select id,sum(cnt) from a group by id'这条语句,在id建立索引之后，仍然使用不到索引，并且该表若数量到达1KW,该语句效率问题导致无法使用，后来寻求解答，得出结论，若建立联合索引(id, cnt),该语句能用到索引，速度提升明显，借此机会发现了联合索引的强大力量
+发现一个现象:'select id,sum(cnt) from a group by id'这条语句,在id建立索引之后，仍然使用不到索引，并且该表若数量到达1KW,该语句效率问题导致无法使用，后来寻求解答，得出结论，若建立联合索引(id, cnt),该语句能用到索引，速度提升明显，借此机会发现了联合索引的强大力量  
+
+*场景二*：  
+
+某一天，每30分钟统计一次数据：  
+
+```
+
+SELECT HOUR(created_time) AS h, 
+       FLOOR(MINUTE(created_time) / 30) AS v, 
+       COUNT(*) 
+FROM record 
+WHERE created_time >= '2010-02-10' 
+AND created_time < FROM_DAYS(TO_DAYS('2010-02-10') + 1) 
+GROUP BY h, v;
+
+```
+
 

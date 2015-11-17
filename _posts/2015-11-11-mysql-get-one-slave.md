@@ -72,6 +72,17 @@ Default database: 'xxx'. Query: 'drop PROCEDURE if exists `xxxx`.`proc_xxx`
 
 2.导出sql的时候，有些建表语句写的不规范，故意将列类型指定为'gb2312',导致写入时报错，对于这种大型文件，utf8为基准的sql解决方法就是把个别这种列类型改掉，以后要提前确认问题，避免这种错误  
 
+####后续  
+1.跳过错误事务:  
+
+```
+
+mysql>slave stop;
+mysql>SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1        #跳过一个事务
+mysql>slave start;
+
+```
+
 
 参考文章：  
 1.[主MySQL设置](http://faq.comsenz.com/library/system/serviceext/serviceext_slave.htm)  
