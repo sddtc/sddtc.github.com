@@ -1,0 +1,11 @@
+- year: 2015
+  projects:
+    - name: Fanji
+      url: http://fanji.prouis.com/
+      blurb: >
+        video list from bilibili.tv
+
+    - name: Chat
+      url: http://chat.prouis.com/
+      blurb: >
+        web chat with socket.io

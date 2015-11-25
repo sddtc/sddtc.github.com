@@ -1,6 +1,6 @@
 # General Jekyll Config
 markdown: redcarpet
-pygments: true
+highlighter: pygments
 url: http://homuralovelive.com
 lsi: false
 exclude: [LICENSE, CNAME, README.md, .gitignore]
