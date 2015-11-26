@@ -36,5 +36,5 @@ demo-phrases.sh对于短语的结果会更准，例如输入san_francisco
 
 
 
-内容摘自:  
+参考资料:  
 1.[再谈word2vec](http://blog.csdn.net/zhaoxinfan/article/details/27352659)  
