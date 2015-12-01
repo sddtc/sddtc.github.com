@@ -2,3 +2,9 @@ Sitemap: http://sddtc.github.com/atom.xml
 
 User-agent: *
 Disallow: /assets/images/
+
+User-agent: Baiduspider
+Disallow: /
+
+User-agent: baiduspider
+Disallow: /
