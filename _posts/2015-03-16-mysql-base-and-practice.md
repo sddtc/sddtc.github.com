@@ -61,7 +61,7 @@ OPTIONS
 	);
 
 //删除一个mysq server:
-drop server if exist ${servername}
+drop server if exists ${servername}
 
 ```
 
