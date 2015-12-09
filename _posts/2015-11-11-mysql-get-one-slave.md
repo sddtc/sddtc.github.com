@@ -83,6 +83,29 @@ mysql>slave start;
 
 ```
 
+2.遇到的问题  
+什么样的语句是不能正确的同步到从库的？
+
+* update的内联模式不行
+
+```
+update sddtc.A dd
+inner join (
+SELECT
+	date(createTime) date,
+	count(1) commentcnt
+FROM
+	sddtc.B
+WHERE
+	createTime >='2015-12-07' and createTime <'2015-12-09'
+GROUP BY
+	date(createTime)
+) tmp
+on dd.date=tmp.date
+set dd.commentcnt = tmp.commentcnt;
+
+```
+
 
 参考文章：  
 1.[主MySQL设置](http://faq.comsenz.com/library/system/serviceext/serviceext_slave.htm)  

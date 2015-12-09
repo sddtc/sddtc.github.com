@@ -132,7 +132,32 @@ You can cope with deadlocks and reduce the likelihood of their occurrence with t
 2.将事务过程缩减，加快提交频率  
 3.其实表A的索引有优化的余地，对索引精确优化也可以有效的避免，只是个人mysql水平有限，过段时间尝试联合索引的替换  
 
+后续：  
+1.事务过程缩减并没有有效的制止现象的发生，我又自己指定了connection的隔离级别，并记录了入库失败时的sql，用于出错补救。当在java里指定隔离级别的时候，程序报错了  
 
+```
+
+2015-12-09 13:26:44  [ Thread-0:95608 ] - [ ERROR ]  入库失败-Binary logging not possible. Message: Transaction level 'READ-COMMITTED' in InnoDB is not safe for binlog mode 'STATEMENT'-sql-null
+java.sql.BatchUpdateException: Binary logging not possible. Message: Transaction level 'READ-COMMITTED' in InnoDB is not safe for binlog mode 'STATEMENT'
+    at com.mysql.jdbc.PreparedStatement.executeBatchSerially(PreparedStatement.java:1815)
+    at com.mysql.jdbc.PreparedStatement.executeBatch(PreparedStatement.java:1277)
+    at com.lagou.order.queue.DeliverInsertThread$1.run(DeliverInsertThread.java:109)
+    at java.lang.Thread.run(Thread.java:745)
+Caused by: java.sql.SQLException: Binary logging not possible. Message: Transaction level 'READ-COMMITTED' in InnoDB is not safe for binlog mode 'STATEMENT'
+    at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:996)
+    at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3887)
+    at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3823)
+    at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2435)
+    at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2582)
+    at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2530)
+    at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1907)
+    at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2141)
+    at com.mysql.jdbc.PreparedStatement.executeBatchSerially(PreparedStatement.java:1773)
+    ... 3 more
+   
+```
+
+因为数据库的binlog格式引起的出错，果然还是不够了解[mysql binlog格式与事务级别read committed的关系](http://slevin.blog.51cto.com/441770/314203)
 
 
 
