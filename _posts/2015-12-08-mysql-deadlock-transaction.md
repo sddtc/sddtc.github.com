@@ -98,15 +98,24 @@ mysql> select @@global.tx_isolation, @@tx_isolation;
 ####setTransactionIsolation  
 
 ```
-
 void setTransactionIsolation(int level) throws SQLException  
-Attempts to change the transaction isolation level for this Connection object to the one given. The constants defined in the interface Connection are the possible transaction isolation levels.
-Note: If this method is called during a transaction, the result is implementation-defined.
+Attempts to change the transaction isolation level for 
+this Connection object to the one given. 
+The constants defined in the interface Connection are the 
+possible transaction isolation levels.
+Note: If this method is called during a transaction, 
+the result is implementation-defined.
 
 Parameters:
-level - one of the following Connection constants: Connection.TRANSACTION_READ_UNCOMMITTED, Connection.TRANSACTION_READ_COMMITTED, Connection.TRANSACTION_REPEATABLE_READ, or Connection.TRANSACTION_SERIALIZABLE. (Note that Connection.TRANSACTION_NONE cannot be used because it specifies that transactions are not supported.)
+level - one of the following Connection constants: Connection.TRANSACTION_READ_UNCOMMITTED, Connection.
+TRANSACTION_READ_COMMITTED, Connection.
+TRANSACTION_REPEATABLE_READ, or Connection.
+TRANSACTION_SERIALIZABLE. 
+(Note that Connection.TRANSACTION_NONE cannot be used because it specifies that transactions are not supported.)
 Throws:
-SQLException - if a database access error occurs, this method is called on a closed connection or the given parameter is not one of the Connection constants
+SQLException - if a database access error occurs, 
+this method is called on a closed connection or the given parameter is not 
+one of the Connection constants
 See Also:
 DatabaseMetaData.supportsTransactionIsolationLevel(int), getTransactionIsolation()
 
