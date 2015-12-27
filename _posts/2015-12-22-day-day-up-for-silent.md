@@ -23,9 +23,13 @@ tags: [java]
 
 ```java
 
-List<Object> objectList;
-List<String> stringList;     
-objectList = stringList;  //compilation error incompatible types
+public static void main(String[] args) {
+ 
+    List<Object> objectList;
+    List<String> stringList;     
+    objectList = stringList;  //compilation error incompatible types
+    
+}
 
 ```
 
