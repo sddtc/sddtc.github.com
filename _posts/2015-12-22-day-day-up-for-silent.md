@@ -18,21 +18,10 @@ tags: [java]
 限定通配符对类型进行了限制。有两种限定通配符，一种是<? extends T>它通过确保类型必须是T的子类来设定类型的上界，另一种是<? super T>它通过确保类型必须是T的父类来设定类型的下界。泛型类型必须用限定内的类型来进行初始化，否则会导致编译错误。另一方面<?>表示了非限定通配符，因为<?>可以用任意类型来替代。  
 
 你可以把List<String>传递给一个接受List<Object>参数的方法吗？  
-乍看起来String是一种Object，所以List<String>应当可以用在需要List<Object>的地方，但是事实并非如此。真这样做的话会导致编译错误。如果你再深一步考虑，你会发现Java这样做是有意义的，因为List<Object>可以存储任何类型的对象包括String, Integer等等，而List<String>却只能用来存储Strings。
-
-
-```java
-
-public static void main(String[] args) {
- 
-    List<Object> objectList;
-    List<String> stringList;     
-    objectList = stringList;  //compilation error incompatible types
-    
-}
-
-```
-
+乍看起来String是一种Object，所以List<String>应当可以用在需要List<Object>的地方，但是事实并非如此。真这样做的话会导致编译错误。如果你再深一步考虑，你会发现Java这样做是有意义的，因为List<Object>可以存储任何类型的对象包括String, Integer等等，而List<String>却只能用来存储Strings。  
+List<Object> objectList;  
+List<String> stringList;     
+objectList = stringList;  //compilation error incompatible types  
 Java中List<Object>和原始类型List之间的区别?  
 原始类型和带参数类型<Object>之间的主要区别是，在编译时编译器不会对原始类型进行类型安全检查，却会对带参数的类型进行检查，通过使用Object作为类型，可以告知编译器该方法可以接受任何类型的对象，比如String或Integer。  它们之间的第二点区别是，你可以把任何带参数的类型传递给原始类型List，但却不能把List<String>传递给接受List<Object>的方法，因为会产生变异错误。  
 
