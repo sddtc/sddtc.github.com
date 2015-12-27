@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "学而不思则罔，思而不学则殆:)"
+date: "2015-12-22"
 categories: sddtc tech
 tags: [java]
 ---
@@ -19,10 +20,13 @@ tags: [java]
 你可以把List<String>传递给一个接受List<Object>参数的方法吗？  
 乍看起来String是一种Object，所以List<String>应当可以用在需要List<Object>的地方，但是事实并非如此。真这样做的话会导致编译错误。如果你再深一步考虑，你会发现Java这样做是有意义的，因为List<Object>可以存储任何类型的对象包括String, Integer等等，而List<String>却只能用来存储Strings。
 
-```
+
+```java
+
 List<Object> objectList;
 List<String> stringList;     
 objectList = stringList;  //compilation error incompatible types
+
 ```
 
 Java中List<Object>和原始类型List之间的区别?  
