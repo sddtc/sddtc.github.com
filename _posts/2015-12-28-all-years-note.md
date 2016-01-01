@@ -3,6 +3,7 @@ layout: post
 title: "2015年度总结"
 date: "2015-12-28"
 categories: sddtc tech
+tags: [life]
 ---
 
 ##2015年终总结  
