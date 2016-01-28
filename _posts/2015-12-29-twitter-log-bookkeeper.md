@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "【年度案例】Twitter高性能分布式日志系统架构解析"
+title: "年度案例】Twitter高性能分布式日志系统架构解析"
 date: "2015-12-29"
 categories: sddtc tech
 tags: [twitter, log]
