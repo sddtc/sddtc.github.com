@@ -10,11 +10,11 @@ tags: [iOS]
 
 有3个步骤(针对iPhone；安卓的在开发者平台那个APP有文章说明，在此不做记录)：  
 
-**1.获取自己手机的udid**  
+####1.获取自己手机的udid
 
 连接iTunes，手机信息，点击'序列号'，会出现UDID  
 
-**2.打开电脑终端，将udid添加到rvictl命令中**  
+####2.打开电脑终端，将udid添加到rvictl命令中  
 
 ```
 >rvictl -s ${udid}
@@ -25,7 +25,7 @@ iOS 5后，apple引入了RVI remote virtual interface的特性，它只需要将
 重要信息：RVI 设备重现的是 iOS 设备的整个网络堆栈，无法跟踪设备上指定的网络接口，或者判断哪些包是通过哪个网络接口传输的，将 WLAN 关闭就可以抓 3G 连接的包。  
 
 
-**3.tcpdump运行抓包命令实施监控**
+####3.tcpdump运行抓包命令实施监控
   
 
 ```
@@ -41,7 +41,7 @@ or Wechat红包
 
 ```
 
-**4.事成之后,将自己的设备从rvictl移除**  
+####4.事成之后,将自己的设备从rvictl移除  
 
 ```
 >rvictl -x ${udid}
