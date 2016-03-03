@@ -50,3 +50,16 @@ ssh-keygen -t rsa -C "tuijiang@gitlab.uuu.org"
 理论上，配置完成之后，ssh -T git@github 或者 ssh -T git@gitlab都可以通过  
 但是公司不允许执行ssh，对于代码可以使用http下载  
 
+注:  
+ssh协议和http协议切换    
+
+三种方式  
+1. 修改命令  
+git remte origin set-url [URL]    
+
+2.先删后加  
+git remote rm origin   
+git remote add origin [URL]   
+ 
+3.直接修改config文件  
+
