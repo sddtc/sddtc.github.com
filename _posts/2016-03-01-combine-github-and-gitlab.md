@@ -53,13 +53,9 @@ ssh-keygen -t rsa -C "tuijiang@gitlab.uuu.org"
 注:  
 ssh协议和http协议切换    
 
-三种方式  
-1. 修改命令  
-git remte origin set-url [URL]    
+```
 
-2.先删后加  
-git remote rm origin   
-git remote add origin [URL]   
- 
-3.直接修改config文件  
+git remote set-url origin [url]
+
+```
 
