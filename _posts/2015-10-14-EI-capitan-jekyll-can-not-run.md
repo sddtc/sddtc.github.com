@@ -17,31 +17,25 @@ EI Capitan是mac目前最新版的系统，作为更新强迫症患者总是第�
 安装方式  
 
 ```
-
 sudo gem install jekyll
-
 ```
 
 而后发现github上有很多人都提出了这个问题，应该是系统更新后，有些方式变了，由于我对ruby了解不多，在此先不做讨论  
-
 解决方法  
 1.将jekyll组件安装在用户路径之下  
 
 ```
-
 sudo gem install -n /usr/local/bin jekyll
-
 ```
 
 2.运行jekyll报错  
 
 ```
-
 ➜  demo  jekyll serve --trace
 Configuration file: /Users/sddtc/Code/Jekyll/demo/_config.yml
             Source: /Users/sddtc/Code/Jekyll/demo
        Destination: /Users/sddtc/Code/Jekyll/demo/_site
-      Generating... 
+      Generating...
                     done.
 I, [2015-10-14T16:18:09.163411 #4957]  INFO -- : Celluloid 0.17.2 is running in BACKPORTED mode. [ http://git.io/vJf3J ]
 /Library/Ruby/Gems/2.0.0/gems/celluloid-0.17.2/lib/celluloid/calls.rb:48:in `check': wrong number of arguments (2 for 1) (ArgumentError)
@@ -75,13 +69,11 @@ I, [2015-10-14T16:18:09.163411 #4957]  INFO -- : Celluloid 0.17.2 is running in 
 	from /Library/Ruby/Gems/2.0.0/gems/jekyll-2.5.3/bin/jekyll:20:in `<top (required)>'
 	from /usr/local/bin/jekyll:23:in `load'
 	from /usr/local/bin/jekyll:23:in `<main>'
-	
 ```
 
 3.解决这个错误也是有人提出修改一下Celluloid的安装版本,用0.16.0  
 
 ```
-
 ➜  demo  sudo gem install celluloid --version '=0.16.0'
 Fetching: timers-4.0.4.gem (100%)
 Successfully installed timers-4.0.4
@@ -95,15 +87,10 @@ Installing ri documentation for celluloid-0.16.0
 
 ➜  demo  sudo gem uninstall celluloid --version '=0.17.2'  
 Successfully uninstalled celluloid-0.17.2
-
-
 ```
 
 4.可以查看一下本地安装的组件，没用的也可以删掉了  
 
 ```
-
 gem list --local
-
 ```
-

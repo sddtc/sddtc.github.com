@@ -18,6 +18,7 @@ tags: [github, command]
 ```
 git rm --cached .idea/
 ```  
+
 然后再次git status查看状态，.idea文件夹不再显示状态。  
 
 #### 本地修改，但更新强制覆盖本地  
@@ -25,12 +26,9 @@ git rm --cached .idea/
 ```
 git fetch --all  
 git reset --hard origin/master
-
 ```
 
 #### 远程新建分支，拉取到本地  
 1.查看所有分支，包括远程: git branch -va   
 2.切换到分支： git checkout -b <branch> origin/<branch>  
 3.如果切到新分支，push代码失败，执行：git push -f origin <branch>
-
-

@@ -6,7 +6,7 @@ categories: sddtc work
 tags: [jekyll, python]
 ---
 
-jekyll语法高亮之pygments系列：    
+jekyll语法高亮之pygments系列：     
 
 1.[下载](https://pypi.python.org/pypi/Pygments) Pygments-x.x.tar.gz,解压安装  
 

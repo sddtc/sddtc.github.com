@@ -10,7 +10,6 @@ linux下的shell date命令通常获取系统时间
 例如：  
 
 ```vim
-
 start=$1
 end=$2
 
@@ -28,12 +27,7 @@ fi
 例如：  
 
 ```vim
-
 custom_start=`date -d "${start} 7 day ago" "+%Y-%m-%d"`
 custom_end=`date -d "${end} +1 day" "+%Y-%m-%d"`
-
-
 custom_start1=`date --date=''$start' +1 day' +'%F'`
-
 ```  
-

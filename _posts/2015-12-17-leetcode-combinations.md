@@ -6,10 +6,9 @@ categories: sddtc tech
 tags: [java]
 ---
 
-
-> Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
-For example,
-If n = 4 and k = 2, a solution is:
+Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
+For example,  
+If n = 4 and k = 2, a solution is:  
 
 ```
 [
@@ -26,7 +25,6 @@ If n = 4 and k = 2, a solution is:
 后来参考网络上的答案,感觉很棒，在此记录  
 
 ```
-
 public List<List<Integer>> combine(int n, int k) {
     List<List<Integer>> result = new ArrayList<>();
 
@@ -52,14 +50,4 @@ private void helper(int n, int k, int start, List<Integer> nodes, List<List<Inte
         nodes.remove(nodes.size()-1);
     }
 }
-
 ```
-
-
-
-
-
-
-
-
-

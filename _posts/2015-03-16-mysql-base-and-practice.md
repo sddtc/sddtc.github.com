@@ -6,14 +6,11 @@ categories: sddtc tech
 tags: [mysql]
 ---
 
-###1.基本操作   
- 
+### 1.基本操作   
 
 ```
-
 mysql>mysqladmin -uxxx -p processlist
 mysql>mysqladmin -uxxx -p status
-
 ```
 
 1.1 修改mysql的库、表、客户端的字符编码格式  
@@ -21,35 +18,28 @@ a.停止mysql服务
 b.修改my.cnf文件
 
 ```
-
 [client]
 default-character-set=utf8
 
 [mysql]
 default-character-set=utf8
 
-
 [mysqld]
 collation-server = utf8_unicode_ci
 init-connect='SET NAMES utf8'
 character-set-server = utf8
-
 ```
 
 c.启动mysql服务  
 d.验证是否修改成功  
 
 ```
-
 mysql>show variables like 'character%';
-
 ```
-
 
 1.2 mysql server相关  
 
 ```
-
 //mysql添加一个server:
 CREATE SERVER ${servername} FOREIGN DATA WRAPPER mysql
 OPTIONS
@@ -62,13 +52,12 @@ OPTIONS
 
 //删除一个mysq server:
 drop server if exists ${servername}
-
 ```
 
-* * * 
+* * *
 
 
-###2.mysql索引使用  
+### 2.mysql索引使用  
 
 *场景一*：  
 
@@ -79,15 +68,11 @@ drop server if exists ${servername}
 某一天，每30分钟统计一次数据：  
 
 ```
-
-SELECT HOUR(created_time) AS h, 
-       FLOOR(MINUTE(created_time) / 30) AS v, 
-       COUNT(*) 
-FROM record 
-WHERE created_time >= '2010-02-10' 
-AND created_time < FROM_DAYS(TO_DAYS('2010-02-10') + 1) 
+SELECT HOUR(created_time) AS h,
+       FLOOR(MINUTE(created_time) / 30) AS v,
+       COUNT(*)
+FROM record
+WHERE created_time >= '2010-02-10'
+AND created_time < FROM_DAYS(TO_DAYS('2010-02-10') + 1)
 GROUP BY h, v;
-
 ```
-
-

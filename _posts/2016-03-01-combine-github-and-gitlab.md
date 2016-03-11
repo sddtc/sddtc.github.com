@@ -30,15 +30,19 @@ Host gitlab
 Hostname gitlab.uuu.org
 IdentityFile /Users/sddtc/.ssh/id_rsa_work
 ```
-生成文件的命令:   
+
+生成文件的命令  
+
 ```
 ssh-keygen -t rsa -C "tuijiang@gitlab.uuu.org"
 
 ```
+
 理论上，配置完成之后，ssh -T git@github 或者 ssh -T git@gitlab都可以通过  
 但是公司不允许执行ssh，对于代码可以使用http下载  
 注:  
 ssh协议和http协议的代码远程地址切换    
+
 ```
 git remote set-url origin [url]
 ```
