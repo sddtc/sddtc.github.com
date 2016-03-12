@@ -15,7 +15,7 @@ tags: [mysql]
 一、停止主库消息写入任务，保证该库只有读取任务，开启bin-log配置，重启主库  
 修改/etc/my.cnf文件：  
 
-```
+```vim
 log-bin=mysql-bin
 server-id=228
 binlog-do-db=databaseone
@@ -23,7 +23,6 @@ binlog-do-db=databasetwo
 expire-logs-days=7
 binlog_cache_size = 4M
 max_binlog_size = 300M
-
 ```
 
 二、使用"show master status;"可以看到bin-log的position位置，这个位置对于没有开过bin-log的数据库可以不用特意记录数据变动起始位置，从库从0开始设置就可以，这时主库可以恢复一切写任务      
@@ -34,7 +33,7 @@ max_binlog_size = 300M
 四、从库进行配置  
 修改/etc/my.cnf文件:
 
-```
+```vim
 server-id=116
 master-port=3306
 replicate-do-db=databaseone
@@ -52,7 +51,7 @@ master-password=passport
 主要原因是主库版本非正式版，5.1.73，从库搭建选择的是官方版5.1.72  
 1548的错误就是从库同步存储过程报错的错误id：  
 
-```
+```vim
 Master_SSL_Verify_Server_Cert: No
 Last_IO_Errno: 0
 Last_IO_Error:
@@ -68,7 +67,7 @@ Default database: 'xxx'. Query: 'drop PROCEDURE if exists `xxxx`.`proc_xxx`
 #### 后续  
 1.跳过错误事务:  
 
-```
+```vim
 mysql>slave stop;
 mysql>SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1        #跳过一个事务
 mysql>slave start;
@@ -80,7 +79,7 @@ mysql>slave start;
 
 * update的内联模式不行
 
-```
+```vim
 update sddtc.A dd
 inner join (
 SELECT
@@ -95,7 +94,6 @@ GROUP BY
 ) tmp
 on dd.date=tmp.date
 set dd.commentcnt = tmp.commentcnt;
-
 ```
 
 参考文章：  

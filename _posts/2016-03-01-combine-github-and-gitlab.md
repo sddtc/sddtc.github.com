@@ -10,7 +10,7 @@ tags: [git,github,gitlab]
 这次记录下让公司的Gitlab和在家的Github的代码可以在住的地方和公司无缝提交代码   
 github的id\_rsa和id\_rsa.pub已经存在，也是git的global账户   
 
-```
+```vim
 # 全局配置，Github仓库中默认使用此配置，是自己的github项目
 git config --global user.name 'sddtc' && git config --global user.email 'sddtc@gmail.com'
 
@@ -19,7 +19,7 @@ git config --local user.name 'tuijiang' && git config --local user.email 'tuijia
 ```
 然后是.ssh下面的config文件配置  
 
-```
+```vim
 #github
 Host github
 Hostname github.com
@@ -33,9 +33,8 @@ IdentityFile /Users/sddtc/.ssh/id_rsa_work
 
 生成文件的命令  
 
-```
+```vim
 ssh-keygen -t rsa -C "tuijiang@gitlab.uuu.org"
-
 ```
 
 理论上，配置完成之后，ssh -T git@github 或者 ssh -T git@gitlab都可以通过  
@@ -43,6 +42,6 @@ ssh-keygen -t rsa -C "tuijiang@gitlab.uuu.org"
 注:  
 ssh协议和http协议的代码远程地址切换    
 
-```
+```vim
 git remote set-url origin [url]
 ```

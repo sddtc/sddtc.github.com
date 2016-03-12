@@ -21,7 +21,6 @@ tags: [java]
 那么开始动手实现吧，已知数组有序  
 
 ```java
-
 /**
  *
  * @param demo 有序数组
@@ -62,9 +61,7 @@ public int binarySearch(int[] demo, int key) {
 其实jdk的源码是这样处理mid求和除以2的  
 
 ```java
-
 int mid = (left + right) >>> 1;
-
 ```
 
 java常用不不常用的计算符号  

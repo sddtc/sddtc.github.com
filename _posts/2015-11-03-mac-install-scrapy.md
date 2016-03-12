@@ -18,7 +18,7 @@ tags: [python, scrapy]
 发现里面有个setup.py文件  
 执行:
 
-```
+```vim
 sudo python setup.py install  
 ```
 
@@ -26,7 +26,7 @@ sudo python setup.py install
 4.在命令行运行scrapy的时候报错  
 查了下原因，后来解决，解决网址(http://stackoverflow.com/questions/17911345/scrapy-unable-to-create-a-project)，命令如下：  
 
-```
+```vim
 sudo easy_install --upgrade lxml   
 sudo easy_install --upgrade scrapy
 ```

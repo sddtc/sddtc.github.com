@@ -8,7 +8,7 @@ tags: [mysql]
 
 ### 1.基本操作   
 
-```
+```vim
 mysql>mysqladmin -uxxx -p processlist
 mysql>mysqladmin -uxxx -p status
 ```
@@ -17,7 +17,7 @@ mysql>mysqladmin -uxxx -p status
 a.停止mysql服务  
 b.修改my.cnf文件
 
-```
+```vim
 [client]
 default-character-set=utf8
 
@@ -33,13 +33,13 @@ character-set-server = utf8
 c.启动mysql服务  
 d.验证是否修改成功  
 
-```
+```vim
 mysql>show variables like 'character%';
 ```
 
 1.2 mysql server相关  
 
-```
+```vim
 //mysql添加一个server:
 CREATE SERVER ${servername} FOREIGN DATA WRAPPER mysql
 OPTIONS
@@ -67,7 +67,7 @@ drop server if exists ${servername}
 
 某一天，每30分钟统计一次数据：  
 
-```
+```vim
 SELECT HOUR(created_time) AS h,
        FLOOR(MINUTE(created_time) / 30) AS v,
        COUNT(*)

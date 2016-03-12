@@ -13,14 +13,10 @@ tags: [java]
 一般我们会将url解码之后持久化，例如、把%23解码为#，把%20解码为空格，或者把%3D解码为等号等  
 然而大量的日志会在url加上未知的字符串，更不用说一些想要进行攻击的url形式了，如果单纯的对url进行如下的解码，显然会抛出异常：  
 
-```
+```java
 import java.net.URLDecoder;
-...
-
 String url = "http://example.com/test?q=%= %20some%20other%20Text";  
 url = URLDecoder.decode(url);
-
-...
 ```
 
 原因：  
@@ -29,15 +25,12 @@ url = URLDecoder.decode(url);
 
 解决方式如下：  
 
-```
+```java
 import java.net.URLDecoder;
-...
 
 String url = "http://example.com/test?q=%= %20some%20other%20Text";
 url = url.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
 url = url.replaceAll("\\+", "%2B");
 
 url = URLDecoder.decode(url, "UTF-8");
-...
-
 ```

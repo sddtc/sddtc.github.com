@@ -6,7 +6,7 @@ categories: sddtc tech
 tags: [google]
 ---
 
-### 什么是[word2vec](https://code.google.com/p/word2vec/)  
+#### 什么是[word2vec](https://code.google.com/p/word2vec/)  
 在2013年8月20日，google将该工具发布在https://code.google.com/p/word2vec/上  
 它用来在使用深度学习算法之前预处理文本,把文本变成深度学习能够理解的向量形式  
 结果采用余弦值的形式，越接近1表示词语相似度越高  
@@ -21,7 +21,7 @@ word2vec有两种结构:continuous bag-of-words and continuous skip-gram
 
 demo-phrases.sh对于短语的结果会更准，例如输入san_francisco  
 
-### Performance
+#### Performance
 '-threads N'参数可以并行多个线程进行训练  
 参数配置和选择  
 * architecture: skip-gram (slower, better for infrequent words) vs CBOW (fast)  

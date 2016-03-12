@@ -17,7 +17,6 @@ tags: [algorithms]
 这道题个人解答如下，性能要甩出链表遍历解答方案一条街  
 
 ```java
-
     /**
      * Definition for singly-linked list.
      * ListNode {
@@ -52,7 +51,6 @@ tags: [algorithms]
 
         return head;
     }
-    
 ```
 
 解决思路如下:  

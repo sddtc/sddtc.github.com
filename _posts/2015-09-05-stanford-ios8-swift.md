@@ -18,7 +18,7 @@ iOS的设计模式也同样遵循MVC，并且是不提倡M和V通信
 
 2.方法里面可以嵌套方法，前提是方法是私有的  
 
-```
+```swift
     init() {
 
         func learnOp(op :Op) {
@@ -35,7 +35,7 @@ iOS的设计模式也同样遵循MVC，并且是不提倡M和V通信
 
 3.协议（Printable）  
 
-```
+```swift
     private enum Op: Printable {
         case Operand(Double)
         case UnaryOperation(String, Double -> Double)
@@ -54,12 +54,11 @@ iOS的设计模式也同样遵循MVC，并且是不提倡M和V通信
             }
         }
     }
-
 ```
 
 4.字典和数组  
 
-```
+```swift
     private var opStack = [Op]() //栈
     private var knownOps = [String:Op]() //字典
 ```

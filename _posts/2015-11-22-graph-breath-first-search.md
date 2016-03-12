@@ -6,7 +6,7 @@ categories: sddtc tech
 tags: [graph, java]
 ---
 
-```
+```java
 class GraphNode {
     int val;
     GraphNode next;

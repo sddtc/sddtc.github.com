@@ -18,7 +18,6 @@ start-balance.sh脚本没找到
 机器添加hadoop之后，没有进行balance，以至于出现这种磁盘分配不均的问题  
 cdh的hdfs命令可以进行dn的blk均衡move  
 
-```
+```vim
 sudo -u hdfs hdfs balancer -threshold 5
-
 ```

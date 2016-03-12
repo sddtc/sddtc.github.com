@@ -16,7 +16,7 @@ tags: [java, mysql]
 有一个消费者实时消费消息，并且实时将记录插入mysql数据库中，为了高效，采用jdbc的批量插入batch模式，开启了事务，完成时commit，抛出异常时rollback。  
 每一步都记录了log日志。最近发生了奇怪的事情，就是error日志中出现了如下异常:  
 
-```
+```vim
 2015-12-08 12:10:18  [ Thread-0:3088986302 ] - [ ERROR ]  入库失败Deadlock found when trying to get lock; try restarting transaction
 java.sql.BatchUpdateException:
     Deadlock found when trying to get lock; try restarting transaction
@@ -50,7 +50,7 @@ Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLTransactionRollbackException:
 
 登陆mysql，查看最后innodb状态  
 
-```
+```vim
 mysql> show engine innodb status;
 ```
 
@@ -69,7 +69,7 @@ mysql> show engine innodb status;
 一步一步来解决  
 1.查看mysql当前隔离级别：  
 
-```
+```vim
 mysql> select @@global.tx_isolation, @@tx_isolation;
 +-----------------------+-----------------+
 | @@global.tx_isolation | @@tx_isolation  |
@@ -150,7 +150,7 @@ You can cope with deadlocks and reduce the likelihood of their occurrence with t
 
 1.事务过程缩减并没有有效的制止现象的发生，我又自己指定了connection的隔离级别，并记录了入库失败时的sql，用于出错补救。当在java里指定隔离级别的时候，程序报错了  
 
-```
+```vim
 2015-12-09 13:26:44  [ Thread-0:95608 ] - [ ERROR ]  
 入库失败-Binary logging not possible.
 Message:
