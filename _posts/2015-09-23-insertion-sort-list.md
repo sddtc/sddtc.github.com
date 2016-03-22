@@ -4,6 +4,7 @@ title: "Insertion Sort List小记"
 date: "2015-09-23"
 categories: sddtc tech
 tags: [algorithms]
+guid: urn:uuid:22a07a54-fe0a-4caa-bc60-75bcb06769aa
 ---
 
 题目链接: [Insertion Sort List](https://leetcode.com/problems/insertion-sort-list/)  

@@ -4,6 +4,7 @@ title: "angularJs"
 date: "2015-05-04"
 categories: sddtc tech
 tags: [angularJs]
+guid: urn:uuid:c0672177-cf08-4c4d-8d31-7516148ef4e7
 ---
 
 * post请求，需要transFn方法   

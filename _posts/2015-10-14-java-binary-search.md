@@ -4,6 +4,7 @@ title: "java实现二分法"
 date: "2015-10-14"
 categories: sddtc tech
 tags: [java]
+guid: urn:uuid:8a9f4073-d0cc-41f2-b3ba-db1d2332f837
 ---
 
 今天突然就非常怀念在我的第一份工作的时候  

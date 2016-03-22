@@ -4,6 +4,7 @@ title: "近期指令与概念总结"
 date: "2015-06-30"
 categories: sddtc tech
 tags: [storm, kafka]
+guid: urn:uuid:77290b8e-e34e-44cd-b084-99ad330e2d96
 ---
 
 * spout 龙卷，读取原始数据为bolt提供数据  
@@ -46,7 +47,7 @@ You do not need to judge if the path starts with hdfs:// or file://. This API wi
 ```vim
 bin/kafka-topics.sh --describe --zookeeper IP1:2181,IP2:2181,IP3:2181 --topic TOPICNAME
 ```
- 
+
 作为consumer从beginning处消费  
 
 ```vim
@@ -61,4 +62,3 @@ bin/kafka-topics.sh --list --zookeeper IP1:2181,IP2:2181,IP3:2181
 
 *storm-hdfs* 可以写入本地，只要fsurl指定前缀为file://  
 另外它的流是org.apache.hadoop.fs.FSDataOutputStream  
-

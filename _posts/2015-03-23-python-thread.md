@@ -4,9 +4,10 @@ title: "python thread"
 date: "2015-03-23"
 categories: sddtc tech
 tags: [python]
+guid: urn:uuid:5b121efd-ee64-4c32-985e-4b7a9fa29128
 ---
 
-"Unhandled exception in thread started by 
+"Unhandled exception in thread started by
 Error in sys.excepthook:  
 Original exception was:"  
 问题在于主线程结束时子线程还未结束，解决办法就是让主线程阻塞足够的时间让子线程运行完再结束自己  
@@ -20,4 +21,4 @@ Python的线程sleep方法并不是在thread模块中，反而是在time模块�
 解决：启动线程之后，必须调用time.sleep休眠足够长的时间，使主线程等待所有子线程返回结果，如果主线程比子线程早结束，就会抛出这个异常   
 
 具体的跟Python的多线程机制有关  
-参见http://bestchenwu.iteye.com/blog/1063401 
+参见http://bestchenwu.iteye.com/blog/1063401

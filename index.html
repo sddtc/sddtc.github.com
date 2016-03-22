@@ -1,41 +1,46 @@
 ---
 layout: default
-title: blog, notes, and life.
 ---
 
-<div id="home">
-  <h2><i class="fa fa-smile-o"></i> Tech</h2>
-  <ul id="tech-posts" class="posts">
-    {% for post in site.categories.tech %}
-        <li><span>{{ post.date | date_to_string }} &raquo;</span><a class="post-link" href="{{ post.url }}">{{ post.title }}</a></li>
-    {% endfor %}
+<div>
+  <ul class="listing">
+  {% for post in site.posts limit: 1 %}
+  <article class="content">
+    <section class="title">
+      <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+    </section>
+    <section class="meta">
+    <span class="time">
+      <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+    </span>
+    {% if post.tags %}
+    <span class="tags">
+      {% for tag in post.tags %}
+      <a href="/tags.html#{{ tag }}" title="{{ tag }}">#{{ tag }}</a>
+      {% endfor %}
+    </span>
+    {% endif %}
+    </section>
+    <section class="post">
+    {{ post.content }}
+    </section>
+    </article>
+  {% endfor %}
   </ul>
-
-  <h2><i class="fa fa-heart"></i> Amity</h2>
-  <ul id="love-posts" class="posts">
-      {% for post in site.categories.love %}
-	    <li><span>{{ post.date | date_to_string }} &raquo;</span><a class="post-link" href="{{ post.url }}">{{ post.title }}</a></li>
-	 {% endfor %}
-  </ul>
-
-  <h2><i class="fa fa-gamepad"></i> Jx3</h2>
-  <ul id="jx3-posts" class="posts">
-    {% for post in site.categories.jx3 %}
-      <li><span>{{ post.date | date_to_string }} &raquo;</span><a class="post-link" href="{{ post.url }}">{{ post.title }}</a></li>
-    {% endfor %}
-  </ul>
-
-  <h2><i class="fa fa-desktop"></i> Work</h2>
-  <ul id="desktop-posts" class="posts">
-      {% for post in site.categories.work %}
-	    <li><span>{{ post.date | date_to_string }} &raquo;</span><a class="post-link" href="{{ post.url }}">{{ post.title }}</a></li>
-	  {% endfor %}
-  </ul>
-
-  <h2><i class="fa fa-pagelines"></i> Chips</h2>
-  <ul id="chip-posts" class="posts">
-    {% for post in site.categories.chip %}
-      <li><span>{{ post.date | date_to_string }} &raquo;</span><a class="post-link" href="{{ post.url }}">{{ post.title }}</a></li>
-    {% endfor %}
+  <div class="divider"></div>
+  <ul class="listing main-listing">
+    <li class="listing-seperator">Happend earlier this year</i>
+  {% capture year %}{{ site.time | date:"%Y"}}{% endcapture %}
+  {% for post in site.posts offset:1 %}
+    {% capture y %}{{ post.date | date:"%Y"}}{% endcapture %}
+    {% if year != y %}
+    {% break %}
+    {% endif %}
+    <li class="listing-item">
+      <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+      <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+    </li>
+  {% endfor %}
+    <li class="listing-seperator"><a href="/archive.html">Long long ago</a></li>
   </ul>
 </div>

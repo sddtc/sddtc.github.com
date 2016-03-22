@@ -4,6 +4,7 @@ title: "记一次mysql的Deadlock found when trying to get lock; try restarting 
 date: "2015-12-08"
 categories: sddtc tech
 tags: [java, mysql]
+guid: urn:uuid:cb6cb0b1-be92-4f1f-a64a-62724177ced3
 ---
 
 本来，窝是一个天天开开心心，无忧无虑的少年  

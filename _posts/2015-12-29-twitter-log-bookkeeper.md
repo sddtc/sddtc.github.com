@@ -4,6 +4,7 @@ title: "【年度案例】Twitter高性能分布式日志系统架构解析"
 date: "2015-12-29"
 categories: sddtc tech
 tags: [twitter, log]
+guid: urn:uuid:52844cd3-de95-411e-83f1-4e4051ce0c7d
 ---
 
 本文是关于Twitter 分布式日志系统 DistributedLog/BookKeeper的摘要  

@@ -4,6 +4,7 @@ title: "leetcode-Combinations"
 date: "2015-12-17"
 categories: sddtc tech
 tags: [java]
+guid: urn:uuid:866af2a0-3fc7-4ced-839d-1839115b7176
 ---
 
 Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.

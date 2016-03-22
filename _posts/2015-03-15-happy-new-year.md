@@ -4,6 +4,7 @@ title: "happy new year,2015"
 date: 2015-03-15 20:19:00
 categories: sddtc work
 tags: [work]
+guid: urn:uuid:c239f897-24b9-4faa-b032-2efd209bbb9c
 ---
 
 
@@ -14,5 +15,3 @@ tags: [work]
 
 要做的事情还很多  
 要努力的，也很多  
-
-

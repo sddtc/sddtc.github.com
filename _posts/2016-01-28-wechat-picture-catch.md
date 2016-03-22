@@ -4,6 +4,7 @@ title: "Wechat抓包图片"
 date: "2016-01-28"
 categories: sddtc tech
 tags: [iOS]
+guid: urn:uuid:7ee46d88-b3ce-4f1f-bde0-2c753c6f926f
 ---
 
 今天无意中看到[developerWorks](http://mp.weixin.qq.com/s?__biz=MjM5MzA0ODkyMA==&mid=405276891&idx=1&sn=ebd98476ad94725d57d2570bde17e45d&scene=23&srcid=0128POvbcBkiuZTd9TG7aCs2#rd)的一篇抓微信红包图片的方法，在电脑上试了一下，第一次看到APP的数据包，还蛮新奇的，特此记录一下，等大年三十红包接口开放了，我们一家可以看免费图片了：）虽然并不想看【。  

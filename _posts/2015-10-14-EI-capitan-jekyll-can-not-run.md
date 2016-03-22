@@ -4,6 +4,7 @@ title: "EI Capitan jekyll can't run"
 date: "2015-10-14"
 categories: sddtc work
 tags: [jekyll, ruby]
+guid: urn:uuid:6a0f8df5-6f92-4a07-996c-4061e23d0026
 ---
 
 EI Capitan是mac目前最新版的系统，作为更新强迫症患者总是第一时间更新  

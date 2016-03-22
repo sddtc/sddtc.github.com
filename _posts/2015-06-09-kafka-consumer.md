@@ -4,6 +4,7 @@ title: "kafka的consumer"
 date: "2015-06-09"
 categories: sddtc tech
 tags: [Kafka, Consumer]
+guid: urn:uuid:e38b6d76-e936-4a17-a1a7-55fea65e0e59
 ---
 
 #### Consumer主要流程如下:  

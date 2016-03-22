@@ -4,6 +4,7 @@ title: "mysql 搭建从库"
 date: "2015-11-11"
 categories: sddtc work
 tags: [mysql]
+guid: urn:uuid:dd045882-6567-468e-9069-9a3c33f2759b
 ---
 
 #### 准备环境：  

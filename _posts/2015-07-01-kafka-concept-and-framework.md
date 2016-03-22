@@ -4,16 +4,17 @@ title: "kafka概念详解与架构特性"
 date: "2015-07-01"
 categories: sddtc tech
 tags: [kafka]
+guid: urn:uuid:52ea5e3d-c004-401d-ad63-a33c766eb7ce
 ---
 
 ##### 背景介绍  
 **Kafka简介**  
-  
+
 Kafka是一种分布式的，基于发布/订阅的消息系统。  
 主要设计目标如下：以时间复杂度为O(1)的方式提供消息持久化能力，即使对TB级以上数据也能保证常数时间的访问性能高吞吐率。即使在非常廉价的商用机器上也能做到单机支持每秒100K条消息的传输,支持Kafka Server间的消息分区，及分布式消费，同时保证每个partition内的消息顺序传输,同时支持离线数据处理和实时数据处理  
 
 **Kafka/Jafka**  
-  
+
 Kafka是Apache下的一个子项目，是一个高性能跨语言分布式发布/订阅消息队列系统，而Jafka是在Kafka之上孵化而来的，即Kafka的一个升级版。具有以下特性：快速持久化，可以在O(1)的系统开销下进行消息持久化；高吞吐，在一台普通的服务器上既可以达到10W/s的吞吐速率；完全的分布式系统，Broker、Producer、Consumer都原生自动支持分布式，自动实现复杂均衡；支持Hadoop数据并行加载，对于像Hadoop的一样的日志数据和离线分析系统，但又要求实时处理的限制，这是一个可行的解决方案。Kafka通过Hadoop的并行加载机制来统一了在线和离线的消息处理。Apache Kafka相对于ActiveMQ是一个非常轻量级的消息系统，除了性能非常好之外，还是一个工作良好的分布式系统。  
 
 ##### Kafka解析    
@@ -37,9 +38,9 @@ Consumer
 ##### Kafka架构
 
 一个典型的kafka集群中包含若干producer（可以是web前端产生的page view，或者是服务器日志，系统CPU、memory等），若干broker（Kafka支持水平扩展，一般broker数量越多，集群吞吐率越高），若干consumer group，以及一个Zookeeper集群。Kafka通过Zookeeper管理集群配置，选举leader，以及在consumer group发生变化时进行rebalance。producer使用push模式将消息发布到broker，consumer使用pull模式从broker订阅并消费消息。  
-  
+
 **Push vs. Pull**  
-  
+
 作为一个messaging system，Kafka遵循了传统的方式，选择由producer向broker push消息并由consumer从broker pull消息。一些logging-centric system，比如Facebook的Scribe和Cloudera的Flume,采用非常不同的push模式。事实上，push模式和pull模式各有优劣。  
 push模式很难适应消费速率不同的消费者，因为消息发送速率是由broker决定的。push模式的目标是尽可能以最快速度传递消息，但是这样很容易造成consumer来不及处理消息，典型的表现就是拒绝服务以及网络拥塞。而pull模式则可以根据consumer的消费能力以适当的速率消费消息。  
 
@@ -61,4 +62,3 @@ payload ： n bytes
 
 
 详情详见：[kafka的深度解析](http://www.xker.com/page/e2015/01/158138.html)
-

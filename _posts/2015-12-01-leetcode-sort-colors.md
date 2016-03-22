@@ -4,6 +4,7 @@ title: "leetcode-Sort Colors"
 date: "2015-12-01"
 categories: sddtc tech
 tags: [java,leetcode]
+guid: urn:uuid:afa0ccfa-bd18-4008-93f0-b12d20edefbc
 ---
 
 Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.  

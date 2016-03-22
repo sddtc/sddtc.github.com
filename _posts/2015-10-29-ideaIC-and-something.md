@@ -4,6 +4,7 @@ title: "idea IC版和其它的碎碎念"
 date: "2015-10-29"
 categories: sddtc tech
 tags: [IDE, java]
+guid: urn:uuid:f1f1a21b-a50b-424c-9554-6e6386b6122a
 ---
 
 idea IC版真的缺失了几个小功能，以前没发现...  

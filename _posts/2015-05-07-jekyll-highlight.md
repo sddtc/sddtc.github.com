@@ -4,6 +4,7 @@ title: "jekyll highlight"
 date: "2015-05-07"
 categories: sddtc work
 tags: [jekyll, python]
+guid: urn:uuid:8454eed2-ae76-49b4-ab1f-861e309308bd
 ---
 
 jekyll语法高亮之pygments系列：     

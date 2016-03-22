@@ -4,6 +4,7 @@ title: "mac安装scrapy"
 date: "2015-11-03"
 categories: sddtc tech
 tags: [python, scrapy]
+guid: urn:uuid:302ac300-ab74-45b2-b388-0abb5ff7c35a
 ---
 
 以前用ubuntu的时候，装过scrapy，很顺利  

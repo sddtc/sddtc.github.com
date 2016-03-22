@@ -4,6 +4,7 @@ title: "shell自定义date命令"
 date: "2015-10-08"
 categories: sddtc tech
 tags: [linux, shell]
+guid: urn:uuid:da1c05f0-eed6-44ce-af01-1165875ce7d0
 ---
 
 linux下的shell date命令通常获取系统时间  

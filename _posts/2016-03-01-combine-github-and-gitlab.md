@@ -4,6 +4,7 @@ title: "让Gitlab和Github的账号合为一体不离不弃"
 date: "2016-03-01"
 categories: sddtc tech
 tags: [git,github,gitlab]
+guid: urn:uuid:de8d598d-6f35-4c7b-ab23-1951062dadfc
 ---
 
 好久没有更新博客了，以后积攒的好东西还会记录下来的   

@@ -4,6 +4,7 @@ title: "git常用命令集锦"
 date: "2015-08-27"
 categories: sddtc tech
 tags: [github, command]
+guid: urn:uuid:a3ec03ca-1f7a-46d7-ba65-db27dda6f614
 ---
 
 #### .gitignore在查看git status的时候不能过滤文件和文件夹  

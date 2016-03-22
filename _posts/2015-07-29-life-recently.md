@@ -4,6 +4,7 @@ title: "life recently"
 date: "2015-07-29"
 categories: sddtc work
 tags: [life]
+guid: urn:uuid:bf1c8ffa-ba3c-4916-b56f-a618b20b8924
 ---
 
 最近都没有很频繁的更新，实在忍不下去啦，稍微总结一下最近做的事  

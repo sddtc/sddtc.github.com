@@ -4,6 +4,7 @@ title: "mysql的常用命令和场景解析"
 date: "2015-03-16"
 categories: sddtc tech
 tags: [mysql]
+guid: urn:uuid:43e490e5-14cd-410a-8638-39233a9f4b9b
 ---
 
 ### 1.基本操作   

@@ -4,6 +4,7 @@ title: "mac的配置文件相关"
 date: "2015-08-01"
 categories: sddtc work
 tags: [mac, config]
+guid: urn:uuid:a0bba4ce-f211-4f3c-baac-7f754a217f93
 ---
 
 #### Mac启动加载文件位置:可设置环境变量

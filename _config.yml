@@ -1,9 +1,26 @@
-# General Jekyll Config
 markdown: kramdown
 highlighter: rouge
 url: http://homuralovelive.com
 lsi: false
 exclude: [LICENSE, CNAME, README.md, .gitignore]
+name: "sddtc-大蜕"
+
+navigations:
+  - title: Archive
+    class: fa fa-list-ul
+    href: /archive.html
+  - title: Tags
+    class: fa fa-tags
+    href: /tags.html
+  - title: About
+    class: fa fa-user
+    href: /about.html
+  - title: Gallery
+    class: fa fa-film
+    href: https://www.instagram.com/sddtc_ch
+  - title: Subscribe
+    class: fa fa-rss
+    href: /atom.xml
 
 # Theme customization - please change from the defaults!
 theme:

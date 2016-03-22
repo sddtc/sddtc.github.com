@@ -4,6 +4,7 @@ date: 2015-07-20
 title: 关于The Log的摘要
 categories: sddtc tech
 tags: [log]
+guid: urn:uuid:e54e5c13-eda4-4433-a2bb-28ab01d7ed4e
 ---
 
 实际上，对数据进行有效利用，很符合马斯洛的层次需求理论。  

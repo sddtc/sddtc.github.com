@@ -4,6 +4,7 @@ title: "datanode相关的问题"
 date: "2015-04-20"
 categories: sddtc tech
 tags: [map-reduce]
+guid: urn:uuid:19a1314e-b25d-46a1-83a1-c0b3e3d0f5da
 ---
 
 今天遇到了一个关于cdh集群的hadoop问题

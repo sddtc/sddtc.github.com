@@ -4,6 +4,7 @@ title: "mysql的高级优化"
 date: "2015-07-31"
 categories: sddtc tech
 tags: [mysql, cache]
+guid: urn:uuid:ac28bead-627d-4d6d-8f78-d981730908b8
 ---
 
 背景:  

@@ -4,6 +4,7 @@ title: "学而不思则罔，思而不学则殆:)"
 date: "2015-12-22"
 categories: sddtc tech
 tags: [java]
+guid: urn:uuid:2ef3550f-8cf3-400b-a55b-c512c9af8b2d
 ---
 
 沉迷于jdk1.8甚至1.9带给我的快感，却把jdk1.5的新特性全部抛弃了，活该  

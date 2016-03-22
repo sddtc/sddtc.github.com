@@ -3,6 +3,7 @@ layout: post
 title: "something about python web"
 categories: sddtc tech
 tags: [python]
+guid: urn:uuid9b3ee784-620b-4541-a1d1-0f74ae58f2b5
 ---
 #### 以下引用的是对于洪强宁关于豆瓣架构的回答：  
 

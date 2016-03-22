@@ -3,6 +3,7 @@ layout: post
 title: "序列化与反序列化的选型"
 categories: sddtc tech
 tags: [java]
+guid: urn:uuid:0e19b236-b196-4f99-b274-e41b17eb9b82
 ---
 
 ### 选型建议

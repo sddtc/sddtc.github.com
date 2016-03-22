@@ -3,6 +3,7 @@ layout: post
 title: linux-dirs
 categories: sddtc tech
 tags: [linux, directive]
+guid: urn:uuid:76552c5a-3e32-437a-9e49-ad545aa470b0
 ---
 
 

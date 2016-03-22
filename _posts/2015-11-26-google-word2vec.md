@@ -4,6 +4,7 @@ title: "解读word2vec"
 date: "2015-11-26"
 categories: sddtc tech
 tags: [google]
+guid: urn:uuid:52104d1f-308e-4afa-973f-6d5d695f1e1e
 ---
 
 #### 什么是[word2vec](https://code.google.com/p/word2vec/)  
