@@ -21,4 +21,4 @@ BigData、Coder、Recsys
 * * *
 
 友情链接：  
-[Dante](http://zhaodedong.com/) | [Lily](http://www.lilysui.cn/) | [Gim](http://lvgm.cn/)     
+[Dante](http://zhaodedong.leanote.com/) | [Lily](http://www.lilysui.cn/) | [Gim](http://lvgm.cn/)     
