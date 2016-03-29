@@ -48,10 +48,11 @@ guid: urn:uuid:22a07a54-fe0a-4caa-bc60-75bcb06769aa
             pre.next = new ListNode(middle[j]);
             pre = pre.next;
         }
-        head.val = middle[0];
+        if(middle.length>0) {
+        	head.val = middle[0];
+        }
 
         return head;
     }
 ```
 
-解决思路如下:  
