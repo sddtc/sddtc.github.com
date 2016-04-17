@@ -1,6 +1,7 @@
 ---
 title: little-recommender
 layout: post
+categories: sddtc tech
 guid: urn:uuid:5a3dd3d9-5780-40bd-9e19-e1c591a32c7d
 tags:
   - python
