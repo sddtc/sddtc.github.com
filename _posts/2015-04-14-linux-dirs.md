@@ -39,24 +39,24 @@ scp -P10033 sddtc@serverip:/home/sddtc/remote.txt .
 
 nohup java -classpath $CLASS_PATH ${jarpath} & //nohup代表后台运行
 
-du -h --max-depth=1 							//查看磁盘使用情况  
+du -h --max-depth=1 //查看磁盘使用情况  
 
-source /etc/profile 							//马上使/etc/profile文件生效
+source /etc/profile //马上使/etc/profile文件生效
 
-wc -l filename 									//统计文件行数
+wc -l filename //统计文件行数
 
-dpkg --get-selections|grep linux 				//带有image的为系统内核
+dpkg --get-selections|grep linux //带有image的为系统内核
 
-uname -a          								//查看系统当前使用内核
+uname -a //查看系统当前使用内核
 
 
-zip -r filename.zip ${filesdir}					//压缩zip
-zip -r filename.zip file1 file2 ${filesdir}	//同时处理多个文件和目录，可以将它们逐一列出，并用空格间隔
+zip -r filename.zip ${filesdir}	 //压缩zip
+zip -r filename.zip file1 file2 ${filesdir} //同时处理多个文件和目录，可以将它们逐一列出，并用空格间隔
 
-du -s folder/* | sort -rn | head				//显示文件夹下所有文件的大小，按照M展示，并按照[数字]排序取出最大的前10
+du -s folder/* | sort -rn | head //显示文件夹下所有文件的大小，按照M展示，并按照[数字]排序取出最大的前10
 du -sh folder/* | sort -rn | head
 
 ```
 
-####sed相关的知识  
+##### sed相关的知识  
 [耗子的博客](http://coolshell.cn/articles/9104.html)
