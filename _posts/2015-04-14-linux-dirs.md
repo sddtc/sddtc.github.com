@@ -6,42 +6,56 @@ tags: [linux, directive]
 guid: urn:uuid:76552c5a-3e32-437a-9e49-ad545aa470b0
 ---
 
+##### 压缩和解压
 
 ```vim
-//nohup代表后台运行
-nohup java -classpath $CLASS_PATH ${jarpath} &  
 
-//查看磁盘使用情况
-du -h --max-depth=1  
 tar -xzf kafka_2.x.x.x.tgz //解压
+tar xvf xxx.tar //解压
+tar cvf xxx.tar folder //压缩
 
-//马上使/etc/profile文件生效
-source /etc/profile
+tar zxvf xxx.tar.gz //解压
+tar zcvf xxx.tar.gz folder //压缩
 
-//利用nc进行文件的传输，用于本地和服务器之间
-nc -l 4444 > kafka-demo-0.0.1-SNAPSHOT-bin.zip
-//本地上传文件到服务器
-nc server-IP 4444 < kafka-demo-0.0.1-SNAPSHOT-bin.zip
+```
 
-wc -l filename //统计文件行数
+##### 服务器间文件传输
 
-dpkg --get-selections|grep linux       //带有image的为系统内核
+```vim
 
-uname -a          //查看系统当前使用内核
+nc -l 4444 > kafka-demo.zip
+nc serverip 4444 < kafka-demo.zip
 
-//压缩zip
-zip -r filename.zip ${filesdir}
-//同时处理多个文件和目录，可以将它们逐一列出，并用空格间隔：
-zip -r filename.zip file1 file2 file3 ${filesdir}
+scp -P10033 localFile sddtc@serverip:/home/sddtc
+scp -P10033 sddtc@serverip:/home/sddtc/remote.txt .
 
-//hdfs文件download到本地
-hdfs dfs -get ${hdfsFilePath} ${localPath}
-hdfs dfs -copyToLocal ${hdfsFilePath} ${localPath}
 
-//显示文件夹下所有文件的大小，按照M展示，并按照[数字]排序取出最大的前10  
-du -s folder/* | sort -rn | head
-//2
+```
+
+
+##### 未分类 
+
+```vim
+
+nohup java -classpath $CLASS_PATH ${jarpath} & //nohup代表后台运行
+
+du -h --max-depth=1 							//查看磁盘使用情况  
+
+source /etc/profile 							//马上使/etc/profile文件生效
+
+wc -l filename 									//统计文件行数
+
+dpkg --get-selections|grep linux 				//带有image的为系统内核
+
+uname -a          								//查看系统当前使用内核
+
+
+zip -r filename.zip ${filesdir}					//压缩zip
+zip -r filename.zip file1 file2 ${filesdir}	//同时处理多个文件和目录，可以将它们逐一列出，并用空格间隔
+
+du -s folder/* | sort -rn | head				//显示文件夹下所有文件的大小，按照M展示，并按照[数字]排序取出最大的前10
 du -sh folder/* | sort -rn | head
+
 ```
 
 ####sed相关的知识  
