@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "git常用命令集锦"
+title: "【git】白社长常用的git命令集锦"
 date: "2015-08-27"
 categories: sddtc tech
-tags: [github, command]
+tags: [git, command]
 guid: urn:uuid:a3ec03ca-1f7a-46d7-ba65-db27dda6f614
 ---
 
@@ -26,12 +26,31 @@ git rm --cached .idea/
 #### 本地修改，但更新强制覆盖本地  
 
 ```vim
-git fetch --all  
-git reset --hard origin/master
+git fetch --all   
+git reset --hard origin/${branch_name}
 ```
 
 #### 远程新建分支，拉取到本地  
 
 1.查看所有分支，包括远程: git branch -va   
-2.切换到分支： git checkout -b <branch> origin/<branch>  
-3.如果切到新分支，push代码失败，执行：git push -f origin <branch>
+2.切换到分支： git checkout -b ${branch_name} origin/${branch_name}  
+3.如果切到新分支，push代码失败，执行：git push -f origin ${branch_name}  
+
+#### 比较分支  
+
+```vim
+git diff master..test
+```
+
+如果不是查看每个文件的详细差别，而是统计一下有哪些文件被改动，有多少行被改 动，就可以使用‘--stat' 参数。  
+
+```vim
+git diff --stat
+```
+
+#### 合并分支A文件到分支B
+
+```vim
+git checkout -p dev user.java //不切换branch，把dev上的user.java更新到当前分支
+git checkout dev feed.java //去掉-p参数，新增该feed.java文件
+```
