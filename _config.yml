@@ -3,7 +3,7 @@ highlighter: rouge
 url: http://homuralovelive.com
 lsi: false
 exclude: [LICENSE, CNAME, README.md, .gitignore]
-name: "sddtc"
+name: "大蜕-部落格"
 
 navigations:
   - title: Archive
@@ -45,5 +45,5 @@ theme:
 
 # Comment settings
 disqus:
-  config: true
+  config: false
   id: homuralovelive
