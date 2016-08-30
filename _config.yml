@@ -42,8 +42,3 @@ theme:
   google_analytics_domain: homuralovelive.com
   # Toggle "Postings are my own" disclaimer in footer
   show_disclaimer: true
-
-# Comment settings
-disqus:
-  config: false
-  id: homuralovelive
