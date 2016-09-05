@@ -23,7 +23,7 @@ navigations:
     href: /atom.xml
 
 # Theme customization - please change from the defaults!
-theme:
+theme_settings:
   # Color for top bar, links, etc
   highlight_color: '#0F0'
 
