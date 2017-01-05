@@ -11,7 +11,9 @@ guid: urn:uuid:a0bba4ce-f211-4f3c-baac-7f754a217f93
 1.首先要知道你使用的Mac OS X是什么样的Shell  
 使用命令  
 
+```vim
 echo $SHELL  
+```
 
 如果输出的是：csh或者是tcsh，那么你用的就是C Shell。  
 如果输出的是：bash，sh，zsh，那么你的用的可能就是Bourne Shell的一个变种。  
@@ -37,5 +39,5 @@ Mac OS X 10.3之后默认的是Bourne Shell。
 
  ```vim
  #source /etc/profile
- $ source .bash_profile（这是文件名）
+ $source .bash_profile（这是文件名）
  ```

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "图-广度优先搜索实现"
+title: "[Algo]图-广度优先搜索实现"
 date: "2015-11-22"
 categories: sddtc tech
 tags: [graph, java]

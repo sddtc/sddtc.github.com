@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "leetcode-Sort Colors"
+title: "[LT]leetcode-Sort Colors"
 date: "2015-12-01"
 categories: sddtc tech
 tags: [java,leetcode]

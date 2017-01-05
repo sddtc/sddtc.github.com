@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "记一次mysql的Deadlock found when trying to get lock; try restarting transaction"
+title: "[Mysql]记一次mysql的Deadlock found when trying to get lock; try restarting transaction"
 date: "2015-12-08"
 categories: sddtc tech
 tags: [java, mysql]

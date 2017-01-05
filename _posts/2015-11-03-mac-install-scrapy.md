@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "mac安装scrapy"
+title: "[Scrapy]mac安装scrapy"
 date: "2015-11-03"
 categories: sddtc tech
 tags: [python, scrapy]

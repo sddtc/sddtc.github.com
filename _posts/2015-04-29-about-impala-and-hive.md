@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "蜕酱的Impala小课堂"
+title: "[Impala]蜕酱的Impala小课堂"
 date: "2015-04-29"
 categories: sddtc tech
 tags: [impala, hive]

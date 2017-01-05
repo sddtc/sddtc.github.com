@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "java实现二分法"
+title: "[Java]java实现二分法"
 date: "2015-10-14"
 categories: sddtc tech
 tags: [java]

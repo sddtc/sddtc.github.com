@@ -1,11 +1,13 @@
 ---
 layout: post
-title: "python thread"
+title: "[Python]关于Python那些事"
 date: "2015-03-23"
 categories: sddtc tech
 tags: [python]
 guid: urn:uuid:5b121efd-ee64-4c32-985e-4b7a9fa29128
 ---
+
+#### Thread
 
 "Unhandled exception in thread started by
 Error in sys.excepthook:  
@@ -20,5 +22,20 @@ import thread
 Python的线程sleep方法并不是在thread模块中，反而是在time模块下  
 解决：启动线程之后，必须调用time.sleep休眠足够长的时间，使主线程等待所有子线程返回结果，如果主线程比子线程早结束，就会抛出这个异常   
 
-具体的跟Python的多线程机制有关  
-参见http://bestchenwu.iteye.com/blog/1063401
+
+#### Shell & Python
+
+```python
+
+import commands
+a = commands.getoutput(‘echo $a')
+b = commands.getoutput(‘echo $b')
+
+```
+
+说明:可以读取shell的变量数据
+
+
+相关参考:  
+  
+[Python的多线程机制有关](http://bestchenwu.iteye.com/blog/1063401)

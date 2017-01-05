@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "leetcode-Combinations"
+title: "[LT]leetcode-Combinations"
 date: "2015-12-17"
 categories: sddtc tech
 tags: [java]

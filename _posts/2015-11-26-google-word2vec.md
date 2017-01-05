@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "解读word2vec"
+title: "[Algo]解读word2vec"
 date: "2015-11-26"
 categories: sddtc tech
 tags: [google]

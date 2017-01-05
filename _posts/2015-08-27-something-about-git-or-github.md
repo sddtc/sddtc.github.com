@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "【git】白社长常用的git命令集锦"
+title: "[git]白社长常用的git命令集锦"
 date: "2015-08-27"
 categories: sddtc tech
 tags: [git, command]

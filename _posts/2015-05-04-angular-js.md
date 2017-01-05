@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "angularJs"
+title: "[AngularJs]"
 date: "2015-05-04"
 categories: sddtc tech
 tags: [angularJs]

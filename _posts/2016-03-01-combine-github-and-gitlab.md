@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "让Gitlab和Github的账号合为一体不离不弃"
+title: "[Git]让Gitlab和Github的账号合为一体不离不弃"
 date: "2016-03-01"
 categories: sddtc tech
 tags: [git,github,gitlab]

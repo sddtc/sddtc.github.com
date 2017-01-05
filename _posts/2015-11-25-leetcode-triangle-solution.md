@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "leetcode-动态规划合集"
+title: "[LT]leetcode-动态规划合集"
 date: "2015-11-25"
 categories: sddtc tech
 tags: [java, leetcode]

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "sqoop的使用和高级进阶"
+title: "[Sqoop]sqoop的使用和高级进阶"
 date: "2015-03-16"
 categories: sddtc tech
 tags: [sqoop,mysql]

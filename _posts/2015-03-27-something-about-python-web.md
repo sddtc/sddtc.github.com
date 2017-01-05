@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "something about python web"
+title: "[PythonWeb]关于PythonWeb那些事"
 categories: sddtc tech
 tags: [python]
 guid: urn:uuid9b3ee784-620b-4541-a1d1-0f74ae58f2b5

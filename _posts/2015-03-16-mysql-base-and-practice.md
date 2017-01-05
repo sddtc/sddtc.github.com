@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "mysql的常用命令和场景解析"
+title: "[Mysql]的常用命令和场景解析"
 date: "2015-03-16"
 categories: sddtc tech
 tags: [mysql]
