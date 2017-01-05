@@ -1,5 +1,5 @@
 ---
-title: [MR]分布式缓存在MapReduce上的使用
+title: "[MR]分布式缓存在MapReduce上的使用"
 date: "2016-04-17"
 layout: post
 categories: sddtc tech

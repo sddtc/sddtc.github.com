@@ -1,5 +1,5 @@
 ---
-title: [Null]白社长的五月病
+title: "[Null]白社长的五月病"
 layout: post
 guid: urn:uuid:792f6a0e-d939-4974-bd61-dd88fa9b644f
 date: "2016-05-15"

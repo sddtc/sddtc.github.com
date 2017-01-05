@@ -1,5 +1,5 @@
 ---
-title: [Recommender]little-recommender
+title: "[Recommender]little-recommender"
 date: "2016-03-27"
 layout: post
 categories: sddtc tech

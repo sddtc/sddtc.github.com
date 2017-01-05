@@ -1,5 +1,5 @@
 ---
-title: [Gradle]关于gradle的那些事
+title: "[Gradle]关于gradle的那些事"
 layout: post
 guid: urn:uuid:ef8c2cbc-413b-41ad-91e1-03614b0627e5
 date: "2017-01-04"

@@ -1,7 +1,7 @@
 ---
 layout: post
 date: '2015-08-07'
-title: [Linux]linux-dir-about-top
+title: "[Linux]linux-dir-about-top"
 categories: sddtc tech
 tags: [linux, directive, top]
 guid: urn:uuid:c762d7b8-191e-49f6-95ae-442faee0267e
