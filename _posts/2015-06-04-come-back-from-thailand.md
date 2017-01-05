@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "come back from thailand"
+title: "[Null]come-back-from-thailand"
 date: "2015-06-04"
 categories: sddtc chip
 tags: [life]

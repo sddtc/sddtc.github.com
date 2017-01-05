@@ -1,6 +1,7 @@
 ---
 layout: post
-title: "[PythonWeb]关于PythonWeb那些事"
+title: "[PythonWeb]关于PythonWeb的那些事"
+date: "2015-03-27"
 categories: sddtc tech
 tags: [python]
 guid: urn:uuid9b3ee784-620b-4541-a1d1-0f74ae58f2b5

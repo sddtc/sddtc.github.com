@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[AngularJs]"
+title: "[AngularJs]关于angularjs的那些事"
 date: "2015-05-04"
 categories: sddtc tech
 tags: [angularJs]

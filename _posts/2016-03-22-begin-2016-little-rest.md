@@ -1,5 +1,5 @@
 ---
-title: 2016的一个阶段性休息之后小小的开始
+title: [Null]2016的一个阶段性休息之后小小的开始
 layout: post
 date: "2016-03-22"
 categories: sddtc life

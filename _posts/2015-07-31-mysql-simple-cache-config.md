@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Mysql]mysql的高级优化"
+title: "[Mysql]高级优化"
 date: "2015-07-31"
 categories: sddtc tech
 tags: [mysql, cache]

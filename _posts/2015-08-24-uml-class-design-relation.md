@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "uml的类之间的关系"
+title: "[UML]的类之间的关系"
 date: "2015-08-24"
 categories: sddtc tech
 tags: [uml, class relation]

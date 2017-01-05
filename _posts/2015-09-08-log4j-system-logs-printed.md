@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Log]log4j-业务日志输出"
+title: "[Log4j]log4j-业务日志输出"
 date: "2015-09-08"
 categories: sddtc tech
 tags: [log4j]

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Mysql]mysql-搭建从库"
+title: "[Mysql]搭建从库"
 date: "2015-11-11"
 categories: sddtc work
 tags: [mysql]

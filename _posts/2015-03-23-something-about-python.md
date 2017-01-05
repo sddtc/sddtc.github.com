@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Python]关于Python那些事"
+title: "[Python]关于Python的那些事"
 date: "2015-03-23"
 categories: sddtc tech
 tags: [python]

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "mac的配置文件相关"
+title: "[Mac]配置文件相关"
 date: "2015-08-01"
 categories: sddtc work
 tags: [mac, config]

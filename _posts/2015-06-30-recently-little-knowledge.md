@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "近期指令与概念总结"
+title: "[BigData]近期指令与概念总结"
 date: "2015-06-30"
 categories: sddtc tech
 tags: [storm, kafka]

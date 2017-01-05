@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Shell]shell自定义date命令"
+title: "[Shell]自定义date命令"
 date: "2015-10-08"
 categories: sddtc tech
 tags: [linux, shell]

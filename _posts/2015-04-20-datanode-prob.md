@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "datanode相关的问题"
+title: "[CDH]datanode相关的问题"
 date: "2015-04-20"
 categories: sddtc tech
 tags: [map-reduce]
