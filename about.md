@@ -3,8 +3,10 @@ title: 大蜕-关于我
 layout: page
 ---
 
-关于大蜕:  
-Coder、BigData、Recsys、Crawler  
+☕️ in,code off😌
+
+关于大蜕: 
+TWer.Dev 
 
 属性:  
 动漫、宅、基三  
