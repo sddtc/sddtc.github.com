@@ -28,3 +28,23 @@ task runnbaleJar(type: Jar) {
 ```
 
 说明:这样打包并不包含配置文件,如logback.xml,接下来我会实践一种优雅的打配置文件包方式
+
+今天我发现用jar命令就可以推翻上面的方式  
+
+```vim
+
+jar {
+	baseName="sddtc-project"
+	version="0.0.1"
+	
+	//---此处还有依赖文件引入命令--//
+	
+   manifest {
+   		attributes 'Main-Class':'sddtc.gradle.APP'
+   }
+}
+
+```
+
+这样执行 gradle clean build  
+打出来的jar包,在src/main/resources内的配置文件会自动打包进来
