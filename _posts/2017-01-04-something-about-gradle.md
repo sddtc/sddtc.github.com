@@ -34,14 +34,13 @@ task runnbaleJar(type: Jar) {
 ```vim
 
 jar {
-	baseName="sddtc-project"
-	version="0.0.1"
-	
-	//---此处还有依赖文件引入命令--//
-	
-   manifest {
-   		attributes 'Main-Class':'sddtc.gradle.APP'
-   }
+    baseName='sddtc-project'
+    version='0.0.1'
+    from configurations.compile.collect{it.isDirectory()?it:zipTree(it)}
+    
+    manifest {
+        attributes 'Main-Class':'sddtc.gradle.APP'
+    }
 }
 
 ```
