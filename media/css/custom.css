@@ -1,4 +1,5 @@
-#sddtc-ungithub-list {
+#sddtc-ungithub-list ul li{
+    list-style-type: none;
 
 }
 
