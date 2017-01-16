@@ -1,16 +1,12 @@
+#sddtc-ungithub-list {
+
+}
+
 #doubanapi {
  height: 500px;
 }
 
-#dbfm {
- width: 30%;
- height: 80%;
- float: left;
-}
-
 #dbfilm {
- width: 70%;
+ width: 100%;
  height: 80%;
- float: right;
- margin-top: 50px;
 }
