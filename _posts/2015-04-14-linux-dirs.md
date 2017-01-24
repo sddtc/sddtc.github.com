@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Linux]linux-dirs"
+title: "[Linux]一些常用命令"
 categories: sddtc tech
 tags: [linux, directive]
 guid: urn:uuid:76552c5a-3e32-437a-9e49-ad545aa470b0
@@ -57,6 +57,7 @@ du -s folder/* | sort -rn | head //显示文件夹下所有文件的大小，按
 du -sh folder/* | sort -rn | head
 
 ```
+
 
 ##### sed相关的知识  
 [耗子的博客](http://coolshell.cn/articles/9104.html)
