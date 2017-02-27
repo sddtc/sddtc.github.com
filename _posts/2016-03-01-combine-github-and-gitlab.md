@@ -16,7 +16,7 @@ github的id\_rsa和id\_rsa.pub已经存在，也是git的global账户
 git config --global user.name 'sddtc' && git config --global user.email 'sddtc@gmail.com'
 
 # 团队项目配置，每次新创建一个项目，需要执行下，就是gitlab项目
-git config --local user.name 'tuijiang' && git config --local user.email 'tuijiang@gitlab.uuu.org'
+git config --local user.name 'sddtc' && git config --local user.email 'changhbaga@gmail.com'
 ```
 然后是.ssh下面的config文件配置  
 
