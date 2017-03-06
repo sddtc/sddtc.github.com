@@ -34,8 +34,11 @@ IdentityFile /Users/sddtc/.ssh/id_rsa_work
 
 生成文件的命令  
 
+-f 是重命名文件  
+-C 是公钥的备注信息  
+
 ```vim
-ssh-keygen -t rsa -C "tuijiang@gitlab.uuu.org"
+ssh-keygen -t rsa -f id_rsa_bitbucket_work -C "tuijiang@gitlab.uuu.org"
 ```
 
 理论上，配置完成之后，ssh -T git@github 或者 ssh -T git@gitlab都可以通过  
