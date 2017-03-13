@@ -38,11 +38,16 @@ IdentityFile /Users/sddtc/.ssh/id_rsa_work
 -C 是公钥的备注信息  
 
 ```vim
-ssh-keygen -t rsa -f id_rsa_bitbucket_work -C "tuijiang@gitlab.uuu.org"
+ssh-keygen -t rsa -f id_rsa_bitbucket_work -C "tuijiang@gitlab.sddtc.org"
 ```
 
-理论上，配置完成之后，ssh -T git@github 或者 ssh -T git@gitlab都可以通过  
-但是公司不允许执行ssh，对于代码可以使用http下载  
+理论上，配置完成之后，ssh -T git@github 或者 ssh -T git@gitlab都可以通过   
+对于ip:port的gitlab地址,可以通过  
+
+```vim
+ssh -p 10022 git@12.21.12.12
+```
+ 
 注:  
 ssh协议和http协议的代码远程地址切换    
 
