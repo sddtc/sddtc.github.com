@@ -20,7 +20,7 @@ TWer.Dev
 
 * 站点: <del>[prouis.com](http://prouis.com)<del>
 * 博客: [homuralovelive.com](http://homuralovelive.com)
-* 其他: ♥ [Github](http://github.com/sddtc) ☺ [Twitter](http://twitter.com/sddtc_) ☺ [G+](https://plus.google.com/u/0/112768245818888919813)
+* 其他: ♥ [Github](http://github.com/sddtc) ♥ [Instagram](https://www.instagram.com/sddtc_ch) ♥ [G+](https://plus.google.com/u/0/112768245818888919813)
 
 * * *
  
