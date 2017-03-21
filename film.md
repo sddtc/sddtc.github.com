@@ -11,7 +11,7 @@ layout: page
         <li>Jan 21: BQ归来,🍺去了</li>
         <li>Jan 23: 打屁股</li>
         <li>Jan 24 - Feb 3: Spring festival</li>
-        <li>from Feb 4 - Mar 22: Bitbucket Private Repo or Do Nothing<li>
+        <li>from Feb 4 - Mar 22: Bitbucket Private Repo or Do Nothing</li>
     </ul>
 </div>
 
