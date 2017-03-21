@@ -11,6 +11,7 @@ layout: page
         <li>Jan 21: BQ归来,🍺去了</li>
         <li>Jan 23: 打屁股</li>
         <li>Jan 24 - Feb 3: Spring festival</li>
+        <li>from Feb 4 - Mar 22: Bitbucket Private Repo or Do Nothing<li>
     </ul>
 </div>
 
@@ -18,7 +19,7 @@ layout: page
 <div id="doubanapi">
 <h2>大蜕-电影列表</h2>
     <div id="dbfilm">
-    <script type="text/javascript" src="http://www.douban.com/service/badge/98378399/?selection=favorite&amp;picsize=small&amp;hideself=on&amp;show=collection&amp;n=100&amp;hidelogo=on&amp;cat=movie&amp;columns=16"></script>
+    <script type="text/javascript" src="http://www.douban.com/service/badge/98378399/?selection=random&amp;picsize=small&amp;hideself=on&amp;show=collection&amp;n=20&amp;hidelogo=on&amp;cat=movie&amp;columns=10"></script>
     </div>
 </div>
 
