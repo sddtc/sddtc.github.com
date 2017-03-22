@@ -32,4 +32,4 @@ registry = http://registry.cnpmjs.org
 
 
 本文转自:  
-[解决npm的'shasum check failed for..'错误(npm注册国内镜像介绍)](ttp://blog.csdn.net/enson16855/article/details/23299787)
+[解决npm的'shasum check failed for..'错误(npm注册国内镜像介绍)](http://blog.csdn.net/enson16855/article/details/23299787)
