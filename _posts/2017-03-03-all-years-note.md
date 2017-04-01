@@ -6,6 +6,7 @@ guid: urn:uuid:83e7450d-5451-4147-8c39-c4e6ba788b52
 categories: sddtc tech
 tags:
   - life
+  - summary
 ---
 
 ## 2016年度总结  
