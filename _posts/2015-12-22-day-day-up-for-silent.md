@@ -1,13 +1,13 @@
 ---
 layout: post
-title: "关于java泛型的理解。"
+title: "关于java泛型特性的理解。"
 date: "2015-12-22"
 categories: sddtc tech
 tags: [java]
 guid: urn:uuid:2ef3550f-8cf3-400b-a55b-c512c9af8b2d
 ---
 
-#### java泛型的优势  
+### java泛型的优势  
 
 泛型的好处是在编译的时候检查类型安全，确保你只能把正确类型的对象放入集合中，避免了在运行时出现ClassCastException。    
 

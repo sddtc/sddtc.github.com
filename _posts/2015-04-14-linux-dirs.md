@@ -6,7 +6,7 @@ tags: [shell]
 guid: urn:uuid:76552c5a-3e32-437a-9e49-ad545aa470b0
 ---
 
-##### 压缩和解压
+### 压缩和解压
 
 ```vim
 
@@ -19,7 +19,7 @@ tar zcvf xxx.tar.gz folder //压缩
 
 ```
 
-##### 服务器间文件传输
+### 服务器间文件传输
 
 ```vim
 
@@ -33,7 +33,7 @@ scp -P10033 sddtc@serverip:/home/sddtc/remote.txt .
 ```
 
 
-##### 未分类 
+### 未分类 
 
 ```vim
 
@@ -59,5 +59,5 @@ du -sh folder/* | sort -rn | head
 ```
 
 
-##### sed相关的知识  
+### sed相关的知识  
 [耗子的博客](http://coolshell.cn/articles/9104.html)

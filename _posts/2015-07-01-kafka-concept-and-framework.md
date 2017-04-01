@@ -7,7 +7,7 @@ tags: [kafka]
 guid: urn:uuid:52ea5e3d-c004-401d-ad63-a33c766eb7ce
 ---
 
-##### 背景介绍  
+### 背景介绍  
 **Kafka简介**  
 
 Kafka是一种分布式的，基于发布/订阅的消息系统。  
@@ -17,7 +17,7 @@ Kafka是一种分布式的，基于发布/订阅的消息系统。
 
 Kafka是Apache下的一个子项目，是一个高性能跨语言分布式发布/订阅消息队列系统，而Jafka是在Kafka之上孵化而来的，即Kafka的一个升级版。具有以下特性：快速持久化，可以在O(1)的系统开销下进行消息持久化；高吞吐，在一台普通的服务器上既可以达到10W/s的吞吐速率；完全的分布式系统，Broker、Producer、Consumer都原生自动支持分布式，自动实现复杂均衡；支持Hadoop数据并行加载，对于像Hadoop的一样的日志数据和离线分析系统，但又要求实时处理的限制，这是一个可行的解决方案。Kafka通过Hadoop的并行加载机制来统一了在线和离线的消息处理。Apache Kafka相对于ActiveMQ是一个非常轻量级的消息系统，除了性能非常好之外，还是一个工作良好的分布式系统。  
 
-##### Kafka解析    
+### Kafka解析    
 
 Broker  
 Kafka集群包含一个或多个服务器，这种服务器被称为broker  
@@ -35,7 +35,7 @@ Consumer
 消费消息。每个consumer属于一个特定的consuer group（可为每个consumer指定group name，若不指定group name则属于默认的group）。使用consumer high level API时，同一topic的一条消息只能被同一个consumer group内的一个consumer消费，但多个consumer group可同时消费这一消息。
 
 
-##### Kafka架构
+### Kafka架构
 
 一个典型的kafka集群中包含若干producer（可以是web前端产生的page view，或者是服务器日志，系统CPU、memory等），若干broker（Kafka支持水平扩展，一般broker数量越多，集群吞吐率越高），若干consumer group，以及一个Zookeeper集群。Kafka通过Zookeeper管理集群配置，选举leader，以及在consumer group发生变化时进行rebalance。producer使用push模式将消息发布到broker，consumer使用pull模式从broker订阅并消费消息。  
 
@@ -58,7 +58,6 @@ payload ： n bytes
 
 因为每条消息都被append到该partition中，是顺序写磁盘，因此效率非常高（经验证，顺序写磁盘效率比随机写内存还要高，这是Kafka高吞吐率的一个很重要的保证）。  
 
-...
 
-
-详情详见：[kafka的深度解析](http://www.xker.com/page/e2015/01/158138.html)
+详情详见：  
+[kafka的深度解析](http://www.xker.com/page/e2015/01/158138.html)

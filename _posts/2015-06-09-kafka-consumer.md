@@ -7,7 +7,7 @@ tags: [kafka]
 guid: urn:uuid:e38b6d76-e936-4a17-a1a7-55fea65e0e59
 ---
 
-#### Consumer主要流程如下:  
+### Consumer主要流程如下:  
 
 1. 加载并解析命令行参数，唯一的必要参数(Required)是zookeeper
 2. 如果没有传入group.id，ConsoleConsumer将生成自己的group.id，即console-consumer-[10万以内的一个随机数]

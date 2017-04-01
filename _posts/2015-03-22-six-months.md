@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Null]不明所以的一句'半年'鬼才懂。"
+title: "不明所以的一句'半年'鬼才懂辣。"
 date: "2015-03-22"
 categories: sddtc life
 tags: [life]

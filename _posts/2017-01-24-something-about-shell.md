@@ -8,7 +8,7 @@ tags:
   - shell
 ---
 
-#### 背景
+### 背景
 
 需要在shell脚本中获取java调用的System.exit()的值  
 System.exit(-1),则 $? 的值为255

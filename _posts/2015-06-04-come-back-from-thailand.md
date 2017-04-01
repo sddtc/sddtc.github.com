@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Null]从泰国玩肥来辣，嘻嘻。"
+title: "从泰国玩肥来辣，嘻嘻。"
 date: "2015-06-04"
 categories: sddtc chip
 tags: [life]

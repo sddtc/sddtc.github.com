@@ -12,7 +12,7 @@ guid: urn:uuid:cb6cb0b1-be92-4f1f-a64a-62724177ced3
 周二发现的问题，直到周四才告一段落，对此我要写下泪の总结  
 珍爱生命，远离事务  
 
-#### 场景说明：
+### 场景说明：
 
 有一个消费者实时消费消息，并且实时将记录插入mysql数据库中，为了高效，采用jdbc的批量插入batch模式，开启了事务，完成时commit，抛出异常时rollback。  
 每一步都记录了log日志。最近发生了奇怪的事情，就是error日志中出现了如下异常:  
@@ -82,7 +82,7 @@ mysql> select @@global.tx_isolation, @@tx_isolation;
 
 2.回答问题3  
 
-#### jdbc的操作，关于事务有什么特别的地方?什么时候开启事务，什么时候结束?  
+### jdbc的操作，关于事务有什么特别的地方?什么时候开启事务，什么时候结束?  
 
 * 如果程序默认(auto-commit)，即自动提交，则每一个sql是有隐含的事务和提交操作  
 * 如果关闭自动提交(auto-commit)操作，则每一个sql操作都需要自己手动提交事务  
@@ -90,7 +90,7 @@ mysql> select @@global.tx_isolation, @@tx_isolation;
 * 如果auto-commit已经启用，可以在任意时刻调用Connection.setTransactionIsolation()
 * 如果自动提交(auto-commit)为false，Connection.setTransactionIsolation（）只可在事务开始之前或结束之后调用。若在事务中调用会发生为止不可预测的行为  
 
-#### setTransactionIsolation  
+### setTransactionIsolation  
 
 ```
 void setTransactionIsolation(int level) throws SQLException  
@@ -117,7 +117,7 @@ DatabaseMetaData.supportsTransactionIsolationLevel(int), getTransactionIsolation
 
 3.回答问题2  
 
-#### 死锁发生的频率不是很大，如何避免？
+### 死锁发生的频率不是很大，如何避免？
 
 You can cope with deadlocks and reduce the likelihood of their occurrence with the following techniques:  
 
@@ -133,21 +133,21 @@ You can cope with deadlocks and reduce the likelihood of their occurrence with t
 
 4.回答问题1  
 
-#### 为什么insert表A和insert表B并且select表A会产生死锁？
+### 为什么insert表A和insert表B并且select表A会产生死锁？
 在innodb默认的事务隔离级别下，普通的SELECT是不需要加行锁的，但LOCK IN SHARE MODE、FOR UPDATE及高串行化级别中的SELECT都要加锁。有一个例外,这个例外就是我遇到的问题：  
 对表A加表锁，表所有行的主键索引（即聚簇索引）加共享锁。默认对其使用主键索引。
 锁冲突的产生：  
 由于共享锁与排他锁是互斥的，当一方拥有了某行记录的排他锁后，另一方就不能其拥有共享锁，同样，一方拥有了其共享锁后，另一方也无法得到其排他锁。所以，当语句1、2同时运行时，相当于两个事务会同时申请某相同记录行的锁资源，于是会产生锁冲突。由于两个事务都会申请主键索引，锁冲突只会发生在主键索引上.
 
-#### 最终，我自己打算尝试的解决方法有几种：  
+### 最终，我自己打算尝试的解决方法有几种：  
 
 1.在抛出异常之后，进行commit尝试，尝试一定次数之后，再进行回滚处理  
 2.将事务过程缩减，加快提交频率  
 3.其实表A的索引有优化的余地，对索引精确优化也可以有效的避免，只是个人mysql水平有限，过段时间尝试联合索引的替换  
 
-#### 然而周二写下上面3个解决办法，周四发现我还是过于天真。
+### 然而周二写下上面3个解决办法，周四发现我还是过于天真。
 
-#### 后续：  
+### 后续：  
 
 1.事务过程缩减并没有有效的制止现象的发生，我又自己指定了connection的隔离级别，并记录了入库失败时的sql，用于出错补救。当在java里指定隔离级别的时候，程序报错了  
 
@@ -186,7 +186,7 @@ Message: Transaction level 'READ-COMMITTED' in InnoDB is not safe for binlog mod
 
 后来我无意中看到了一段话：  
 
-#### insert …select …带来的问题
+### insert …select …带来的问题
 
 "当使用insert...select...进行记录的插入时，如果select的表是innodb类型的，不论insert的表是什么类型的表，都会对select的表的纪录进行锁定。
 

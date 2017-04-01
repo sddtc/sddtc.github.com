@@ -7,7 +7,7 @@ tags: [sqoop,mysql]
 guid: urn:uuid:df768b2c-35e3-4806-b4e0-486ce4612871
 ---
 
-##### sqoop相关命令使用:  
+### sqoop相关命令使用:  
 
 * sqoop的export命令（hdfs--->mysql)  
 导出操作有几点需要注意的地方：  
@@ -36,7 +36,7 @@ sqoop import
 
 * * *
 
-##### mysql和sqoop之间的交互问题:  
+### mysql和sqoop之间的交互问题:  
 * sqoop集群迁移之后,mysql与hdfs之间的import导表操作可能会报没权限错误  
 a.需要给mysql添加新hdfs用户  
 b.如有权限问题，最好先查看mysql都有哪些已知用户  

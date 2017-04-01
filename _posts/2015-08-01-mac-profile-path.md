@@ -7,8 +7,8 @@ tags: [mac]
 guid: urn:uuid:a0bba4ce-f211-4f3c-baac-7f754a217f93
 ---
 
-#### Mac启动加载文件位置:可设置环境变量
-1.首先要知道你使用的Mac OS X是什么样的Shell  
+### Mac启动加载文件位置:可设置环境变量
+1.首先要知道你使用的Mac OS X是什么样的Shell   
 使用命令  
 
 ```vim

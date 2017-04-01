@@ -7,7 +7,7 @@ tags: [java]
 guid: urn:uuid:af62c8d3-84d7-4c48-bb29-4fef13220ff1
 ---
 
-#### CountDownLatch  
+### CountDownLatch  
 
 CountDownLatch in Java is a kind of synchronizer which allows one Thread to wait for one or more Threads before starts processing.  
 
@@ -17,7 +17,7 @@ CountDownLatch works in Java, an example of CountDownLatch in Java and finally s
 
 One of the disadvantage of CountDownLatch is that its not reusable once count reaches to zero you can not use CountDownLatch any more, but don't worry Java concurrency API has another concurrent utility called CyclicBarrier for such requirements.  
 
-#### Cyclicbarrier
+### Cyclicbarrier
 
 Difference between CountDownLatch and CyclicBarrier in Java  
 In our last article we have see how CountDownLatch can be used to implement multiple threads waiting for each other.  
@@ -30,7 +30,7 @@ Given the nature of CyclicBarrier it can be very handy to implement map reduce k
 1) To implement multi player game which can not begin until all player has joined.
 2) Perform lengthy calculation by breaking it into smaller individual tasks, In general to implement Map reduce technique.
 
-*todo*
+*todo*  
 ForkjoinTask  
 AbstractQueuedSynchronizer  
 TreeMap

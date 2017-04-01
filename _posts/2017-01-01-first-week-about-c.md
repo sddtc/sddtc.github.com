@@ -12,7 +12,7 @@ tags:
 第一周,学到的东西也很多.  
 
 ### Gradle  
-  一直使用Maven来进行Java项目搭建和管理、构建，如今切换技术栈到Gradle上，在此了解了一些它的优势和区别。  
+一直使用Maven来进行Java项目搭建和管理、构建，如今切换技术栈到Gradle上，在此了解了一些它的优势和区别。  
 1.相同点:依赖管理   
 **区别**:  
 - Maven是xml文档编写,语法较为复杂;Gradle语法更加精简  
@@ -39,15 +39,11 @@ tags:
 可使用shell,python，perl等脚本语言编写  
 可将从Git仓库拉取代码，执行job任务  
 
-
 ### Python VirtualEnv  
 python虚拟环境是python的一个第三方package，用于给每个应用部署一套python环境，这样一来，每个应用可依赖相同第三方包的不同版本，并不会造成版本冲突  
 
-
 ### Java8  
-我司对于新技术的使用真的是快准狠,为了更多的使用新技术带来的便捷,同事推荐下买了java8 in action;)  
-
-
+对于新技术的使用要快准狠,为了更多的使用新技术带来的便捷,同事推荐下买了java8 in action;)  
 
 参考文章:  
 [Maven和Gradle对比](http://www.importnew.com/18008.html)

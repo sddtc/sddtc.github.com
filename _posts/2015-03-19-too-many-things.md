@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Null]一篇纯粹为了凑字数的文。"
+title: "一篇纯粹为了凑字数的文。"
 date: "2015-03-19"
 categories: sddtc life
 tags: [life]

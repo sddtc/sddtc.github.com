@@ -7,7 +7,7 @@ tags: [linux]
 guid: urn:uuid:c762d7b8-191e-49f6-95ae-442faee0267e
 ---
 
-#### top命令关键参数解析:  
+### top命令关键参数解析:  
 
 ```vim
 

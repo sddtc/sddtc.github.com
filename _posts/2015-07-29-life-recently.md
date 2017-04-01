@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Null]最近的生活小总结。"
+title: "最近生活的简单总结。"
 date: "2015-07-29"
-categories: sddtc work
+categories: sddtc chip
 tags: [life]
 guid: urn:uuid:bf1c8ffa-ba3c-4916-b56f-a618b20b8924
 ---

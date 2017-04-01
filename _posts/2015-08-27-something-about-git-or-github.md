@@ -7,7 +7,7 @@ tags: [git]
 guid: urn:uuid:a3ec03ca-1f7a-46d7-ba65-db27dda6f614
 ---
 
-#### .gitignore在查看git status的时候不能过滤文件和文件夹  
+### .gitignore在查看git status的时候不能过滤文件和文件夹  
 
 在.gitignore添加.idea文件夹，以过滤该文件夹，但是通过git status查看仍显示.idea文件夹的状态。  
 原因：
@@ -23,20 +23,20 @@ git rm --cached .idea/
 
 然后再次git status查看状态，.idea文件夹不再显示状态。  
 
-#### 本地修改，但更新强制覆盖本地  
+### 本地修改，但更新强制覆盖本地  
 
 ```vim
 git fetch --all   
 git reset --hard origin/${branch_name}
 ```
 
-#### 远程新建分支，拉取到本地  
+### 远程新建分支，拉取到本地  
 
 1.查看所有分支，包括远程: git branch -va   
 2.切换到分支： git checkout -b ${branch_name} origin/${branch_name}  
 3.如果切到新分支，push代码失败，执行：git push -f origin ${branch_name}  
 
-#### 比较分支  
+### 比较分支  
 
 ```vim
 git diff master..test
@@ -48,7 +48,7 @@ git diff master..test
 git diff --stat
 ```
 
-#### 合并分支A文件到分支B
+### 合并分支A文件到分支B
 
 ```vim
 git checkout -p dev user.java //不切换branch，把dev上的user.java更新到当前分支

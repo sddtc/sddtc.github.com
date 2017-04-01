@@ -7,7 +7,7 @@ tags: [log]
 guid: urn:uuid:52844cd3-de95-411e-83f1-4e4051ce0c7d
 ---
 
-#### 本文是关于Twitter 分布式日志系统 DistributedLog/BookKeeper的摘要  
+### 本文是关于Twitter 分布式日志系统 DistributedLog/BookKeeper的摘要  
 
 Manhattan（Twitter的最终一致性分布式Key/Value数据库）    
 1.可以使用日志来序列化所有的请求。co-ordinator 将请求写到日志中。所有的 replicas 从日志中按顺序读取请求，并修改本地的状态。这种解决问题的思路叫做 Pub/Sub。而日志就是 Pub/Sub 模式的基础。  

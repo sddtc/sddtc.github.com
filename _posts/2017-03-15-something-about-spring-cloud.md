@@ -42,7 +42,7 @@ Zuul在Netflix的微服务体系中的定位：
 Zuul只做跨横切面的功能: 如路由，安全认证，容错，限流，日志等  
 Zuul只是一个HTTP网关: 聚合或者协议转换(如rpc转换成http)，在Edge Service层做  
 
-*todo*
+*todo*  
 Zipkin  
 Sleuth  
 Kibana  

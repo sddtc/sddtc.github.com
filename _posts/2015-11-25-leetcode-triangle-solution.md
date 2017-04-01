@@ -10,7 +10,7 @@ guid: urn:uuid:102ad6aa-e1e4-43e3-8338-21ddaf5a7c8c
 真是活久见系列的生动范例  
 动态规划实际算法习题  
 
-#### 一
+### 一
 Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.   
 
 For example, given the following triangle    
@@ -67,7 +67,7 @@ public int minimumTotal(List<List<Integer>> triangle, int[] dp, int lvlidx) {
 }
 ```
 
-#### 二   
+### 二   
 A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).  
 The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).  
 How many possible unique paths are there?   
