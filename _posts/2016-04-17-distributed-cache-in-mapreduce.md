@@ -1,11 +1,11 @@
 ---
-title: "[MR]分布式缓存在MapReduce上的使用"
+title: "[MR]分布式缓存在MapReduce上的使用。"
 date: "2016-04-17"
 layout: post
 categories: sddtc tech
 guid: urn:uuid:fb59ef6c-a9e2-4bf6-a7a0-d51d80f4250b
 tags:
-  - java
+  - mapreduce
 ---
 
 在写mapreduce时，简单的统计可以用一个文件搞定，只是如果需要关联其它文件的列  

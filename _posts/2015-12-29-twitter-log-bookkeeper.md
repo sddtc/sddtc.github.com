@@ -1,21 +1,21 @@
 ---
 layout: post
-title: "年度案例-Twitter高性能分布式日志系统架构解析"
+title: "Twitter高性能分布式日志系统架构解析。"
 date: "2015-12-29"
 categories: sddtc tech
-tags: [twitter, log]
+tags: [log]
 guid: urn:uuid:52844cd3-de95-411e-83f1-4e4051ce0c7d
 ---
 
-本文是关于Twitter 分布式日志系统 DistributedLog/BookKeeper的摘要  
-Manhattan（Twitter的最终一致性分布式Key/Value数据库）  
+#### 本文是关于Twitter 分布式日志系统 DistributedLog/BookKeeper的摘要  
 
+Manhattan（Twitter的最终一致性分布式Key/Value数据库）    
 1.可以使用日志来序列化所有的请求。co-ordinator 将请求写到日志中。所有的 replicas 从日志中按顺序读取请求，并修改本地的状态。这种解决问题的思路叫做 Pub/Sub。而日志就是 Pub/Sub 模式的基础。  
-
-2.当数据被复制到多台机器上的时候，我们就需要保证数据的强一致性。否则，如果我们出现丢数据、数据不一致，那么势必影响到构建在分布式日志上的所有系统。如果日志都不能相信了，你的生活还能相信谁呢 ：）  
-
+2.当数据被复制到多台机器上的时候，我们就需要保证数据的强一致性。否则，如果我们出现丢数据、数据不一致，那么势必影响到构建在分布式日志上的所有系统。如果日志都不能相信了，你的生活还能相信谁呢。  
 3.为什么持久化 (durability)、多副本 (replication) 和强一致性 (consistency)，对我们来说这么重要呢？  
-比如 Kestrel（用于在线系统）、Kafka（用于离线分析）这些系统都不支持严格的持久化，或者在支持持久化的情况下性能极差。它们采用定期回刷 (periodic flush) 磁盘或者依赖于文件系统 (pdflush) 来持久化数据。  
+
+比如 Kestrel（用于在线系统）、Kafka（用于离线分析）这些系统都不支持严格的持久化，或者在支持持久化的情况下性能极差。  
+它们采用定期回刷 (periodic flush) 磁盘或者依赖于文件系统 (pdflush) 来持久化数据。  
 
 4.日志系统的核心负载可以归为三类：writes，tailing reads 和 catch-up reads。  
 Writes 就是将数据追加到一个日志中，tailing reads 就是从日志的尾部读最新的东西，而 catch-up reads 则是从比较早的位置开始读日志（比如数据库中重建副本）。    

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[AngularJs]关于angularjs的那些事"
+title: "[AngularJs]http请求要点和div的操作。"
 date: "2015-05-04"
 categories: sddtc tech
 tags: [angularJs]

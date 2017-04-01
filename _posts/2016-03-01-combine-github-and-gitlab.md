@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "[Git]让Gitlab和Github的账号合为一体不离不弃"
+title: "[Git]一台电脑同时支持github和gitlab的提交。"
 date: "2016-03-01"
 categories: sddtc tech
-tags: [git,github,gitlab]
+tags: [git]
 guid: urn:uuid:de8d598d-6f35-4c7b-ab23-1951062dadfc
 ---
 

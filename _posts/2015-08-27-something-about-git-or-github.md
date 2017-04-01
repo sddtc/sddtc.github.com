@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "[git]白社长常用的git命令集锦"
+title: "[git]版本管理相关命令。"
 date: "2015-08-27"
 categories: sddtc tech
-tags: [git, command]
+tags: [git]
 guid: urn:uuid:a3ec03ca-1f7a-46d7-ba65-db27dda6f614
 ---
 

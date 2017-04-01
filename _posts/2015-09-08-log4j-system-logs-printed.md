@@ -1,11 +1,12 @@
 ---
 layout: post
-title: "[Log4j]log4j-业务日志输出"
+title: "[Log4j]业务日志输出规则实践。"
 date: "2015-09-08"
 categories: sddtc tech
 tags: [log4j]
 guid: urn:uuid:672b9275-5b41-441a-b94b-6f71a1ee0cf0
 ---
+
 #### log4j 业务日志打印配置
 
 日志通常分为两种：系统日志和业务数据日志  

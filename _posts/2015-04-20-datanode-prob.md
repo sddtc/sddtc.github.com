@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "[CDH]datanode相关的问题"
+title: "[CDH]datanode存储空间溢出解决。"
 date: "2015-04-20"
 categories: sddtc tech
-tags: [map-reduce]
+tags: [cdh]
 guid: urn:uuid:19a1314e-b25d-46a1-83a1-c0b3e3d0f5da
 ---
 

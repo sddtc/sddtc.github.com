@@ -4,7 +4,7 @@ layout: post
 guid: urn:uuid:792f6a0e-d939-4974-bd61-dd88fa9b644f
 date: "2016-05-15"
 categories: sddtc chip
-tags: [boring， life]
+tags: [life]
 ---
 
 看了看频率大概整整一周都在忙工作，上班优化，上线之后的日子就是一直操心  

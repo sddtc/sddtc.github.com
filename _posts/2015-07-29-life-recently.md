@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Null]life-recently"
+title: "[Null]最近的生活小总结。"
 date: "2015-07-29"
 categories: sddtc work
 tags: [life]

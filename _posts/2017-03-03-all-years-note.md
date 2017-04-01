@@ -1,5 +1,5 @@
 ---
-title: "[Summary]2016年度总结"
+title: "[Summary]2016年度总结。"
 layout: post
 date: "2017-03-03"
 guid: urn:uuid:83e7450d-5451-4147-8c39-c4e6ba788b52

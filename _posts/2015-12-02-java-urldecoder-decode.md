@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Java]URLDecoder小记"
+title: "[Java]URLDecoder处理文件的case小记。"
 date: "2015-12-02"
 categories: sddtc tech
 tags: [java]

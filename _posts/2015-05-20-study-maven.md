@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Maven]学习"
+title: "[Maven]集成打包配置说明。"
 categories: sddtc tech
 tags: [maven]
 guid: urn:uuid:82e6670e-8ad4-4ef9-972f-8ebe821ca3b0

@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "[BigData]近期指令与概念总结"
+title: "[Storm]介绍和kafka相关命令脚本。"
 date: "2015-06-30"
 categories: sddtc tech
-tags: [storm, kafka]
+tags: [storm]
 guid: urn:uuid:77290b8e-e34e-44cd-b084-99ad330e2d96
 ---
 

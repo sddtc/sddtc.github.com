@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Wechat抓包图片"
+title: "wechat通过抓包获取图片方法实践。"
 date: "2016-01-28"
 categories: sddtc tech
 tags: [iOS]

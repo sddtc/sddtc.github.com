@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Algo]Insertion Sort List小记"
+title: "[algorithms]Insertion Sort List解决方案。"
 date: "2015-09-23"
 categories: sddtc tech
 tags: [algorithms]

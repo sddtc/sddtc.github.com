@@ -1,5 +1,5 @@
 ---
-title: "[Recommender]little-recommender"
+title: "[Recommender]实现一个简单的推荐系统。"
 date: "2016-03-27"
 layout: post
 categories: sddtc tech

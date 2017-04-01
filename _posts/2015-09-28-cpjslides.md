@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "[Translate]Concurrent Programming in Java"
+title: "[Translate]Concurrent Programming in Java翻译，这是个坑。"
 date: "2015-09-28"
 categories: sddtc tech
-tags: [concurrent,java]
+tags: [java]
 guid: urn:uuid:899b0108-587c-4d94-b056-9333038b3870
 ---
 
-[在这里](https://ctinterpretation.gitbooks.io/concurrent-programming-in-java/content/)
+[坑在这里](https://ctinterpretation.gitbooks.io/concurrent-programming-in-java/content/)

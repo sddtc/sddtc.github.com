@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "[UML]的类之间的关系"
+title: "[UML]类之间的关系。"
 date: "2015-08-24"
 categories: sddtc tech
-tags: [uml, class relation]
+tags: [uml]
 guid: urn:uuid:09a5d329-b467-44f7-96b1-f9b87382cc78
 ---
 

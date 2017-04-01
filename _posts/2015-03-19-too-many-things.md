@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "[Null]too-many-things"
+title: "[Null]一篇纯粹为了凑字数的文。"
 date: "2015-03-19"
-categories: sddtc work
-tags: [boring, life]
+categories: sddtc life
+tags: [life]
 guid: urn:uuid:2befc398-5215-49b2-a505-89730d507cba
 ---
 

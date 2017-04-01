@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Jekyll]EI Capitan jekyll can't run"
+title: "[Jekyll]EI Capitan jekyll can't run解决方案。"
 date: "2015-10-14"
 categories: sddtc work
 tags: [jekyll, ruby]

@@ -1,11 +1,11 @@
 ---
-title: "[Spring-Cloud]简介和部署"
+title: "[Spring-Cloud]概念理解和部署。"
 layout: post
 guid: urn:uuid:21f23e62-4c3a-41dd-82dc-2fb49284cda0
 date: "2017-03-15"
 categories: sddtc tech
 tags:
-  - Spring-Cloud
+  - springcloud
 ---
 
 ### 背景
@@ -42,13 +42,13 @@ Zuul在Netflix的微服务体系中的定位：
 Zuul只做跨横切面的功能: 如路由，安全认证，容错，限流，日志等  
 Zuul只是一个HTTP网关: 聚合或者协议转换(如rpc转换成http)，在Edge Service层做  
 
-#### Zipkin
-#### Sleuth
-#### Kibana
-#### Ribbon
-#### Feign
-#### Hystrix
-
+*todo*
+Zipkin  
+Sleuth  
+Kibana  
+Ribbon  
+Feign  
+Hystrix  
 
 参考资料:   
 [Netflix开源他们的另一个架构——Eureka](http://www.infoq.com/cn/news/2012/09/Eureka)  

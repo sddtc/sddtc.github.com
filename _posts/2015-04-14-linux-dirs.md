@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Linux]一些常用命令"
+title: "[Linux]压缩解压与scp文件传输。"
 categories: sddtc tech
-tags: [linux, directive]
+tags: [shell]
 guid: urn:uuid:76552c5a-3e32-437a-9e49-ad545aa470b0
 ---
 

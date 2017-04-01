@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "[kafka]的consumer"
+title: "[kafka]consumer的主要流程讲解。"
 date: "2015-06-09"
 categories: sddtc tech
-tags: [Kafka, Consumer]
+tags: [kafka]
 guid: urn:uuid:e38b6d76-e936-4a17-a1a7-55fea65e0e59
 ---
 

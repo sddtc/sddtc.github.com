@@ -1,13 +1,14 @@
 ---
 layout: post
-title: "[Algo]解读word2vec"
+title: "[algorithm]解读word2vec项目。"
 date: "2015-11-26"
 categories: sddtc tech
-tags: [google]
+tags: [algorithm]
 guid: urn:uuid:52104d1f-308e-4afa-973f-6d5d695f1e1e
 ---
 
-#### 什么是[word2vec](https://code.google.com/p/word2vec/)  
+#### 什么是[word2vec](https://code.google.com/p/word2vec/) 
+
 在2013年8月20日，google将该工具发布在https://code.google.com/p/word2vec/上  
 它用来在使用深度学习算法之前预处理文本,把文本变成深度学习能够理解的向量形式  
 结果采用余弦值的形式，越接近1表示词语相似度越高  
@@ -30,10 +31,6 @@ demo-phrases.sh对于短语的结果会更准，例如输入san_francisco
 * sub-sampling of frequent words: can improve both accuracy and speed for large data sets (useful values are in range 1e-3 to 1e-5)  
 * dimensionality of the word vectors: usually more is better, but not always  
 * context (window) size: for skip-gram usually around 10, for CBOW around 5  
-
-
-
-
 
 
 参考资料:  

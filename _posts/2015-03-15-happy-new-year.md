@@ -2,8 +2,8 @@
 layout: post
 title: "[Null]Happy-New-Year,2015"
 date: 2015-03-15 20:19:00
-categories: sddtc work
-tags: [work]
+categories: sddtc life
+tags: [life]
 guid: urn:uuid:c239f897-24b9-4faa-b032-2efd209bbb9c
 ---
 

@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "[LT]leetcode-Combinations"
+title: "[algorithm]Combinations解决方案。"
 date: "2015-12-17"
 categories: sddtc tech
-tags: [java]
+tags: [algorithm]
 guid: urn:uuid:866af2a0-3fc7-4ced-839d-1839115b7176
 ---
 

@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "[Mac]配置文件相关"
+title: "[Mac]终端的配置文件定义与修改。"
 date: "2015-08-01"
 categories: sddtc work
-tags: [mac, config]
+tags: [mac]
 guid: urn:uuid:a0bba4ce-f211-4f3c-baac-7f754a217f93
 ---
 

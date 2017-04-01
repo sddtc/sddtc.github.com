@@ -1,5 +1,5 @@
 ---
-title: "[npm]国内镜像设置"
+title: "[npm]国内镜像配置方法。"
 layout: post
 date: "2017-03-22"
 categories: sddtc tech
@@ -9,9 +9,12 @@ tags:
   - nodejs
 ---
 #### 背景
+
 通过npm下载vue-cli脚手架,由于源的问题一直报错:  
+
 ```
 ...shasum check failed for...
+
 ```
 
 设置国内镜像:  

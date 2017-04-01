@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Mysql]常用命令和场景解析"
+title: "[MYSQL]服务器配置文件的修改Tips。"
 date: "2015-03-16"
 categories: sddtc tech
 tags: [mysql]

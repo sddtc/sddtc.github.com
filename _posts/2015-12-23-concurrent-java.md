@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Java]concurrent包部分解读"
+title: "[Java]concurrent包部分解读。"
 date: "2015-12-23"
 categories: sddtc tech
 tags: [java]
@@ -30,11 +30,7 @@ Given the nature of CyclicBarrier it can be very handy to implement map reduce k
 1) To implement multi player game which can not begin until all player has joined.
 2) Perform lengthy calculation by breaking it into smaller individual tasks, In general to implement Map reduce technique.
 
-
-#### ForkjoinTask
-
-
-
-#### AbstractQueuedSynchronizer
-
-#### TreeMap
+*todo*
+ForkjoinTask  
+AbstractQueuedSynchronizer  
+TreeMap

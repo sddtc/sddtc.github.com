@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "idea-IC版和其它的碎碎念"
+title: "idea-IC版和其它的碎碎念。"
 date: "2015-10-29"
 categories: sddtc tech
 tags: [IDE, java]

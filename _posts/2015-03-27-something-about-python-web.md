@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[PythonWeb]关于PythonWeb的那些事"
+title: "[Python]豆瓣和python的一个小故事。"
 date: "2015-03-27"
 categories: sddtc tech
 tags: [python]
