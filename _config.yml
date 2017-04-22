@@ -3,7 +3,7 @@ highlighter: rouge
 url: http://homuralovelive.com
 lsi: false
 exclude: [LICENSE, CNAME, README.md, .gitignore]
-name: "大蜕-部落格"
+name: "大蜕-个人博客"
 
 navigations:
   - title: Archive
