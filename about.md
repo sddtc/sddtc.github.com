@@ -16,7 +16,7 @@ layout: page
 &emsp;&emsp;&emsp;&emsp;燕姿本命五月天  
 
 **嗜好:**  
-&emsp;&emsp;&emsp;美式(喜爱度-)  
+&emsp;&emsp;&emsp;&emsp;美式(喜爱度-)  
 &emsp;&emsp;&emsp;&emsp;<del>零度可乐</del>  
 &emsp;&emsp;&emsp;&emsp;草莓(喜爱度-),菠萝(喜爱度↑)  
 &emsp;&emsp;&emsp;&emsp;茶(喜爱度-),啤酒(喜爱度↓)  
