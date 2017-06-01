@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[git]版本管理相关命令。"
+title: "[Git]版本管理相关命令。"
 date: "2015-08-27"
 categories: sddtc tech
 tags: [git]
@@ -8,7 +8,6 @@ guid: urn:uuid:a3ec03ca-1f7a-46d7-ba65-db27dda6f614
 ---
 
 ### .gitignore在查看git status的时候不能过滤文件和文件夹  
-
 在.gitignore添加.idea文件夹，以过滤该文件夹，但是通过git status查看仍显示.idea文件夹的状态。  
 原因：
 在git库中已存在了这个文件，之前push提交过该文件。  
@@ -31,7 +30,6 @@ git reset --hard origin/${branch_name}
 ```
 
 ### 远程新建分支，拉取到本地  
-
 1.查看所有分支，包括远程: git branch -va   
 2.切换到分支： git checkout -b ${branch_name} origin/${branch_name}  
 3.如果切到新分支，push代码失败，执行：git push -f origin ${branch_name}  
@@ -53,4 +51,14 @@ git diff --stat
 ```vim
 git checkout -p dev user.java //不切换branch，把dev上的user.java更新到当前分支
 git checkout dev feed.java //去掉-p参数，新增该feed.java文件
+```
+
+### 从master分支更新代码到fork分支
+
+```
+git remote -v
+git remote add upstream ${master_repo_address}
+git fetch upstream
+git checkout master
+git merge upstream/master
 ```
