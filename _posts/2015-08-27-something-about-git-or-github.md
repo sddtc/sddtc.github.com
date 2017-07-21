@@ -74,3 +74,13 @@ git merge upstream/master
 >> In contrast, rebasing unifies the lines of development by re-writing changes from the source branch so that they appear as children of the destination branch – effectively pretending that those commits were written on top of the destination branch all along.
 
 综上所述, 我要使用 git fetch then git rebase, 替换之前git fetch then git merge的操作了, 为了保证在查看git log --graph的时候只有一条主线一目连了然.
+
+### 查看git log
+
+--online: 查看历史记录的简洁版本
+--graph: 查看历史中什么时候出现了分支、合并。
+--no-merges: 隐藏合并提交
+
+```
+git log --online --graph
+```
