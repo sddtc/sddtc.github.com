@@ -77,10 +77,10 @@ git merge upstream/master
 
 ### 查看git log
 
---online: 查看历史记录的简洁版本
+--oneline: 查看历史记录的简洁版本
 --graph: 查看历史中什么时候出现了分支、合并。
 --no-merges: 隐藏合并提交
 
 ```
-git log --online --graph
+git log --oneline --graph
 ```
