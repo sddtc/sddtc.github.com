@@ -62,3 +62,14 @@ git fetch upstream
 git checkout master
 git merge upstream/master
 ```
+
+### git pull vs git fetch then git rebase
+
+> * Fetch vs Pull
+
+>> Git fetch just updates your repo data, but a git pull will basically perform a fetch and then merge the branch pulled
+
+> * Rebase vs Merge
+
+>> In contrast, rebasing unifies the lines of development by re-writing changes from the source branch so that they appear as children of the destination branch – effectively pretending that those commits were written on top of the destination branch all along.
+
