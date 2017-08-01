@@ -1,5 +1,5 @@
 ---
-title: [RailsAdmin]关于RA的一些必须掌握的tips
+title: "[RailsAdmin]关于RA的一些必须掌握的tips"
 layout: post
 date: "2017-08-01"
 categories: sddtc tech
