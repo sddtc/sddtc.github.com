@@ -16,6 +16,7 @@ tags:
 config.included_models = [Brand, Product, Admin, Store]
 ```
 
+
 ### 修改model的显示title
 
 修改model的title, 修改model下拉框的默认'model #id'名称展示
@@ -34,6 +35,7 @@ config.included_models = [Brand, Product, Admin, Store]
   end
 
 ```
+
 
 ### 不显示model的个别action
 
@@ -60,6 +62,7 @@ config.included_models = [Brand, Product, Admin, Store]
   end
 
 ```
+
 
 ### 自定义引入javascript脚本
 
@@ -90,6 +93,7 @@ $(document).on('keyup', '#bundle_set_sale_price', function () {
 
 ```
 
+
 ### show页面显示img图片内容  
 
 在model详情页面显示图片  
@@ -103,6 +107,7 @@ show do
   end
 end
 ```
+
 
 ### show页面field字段的值自定义
 
@@ -120,6 +125,7 @@ show do
 end
 ```
 
+
 ### model设置枚举  
 
 model的count属性希望展示下拉列表,采用枚举  
@@ -129,6 +135,7 @@ def count_enum
   [5, 10, 15]
 end
 ```
+
 
 ### model编辑时提示信息自定义
 
@@ -142,6 +149,7 @@ edit do
   end
 end
 ```
+
 
 相关参考:  
 
