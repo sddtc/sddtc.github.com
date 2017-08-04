@@ -16,6 +16,7 @@ tags:
 config.included_models = [Brand, Product, Admin, Store]
 ```
 
+---
 
 ### 修改model的显示title
 
@@ -36,10 +37,11 @@ config.included_models = [Brand, Product, Admin, Store]
 
 ```
 
+---
 
 ### 不显示model的个别action
 
-有些model不需要默认的编辑、删除等action  
+有些model不需要默认的编辑、删除等action,利用except关键字  
 
 ```
   config.actions do
@@ -63,6 +65,7 @@ config.included_models = [Brand, Product, Admin, Store]
 
 ```
 
+---
 
 ### 自定义引入javascript脚本
 
@@ -93,6 +96,7 @@ $(document).on('keyup', '#bundle_set_sale_price', function () {
 
 ```
 
+---
 
 ### show页面显示img图片内容  
 
@@ -102,12 +106,13 @@ $(document).on('keyup', '#bundle_set_sale_price', function () {
 show do
   field :background_img do
     formatted_value do
-      bindings[:view].tag(:img, { :src => bindings[:object].background_img }) << value
+		bindings[:view].tag(:img, {:src => bindings[:object].background_img, :style => "width:400px;height:300px"})
     end
   end
 end
 ```
 
+---
 
 ### show页面field字段的值自定义
 
@@ -125,6 +130,7 @@ show do
 end
 ```
 
+---
 
 ### model设置枚举  
 
@@ -136,6 +142,7 @@ def count_enum
 end
 ```
 
+---
 
 ### model编辑时提示信息自定义
 
@@ -150,6 +157,19 @@ edit do
 end
 ```
 
+---
+
+### 建立联合索引, 提交表单时提示失败
+
+bundle_offer_id和count建立唯一联合索引,保证数据库数据不重复
+
+
+```
+
+validates_uniqueness_of :bundle_offer_id, scope:[:bundle_offer_id, :count]
+
+
+```
 
 相关参考:  
 
