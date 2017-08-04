@@ -106,7 +106,7 @@ $(document).on('keyup', '#bundle_set_sale_price', function () {
 show do
   field :background_img do
     formatted_value do
-		bindings[:view].tag(:img, {:src => bindings[:object].background_img, :style => "width:400px;height:300px"})
+      bindings[:view].tag(:img, {:src => bindings[:object].background_img, :style => "width:400px;height:300px"})
     end
   end
 end
@@ -165,10 +165,7 @@ bundle_offer_id和count建立唯一联合索引,保证数据库数据不重复
 
 
 ```
-
 validates_uniqueness_of :bundle_offer_id, scope:[:bundle_offer_id, :count]
-
-
 ```
 
 相关参考:  
