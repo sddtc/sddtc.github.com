@@ -175,10 +175,10 @@ validates_uniqueness_of :bundle_offer_id, scope:[:bundle_offer_id, :count]
 timeout_seconds = 10
 
 RestClient::Request.execute(:method => :post, 
-							:url => url, 
-							:payload=> request, 
-							:timeout => timeout_seconds, 
-							:open_timeout => timeout_seconds)
+			    :url => url, 
+			    :payload=> request, 
+			    :timeout => timeout_seconds, 
+			    :open_timeout => timeout_seconds)
                                              
 ```
 
