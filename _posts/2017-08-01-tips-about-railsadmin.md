@@ -168,6 +168,21 @@ bundle_offer_id和count建立唯一联合索引,保证数据库数据不重复
 validates_uniqueness_of :bundle_offer_id, scope:[:bundle_offer_id, :count]
 ```
 
+### 设置超时时间
+
+```
+
+timeout_seconds = 10
+
+RestClient::Request.execute(:method => :post, 
+							:url => url, 
+							:payload=> request, 
+							:timeout => timeout_seconds, 
+							:open_timeout => timeout_seconds)
+                                             
+```
+
+
 相关参考:  
 
 [Ruby&Rails 风格指导](http://guides.ruby.tw/ruby-rails-style-guides/zhCN/#intro)  
