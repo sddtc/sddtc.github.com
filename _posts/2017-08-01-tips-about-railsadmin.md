@@ -8,17 +8,15 @@ tags:
   - rails
 ---
 
-### 开启白名单
+### 一、开启白名单
 
 只显示需要的model列表  
 
 ```
 config.included_models = [Brand, Product, Admin, Store]
 ```
-
----
-
-### 修改model的显示title
+ 
+### 二、修改model的显示title
 
 修改model的title, 修改model下拉框的默认'model #id'名称展示
 
@@ -39,9 +37,36 @@ config.included_models = [Brand, Product, Admin, Store]
 
 ---
 
-### 不显示model的个别action
+### 三、当你新增或更新, 控制model显示不同的title
 
-有些model不需要默认的编辑、删除等action,利用except关键字  
+关键字: new_record? 代表新增  
+
+```
+
+  config.model Floor do
+    object_label_method do
+      :custom_label_method
+    end
+  end
+
+  Floor.class_eval do
+    def custom_label_method
+      if new_record?
+        "Floor"
+      else
+        "#{store.name} - LEVEL #{level}"
+      end
+    end
+  end
+
+```
+
+---
+
+### 四、不显示model的个别action
+
+有些model不需要默认的编辑、删除等action  
+关键字:except  
 
 ```
   config.actions do
@@ -67,7 +92,7 @@ config.included_models = [Brand, Product, Admin, Store]
 
 ---
 
-### 自定义引入javascript脚本
+### 五、自定义引入javascript脚本
 
 若需要动态引入js脚本  
 
@@ -98,7 +123,7 @@ $(document).on('keyup', '#bundle_set_sale_price', function () {
 
 ---
 
-### show页面显示img图片内容  
+### 六、show页面显示img图片内容  
 
 在model详情页面显示图片  
 
@@ -114,7 +139,7 @@ end
 
 ---
 
-### show页面field字段的值自定义
+### 七、show页面field字段的值自定义
 
 在model详情页面,让某个字段展示其它内容,例如从数据库读取  
 
@@ -132,7 +157,7 @@ end
 
 ---
 
-### model设置枚举  
+### 八、model设置枚举  
 
 model的count属性希望展示下拉列表,采用枚举  
 
@@ -144,7 +169,7 @@ end
 
 ---
 
-### model编辑时提示信息自定义
+### 九、model编辑时提示信息自定义
 
 默认是Required, 希望多加一些信息  
 
@@ -159,16 +184,48 @@ end
 
 ---
 
-### 建立联合索引, 提交表单时提示失败
+### 十、表单渲染后设置默认值
 
-bundle_offer_id和count建立唯一联合索引,保证数据库数据不重复
-
+表单渲染之后, 有些下拉框或者输入框需要一些默认值  
+关键字: after_initialize
 
 ```
-validates_uniqueness_of :bundle_offer_id, scope:[:bundle_offer_id, :count]
+
+  after_initialize do
+    if new_record?
+      self.name ||= 'POI'
+      self.lover ||= 'Root'
+    end
+  end
+  
+
 ```
 
-### 设置超时时间
+---
+
+### 十一、表单控制的唯一索引或联合索引
+有些记录的个别字段需要保持唯一性, 除了db层面的控制, 表单层面也可以做一层控制  
+关键字: validates_uniqueness_of  
+
+单个索引:保证每条记录名称不重复  
+
+```
+
+validates_uniqueness_of :name
+
+```
+
+联合索引:关键字scope内相当于是组合唯一索引, 保证记录不重复  
+
+```
+validates_uniqueness_of :offer_id, scope: [:offer_id, :count]
+
+```
+
+
+---
+
+### 十二、设置HTTP请求超时时间
 
 ```
 
