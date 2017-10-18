@@ -54,9 +54,9 @@ git merge upstream/master
   
 ### git pull vs git fetch then git rebase
 * Fetch vs Pull  
->> Git fetch just updates your repo data, but a git pull will basically perform a fetch and then merge the branch pulled.  
+> Git fetch just updates your repo data, but a git pull will basically perform a fetch and then merge the branch pulled.  
 * Rebase vs Merge  
->> In contrast, rebasing unifies the lines of development by re-writing changes from the source branch so that they appear as children of the destination branch – effectively pretending that those commits were written on top of the destination branch all along.  
+> In contrast, rebasing unifies the lines of development by re-writing changes from the source branch so that they appear as children of the destination branch – effectively pretending that those commits were written on top of the destination branch all along.  
 
 综上所述, 使用 `git fetch` then `git rebase`, 替换 `git fetch` then `git merge` 的操作, 保证在查看 `git log --graph` 时只有一条主线, 一目了然.
 
@@ -69,8 +69,7 @@ git merge upstream/master
 git log --oneline --graph
 ```
 
-### create branch & push branch on Terminal  
-```
-git co -b sddtc-new-tmp
-git push --set-upstream origin sddtc-new-tmp
-```
+### Terminal skills  
+create branch: `git co -b sddtc-new-tmp`  
+push branch to remote: `git push --set-upstream origin sddtc-new-tmp`  
+remote branch has deleted, update it on local: `git fetch -p`  
