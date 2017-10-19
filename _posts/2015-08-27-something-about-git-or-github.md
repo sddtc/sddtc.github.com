@@ -73,3 +73,17 @@ git log --oneline --graph
 create branch: `git co -b sddtc-new-tmp`  
 push branch to remote: `git push --set-upstream origin sddtc-new-tmp`  
 remote branch has deleted, update it on local: `git fetch -p`  
+
+### Merge commits
+1. You should select a commit record as a end tag: `git log`
+2. `git reset --soft ${commit-hash-value}`
+3. Then `git st`, you will see the change have cached on local.
+4. `git commit -m ${your comment}`
+5. run `git push --force`, it will merge your past commit.
+
+
+If you push a commite, then you change files again, you can use below:
+
+1. `git add .`  
+2. `git commit --amend`  
+3. `git push --force`  
