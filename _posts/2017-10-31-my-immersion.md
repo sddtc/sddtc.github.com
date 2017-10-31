@@ -1,5 +1,5 @@
 ---
-title: [sddtc]浸泡。
+title: "[sddtc]浸泡。"
 layout: post
 date: "2017-10-31"
 categories: sddtc life
