@@ -87,3 +87,23 @@ If you push a commite, then you change files again, you can use below:
 1. `git add .`  
 2. `git commit --amend`  
 3. `git push --force`  
+
+If you have account A, commit use account B, then you want change author, you can use below:  
+
+`git commit --amend --author="Author Name <email@address.com>"`  
+
+**Another case**:  
+
+For example, if your commit history is A-B-C-D-E-F with F as HEAD, and you want to change the author of C and D, then you would..  
+
+1. Specify `git rebase -i B`  
+2. change the lines for both C and D to `edit`  
+3. Once the rebase started, it would first pause at C  
+4. You would `git commit --amend --author="Author Name <email@address.com>"`  
+5. Then `git rebase --continue`  
+6. It would pause again at D  
+7. Then you would `git commit --amend --author="Author Name <email@address.com>" again`  
+8. `git rebase --continue`  
+9. The rebase would complete.  
+
+
