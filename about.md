@@ -23,7 +23,7 @@ find me  | ※※※※ | ※※※※
 ------------- | ------------- | ------------- 
 `博客`  | [`homuralovelive.com`](http://homuralovelive.com) | `Nil`
 `Github` | [`sddtc's Github`](http://github.com/sddtc) | `None`
-`Iinstagram` | [`sddtc's Instagram`](https://www.instagram.com/sddtc_ch) | `Null`
+`Instagram` | [`sddtc's Instagram`](https://www.instagram.com/sddtc_ch) | `Null`
 `G+` | [`sddtc's G+`](https://plus.google.com/u/0/112768245818888919813) | `Undefined`
 
 * * *
