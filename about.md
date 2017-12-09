@@ -8,23 +8,22 @@ layout: page
 
 **关于大蜕:**  `复杂的人`   
 
-**属性:**  `害羞`  
+**属性:**  <del>`害羞`</del>`明骚`  
 
-**嗜♂好♂:**  <del>`根总`</del>  
+**嗜好:**  <del>`根总`</del>`阿根`
 
 <br>
 * * *
-
-`击败敌人要了解对方的弱点, 而更重要的是, 要清楚自己的弱点.`
+> "象棋的可能棋局数比宇宙中的原子的数量还多，没人能预料到一切，即便是你。  
+这也就是说，第一步会很令人害怕，因为它是距离结局最远的一步，在这一步与终点之间充满了无穷无尽的可能性。  
+但这也意味着，即使你走错一步，接下来也会有无数种补救的方法。
+所以放松，出招就好。"
 <br>
 * * *
 
-find me  | ※※※※ | ※※※※
-------------- | ------------- | ------------- 
-`博客`  | [`homuralovelive.com`](http://homuralovelive.com) | `Nil`
-`Github` | [`sddtc's Github`](http://github.com/sddtc) | `None`
-`Instagram` | [`sddtc's Instagram`](https://www.instagram.com/sddtc_ch) | `Null`
-`G+` | [`sddtc's G+`](https://plus.google.com/u/0/112768245818888919813) | `Undefined`
+**`Blog`**:      [`homuralovelive.com`](http://homuralovelive.com)  
+**`Github`**:    [`sddtc's Github`](http://github.com/sddtc)  
+**`Instagram`**: [`sddtc's Instagram`](https://www.instagram.com/sddtc_ch)  
+**`G+`**:        [`sddtc's G+`](https://plus.google.com/u/0/112768245818888919813)  
 
 * * *
- 
