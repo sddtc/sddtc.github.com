@@ -18,6 +18,9 @@ navigations:
   - title: Gallery
     class: fa fa-film
     href: /film.html
+  - title: Comments Board
+    class: fa fa-comments
+    href: /comments.html
   - title: Subscribe
     class: fa fa-rss
     href: /atom.xml
