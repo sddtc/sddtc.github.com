@@ -21,8 +21,8 @@ layout: page
 <br>
 * * *
 
-**`Blog`**:      [`homuralovelive.com`](http://homuralovelive.com)  
-**`Github`**:    [`sddtc's Github`](http://github.com/sddtc)  
+**`Blog`**:      [`homuralovelive.com`](https://homuralovelive.com)  
+**`Github`**:    [`sddtc's Github`](https://github.com/sddtc)  
 **`Instagram`**: [`sddtc's Instagram`](https://www.instagram.com/sddtc_ch)  
 **`G+`**:        [`sddtc's G+`](https://plus.google.com/u/0/112768245818888919813)  
 
