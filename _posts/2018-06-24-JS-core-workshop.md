@@ -8,13 +8,13 @@ tags:
 ---
 
 
-### Javascript. The Core
+## Javascript. The Core
 
 **This article covers ES2017+ runtime system.**
 
 ECMAScript 是一种面向对象的语言, 以 `prototype` 为基本组织形式, 核心表现形式为 *object*.
 
-#### *Object*
+### *Object*
 
 > Def. 1: Object: An object is a collection of properties, and has a single prototype object. The prototype may be either an object or the null value.
 
@@ -32,7 +32,7 @@ let point = {
 
 *prototype objects* 常常在`ECMAScript`的`dynamic dispatch`机制方面用来实现继承的特性  
 
-#### *Prototype*
+### *Prototype*
 
 每个对象在**创建**后便拥有`prototype`属性, 如果没有显式的赋值, 对象会拥有一个`default prototype`.  
 
@@ -116,7 +116,7 @@ console.log(objectC.x); // 20
 
 我们学习了`Object.prototype`, 知道它的优势是可以在多个对象间共享, 基于这个原则, 让我们来看看JS里面的`"class"`.
 
-#### *Class*
+### *Class*
 
 当多个对象拥有统一的行为和相同的初始状态时, 他们便可以当成一类对象.  
 
@@ -200,7 +200,7 @@ console.log(
 
 到目前为止, 我们已经理解了ECMAScript的对象相关的知识, 接下来让我们学习更深一层的知识: *JS runtime system*  
 
-#### *Execution context*
+### *Execution context*
 
 ECMAScript定义了*execution context*来执行和追踪JS code.  *execution context*在逻辑上用一个栈来表示.  
 
@@ -248,5 +248,65 @@ function *gen() {
 
 接下来, 我们将讨论`execution context`的重要组成部分; 特别是我们应该看到ECMAScript运行时如何管理`variables storage, and scopes created by nested blocks of a code`. 这是一个通用概念, 用于JS存储数据, 并通过闭包机制解决Funarg问题.  
 
-#### *Environment* 
+### *Environment* 
+
+每个*execution context*都有一个关联的*lexical environment*.  
+
+> Def. 9: Lexical environment: A lexical environment is a structure used to define association between identifiers appearing in the context with their values. Each environment can have a reference to an optional parent environment  
+
+所以在一个*scope*里, *environment*是变量, 方法, 类的存储空间  
+从技术上讲, environment是一组由*environment record*(将*identifiers*映射到值的实际存储表)和对父项的引用(可以为空)组成。 
+例如:  
+
+```
+let x = 10;
+  let y = 20;
+  function foo(z) {
+      let x = 100;
+      return x + y + z;
+  }
+
+  console.log(foo(30)); //150;
+ ```  
+ 
+从逻辑上讲, 这提醒我们上面讨论过的*prototype chain*。 *identifiers resolution*的规则非常相似: 如果在自己的*environment*中找不到变量，则会尝试在*parent environment*中，父级的父级中查找它, 等等 - 直到*the whole environment*为止.  
+ 
+> Def. 10: Identifier resolution: the process of resolving a variable (binding) in an environment chain. An unresolved binding results to ReferenceError
+
+这解释了为什么变量x被解析为100, 但不是10 - 它直接在foo的自己的*environment*中找到; 为什么我们可以访问参数z - 它也只存储在*activation environment*中; 以及为什么我们可以访问变量y - 它在*parent environment*中找到.  
+
+与*prototypes*类似，几个*child environments*可以共享相同的*parent environment*: 例如, 两个*global functions*共享相同的*global environment*.  
+
+*environment*记录因*type*而异. 有*object environment*记录和*declarative environment*记录. 在*declarative*记录之上还有*function environment*记录和*module environment*记录. 记录的每种类型都只针对它的*properties*. 但是，*identifier resolution*的通用机制在所有*environments*中都很常见，并且不依赖于记录的类型.  
+
+*object environment*记录可以是*global environment*的记录. 这样的记录也有关联的绑定对象, 它可以存储记录中的一些*properties*, 但不是其他属性，反之亦然. 绑定对象也可以作为`this`提供.  
+例如:  
+
+```
+  var xEnvironment = 10;
+  let yEnvironment = 20;
+
+  console.log(
+      xEnvironment,
+      yEnvironment,
+  )
+
+  console.log(
+      this.xEnvironment,
+      this.yEnvironment,
+  )
+
+  this['not valid ID'] = 30;
+
+  console.log(
+      this['not valid ID'],
+  );
+
+```
+
+请注意，绑定对象的存在是为了覆盖*legacy constructs*, 如`var`-declarations和`with`-statements, 它们也将它们的对象作为绑定对象提供. 当*environment*被表示为简单对象时, 这些都是历史原因. 目前，*environment model*更加优化，但结果我们无法再访问绑定像访问*properties*.  
+
+我们已经看到*environment*是如何通过父链接相关的. 现在我们将看到一个*environment*如何*outlive*创造它的*context*. 这是我们即将讨论的闭包机制的基础.  
+
+### Closure
 TBC
