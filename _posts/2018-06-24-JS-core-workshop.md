@@ -1,14 +1,11 @@
 ---
-title: "[javascript]JS相关的一些事"
+title: "[javascript]Javascript. The Core"
 layout: post
 categories: sddtc tech
 guid: urn:uuid:74071ae4-e14c-4c3d-b8ea-3d2666c187e3
 tags:
   - javascript
 ---
-
-
-## Javascript. The Core
 
 **This article covers ES2017+ runtime system.**
 
@@ -308,5 +305,48 @@ let x = 10;
 
 我们已经看到*environment*是如何通过父链接相关的. 现在我们将看到一个*environment*如何*outlive*创造它的*context*. 这是我们即将讨论的闭包机制的基础.  
 
-### Closure
+### *Closure*
+
+ECMAScript中的函数是一流的。 Functions是函数式编程的基础，它们在JavaScript中被很好地支持。  
+
+> Def. 11: First-class function: a function which can participate as a normal data: be stored in a variable, passed as an argument, or returned as a value from another function.  
+
+与一流的functions的概念相关的是所谓的"Funarg问题"("A problem of a functional argument"), 它出现在functions不得不处理*free variables*时.  
+
+> Def. 12: Free variable: a variable which is neither a parameter, nor a local variable of this function.
+  
+让我们来分析下Funarg问题:  
+例如:  
+
+```
+let x = 10;
+ 
+function foo() {
+  console.log(x);
+}
+ 
+function bar(funArg) {
+  let x = 20;
+  funArg(); // 10, not 20!
+}
+ 
+// Pass `foo` as an argument to `bar`.
+bar(foo);
+```
+对于函数foo，变量x是*free variables*。 当foo函数被激活时(通过funArg参数) - 它应该在哪里解析x的绑定？从创建函数的外部作用域或调用者作用域当函数被调用时？正如我们所看到的，调用者即bar函数也为x提供了绑定 - 值为20。  
+
+上述用例被称为**downwards funarg problem**(向下漏斗问题)，即在确定绑定的正确环境时的模糊性：它应该是创建时的环境还是被调用时的环境？  
+
+这是通过使用*static scope*的协议解决的，也就是创建时的*scope*  
+
+> Def. 13: Static scope: a language implements static scope, if only by looking at the source code one can determine in which environment a binding is resolved.  
+
+*static scope*(静态作用域)有时也被称为*lexical scope*(词法作用域)，而后被称为*lexical environments*。  
+从技术上讲，*static scope*是通过捕获*function is created*的环境来实现的。  
+
+> Def. 14: Closure: A closure is a function which captures the environment where it’s defined. Further this environment is used for identifier resolution.  
+
 TBC
+
+
+
