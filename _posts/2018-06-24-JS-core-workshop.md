@@ -346,6 +346,59 @@ bar(foo);
 
 > Def. 14: Closure: A closure is a function which captures the environment where it’s defined. Further this environment is used for identifier resolution.  
 
+在*a new fresh activation*环境中调用函数, 该环境存储局部变量和参数. *the activation environment*的*parent*环境设置为函数的闭包环境，从而产生*the lexical scope*语义.  
+例如:  
+
+```
+  function fooFoo() {
+      let x = 10;
+
+      function bar() {
+          return x;
+      }
+      
+      return bar;
+  }
+
+  let xFoo = 20;
+  let barFoo = fooFoo();
+
+  barFoo();// 10, not 20!
+ ```
+同样，从技术上讲，它与捕获*the definition environment*的机制没有区别。就在这种情况下，如果我们没有关闭，fooFoo的*the activation environment*将被*destroyed*。但是我们捕获了它，所以它不能被*deallocated*，并且被保留 - 以支持*static scope*语义。
+
+通常对闭包有一个不完全的理解 - 通常开发人员只依照*upward*的funarg问题来考虑闭包(实际上它确实更有意义)。但是，正如我们所看到的，*upward*和*downwards*的funarg问题的技术机制完全相同 - 并且是*the static scope*的机制。
+
+如上所述，与*prototypes*类似，可以跨多个闭包共享相同的父环境。 这允许访问和改变共享数据， 例如：  
+
+```
+
+  function createCounter() {
+      let count = 0;
+
+      return {
+          increment() {count++; return count;},
+          decrement() {count--; return count;},
+      };
+  }
+
+  let counter = createCounter();
+  console.log(
+      counter.increment(), //1
+      counter.decrement(), //0
+      counter.increment(), //1
+  );
+
+```
+由于在包含count变量的作用域内创建了闭包，*increment*和*decrement*，因此它们*share this parent scope*。 也就是说，捕获总是"by-reference"发生 - 意味着存储了对整个父环境的引用。  
+
+某些语言可以捕获"by-value"，*making copy of*被捕获的*variable*，并且不允许在父作用域中更改它。 但是在Javascript中，要记得，它始终是对父作用域的引用。  
+
+*implementations*可以优化该步骤，不捕获整个*environment*。 捕获*used free-variables*，但它们仍然保持*parent scopes*中可变数据的不变性。  
+
+所有*identifiers*都是*statically scoped*。但是有一个值在ECMAScript中是*dynamically scoped*。它就是*this*
+
+### *This*
 TBC
 
 
