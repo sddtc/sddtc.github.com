@@ -49,8 +49,9 @@ def new_post(title)
   File.open(filename, "wb") do |f|
     f << <<-EOS
 ---
-title: #{title}
+title: "#{title}"
 layout: post
+categories: sddtc
 guid: urn:uuid:#{uuid}
 tags:
   - 

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[algorithm]图的广度优先搜索实现。"
+title: "[Algorithm]图的广度优先搜索实现。"
 date: "2015-11-22"
 categories: sddtc tech
 tags: [algorithm]
@@ -9,7 +9,7 @@ guid: urn:uuid:dc1595e5-2297-484a-8688-6808d8f12e51
 
 ### 图的广度优先搜索实现  
 
-```java
+~~~java
 class GraphNode {
     int val;
     GraphNode next;
@@ -98,4 +98,4 @@ public class GraphBreathFirstSearch{
         }
     }
 }
-```
+~~~

@@ -1,5 +1,7 @@
 markdown: kramdown
-highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
 url: https://homuralovelive.com
 lsi: false
 exclude: [LICENSE, CNAME, README.md, .gitignore]
@@ -38,7 +40,7 @@ theme_settings:
   # "Hi, I'm _______"
   name: 大蜕
   email: changhbaga@gmail.com
-  tagline: "love baka ye"
+  tagline: "pipicong"
 
   # Google Analytics key, leave blank to ignore
   google_analytics_key: UA-46032200-2

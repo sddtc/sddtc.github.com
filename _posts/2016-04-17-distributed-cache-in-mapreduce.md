@@ -22,8 +22,7 @@ tags:
 
 1. Job装配阶段，将小文件的hdfs相对路径地址写入  
 
-```java
-
+~~~java
 Configuration configuration = new Configuration();
 Job job = Job.getInstance(configuration, "new-job-task");
 
@@ -33,13 +32,10 @@ try {
 } catch (Exception e) {
     e.printStackTrace();
 }
-
-```
-
+~~~
 2. map阶段，将小文件读入内存中  
 
-```java
-
+~~~java
 private FileSystem hdfs = null;
 private Map<String, String> publisherIdWithName = new HashMap<String, String>();
 
@@ -72,7 +68,6 @@ private List<String> readLinesFromJobFS(Path p) throws Exception {
     }
     return ls;
 }
- 
-```
+~~~
 
 

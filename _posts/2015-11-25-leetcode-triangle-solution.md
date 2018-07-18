@@ -7,29 +7,25 @@ tags: [algorithm]
 guid: urn:uuid:102ad6aa-e1e4-43e3-8338-21ddaf5a7c8c
 ---
 
-真是活久见系列的生动范例  
-动态规划实际算法习题  
+真是活久见系列的生动范例: 动态规划实际算法习题  
 
 ### 一
+
 Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.   
-
 For example, given the following triangle    
-
-```vim
+~~~vim
 [  
      [2],  
     [3,4],
    [6,5,7],
   [4,1,8,3]
 ]
-```
-
+~~~
 The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).  
 
 Note:   
 Bonus point if you are able to do this using only O(n) extra space, where n is the total number of rows in the triangle.  
-
-```java
+~~~java
 public int minimumTotal(List<List<Integer>> triangle) {
     if(triangle.size==0) return 0;
     if(triangle.size==1) return triangle.get(0).get(0);
@@ -65,14 +61,14 @@ public int minimumTotal(List<List<Integer>> triangle, int[] dp, int lvlidx) {
 
     return minimumTotal(triangle, dp, lvlidx+1);
 }
-```
+~~~
 
-### 二   
+### 二  
+ 
 A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).  
 The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).  
 How many possible unique paths are there?   
-
-```java
+~~~java
 public int uniquePaths(int m, int n) {
     int[][] dp = new int[m][n];
 
@@ -91,4 +87,4 @@ public int uniquePaths(int m, int n) {
 
     return dp[m-1][n-1];
 }
-```
+~~~

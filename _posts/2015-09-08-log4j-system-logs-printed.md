@@ -11,16 +11,13 @@ guid: urn:uuid:672b9275-5b41-441a-b94b-6f71a1ee0cf0
 
 日志通常分为两种：系统日志和业务数据日志  
 Log4j由三个重要的组件构成：日志信息的优先级，日志信息的输出目的地，日志信息的输出格式。  
-
 其中，Log4j提供的appender有以下几种：   
 org.apache.log4j.ConsoleAppender（控制台），   
 org.apache.log4j.FileAppender（文件），   
 org.apache.log4j.DailyRollingFileAppender（每天产生一个日志文件），  
 org.apache.log4j.RollingFileAppender（文件大小到达指定尺寸的时候产生一个新的文件），   
 org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）    
-　　
-
-```vim
+~~~vim
 //## ------------------rootLogger ------------------  ##
 //日志记录的优先级，分为OFF、FATAL、ERROR、WARN、INFO、DEBUG、ALL或者您定义的级别。
 //Log4j建议只使用四个级别，优先级从高到低分别是ERROR、WARN、INFO、DEBUG。
@@ -83,11 +80,9 @@ log4j.appender.db.sql=
 	log4j_log (PRIORITY,LOGDATE,CLASS,METHOD,MSG)
 	VALUES('%p','%d{yyyy-MM-dd HH:mm:ss}','%C','%M','%m')
 log4j.appender.db.layout=org.apache.log4j.PatternLayout
-```
-
+~~~
 在java项目中使用时，需要引入的pom  
-
-```vim
+~~~vim
 <dependency>
 	<groupId>commons-logging</groupId>
 	<artifactId>commons-logging</artifactId>
@@ -101,18 +96,15 @@ log4j.appender.db.layout=org.apache.log4j.PatternLayout
 	<artifactId>slf4j-api</artifactId>
 	<version>1.7.12</version>
 </dependency>
-```
-
+~~~
 程序中使用:  
-
-```vim
+~~~vim
 //除了当前log的输出外，还有rootLogger的两个输出器也同时产生了输出(除非设置该日志的additivity=false)
 Log dempOneCustomLog = LogFactory.getLog("demoOneLog");
 
 dempOneCustomLog.info(message);
 dempOneCustomLog.debug(message);
-
-```
+~~~
 
 主要参考：[日志框架（一）----- log4j使用](http://houfeng0923.iteye.com/blog/1264849)  
 关于日志框架的源码参考：[java日志，需要知道的几件事(commons-logging,log4j,slf4j,logback)](http://singleant.iteye.com/blog/934593)

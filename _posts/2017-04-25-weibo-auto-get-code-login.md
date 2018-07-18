@@ -9,21 +9,24 @@ tags:
 ---
 
 ### 背景
+
 使用过weibo第三方登录api的人都知道在获取code值时,一般都需要手动打开浏览器获得跳转之后的地址,例如
-```
+~~~
 http://homuralovelive.com/?code=2156b2ef6161df36a27464728bb40e77
-```
+~~~
 因为单纯用  
-```
+~~~
 response = urllib2.urlopen(request)
-```
+~~~
 这样的方式无法正常的跳转,为此我曾保存过一个博主[byrain](http://byrain.github.io/)的博文,他可以自动获取code的值,然而今天查看书签的时候突然发现他的博客更换主题文章都404了,于是想在此记录他曾记录的片段.  
 
 ### 获取方法
+
 sina的登陆采取了RSA2加密的方式  
 
 #### 一、用户名密码加密
-```
+
+~~~
 # encode username
 def get_username(user_id):
     user_id_ = urllib.quote(user_id)  
@@ -39,10 +42,12 @@ def get_password_rsa(USER_PSWD, PUBKEY, servertime, nonce):
     passwd = rsa.encrypt(message, key)
     passwd = binascii.b2a_hex(passwd)  # to 16
     return passwd
-```
+~~~
 来源网络,可以看出对于username的加密很简单,但是对于password的加密,就用到了PUBKEY, servertime,nonce这几个参数.  
+
 #### 二、参数获取  
-```
+
+~~~
 def get_parameter():
     name = con.USERID #set by your own
     password = con.PASSWD  #set by your own
@@ -58,13 +63,13 @@ def get_parameter():
     rsakv = str(data['rsakv'])
     sp = get_password_rsa(password, PUBKEY, servertime, nonce)
     return servertime, nonce, rsakv, sp, su
-```
+~~~
 来源网络,采用正则将返回的内容分离,提取所需信息,同时需要获得额外的rsakv,供之后的登陆使用.  
 
 #### 三、获取ticket  
-有了这几个参数后,就可以获得自动授权所需要的ticket.  
 
-```
+有了这几个参数后,就可以获得自动授权所需要的ticket.  
+~~~
 def get_ticket():
     servertime, nonce, rsakv, sp, su = get_parameter()
     header = {
@@ -114,13 +119,12 @@ def get_ticket():
     data = json.loads(json_data)
     ticket = data['ticket']
     return ticket
-```
-
+~~~
 post到server端的信息如上,然后获取返回的内容里就有ticket.  
 
 #### 四、获得授权  
 
-```
+~~~
 def get_code():
     ticket = get_ticket()
     header = {
@@ -160,7 +164,7 @@ def get_code():
     print return_redirect_uri
     code = return_redirect_uri[32:]
     return code
-```
+~~~
 授权的页面和之前登陆的页面并不是一个.在POST https://api.weibo.com/oauth2/内容的时候，会重定向,所以需要在requests.post里添加allow_redirects=False参数,获得302的返回header里包括了包含code码的url,提取出来就OK啦.  
 
 ### 使用说明  

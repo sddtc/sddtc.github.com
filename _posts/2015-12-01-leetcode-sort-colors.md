@@ -11,10 +11,9 @@ Given an array with n objects colored red, white or blue, sort them so that obje
 Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.    
 Could you come up with an one-pass algorithm using only constant space?  
 
-解这道题，也可以再学习下[计数排序](https://zh.wikipedia.org/zh/%E8%AE%A1%E6%95%B0%E6%8E%92%E5%BA%8F)  
+解这道题，也可以再学习下 [计数排序](https://zh.wikipedia.org/zh/%E8%AE%A1%E6%95%B0%E6%8E%92%E5%BA%8F)  
 
-```java
-
+~~~java
 public void sortColor(int[] nums) {
     if(nums == null || nums.length <= 1) {
         return;
@@ -41,5 +40,4 @@ public void sortColor(int[] nums) {
          }
     }
 }
-
-```
+~~~

@@ -7,31 +7,21 @@ tags: [jekyll, ruby]
 guid: urn:uuid:6a0f8df5-6f92-4a07-996c-4061e23d0026
 ---
 
-EI Capitan是mac目前最新版的系统，作为更新强迫症患者总是第一时间更新  
-只是这一次才发现，原来mac也会对用户安装的程序有细微的影响。。  
-
-事情比较简单，更新了系统，jekyll用不了了  
-多亏坐在我旁边好奇的lily发现了这个bug。。！  
-
-本来本机安装的ruby的路径(/System/Library/Frameworks/Ruby.framework/Versions/2.0/usr/lib/ruby/gems/2.0.0/gems)下应该是有jekyll组件的  
-没了重新安装时，出现了无法写入"/usr/bin/jekyll"的错误，no permission  
+EI Capitan是mac目前最新版的系统，作为更新强迫症患者总是第一时间更新, 只是这一次才发现，原来mac也会对用户安装的程序有细微的影响。。  
+事情比较简单，更新了系统，jekyll用不了了. 多亏坐在我旁边好奇的lily发现了这个bug。。！  
+本来本机安装的ruby的路径(/System/Library/Frameworks/Ruby.framework/Versions/2.0/usr/lib/ruby/gems/2.0.0/gems)下应该是有jekyll组件的. 没了重新安装时，出现了无法写入"/usr/bin/jekyll"的错误: no permission  
 安装方式  
-
-```vim
+~~~vim
 sudo gem install jekyll
-```
-
+~~~
 而后发现github上有很多人都提出了这个问题，应该是系统更新后，有些方式变了，由于我对ruby了解不多，在此先不做讨论  
 解决方法  
-1.将jekyll组件安装在用户路径之下  
-
-```vim
+1. 将jekyll组件安装在用户路径之下  
+~~~vim
 sudo gem install -n /usr/local/bin jekyll
-```
-
-2.运行jekyll报错  
-
-```vim
+~~~
+2. 运行jekyll报错  
+~~~vim
 ➜  demo  jekyll serve --trace
 Configuration file: /Users/sddtc/Code/Jekyll/demo/_config.yml
             Source: /Users/sddtc/Code/Jekyll/demo
@@ -70,11 +60,9 @@ I, [2015-10-14T16:18:09.163411 #4957]  INFO -- : Celluloid 0.17.2 is running in 
 	from /Library/Ruby/Gems/2.0.0/gems/jekyll-2.5.3/bin/jekyll:20:in `<top (required)>'
 	from /usr/local/bin/jekyll:23:in `load'
 	from /usr/local/bin/jekyll:23:in `<main>'
-```
-
-3.解决这个错误也是有人提出修改一下Celluloid的安装版本,用0.16.0  
-
-```vim
+~~~
+3. 解决这个错误也是有人提出修改一下Celluloid的安装版本,用0.16.0  
+~~~vim
 ➜  demo  sudo gem install celluloid --version '=0.16.0'
 Fetching: timers-4.0.4.gem (100%)
 Successfully installed timers-4.0.4
@@ -88,10 +76,8 @@ Installing ri documentation for celluloid-0.16.0
 
 ➜  demo  sudo gem uninstall celluloid --version '=0.17.2'  
 Successfully uninstalled celluloid-0.17.2
-```
-
-4.可以查看一下本地安装的组件，没用的也可以删掉了  
-
-```vim
+~~~
+4. 可以查看一下本地安装的组件，没用的也可以删掉了  
+~~~vim
 gem list --local
-```
+~~~

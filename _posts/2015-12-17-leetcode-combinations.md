@@ -10,8 +10,7 @@ guid: urn:uuid:866af2a0-3fc7-4ced-839d-1839115b7176
 Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
 For example,  
 If n = 4 and k = 2, a solution is:  
-
-```vim
+~~~vim
 [
   [2,4],
   [3,4],
@@ -20,12 +19,9 @@ If n = 4 and k = 2, a solution is:
   [1,3],
   [1,4],
 ]
-```
-
-思路：提示说backtracking问题   
-后来参考网络上的答案,感觉很棒，在此记录  
-
-```java
+~~~
+思路：提示说backtracking问题. 后来参考网络上的答案,感觉很棒，在此记录  
+~~~java
 public List<List<Integer>> combine(int n, int k) {
     List<List<Integer>> result = new ArrayList<>();
 
@@ -51,4 +47,4 @@ private void helper(int n, int k, int start, List<Integer> nodes, List<List<Inte
         nodes.remove(nodes.size()-1);
     }
 }
-```
+~~~
