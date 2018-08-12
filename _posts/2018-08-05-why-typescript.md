@@ -56,16 +56,16 @@ foo = '456'; // Error: cannot assign `string` to `number`
 
 TypeScript 使用后缀类型注释.  
 
-```javascript
+~~~javascript
 var foo: number = 123;
 
 var foo: number = '123'; // Error: cannot assign a `string` to a `number`
-```
+~~~
 
 #### 类型是结构型的
 在某些语言中, 静态类型会强迫你做没有必要的定义, 即使您知道代码可以正常工作, 语言语义也会迫使您复制内容. 在 TypeScript 中, 因为我们希望它对于具有最小认知过载的 JavaScript 开发人员来说很容易, 所以类型是结构性的. 例如: 
 
-```javascript
+~~~javascript
 interface Point2D {
     x: number;
     y: number;
@@ -82,22 +82,22 @@ function iTakePoint2D(point: Point2D) { /* do something */ }
 iTakePoint2D(point2D); // exact match okay
 iTakePoint2D(point3D); // extra information okay
 iTakePoint2D({ x: 0 }); // Error: missing information `y`
-```
+~~~
 
 #### 类型错误不会阻塞 JavaScript
 为了便于您将 JavaScript 代码迁移到 TypeScript, 即使存在编译错误, 默认情况下 TypeScript 也会尽可能地编译为有效的 JavaScript. 例如:  
 
-```javascript
+~~~javascript
 var foo = 123;
 foo = '456'; // Error: cannot assign a `string` to a `number`
-```
+~~~
 
 也会被编译为:  
 
-```javascript
+~~~javascript
 var foo = 123;
 foo = '456';
-```
+~~~
 
 因此, 您可以将 JavaScript 代码逐步升级为 TypeScript. 这与其他语言编译器的工作方式有很大不同, 也是转向 TypeScript 的另一个原因.  
 
@@ -109,31 +109,31 @@ TypeScript 的主要设计目标是使您能够安全、 轻松地使用 TypeScr
 
 作为如何编写自己的声明文件的快速示例, 请考虑 `jquery` 的一个简单示例. 默认情况下(正如预期的良好 JS 代码). TypeScript 要求您在使用变量之前声明(即在某处使用 `var`):
 
-```javascript
+~~~javascript
 $('.awesome').show(); // Error: cannot find name `$`
-```
+~~~
 
 若要快速修复, 你可以告诉 TypeScript 确实存在一个名为 `$` 的东西: 
 
-```javascript
+~~~javascript
 declare var $: any;
 $('.awesome').show(); // Okay!
-```
+~~~
 
 如果您愿意, 可以基于此基本定义构建并提供更多信息以帮助保护您免受错误的影响:  
 
-```javascript
+~~~javascript
 declare var $: {
     (selector:string): any;
 };
 $('.awesome').show(); // Okay!
 $(123).show(); // Error: selector needs to be a string
-```
+~~~
 
 #### Future JavaScript => Now
 TypeScript 提供了许多针对当前 JavaScript 引擎(仅支持 `ES5` 等)在 `ES6` 中规划的功能. `The typescript team` 正在积极地添加这些功能, 这个列表只会随着时间的推移而变大, 我们将在其自己的部分中介绍. 一个关于 `class` 的示例:   
 
-```javascript
+~~~javascript
 class Point {
     constructor(public x: number, public y: number) {
     }
@@ -145,14 +145,13 @@ class Point {
 var p1 = new Point(0, 10);
 var p2 = new Point(10, 20);
 var p3 = p1.add(p2); // { x: 10, y: 30 }
-```
+~~~
 
 可爱的橘猫般的 `=> ` 功能：
 
-```javascript
-
+~~~javascript
 var inc = x => x+1;
-```
+~~~
 
 译自:   
 [basarat.gitbooks.io/typescript](https://basarat.gitbooks.io/typescript/content/docs/why-typescript.html)

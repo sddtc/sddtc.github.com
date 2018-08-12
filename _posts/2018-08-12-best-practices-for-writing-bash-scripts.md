@@ -39,7 +39,7 @@ tags:
 
 综上所述, 有什么理由不这样定义你的脚本呢~?
 
-~~~bash
+~~~shell
 #!/usr/bin/env bash
 # Bash3 Boilerplate. Copyright (c) 2014, kvz.io
 
