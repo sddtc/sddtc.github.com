@@ -1,7 +1,7 @@
 ---
 title: "[OpenID] 关于 .well-known 规范的那些事 (1)"
 layout: post
-categories: sddtc
+categories: sddtc tech
 guid: urn:uuid:40e4ac4b-9912-4f84-89b2-224bad265fe7
 tags:
   - well-known
