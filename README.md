@@ -8,6 +8,7 @@
 * 2015-04-22 new design Using [lagom](https://github.com/swanson/lagom/) Jekyll theme
 * 2016-03-22 new design Using [lhzhang](http://lhzhang.com/) Jekyll theme
 * 2016-08-21 添加伪春菜,调教ing
+* 2019-01-03 添加鼠标点击爱心效果
 
 ## Licence and Copyright
 Following files, directories and their contents are copyright sddtc Chang. You may not reuse anything therein without my permission:
