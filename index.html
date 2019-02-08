@@ -3,67 +3,70 @@ layout: default
 ---
 
 <div>
-  <ul class="listing">
-  {% for post in site.posts limit: 1 %}
-  <article class="content">
-    <section class="title">
-      <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
-    </section>
-    <section class="meta">
+    <ul class="listing">
+        {% for post in site.posts limit: 1 %}
+        <article class="content">
+            <section class="title">
+                <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+            </section>
+            <section class="meta">
     <span class="time">
-      <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+      <time datetime="{{ post.date | date:" %Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
     </span>
-    {% if post.tags %}
-    <span class="tags">
+                {% if post.tags %}
+                <span class="tags">
       {% for tag in post.tags %}
       <a href="/tags.html#{{ tag }}" title="{{ tag }}">#{{ tag }}</a>
       {% endfor %}
     </span>
-    {% endif %}
-    </section>
-    <section class="post">
-    {{ post.content }}
-    </section>
-    </article>
-  {% endfor %}
-  </ul>
-  <div class="divider"></div>
-  <ul class="listing main-listing">
-    <li class="listing-seperator">Happend earlier this year</li>
-  {% capture year %}{{ site.time | date:"%Y"}}{% endcapture %}
-  {% for post in site.posts offset:1 %}
-    {% capture y %}{{ post.date | date:"%Y"}}{% endcapture %}
-    {% if year != y %}
-    {% break %}
-    {% endif %}
-    <li class="listing-item">
-      <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-      <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-    </li>
-  {% endfor %}
-    <li class="listing-seperator"><a href="/archive.html">Long long ago</a></li>
-  </ul>
+                {% endif %}
+            </section>
+            <section class="post">
+                {{ post.content }}
+            </section>
+        </article>
+        {% endfor %}
+    </ul>
+    <div class="divider"></div>
+    <ul class="listing main-listing">
+        <li class="listing-seperator">Happend earlier this year</li>
+        {% capture year %}{{ site.time | date:"%Y"}}{% endcapture %}
+        {% for post in site.posts offset:1 %}
+        {% capture y %}{{ post.date | date:"%Y"}}{% endcapture %}
+        {% if year != y %}
+        {% break %}
+        {% endif %}
+        <li class="listing-item">
+            <time datetime="{{ post.date | date:" %Y-%m-%d
+            " }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+            <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+        </li>
+        {% endfor %}
+        <li class="listing-seperator"><a href="/archive.html">Long long ago</a></li>
+    </ul>
 </div>
 
 <!--ukagaka-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<link type="text/css" href="https://rawgit.com/universe-white-chief/ukagaka/master/css/style.css" rel="stylesheet">
-<script type="text/javascript" src="https://rawgit.com/universe-white-chief/ukagaka/master/js/common.js"></script>
+<link type="text/css" href="https://cdn.jsdelivr.net/gh/universe-white-chief/ukagaka/css/style.css"
+      rel="stylesheet"/>
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/gh/universe-white-chief/ukagaka/js/common.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
-  var http_base = "https://rawgit.com/universe-white-chief/ukagaka/master/";
+  var http_base = "https://cdn.jsdelivr.net/gh/universe-white-chief/ukagaka/";
   WCC.init({
-      '_site_path': http_base, //站点地址，用这个地址来拼接引入 ghost
-      '_weichuncai_path': http_base + "data.json", //请求的用户数据文件地址
-      'imagewidth': "240",
-      'imageheight': "240",
-      'ghost': "default",
-      'talkself_user': [
-          ["平湖断的是海底月, 玉泉追的是心上人.", "2"],
-          ["看到你的那一刻, 窝仿佛星楼水月一起交.", "2"],
-          ["每个疏影横斜都是想拉近和你的距离", "3"],
-          ["女人，你就是我的生死劫.", "3"],
-          ["亢龙有悔, 爱你有悔", "3"]
-          ["我喜欢你, 就像冰心电你, 不讲道理~", "3"]
-      ]
+    '_site_path': http_base, //站点地址，用这个地址来拼接引入 ghost
+    '_weichuncai_path': http_base + "data.json", //请求的用户数据文件地址
+    'imagewidth': "240",
+    'imageheight': "240",
+    'ghost': "default",
+    'talkself_user': [
+      [ "平湖断的是海底月, 玉泉追的是心上人.", "2" ],
+      [ "看到你的那一刻, 窝仿佛星楼水月一起交.", "2" ],
+      [ "每个疏影横斜都是想拉近和你的距离", "3" ],
+      [ "女人，你就是我的生死劫.", "3" ],
+      [ "亢龙有悔, 爱你有悔", "3" ],
+      [ "我喜欢你, 就像冰心电你, 不讲道理~", "3" ]
+    ]
   });
 </script>

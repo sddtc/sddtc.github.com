@@ -6,6 +6,7 @@ url: https://homuralovelive.com
 lsi: false
 exclude: [LICENSE, CNAME, README.md, .gitignore]
 name: "大蜕-个人博客"
+title: "大蜕-个人博客"
 
 navigations:
   - title: Archive
