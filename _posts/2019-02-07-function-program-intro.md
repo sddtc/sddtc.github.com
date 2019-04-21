@@ -2,7 +2,7 @@
 title: "[sddtc]《函数式编程思维》小结"
 layout: post
 categories: sddtc tech
-dae: "2019-02-07"
+date: "2019-02-07"
 guid: urn:uuid:0d534c3c-3078-403t7-801f-320a8332b2fb
 tags:
   - functional
