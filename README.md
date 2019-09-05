@@ -16,3 +16,11 @@ Following files, directories and their contents are copyright sddtc Chang. You m
 * about.html
 * images/
 * _posts/
+
+## Run
+**In Docker**
+```bash
+auto/start
+```
+
+*Note: if you have any questions please raise an issue :)*
