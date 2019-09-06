@@ -40,7 +40,7 @@ end
 
 def new_post(title)
   time = Time.now
-  filename = "_posts/" + time.strftime("%Y-%m-%d-") + title + '.markdown'
+  filename = "_posts/" + time.strftime("%Y-%m-%d-") + title + '.md'
   if File.exists? filename then
     puts "Post already exists: #{filename}"
     return
@@ -49,9 +49,10 @@ def new_post(title)
   File.open(filename, "wb") do |f|
     f << <<-EOS
 ---
-title: "#{title}"
+title: "[TBD]#{title}"
 layout: post
 categories: sddtc
+date: "#{time.strftime("%Y-%m-%d")}"
 guid: urn:uuid:#{uuid}
 tags:
   - 
