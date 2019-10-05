@@ -14,11 +14,6 @@ task :generate => [:clean, :scss] do
   `jekyll`
 end
 
-desc 'Generate css'
-task :scss do
-  `scss media/css/style.scss media/css/style.css`
-end
-
 desc 'Start server'
 task :server => [:clean, :scss] do
   `jekyll serve -t`
