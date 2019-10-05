@@ -13,7 +13,7 @@ tags:
 
 ### 错误事例
 **ETIMEDOUT**
-```
+```javascript
 RequestError: Error: ETIMEDOUT
     at new RequestError (/var/task/node_modules/request-promise-core/lib/errors.js:14:15)
     at Request.plumbing.callback (/var/task/node_modules/request-promise-core/lib/plumbing.js:87:29)
@@ -29,7 +29,7 @@ RequestError: Error: ETIMEDOUT
     at Timer.processTimers (timers.js:223:10)
 ``` 
 **ESOCKETTIMEDOUT**
-```
+```javascript
 RequestError: Error: ESOCKETTIMEDOUT
     at new RequestError (/var/task/node_modules/request-promise-core/lib/errors.js:14:15)
     at Request.plumbing.callback (/var/task/node_modules/request-promise-core/lib/plumbing.js:87:29)
@@ -52,7 +52,7 @@ RequestError: Error: ESOCKETTIMEDOUT
     at Timer.processTimers (timers.js:223:10)
 ```
 **Socket hang up**
-```
+```javascript
 RequestError: Error: socket hang up
     at new RequestError (/var/task/node_modules/request-promise-core/lib/errors.js:14:15)
     at Request.plumbing.callback (/var/task/node_modules/request-promise-core/lib/plumbing.js:87:29)

