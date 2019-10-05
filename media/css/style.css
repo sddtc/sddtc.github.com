@@ -17,9 +17,22 @@ body {
     line-height: 2.4em;
 }
 
+ol, ul, li {
+    list-style-position: inside;
+    list-style-image: url("../img/bullet.png");
+}
+
 a {
     color: #63c0f5;
     text-shadow: 0 0 5px rgba(104, 182, 255, 0.5);
+}
+
+h2, h3, h4, h5, h6 {
+    color: #d9f5ef;
+}
+
+section span time {
+    color: #f5e5b9;
 }
 
 article {
