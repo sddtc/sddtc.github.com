@@ -12,6 +12,13 @@
 * 2019-10-05 Dark theme 🤭
 
 ## Development
+
+### pre-condition
+
+需要安装 Ruby 版本管理工具, 本人使用的是 rvm
+之后安装 Ruby 2.6: `rvm install 2.6`
+最后运行下方的脚本
+
 **In Docker**
 ```bash
 auto/start
