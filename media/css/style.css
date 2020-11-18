@@ -48,16 +48,16 @@ h4 {
 }
 
 section span time {
-    color: #f5e5b9;
+    color: #16697a;
 }
 
 blockquote {
-    background-color: #1b1f23 !important;
     border-radius: 3px;
     border-left: 0.2em solid #f5b461 !important;
     font-size: 1.2em;
     line-height: 2.0;
     margin: 1em 0 1em 0;
+    font-style: italic;
 }
 
 blockquote p, blockquote h2, blockquote h3, blockquote h4, blockquote h5, blockquote h6 {
@@ -65,10 +65,11 @@ blockquote p, blockquote h2, blockquote h3, blockquote h4, blockquote h5, blockq
 }
 
 pre code {
+    border-top: 0.2em solid #ec524b !important;
+    border-bottom: 0.2em solid #ec524b !important;
     margin: 15px 0 15px 0;
-    border-radius: 3px;
     line-height: 2.0;
-    background-color: rgba(21, 21, 21, 0.64) !important;
+    background-color: #ffe !important;
 }
 
 code {

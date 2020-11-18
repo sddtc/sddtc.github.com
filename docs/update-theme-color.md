@@ -86,3 +86,28 @@ ul.listing li.listing-seperator:before {
     color: #f5b461;
 }
 ```
+
+### 文章时间配色
+
+```
+section span time {
+    color: #16697a;
+}
+```
+
+和 `h2` 的标题颜色保持一致比较好看  
+
+### 代码片段背景色
+
+```
+pre code {
+    margin: 15px 0 15px 0;
+    border-radius: 3px;
+    line-height: 2.0;
+    background-color: #070d59 !important;
+}
+```
+
+### 引用片段背景色
+
+
