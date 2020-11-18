@@ -102,7 +102,7 @@ data class SddtcData(val name: String, val id: String = "1111-2222-3333-4444", v
 
 ```kotlin
 // $FF: synthetic method
-public TestClass(String var1, String var2, String var3, int var4, DefaultConstructorMarker var5)
+public SddtcClass(String var1, String var2, String var3, int var4, DefaultConstructorMarker var5)
 
 //where var1 ,var2, var3 represent the paremeters name,Id and state, 
 //var4 is the mask for default values and we can ignore var5
