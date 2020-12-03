@@ -31,8 +31,17 @@ Android 系统遵循的是最小权限原则(_the principle of least privilege._
 * Broadcast receivers
 * Content providers
 
+#### Activities
 
 
+#### Services
+
+
+#### Broadcast receivers
+
+
+
+#### Content providers
   
 
  
