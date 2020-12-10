@@ -1,16 +1,18 @@
 # homura and lovelive  
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sddtc/homuralovelive)
 
-## Story
 * homura是魔法少女小圆里面的一个角色  
 * lovelive是我14年遇到的，最棒的组合     
 * 成长的路略苦闷,但结果还是失败的话,只能说你什么都不是  
-* 2015-04-22 new design Using [lagom](https://github.com/swanson/lagom/) Jekyll theme
-* 2016-03-22 new design Using [lhzhang](http://lhzhang.com/) Jekyll theme
-* 2016-08-21 添加伪春菜,调教ing
-* 2019-01-03 添加鼠标点击爱心效果
-* 2019-10-05 Dark theme 🤭
+
+
+## Changelog
 * 2020-11-18 Warm theme 😮
+* 2019-10-05 Dark theme 🤭
+* 2019-01-03 添加鼠标点击爱心效果
+* 2016-08-21 添加伪春菜,调教ing
+* 2016-03-22 new design Using [lhzhang](http://lhzhang.com/) Jekyll theme
+* 2015-04-22 new design Using [lagom](https://github.com/swanson/lagom/) Jekyll theme
+
 
 ## Development
 
