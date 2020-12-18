@@ -8,7 +8,6 @@ tags:
   - android
 ---
 
-
 #### 背景知识
 
 设计 [ViewModel](https://developer.android.com/reference/androidx/lifecycle/ViewModel) 类的目的是为了以生命周期的方式来存储和管理 Android 应用中和 UI 相关的数据的。它帮助应用程序可以在屏幕旋转的时候仍然持有相关的数据， 换句话说， 想象一下你的应用程序可以显示出一个计数器并且可以点击一个按钮使它的值可以做加一操作，如果没有任何多余的代码逻辑处理， 当你旋转屏幕，你的应用界面适应了横屏模式，那么显示出来的累加值可能就会被清零了 😊， 因为数据的状态没有被正确的恢复。  
@@ -66,9 +65,16 @@ class MyActivity : AppCompatActivity() {
 
 如果 一个 `Activity` 被重新创建了，那么它会接收到与第一个  `Activity`  所创建出来的 `MyViewModel` 实例。 当 `Activity ` 完成它的工作之后，框架将调用 ViewModel 对象的`onCleared()` 方法，以便清理资源。  
 
-❌ViewModel 绝不能引用任何一个视图,  也不能引用[Lifecycle 类](https://developer.android.com/reference/androidx/lifecycle/Lifecycle)，总之是不能引用任何可能包含对 `activity` 上下文有引用的类。  
+❌ ViewModel 绝不能引用任何一个视图,  也不能引用 [Lifecycle 类](https://developer.android.com/reference/androidx/lifecycle/Lifecycle)，总之是不能引用任何可能包含对 `activity` 上下文有引用的类。  
 
-~~记住了没~~
+`ViewModel` 对象是为了使 `Views` 或 `LifecycleOwners` 的实例寿命更长。这种设计还意味着你可以编写测试来更轻松地覆盖 `ViewModel`， 因为它不了解 `View` 和 `Lifecycle` 对象。  
+`ViewModel` 对象可以_包含_ `LifecycleObserver`，例如 `LiveData` 对象。 但是 `ViewModel` 对象绝不能 _`observe`_ 有生命周期感知属性的可观察对象的更改（例如： `LiveData`）。     
+如果 `ViewModel` 需要 `Application` 上下文（例如，查找系统服务），则可以扩展 `AndroidViewModel` 类， 并构造一个接收 `Application` 的构造函数，因为 `Application` 类扩展了 `Context`。  
+
+~~记住了没~~  
+
+
+#### ViewModel 的生命周期
 
 
 
