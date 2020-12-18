@@ -73,8 +73,85 @@ class MyActivity : AppCompatActivity() {
 
 ~~记住了没~~  
 
-
 #### ViewModel 的生命周期
+`ViewModel` 对象作用的的范围是从获取 `ViewModel` 时传递给 `ViewModelProvider` 的整个生命周期范围。 `ViewModel` 会被保留在内存中直到其生命周期范围永久的消亡：对于 `Activity` 而言是当它完成的时候; 对于 `Fragment` 而言，是当它 `deteched` 的时候。  
+
+![viewmodel-lifecycle](/media/img/viewmodel/viewmodel-lifecycle.png)
+
+上面这张图说明了当一个 `Activity` 经历 `rotated`(屏幕旋转) 后结束时的各种生命周期状态。 它还在关联的 `Activity` 生命周期旁显示了 `ViewModel` 的生命周期。 它也同样适用于 `Fragment` 的生命周期。  
+
+#### Fragments 之间的数据共享
+通常一个 `Activity` 中的两个或更多 `Fragments` 需要相互通信。 想象这样一个场景:            
+你有一个 `Fragment` 是允许用户从列表中选择一个项目，另一个 `Fragment` 显示了所选项目的内容。 这种情况绝非易事，因为两个 `Fragment` 都需要定义一些接口描述，并且 `Activity` 必须将这两个 `Fragments` 绑定在一起。 此外，两个 `Fragment` 都必须处理另一个 `Fragment` 尚未创建或不可见的情况。          
+那么这个时候你该怎么办呢？ 你可以通过使用 `ViewModel` 对象解决这样的痛点。 `Fragments` 可以共享 `ViewModel` 来处理此通信，通过使用 `ViewModel` 的各种生命周期函数。 如以下示例代码所示：  
+
+```kotlin
+class SharedViewModel : ViewModel() {
+    val selected = MutableLiveData<Item>()
+
+    fun select(item: Item) {
+        selected.value = item
+    }
+}
+
+class MasterFragment : Fragment() {
+
+    private lateinit var itemSelector: Selector
+
+    // Use the 'by activityViewModels()' Kotlin property delegate
+    // from the fragment-ktx artifact
+    private val model: SharedViewModel by activityViewModels()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        itemSelector.setOnClickListener { item ->
+            // Update the UI
+        }
+    }
+}
+
+class DetailFragment : Fragment() {
+
+    // Use the 'by activityViewModels()' Kotlin property delegate
+    // from the fragment-ktx artifact
+    private val model: SharedViewModel by activityViewModels()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        model.selected.observe(viewLifecycleOwner, Observer<Item> { item ->
+            // Update the UI
+        })
+    }
+}
+```
+
+我们可以注意到的是，`MasterFragment` 和 `DetailFragment` 都持有 `SharedViewModel`。 这样，当每个 `Fragment` 都获得 `ViewModelProvider` 时，它们将收到相同的 `SharedViewModel` 的实例，该实例的作用范围将是展示给用户的那个 `Activity`。  
+
+使用这种方法具有以下优点：    
+* `Activity` 无需执行任何操作也无需了解此通信。  
+* 除了都持有 `SharedViewModel` 之外，`Fragments` 之间也不需要过多的了解彼此的细节。 如果其中一个 `Fragment` 消失了，则另一个 `Fragment` 仍然可以继续照常工作。
+* 每个 `Fragment` 都有自己的生命周期并且不受另一个 `Fragment` 的生命周期影响。 如果一个 `Fragment` 替换了另一个 `Fragment`， 则 UI 可以继续工作而不会出现任何问题。
+
+#### Replacing Loaders with ViewModel
+像 `CursorLoader` 这样的 Loader 类经常用于使应用程序 UI 中的数据与数据库保持同步。 你可以使用 ViewModel 和其他一些类来替换这种 Loader 类。 使用 ViewModel 可将 UI 控制器与数据加载的操作分离开来，这意味着类之间的强引用会变少。    
+在使用 `loader` 程序的一种常见方法中，应用程序可能会使用 `CursorLoader` 来观察数据库中的内容。 当数据库中的值发生更改时， `loader` 会自动触发数据的重新加载并更新 UI：  
+
+![viewmodel-loader](/media/img/viewmodel/viewmodel-loader.png)
+
+`ViewModel` 与 `Room` 和 `LiveData` 一起使用以替换 `loader`。 `ViewModel` 可以确保数据在设备配置更改后（例如旋转屏幕）仍然存在。 当数据库更改时，`Room` 会通知你的 `LiveData`，然后 `LiveData` 会使用修改后的数据更新 UI。  
+
+![viewmodel-replace-loader](/media/img/viewmodel/viewmodel-replace-loader.png)  
+
+#### Use coroutines with ViewModel
+`ViewModel` 还包含了对 `Kotlin` 协程的支持
+
+#### 更多的信息
+随着数据变得越来越复杂，你可能会选择使用单独的类来加载数据。 `ViewModel` 的目的是为 UI 控制器封装数据，以使数据在配置更改后仍然可以被恢复。 所以如果你想要了解更多更多有关如何在配置更改后加载，保留和管理数据的信息，可以看看[这篇文章](https://developer.android.com/topic/libraries/architecture/saving-states)    
+
+#### 一些相关的资源
+* [Android Architecture Components basic sample](https://github.com/android/architecture-components-samples/tree/main/BasicSample)
+* [Sunflower, a gardening app illustrating Android development best practices with Android Jetpack.](https://github.com/android/sunflower)
+
 
 
 
