@@ -1,47 +1,35 @@
-markdown: kramdown
+encoding: utf-8
+
+# SEO
+title: 大蜕
+description: 大蜕的个人博客
+keywords: 大蜕,Blog,sddtc,JavaScript
+author: sddtc
+footerText: 'Copyright © 2021'
+
+# theme
+permalink: /posts/:year/:month/:day/:title.html
 kramdown:
+  auto_ids: true
   input: GFM
   syntax_highlighter: rouge
-url: https://homuralovelive.com
-lsi: false
-exclude: [LICENSE, CNAME, README.md, .gitignore]
-name: "大蜕-个人博客"
-title: "大蜕-个人博客"
+exclude: ['CNAME', 'README.md', 'LICENSE', '_site', 'dist', 'Gemfile', 'Gemfile.lock']
 
-navigations:
-  - title: Archive
-    class: fa fa-list-ul
-    href: /archive.html
-  - title: About
-    class: fa fa-user
-    href: /about.html
-  - title: Gallery
-    class: fa fa-film
-    href: /film.html
-  - title: Comments Board
-    class: fa fa-comments
-    href: /comments.html
-  - title: Subscribe
-    class: fa fa-rss
-    href: /atom.xml
+# 域名配置
+# baseurl配置,如果网站部署在根目录下的其他目录中，请设置为 /目录名
+domainUrl: 'https://www.homuralovelive.com'
+baseurl: ''
 
-# Theme customization - please change from the defaults!
-theme_settings:
-  # Color for top bar, links, etc
-  highlight_color: '#0F0'
+# 菜单
+menu:
+  - title: 首页
+    url: /
+  - title: 归类
+    url: /pages/categories.html
+  - title: 搜索
+    url: /pages/search.html
+  - title: 关于
+    url: /pages/about.html
 
-  # Profile links on the left sidebar, leave blank to ignore
-  social:
-    github: sddtc
-    twitter: sddtc_
-
-  # "Hi, I'm _______"
-  name: 大蜕
-  email: changhbaga@gmail.com
-  tagline: "sddtc"
-
-  # Google Analytics key, leave blank to ignore
-  google_analytics_key: UA-46032200-2
-  google_analytics_domain: homuralovelive.com
-  # Toggle "Postings are my own" disclaimer in footer
-  show_disclaimer: true
+# 点击页面文字冒出特效,不需要请设置为false
+extClickEffect: true
