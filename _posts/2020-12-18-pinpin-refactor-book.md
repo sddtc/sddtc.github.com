@@ -115,15 +115,6 @@ tags:
   * 如果我只是想要加入一两个函数，可以使用 `Introduce Foreign Method`
   * 如果函数超过了两个，使用 `Introduce Local Extension`
 
-单单品品这一章节的 Agenda 我已经按耐不住想要继续阅读的渴望了 🌝
-
-
-
-  
-  
-
- 
-  
-
+单单品品这一章节的 Agenda 我已经按耐不住想要继续阅读的渴望了 🌝  
 
 
