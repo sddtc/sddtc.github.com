@@ -33,3 +33,9 @@ menu:
 
 # 点击页面文字冒出特效,不需要请设置为false
 extClickEffect: true
+
+plugins:
+  - jekyll-feed
+
+feed:
+  path: /static/xml/rss.xml
