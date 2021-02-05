@@ -30,6 +30,8 @@ menu:
     url: /pages/search.html
   - title: 关于
     url: /pages/about.html
+  - title: RSS 订阅
+    url: /static/xml/rss.xml
 
 # 点击页面文字冒出特效,不需要请设置为false
 extClickEffect: true
