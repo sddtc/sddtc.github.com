@@ -30,6 +30,8 @@ menu:
     url: /pages/search.html
   - title: 关于
     url: /pages/about.html
+  - title: 伙伴
+    url: /pages/friends.html
   - title: RSS 订阅
     url: /static/xml/rss.xml
 
