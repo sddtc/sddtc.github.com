@@ -1,9 +1,9 @@
 ---
-title: "[Mockito]初步使用静态测试方法。"
+title: "Mockito 之初步使用静态测试方法。"
 layout: post
 guid: urn:uuid:abb1f64e-4061-4d12-bd4b-0fc891562194
 date: "2017-01-05"
-categories: sddtc tech
+categories: mockito qa
 tags: [mockito]
 ---
 

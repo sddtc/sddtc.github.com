@@ -1,8 +1,8 @@
 ---
-title: "[sddtc]论'永远不要相信用户的输入'"
+title: "论'永远不要相信用户的输入'"
 layout: post
 date: "2018-03-28"
-categories: sddtc tech
+categories: bug
 guid: urn:uuid:0f855d06-5b58-4525-a314-2f8a49656151
 tags:
   - summary

@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Git]一台电脑同时支持github和gitlab的提交。"
+title: "[Git]一台电脑同时支持 github 和 gitlab 的提交。"
 date: "2016-03-01"
-categories: sddtc tech
+categories: git
 tags: [git]
 guid: urn:uuid:de8d598d-6f35-4c7b-ab23-1951062dadfc
 ---

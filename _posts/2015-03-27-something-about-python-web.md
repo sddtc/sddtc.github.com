@@ -1,9 +1,10 @@
 ---
 layout: post
-title: "豆瓣和python的一个小故事。"
+title: "豆瓣和 python 的一个小故事。"
 date: "2015-03-27"
-categories: sddtc chip
-tags: [life]
+categories: python tech
+tags:
+  - python
 guid: urn:uuid9b3ee784-620b-4541-a1d1-0f74ae58f2b5
 ---
 

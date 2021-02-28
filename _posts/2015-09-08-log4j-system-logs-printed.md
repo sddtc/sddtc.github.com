@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Log4j]业务日志输出规则实践。"
+title: "[Log4j] 业务日志输出规则实践。"
 date: "2015-09-08"
-categories: sddtc tech
+categories: log4j
 tags: [log4j]
 guid: urn:uuid:672b9275-5b41-441a-b94b-6f71a1ee0cf0
 ---

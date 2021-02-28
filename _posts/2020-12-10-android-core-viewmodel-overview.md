@@ -1,7 +1,7 @@
 ---
 title: "[Android Core] 再谈 ViewModel"
 layout: post
-categories: sddtc tech
+categories: android
 date: "2020-12-10"
 guid: urn:uuid:4b5d1b0f-7ffe-48b6-9947-b763ab21cedb
 tags:

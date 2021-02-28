@@ -1,7 +1,7 @@
 ---
 title: "[读书笔记] 读 《这就是软件工程师》 有感"
 layout: post
-categories: life
+categories: book
 date: "2021-02-28"
 guid: urn:uuid:ca3c14e3-0bfa-4474-ae1b-18d0aa292f1f
 tags:

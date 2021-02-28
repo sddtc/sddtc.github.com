@@ -1,9 +1,9 @@
 ---
-title: "Netflix推荐系统的最新解读：算法、商业价值与创新。"
+title: "Netflix 推荐系统的最新解读：算法、商业价值与创新。"
 layout: post
 guid: urn:uuid:9224cf1f-0607-4a77-a5c9-5d4bebb85141
 date: "2016-06-26"
-categories: sddtc tech
+categories: recsys
 tags:
   - recsys
 ---

@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[algorithm]Sort Colors解决方案。"
+title: "[algorithm] Sort Colors 解决方案。"
 date: "2015-12-01"
-categories: sddtc tech
+categories: algo
 tags: [algorithm]
 guid: urn:uuid:afa0ccfa-bd18-4008-93f0-b12d20edefbc
 ---

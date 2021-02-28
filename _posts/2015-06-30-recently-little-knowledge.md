@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Storm]介绍和kafka相关命令脚本。"
+title: "[Storm] 介绍和 kafka 相关命令脚本。"
 date: "2015-06-30"
-categories: sddtc tech
+categories: storm kafka
 tags: [storm]
 guid: urn:uuid:77290b8e-e34e-44cd-b084-99ad330e2d96
 ---
@@ -27,7 +27,7 @@ storm的lib包下面需要放zookeeper.jar
 
 * * *
 
-**hdfs可以写入hdfs文件系统，也可以将流直接写入本地文件**
+hdfs可以写入hdfs文件系统，也可以将流直接写入本地文件
 
 You can get the FileSystem by the following way:
 

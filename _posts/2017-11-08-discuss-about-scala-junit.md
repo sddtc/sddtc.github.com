@@ -1,9 +1,9 @@
 ---
-title: "[Scala]关于Scala这门语言的理解和它的测试框架。"
+title: "关于 Scala 这门语言的理解和它的测试框架。"
 layout: post
 guid: urn:uuid:2554a79f-6be5-4d80-ac5b-7e2a3a152a04
 date: "2017-11-08"
-categories: sddtc tech
+categories: scala
 tags:
   - tech
   - scala

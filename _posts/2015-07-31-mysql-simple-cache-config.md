@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[MYSQL]服务器端的高级优化实践。"
+title: "[MYSQL] 服务器端的高级优化实践。"
 date: "2015-07-31"
-categories: sddtc tech
+categories: db mysql
 tags: [mysql]
 guid: urn:uuid:ac28bead-627d-4d6d-8f78-d981730908b8
 ---

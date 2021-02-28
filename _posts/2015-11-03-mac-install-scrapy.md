@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Scrapy]mac安装scrapy实践。"
+title: "[Scrapy] mac 安装 scrapy 实践。"
 date: "2015-11-03"
-categories: sddtc tech
+categories: scrapy
 tags: [python, scrapy]
 guid: urn:uuid:302ac300-ab74-45b2-b388-0abb5ff7c35a
 ---

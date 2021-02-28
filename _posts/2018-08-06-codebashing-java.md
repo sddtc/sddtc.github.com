@@ -1,7 +1,7 @@
 ---
 title: "[Java] Codebashing"
 layout: post
-categories: sddtc tech
+categories: java
 guid: urn:uuid:613ca4d3-7820-4d5e-b246-5c4cc79615dc
 tags:
   - java

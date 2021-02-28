@@ -1,7 +1,7 @@
 ---
 title: "使用 Gradle 插件发布 Android library 到 maven 远程仓库"
 layout: post
-categories: tech
+categories: android
 date: "2021-02-22"
 guid: urn:uuid:6e1b87f5-dea9-4660-8d86-a1101e1c8998
 tags:

@@ -1,8 +1,8 @@
 ---
-title: "[Recommender]实现一个简单的推荐系统。"
+title: "实现一个简单的推荐系统。"
 date: "2016-03-27"
 layout: post
-categories: sddtc tech
+categories: python recsys
 guid: urn:uuid:5a3dd3d9-5780-40bd-9e19-e1c591a32c7d
 tags:
   - python

@@ -1,8 +1,8 @@
 ---
-title: "[sddtc]浸泡。"
+title: "浸泡。"
 layout: post
 date: "2017-10-31"
-categories: sddtc life
+categories: life
 guid: urn:uuid:ba404166-5cea-4a1e-a6d1-0c604dd98c77
 tags:
   - life

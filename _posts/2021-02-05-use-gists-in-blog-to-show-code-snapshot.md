@@ -1,7 +1,7 @@
 ---
 title: "运用 Gists 来进行嵌套代码块管理"
 layout: post
-categories: sddtc
+categories: git
 date: "2021-02-05"
 guid: urn:uuid:72b71a08-e384-4327-9fb7-250c4ca1287b
 tags:

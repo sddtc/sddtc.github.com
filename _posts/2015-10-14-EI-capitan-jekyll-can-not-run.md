@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Jekyll]EI Capitan jekyll can't run解决方案。"
+title: "[Jekyll] EI Capitan jekyll can't run 解决方案。"
 date: "2015-10-14"
-categories: sddtc work
+categories: jekyll
 tags: [jekyll, ruby]
 guid: urn:uuid:6a0f8df5-6f92-4a07-996c-4061e23d0026
 ---

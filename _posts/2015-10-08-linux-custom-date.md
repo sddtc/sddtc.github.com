@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Shell]自定义date命令。"
+title: "[Shell] 自定义 date 命令。"
 date: "2015-10-08"
-categories: sddtc tech
+categories: shell date
 tags: [linux, shell]
 guid: urn:uuid:da1c05f0-eed6-44ce-af01-1165875ce7d0
 ---

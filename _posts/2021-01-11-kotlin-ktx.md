@@ -1,7 +1,7 @@
 ---
 title: "[Android Core] Android KTX【卡通侠神马的"
 layout: post
-categories: sddtc tech
+categories: android
 date: "2021-01-11"
 guid: urn:uuid:6b506c07-24fb-4236-a584-c7ebe7feb52f
 tags:

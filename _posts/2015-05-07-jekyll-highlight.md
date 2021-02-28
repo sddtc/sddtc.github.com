@@ -1,9 +1,10 @@
 ---
 layout: post
-title: "[Jekyll]我们都会喜欢的语法高亮。"
+title: "[Jekyll] 我们都会喜欢的语法高亮。"
 date: "2015-05-07"
-categories: sddtc work
-tags: [jekyll]
+categories: jekyll
+tags:
+  - jekyll
 guid: urn:uuid:8454eed2-ae76-49b4-ab1f-861e309308bd
 ---
 

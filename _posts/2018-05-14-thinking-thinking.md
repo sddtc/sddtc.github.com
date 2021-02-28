@@ -1,7 +1,7 @@
 ---
-title: "[Thinking]读书笔记"
+title: "《少有人走的路》 读书笔记"
 layout: post
-categories: sddtc life
+categories: book
 guid: urn:uuid:a7687fb2-9b13-409c-925d-41fa4b606822
 tags:
   - life

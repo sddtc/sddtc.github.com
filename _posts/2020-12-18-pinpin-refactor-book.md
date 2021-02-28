@@ -1,7 +1,7 @@
 ---
 title: "[读书笔记] 品品《重构》这本书嗷"
 layout: post
-categories: sddtc
+categories: book
 date: "2020-12-18"
 guid: urn:uuid:a93dc7db-0ac2-40c2-9980-af9d142cd8c3
 tags:

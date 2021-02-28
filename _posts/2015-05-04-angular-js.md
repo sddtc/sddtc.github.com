@@ -1,9 +1,10 @@
 ---
 layout: post
-title: "[AngularJs]http请求要点和div的操作。"
+title: "[AngularJs] http 请求要点和 div 的操作。"
 date: "2015-05-04"
-categories: sddtc tech
-tags: [angularJs]
+categories: angular tech
+tags:
+  - angularJs
 guid: urn:uuid:c0672177-cf08-4c4d-8d31-7516148ef4e7
 ---
 

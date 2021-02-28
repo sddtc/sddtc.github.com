@@ -1,7 +1,7 @@
 ---
 title: "[Android Core] 最佳实践什么的 可太有魅力了"
 layout: post
-categories: sddtc tech
+categories: android
 date: "2020-12-08"
 guid: urn:uuid:0dfa4770-99cc-41f1-9cb9-276b067bc41a
 tags:

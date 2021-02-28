@@ -1,13 +1,15 @@
 ---
 layout: post
-title: "[Sqoop]基本使用要点和mysql相关的一个Tip。"
+title: "[Sqoop] 基本使用要点和 mysql 相关的一个 Tip。"
 date: "2015-03-16"
-categories: sddtc tech
-tags: [sqoop,mysql]
+categories: db tech
+tags: 
+  - sqoop
+  - mysql
 guid: urn:uuid:df768b2c-35e3-4806-b4e0-486ce4612871
 ---
 
-### sqoop相关命令使用:  
+### sqoop 相关命令使用:  
 
 * sqoop的export命令（hdfs--->mysql)  
 导出操作有几点需要注意的地方：  

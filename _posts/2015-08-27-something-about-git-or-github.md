@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Git]版本管理相关命令合集。"
+title: "[Git] 版本管理相关命令合集。"
 date: "2015-08-27"
-categories: sddtc tech
+categories: git
 tags: [git]
 guid: urn:uuid:a3ec03ca-1f7a-46d7-ba65-db27dda6f614
 ---

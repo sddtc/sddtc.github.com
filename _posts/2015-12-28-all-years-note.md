@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Summary]2015年度总结"
+title: "2015 年度总结"
 date: "2015-12-28"
-categories: sddtc tech
+categories: life
 tags: [life]
 guid: urn:uuid:9a45410a-47a1-45f9-bd9c-f6e3b97651e2
 ---

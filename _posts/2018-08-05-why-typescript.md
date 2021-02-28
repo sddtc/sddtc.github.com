@@ -1,7 +1,7 @@
 ---
 title: "[Javascript] Why typescript ?"
 layout: post
-categories: sddtc tech
+categories: js
 guid: urn:uuid:75f8bea2-76fb-431d-a960-5606c368882d
 tags:
   - typescript

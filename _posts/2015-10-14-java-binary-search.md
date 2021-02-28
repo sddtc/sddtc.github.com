@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Java]java实现二分法回忆片段和解决方案。"
+title: "Java 实现二分法回忆片段和解决方案。"
 date: "2015-10-14"
-categories: sddtc tech
+categories: java
 tags: [java]
 guid: urn:uuid:8a9f4073-d0cc-41f2-b3ba-db1d2332f837
 ---

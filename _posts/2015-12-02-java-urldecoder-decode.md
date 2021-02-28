@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Java]URLDecoder处理文件的case小记。"
+title: "[Java] URLDecoder 处理文件的 case 小记。"
 date: "2015-12-02"
-categories: sddtc tech
+categories: java
 tags: [java]
 guid: urn:uuid:46ae0934-607e-49be-b683-bbc330ea4fc5
 ---

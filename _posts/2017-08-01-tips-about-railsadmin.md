@@ -1,8 +1,8 @@
 ---
-title: "[RailsAdmin]关于RA的一些必须掌握的tips"
+title: "关于 RA 的一些必须掌握的 tips"
 layout: post
 date: "2017-08-01"
-categories: sddtc tech
+categories: rails ruby
 guid: urn:uuid:035dab89-3c15-48c3-be1e-43961682d17f
 tags:
   - rails

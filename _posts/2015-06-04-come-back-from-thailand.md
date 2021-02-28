@@ -2,8 +2,9 @@
 layout: post
 title: "从泰国玩肥来辣，嘻嘻。"
 date: "2015-06-04"
-categories: sddtc chip
-tags: [life]
+categories: chore
+tags:
+  - chore
 guid: urn:uuid:821c03fb-f6c7-4fe5-8a68-57427be70883
 ---
 

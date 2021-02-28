@@ -1,7 +1,7 @@
 ---
 title: "[React] 当我在写 React 我在写什么。"
 layout: post
-categories: sddtc tech
+categories: react
 guid: urn:uuid:988e1743-8b55-404e-acdd-520ab7e971c2
 tags:
   - javascript

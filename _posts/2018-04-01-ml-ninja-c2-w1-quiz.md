@@ -1,7 +1,7 @@
 ---
-title: "[ML Ninja]Coursera第二阶段第一课Quiz"
+title: "[ML Ninja] Coursera 第二阶段第一课 Quiz"
 layout: post
-categories: sddtc tech
+categories: ml
 guid: urn:uuid:b3ef70bd-be67-4b87-88da-a0ed6739f361
 tags:
   - ML Ninja

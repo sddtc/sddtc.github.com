@@ -1,7 +1,7 @@
 ---
 title: "Github - JavaScript Game Engines 使用指南"
 layout: post
-categories: sddtc tech
+categories: js
 date: "2021-02-10"
 guid: urn:uuid:df392dbf-8069-4721-8bdf-5e5603124241
 tags:

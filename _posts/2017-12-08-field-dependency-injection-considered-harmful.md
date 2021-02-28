@@ -1,9 +1,9 @@
 ---
-title: "[译]请不要再使用字段注入依赖的方式啦"
+title: "[译] 请不要再使用字段注入依赖的方式啦"
 layout: post
 guid: urn:uuid:2ff58047-9dfe-4f8d-8f2d-288e2036badb
 date: "2017-12-08"
-categories: sddtc tech
+categories: translation
 tags:
   - DI
   - java

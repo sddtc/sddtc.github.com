@@ -1,7 +1,7 @@
 ---
 title: "[AuthZ] RBAC 与 ABAC"
 layout: post
-categories: sddtc
+categories: authz
 date: "2019-09-10"
 guid: urn:uuid:f899cf95-dfa8-40ba-9706-3047b4e156fb
 tags:

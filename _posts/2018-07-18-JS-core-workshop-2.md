@@ -1,7 +1,7 @@
 ---
-title: "[Javascript]The Core (2)"
+title: "[Javascript] The Core (2)"
 layout: post
-categories: sddtc tech
+categories: js
 guid: urn:uuid:74071ae4-e14c-4c3d-b8ea-3d2666c187e4
 tags:
   - javascript

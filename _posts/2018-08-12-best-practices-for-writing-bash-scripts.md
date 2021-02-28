@@ -1,7 +1,7 @@
 ---
 title: "[Bash] Best Practices For Writing Bash scripts"
 layout: post
-categories: sddtc tech
+categories: shell
 guid: urn:uuid:7bb4c030-c072-4ed1-a832-2640408911fa
 tags:
   - bash

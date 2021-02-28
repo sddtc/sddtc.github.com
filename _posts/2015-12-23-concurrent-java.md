@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Java]concurrent包部分解读。"
+title: "[Java] concurrent 包部分解读。"
 date: "2015-12-23"
-categories: sddtc tech
+categories: java
 tags: [java]
 guid: urn:uuid:af62c8d3-84d7-4c48-bb29-4fef13220ff1
 ---

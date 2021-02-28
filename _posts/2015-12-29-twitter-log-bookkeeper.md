@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "Twitter高性能分布式日志系统架构解析。"
+title: "Twitter 高性能分布式日志系统架构解析。"
 date: "2015-12-29"
-categories: sddtc tech
+categories: log
 tags: [log]
 guid: urn:uuid:52844cd3-de95-411e-83f1-4e4051ce0c7d
 ---

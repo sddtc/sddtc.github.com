@@ -1,9 +1,9 @@
 ---
-title: "[Gradle]关于jar打包解决方案。"
+title: "关于 Gradle 打 jar 包解决方案。"
 layout: post
 guid: urn:uuid:ef8c2cbc-413b-41ad-91e1-03614b0627e5
 date: "2017-01-04"
-categories: sddtc tech
+categories: gradle
 tags:
   - gradle
 ---

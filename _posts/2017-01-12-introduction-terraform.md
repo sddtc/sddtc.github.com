@@ -1,8 +1,8 @@
 ---
-title: "[Terraform]基础设施即代码的概念理解。"
+title: "[Terraform] 基础设施即代码的概念理解。"
 layout: post
 guid: urn:uuid:ebbd394d-6401-4b32-a827-afdbee276f73
-categories: sddtc tech
+categories: terraform
 tags:
   - terraform
 ---

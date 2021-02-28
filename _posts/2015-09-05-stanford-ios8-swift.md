@@ -1,16 +1,18 @@
 ---
 layout: post
-title: "[Swift]斯坦福大学冬季课程-iOS8-swift学习笔记。"
+title: "[Swift] 斯坦福大学冬季课程 iOS8 Swift 学习笔记。"
 date: "2015-08-27"
-categories: sddtc tech
+categories: swift
 tags: [swift]
 guid: urn:uuid:85554b63-e9f0-4454-8ca7-fbcf272a2fad
 ---
 
 昨天偶然看到了一个斯坦福大学的公开课，具体是怎么个偶然法，我已经忘记了...但是iOS是一个很酷的东西,还是很值得学习的. 作为一个工程师，涉猎和理解，是相互的  
 第1课-第4课：  
-1. MVC: iOS的设计模式也同样遵循MVC，并且是不提倡M和V通信  
+
+1. MVC: iOS的设计模式也同样遵循MVC，并且是不提倡M和V通信    
 2. 方法里面可以嵌套方法，前提是方法是私有的  
+
 ~~~swift
 init() {
     func learnOp(op :Op) {
@@ -24,7 +26,9 @@ init() {
     knownOps["√"] = Op.UnaryOperation("√", sqrt)
 }
 ~~~
-3. 协议（Printable）  
+
+3. 协议（Printable）
+  
 ~~~swift
 private enum Op: Printable {
     case Operand(Double)
@@ -45,15 +49,20 @@ private enum Op: Printable {
     }
 }
 ~~~
-4. 字典和数组  
+
+4. 字典和数组
+  
 ~~~swift
 private var opStack = [Op]() //栈
 private var knownOps = [String:Op]() //字典
 ~~~
-5. optional  
+
+5. optional
 有一种类型叫做optional,应该是在没有强制转化之前，任何一个类型都是optional的. 这一点，在需要强类型的时候转化  
+
 6. auto-layout  
 一个长远的课题，布局总在最后整体使用，auto-layout应该是xcode4之后的新特性. 主要是相对位置的约束: 规定了至少应该有2个约束来固定一个位置  
+
 7. 继承和重载  
 swift是支持重载的，并且是单继承，但是Objective-C不支持，因此当类继承UIViewController（NSObject），swift就不能很好地拥有重载的特性，公开课使用的xcode版本和我本机不一致，因此我暂时写了2个方法，还蛮多人遇到该问题
 

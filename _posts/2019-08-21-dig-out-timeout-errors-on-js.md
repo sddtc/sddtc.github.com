@@ -1,7 +1,7 @@
 ---
 title: "[NodeJS] 浅淡 ETIMEDOUT & ESOCKETTIMEDOUT & Socket hang up"
 layout: post
-categories: sddtc tech
+categories: nodejs
 date: "2019-08-21"
 guid: urn:uuid:5446ab04-a3bb-4435-9ca6-845b3b807c25
 tags:

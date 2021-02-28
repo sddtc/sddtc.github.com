@@ -1,8 +1,8 @@
 ---
-title: "[npm]国内镜像配置方法。"
+title: "[npm] 国内镜像配置方法。"
 layout: post
 date: "2017-03-22"
-categories: sddtc tech
+categories: npm
 guid: urn:uuid:0d1db18e-7b0a-4da1-8b7e-22e9820fece8
 tags:
   - npm

@@ -1,8 +1,8 @@
 ---
-title: "2016一个新的开始。"
+title: "2016 一个新的开始。"
 layout: post
 date: "2016-03-22"
-categories: sddtc chip
+categories: life
 guid: urn:uuid:b0387d1f-ed9c-46e0-994e-c9efc93ba5e3
 tags:
   - life

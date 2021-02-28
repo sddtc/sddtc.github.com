@@ -1,7 +1,7 @@
 ---
-title: "[Serverless]AWS Serverless应用实践学习(1)"
+title: "[Serverless] AWS Serverless 应用实践学习(1)"
 layout: post
-categories: sddtc tech
+categories: serverless
 guid: urn:uuid:192d70f7-616e-4e4a-ab72-088b5554b311
 tags:
   - serverless

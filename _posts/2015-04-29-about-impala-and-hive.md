@@ -1,9 +1,11 @@
 ---
 layout: post
-title: "[Impala]和Hive的异同比较。"
+title: "[Impala] 和 Hive 的异同比较。"
 date: "2015-04-29"
-categories: sddtc tech
-tags: [impala]
+categories: db impala hive tech
+tags:
+  - impala
+  - hive
 guid: urn:uuid:4e684ef0-78a6-4f03-8a37-984a4ae13ee3
 ---
 

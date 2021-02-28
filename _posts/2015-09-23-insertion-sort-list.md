@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[algorithms]Insertion Sort List解决方案。"
+title: "[algorithms] Insertion Sort List 解决方案。"
 date: "2015-09-23"
-categories: sddtc tech
+categories: algo
 tags: [algorithms]
 guid: urn:uuid:22a07a54-fe0a-4caa-bc60-75bcb06769aa
 ---
@@ -14,7 +14,8 @@ guid: urn:uuid:22a07a54-fe0a-4caa-bc60-75bcb06769aa
 3.思考与编码  
 4.关于Arrays.sort源码的剖析  
 这道题个人解答如下，性能要甩出链表遍历解答方案一条街  
-~~~java
+
+```java
 /**
  * Definition for singly-linked list.
  * ListNode {
@@ -51,5 +52,5 @@ public ListNode insertionSortList(ListNode head) {
 
     return head;
 }
-~~~
+```
 

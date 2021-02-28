@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "关于java泛型特性的理解。"
+title: "关于 Java 泛型特性的理解。"
 date: "2015-12-22"
-categories: sddtc tech
+categories: java
 tags: [java]
 guid: urn:uuid:2ef3550f-8cf3-400b-a55b-c512c9af8b2d
 ---

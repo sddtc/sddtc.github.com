@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[algorithm]解读word2vec项目。"
+title: "[algorithm]解读 word2vec 项目。"
 date: "2015-11-26"
-categories: sddtc tech
+categories: algo
 tags: [algorithm]
 guid: urn:uuid:52104d1f-308e-4afa-973f-6d5d695f1e1e
 ---
