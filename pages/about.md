@@ -3,14 +3,12 @@ layout: post
 title: 关于我
 ---
 
-> ☕️ in,code off
+> ☕️ in, code off
 
 关于大蜕:  `复杂的人`  
+属性:  `优雅的彩笔`, `动画党`, `剑三穷苦 PVP`, `用爱发电`, `BE 美学人`  
 
-属性:  `优雅的彩笔`  
-
-今日心情    
-
+今日心情:    
 ![Sddtc-Today](/media/img/soul/yiya.gif)
 
 > "象棋的可能棋局数比宇宙中的原子的数量还多，没人能预料到一切，即便是你。  
@@ -18,6 +16,6 @@ title: 关于我
 但这也意味着，即使你走错一步，接下来也会有无数种补救的方法。
 所以放松，出招就好。"
 
-`Blog`:      [`homuralovelive.com`](https://homuralovelive.com)  
-`Github`:    [`sddtc's Github`](https://github.com/sddtc)  
-`Instagram`: [`sddtc's Instagram`](https://www.instagram.com/sddtc_ch)  
+`Blog`     : [homuralovelive.com](https://homuralovelive.com)  
+`Github`   : [Github](https://github.com/sddtc)  
+`Instagram`: [Instagram](https://www.instagram.com/sddtc_ch)  

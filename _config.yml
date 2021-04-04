@@ -32,8 +32,8 @@ menu:
     url: /pages/about.html
   - title: 伙伴
     url: /pages/friends.html
-  - title: RSS 订阅
-    url: /static/xml/rss.xml
+  - title: BE 美学人
+    url: /pages/be.html
 
 # 点击页面文字冒出特效,不需要请设置为false
 extClickEffect: true
