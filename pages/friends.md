@@ -8,3 +8,4 @@ title: 伙伴们嗷
 > 一 苹果 "非同凡响" 广告， 1997
 
 * [阿恒嗷](https://zhangjiaheng.cn)
+* [Phil Calçado](https://philcalcado.com/)
