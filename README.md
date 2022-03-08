@@ -44,6 +44,7 @@ auto/start
 1. 文章名称为英语目的是为了使生成的 URI 部分是英语，后期文章的名称可以在内容页进行修改  
 2. 请勿使用空格的原因是脚本(`/auto/create-new-post.sh`)没有进行编码保护，容易产生异常  
 
+test
 ## Licence and Copyright
 Following files, directories and their contents are copyright sddtc Chang. You may not reuse anything therein without my permission:
 
