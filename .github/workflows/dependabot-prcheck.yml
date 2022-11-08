@@ -1,11 +1,17 @@
 name: Dependabot PR Check
 
 on:
-  pull_request
+  pull_request_target:
+    branches:
+      - 'dependabot/**'
 
 jobs:
   check-dependabot:
     runs-on: ubuntu-latest
     if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          github-token: ${{ secrets.GITHUBACTION_TOKEN }}
       - run: echo "PR created by Dependabot"
