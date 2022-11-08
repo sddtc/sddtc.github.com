@@ -41,7 +41,7 @@ jobs:
   dependabot_auto_merge:
     if: ${{ github.event_name == 'pull_request_target' && github.actor == 'dependabot[bot]' }}
     runs-on: ubuntu-latest
-    needs: ci
+    needs: build
     steps:
       # If the PR is created by Dependabot run additional steps
       - name: Fetch Dependabot metadata
