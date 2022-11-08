@@ -3,7 +3,7 @@ name: Dependabot PR Check
 on:
   pull_request_target:
     branches:
-      - 'dependabot/**'
+      - /^dependabot.*/
 
 jobs:
   check-dependabot:
