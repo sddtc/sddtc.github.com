@@ -33,17 +33,16 @@ tags:
 * 通过强大的搜索引擎找到剑网3的 API, 目前感觉大部分是黑盒 API, 能用但是并不知道哪天就不能用了, 并没有官方的文档  
 * 因为功能需要针对帮会的需求进行定制化, 因此笔者自己也创建了一个名叫机关小猪的项目, 用来监听, 解析, 分析, 发送信息  
 
-![2023-01-22-zci3TGSEaBqx](https://cdn.jsdelivr.net/gh/sddtc/upic-cloud@main/images/2023/2023-01-22-zci3TGSEaBqx.png)
+![little-pig-robot](https://cdn.jsdelivr.net/gh/sddtc/upic-cloud@main/images/2023/2023-01-22-zci3TGSEaBqx.png)
 
 为了方便功能调试, QQ robot 和机关小猪项目都运行在本地电脑上, 那么意味着有网的时候能正常工作, 当你的电脑没网了基本上群机器人也冬眠了. 群里的亲友时常在召唤机关小猪的时候由于笔者在上下班的路上因此毫无回应  
 等到第一个功能开发完备, 笔者需要将它们部署在云服务上, 接下来要做的事大概包括:  
 * 机关小猪需要集成 CI 跑测试, 集成 CD 将项目打包上传到云服务. 笔者大概率会选择 aws 云, 因为已经有账号. 也觉得价格合理且文档齐备
 * 将 mirai 的 mcl 客户端部署到云端, 机关小猪和 mcl 如果部署在一起就不用解决网路访问的问题, 否则需要考虑网络访问  
 
-最后的最后, 一定要和大家分享一个视频(来自宫聚仁儿), 太棒了🥹. 祝大家新的一年心想事成   
+最后的最后, 一定要和大家分享一个视频(来自关爱手癌-宫聚仁), 太棒了🥹. 祝大家新的一年心想事成   
 
-![2023-01-22-shouai.mp4](/media/video/2023-01-22-shouai.mp4)
-
+<video width="auto%" preload="auto" muted controls><source src="../media/video/2023-01-22-shouai.mp4" type="video/mp4">
 
 
 
