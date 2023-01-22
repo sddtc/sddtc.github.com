@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'jekyll', '~> 3.8', '>= 3.8.5'
+gem 'jekyll', '~> 4.3'
 gem 'rouge',            '3.30.0'
 gem 'wdm',              '>= 0.1.0'
 gem 'kramdown',         '>= 2.3.1'
