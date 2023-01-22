@@ -1,60 +1,25 @@
-name: blog ci
+name: ci/cd pipeline
 
 on:
   push:
     branches:
       - main
   pull_request:
-  pull_request_target:
-    types:
-      - opened
 
 jobs:
   build:
-    if: |
-      (github.event_name == 'pull_request_target' && github.actor == 'dependabot[bot]') ||
-      (github.event_name != 'pull_request_target' && github.actor != 'dependabot[bot]')
+    if: ${{ github.actor != 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     steps:
       - name: Git Checkout
         uses: actions/checkout@v3
         # Do not trigger a checkout when opening PRs from a fork (helps avoid
         # "pwn request". See https://docs.github.com/en/actions/reference/events-that-trigger-workflows#pull_request_target )
-        if: github.event_name != 'pull_request_target'
         with:
           ref: ${{ github.event.pull_request.head.ref }}
-
-      - name: Dependabot Checkout
-        uses: actions/checkout@v3
-        if: github.event_name == 'pull_request_target'
-        with:
-          # Dependabot can only check out at the HEAD of the PR branch
-          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Build the site in the jekyll/builder container
         run: |
           docker run \
           -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
           jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll && jekyll build --future"
-
-
-  dependabot_auto_merge:
-    if: ${{ github.event_name == 'pull_request_target' && github.actor == 'dependabot[bot]' }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      # If the PR is created by Dependabot run additional steps
-      - name: Fetch Dependabot metadata
-        id: metadata
-        uses: dependabot/fetch-metadata@v1.3.5
-        with:
-          github-token: "${{ secrets.GITHUBACTION_TOKEN }}"
-
-      - name: Approve a Dependabot PR
-        if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-minor' ||
-          steps.metadata.outputs.update-type == 'version-update:semver-patch' }}
-        # Approving the PR and waiting for 5 sec to let GitHub UI to reflect the changes
-        run: gh pr review --approve "$PR_URL" && sleep 5
-        env:
-          PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ secrets.GITHUBACTION_TOKEN }}

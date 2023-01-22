@@ -1,0 +1,43 @@
+name: Dependabot PR check and auto approval
+
+on:
+  pull_request_target:
+
+jobs:
+  dependabot-build:
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Dependabot Checkout
+        uses: actions/checkout@v3
+        if: github.event_name == 'pull_request_target'
+        with:
+          # Dependabot can only check out at the HEAD of the PR branch
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Build the site in the jekyll/builder container
+        run: |
+          docker run \
+          -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
+          jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll && jekyll build --future"
+
+  dependabot-auto-approve:
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: dependabot-build
+    steps:
+      - name: Fetch Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1.3.5
+        with:
+          github-token: ${{ secrets.GITHUBACTION_TOKEN }}
+      - name: Approve a Dependabot PR
+        if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-minor' ||
+          steps.metadata.outputs.update-type == 'version-update:semver-patch' }}
+        # Approving the PR and waiting for 5 sec to let GitHub UI to reflect the changes
+        run: gh pr review --approve "$PR_URL" && sleep 5
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUBACTION_TOKEN }}
