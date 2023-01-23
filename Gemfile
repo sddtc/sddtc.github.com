@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'jekyll', '~> 4.3'
-gem 'rouge',            '3.30.0'
+gem 'rouge',            '4.0.1'
 gem 'wdm',              '>= 0.1.0'
 gem 'kramdown',         '>= 2.3.1'
 gem 'kramdown-parser-gfm', '~> 1.1'
