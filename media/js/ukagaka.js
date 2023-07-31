@@ -28,9 +28,8 @@ const UKAGAKA_BASE_URL = 'https://cdn.jsdelivr.net/gh/universe-white-chief/ukaga
 loadScript(
     `${UKAGAKA_BASE_URL}/js/common.js`)
 .then(_ => {
-  const http_base = UKAGAKA_BASE_URL;
   WCC.init({
-    '_site_path': http_base, //站点地址，用这个地址来拼接引入 ghost
+    '_site_path': `${UKAGAKA_BASE_URL}/`, //站点地址，用这个地址来拼接引入 ghost
     '_weichuncai_path': `${UKAGAKA_BASE_URL}/data.json`, //请求的用户数据文件地址
     'imagewidth': '240',
     'imageheight': '240',
