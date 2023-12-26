@@ -15,7 +15,7 @@ tags:
 
 
 ## Mobile 的用户体验
-在大多数情况下，桌面应用程序都只有一个单一的入口点来进入桌面应用程序，而后作为整体的进程运行。 相对而言 Android 应用程序要复杂得多。 典型的 Android 应用程序会包含多个应用程序组件：Activities, Fragments, Services, Content Providers 和 Broadcast Receivers 有关他们的概念请见[这里](https://www.homuralovelive.com/sddtc/2020/12/01/android-core-applications-fundamentals.html)。
+在大多数情况下，桌面应用程序都只有一个单一的入口点来进入桌面应用程序，而后作为整体的进程运行。 相对而言 Android 应用程序要复杂得多。 典型的 Android 应用程序会包含多个应用程序组件：Activities, Fragments, Services, Content Providers 和 Broadcast Receivers 有关他们的概念请见[这里](https://www.sddtc.florist/sddtc/2020/12/01/android-core-applications-fundamentals.html)。
 
 你可以在应用程序的 app manifest 中声明这些组件， 之后 Android 系统使用 manifest 文件来决定如何将您的应用程序集成到安卓设备的整体用户体验中。 一个能正常工作的 Android 应用程序往往包含多个组件，而且用户经常在短时间内与多个应用程序进行交互，因此应用程序需要适应/处理不同类型的用户驱动的交互行为和任务。
 

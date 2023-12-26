@@ -24,4 +24,4 @@ tags:
 
 
 #### Reference
-[[读书笔记] 品品《重构》这本书嗷](https://www.homuralovelive.com/posts/2020/12/18/pinpin-refactor-book.html)
+[[读书笔记] 品品《重构》这本书嗷](https://www.sddtc.florist/posts/2020/12/18/pinpin-refactor-book.html)

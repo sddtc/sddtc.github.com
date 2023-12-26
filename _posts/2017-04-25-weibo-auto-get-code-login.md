@@ -12,7 +12,7 @@ tags:
 
 使用过weibo第三方登录api的人都知道在获取code值时,一般都需要手动打开浏览器获得跳转之后的地址,例如
 ~~~
-http://homuralovelive.com/?code=2156b2ef6161df36a27464728bb40e77
+https://www.sddtc.florist/?code=2156b2ef6161df36a27464728bb40e77
 ~~~
 因为单纯用  
 ~~~

@@ -42,7 +42,7 @@ tags:
 
 最后的最后, 一定要和大家分享一个视频(来自关爱手癌-宫聚仁), 太棒了🥹. 祝大家新的一年心想事成   
 
-<video width="auto%" preload="auto" muted controls><source src="https://www.homuralovelive.com/media/video/2023-01-22-shouai.mp4" type="video/mp4">
+<video width="auto%" preload="auto" muted controls><source src="https://www.sddtc.florist/media/video/2023-01-22-shouai.mp4" type="video/mp4">
 
 
 

@@ -11,6 +11,6 @@ title: 关于我
 但这也意味着，即使你走错一步，接下来也会有无数种补救的方法。
 所以放松，出招就好。"
 
-`Blog`     : [homuralovelive.com](https://homuralovelive.com)  
+`Blog`     : [www.sddtc.florist](https://www.sddtc.florist)  
 `Github`   : [Github](https://github.com/sddtc)  
 `Instagram`: [Instagram](https://www.instagram.com/sddtc_ch)  

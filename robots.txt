@@ -1,4 +1,4 @@
-Sitemap: https://sddtc.github.com/atom.xml
+Sitemap: https://sddtc.github.io/atom.xml
 
 User-agent: *
 Disallow: /assets/images/
