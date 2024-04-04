@@ -25,7 +25,7 @@ tags:
 在完成事故报告的时候, 看到了一个链接, 是关于`YOKOTENKAI`的. 并不知道这个词是什么东西, 但是报告里面的说法是拥抱它. 于是在 [Reddit 找到了](https://www.reddit.com/r/translator/comments/5uhgvt/japanese_english_what_does_yokoten_means/):    
 > You won't find yokoten (横展) in a dictionary because it's an abbreviation for yokotenkai (横展開). Its literal meaning is "horizontal deployment" but it's a term coined by Toyota so the actual meaning is dependent on how they actually used it in practice.  
 翻译过来就是: 
-> 你不会在字典中找到 yokoten（水平部署），因为它是 yokotenkai（水平扩展）的缩写。 它的字面意思是“水平部署”，但这是丰田创造的一个术语，因此实际含义取决于他们在实践中如何实际使用它。
+> 你不会在字典中找到 yokoten，因为它是 yokotenkai的缩写。 它的字面意思是“horizontal deployment”，但这是丰田创造的一个术语，因此实际含义取决于他们在实践中如何实际使用它。
 
 所以拥抱`YOKOTENKAI` 所拥抱的就是  
 > 这是 Anthony O'Connell 最喜欢的短语之一，也是任何活动中最具挑战性的活动之一组织。在小型组织中，知识和经验的共享是相对容易的。 人们在物理上靠得很近，存在时间短暂、紧密通信闭环。
