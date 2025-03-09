@@ -1,10 +1,14 @@
 services:
   jekyll:
-    image: jekyll/jekyll
-    command: jekyll serve
+    image: jekyll/jekyll:latest
+    command: "jekyll serve"
     working_dir: /app
+    container_name: sddtc_blog
     volumes:
       - $PWD:/srv/jekyll
       - .:/app
     ports:
       - "4000:4000"
+    environment:
+      JEKYLL_UID: 1001
+      JEKYLL_GID: 1001
