@@ -1,12 +1,10 @@
-version: '3'
-
 services:
   jekyll:
-    image: jekyll/jekyll:3.8@sha256:9521c8aae4739fcbc7137ead19f91841b833d671542f13e91ca40280e88d6e34
+    image: jekyll/jekyll
     command: jekyll serve
     working_dir: /app
     volumes:
       - $PWD:/srv/jekyll
       - .:/app
     ports:
-      - 4000:4000
+      - "4000:4000"
