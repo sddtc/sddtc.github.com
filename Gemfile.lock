@@ -63,7 +63,7 @@ GEM
     rb-inotify (0.11.1)
       ffi (~> 1.0)
     rexml (3.3.9)
-    rouge (4.5.1)
+    rouge (4.5.2)
     safe_yaml (1.0.5)
     sass-embedded (1.82.0)
       google-protobuf (~> 4.28)
@@ -83,7 +83,7 @@ DEPENDENCIES
   jekyll-sass-converter (~> 3.1)
   kramdown (>= 2.3.1)
   kramdown-parser-gfm (~> 1.1)
-  rouge (= 4.5.1)
+  rouge (= 4.5.2)
   wdm (>= 0.1.0)
 
 BUNDLED WITH
