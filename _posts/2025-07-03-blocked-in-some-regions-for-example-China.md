@@ -13,6 +13,5 @@ tags:
 > These issues can prevent access to files hosted on the CDN. 
 
 博客的春菜插件的资源无法加载了我才注意到这个问题. 且 2 年前左右 `cdn.jsdelivr.net` 就无法在中国区访问了. 顿时有种很复杂的情绪. 这已经不是第一次发生这样的事了,  
-自从需要 🪜才能访问谷歌以来, 处处都在遭受歧视. 包括 chatGPT, microsoft designer, myEdit 和 github/docker. 如果这些网站的使用还有这样的门槛, 很的太
-悲哀了. 技术本应是纯粹的. 很生气, 很无奈. 
-
+自从需要🪜才能访问谷歌以来, 处处都在遭受歧视. 包括 chatGPT, microsoft designer, myEdit 和 github/docker. 如果这些网站的使用还有这样的门槛, 太
+悲哀了. 技术本应是纯粹的. 很生气, 很无奈.
