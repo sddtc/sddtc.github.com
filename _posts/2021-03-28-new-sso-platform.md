@@ -1,7 +1,7 @@
 ---
 title: "登录系统的蜕变之路"
 layout: post
-categories: tech oauth
+categories: 身份认证
 date: "2021-03-28"
 guid: urn:uuid:f2f1bb31-ee56-4fc2-b1c7-4fc848ed4df9
 tags:

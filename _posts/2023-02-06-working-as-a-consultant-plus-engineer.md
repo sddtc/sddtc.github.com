@@ -1,7 +1,7 @@
 ---
 title: "伴君如伴虎, 那些略感遗憾的事"
 layout: post
-categories: tech
+categories: 软件工程
 date: "2023-02-06"
 guid: urn:uuid:787fd3e0-7122-4a1d-bd15-98cc5e64e193
 tags:

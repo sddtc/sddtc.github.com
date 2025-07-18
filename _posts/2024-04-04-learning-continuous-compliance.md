@@ -1,7 +1,7 @@
 ---
 title: "技术雷达: Continuous Compliance - 持续合规性：确保整个软件生命周期的安全性"
 layout: post
-categories: security
+categories: 安全
 date: "2024-04-04"
 guid: urn:uuid:1b1288ae-49b4-42fb-a156-2cc163d37e93
 tags:

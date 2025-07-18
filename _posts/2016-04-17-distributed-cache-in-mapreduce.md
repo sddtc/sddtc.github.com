@@ -2,7 +2,7 @@
 title: "分布式缓存在 MapReduce 上的使用。"
 date: "2016-04-17"
 layout: post
-categories: cache mapreduce
+categories: 大数据
 guid: urn:uuid:fb59ef6c-a9e2-4bf6-a7a0-d51d80f4250b
 tags:
   - mapreduce

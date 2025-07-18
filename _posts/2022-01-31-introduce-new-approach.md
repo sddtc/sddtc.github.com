@@ -1,7 +1,7 @@
 ---
 title: "在团队中引入新技术的3个原则"
 layout: post
-categories: tech
+categories: 软件工程
 date: "2022-01-31"
 guid: urn:uuid:cf824896-c020-4d8b-bb8b-035dd0e284f7
 tags:

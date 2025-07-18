@@ -1,7 +1,7 @@
 ---
 title: "[Android Core] Fundamentals 是基本原理的意思."
 layout: post
-categories: android
+categories: 移动端
 date: "2020-12-01"
 guid: urn:uuid:ea14c80c-353c-4c7c-81bf-d750eeba1cb9
 tags:

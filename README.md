@@ -17,14 +17,15 @@
 
 ## Development
 ### 准备
-需要安装 Ruby 版本管理工具, 本人使用的是 rvm
-之后安装 Ruby 2.6: `rvm install 2.6`
-最后运行下方的脚本
-
+安装ruby(保持依赖最新是个好习惯, 不是最新也不会有问题), 运行下方的脚本:
 **In Docker**
 ```bash
 auto/start
 ```
+
+更新: 2025-07-18 本人在docker运行jekyll一直报错, 解决ing.  
+缓兵之计可以本地安装`jekyll`并直接运行 `jekyll serve` 然后打开 `localhost:4000`.
+
 ### 创建新文章
 ```bash
 ./auto/create-new-post.sh {文章的标题}
@@ -43,3 +44,33 @@ Following files, directories and their contents are copyright sddtc Chang. You m
 * images/
 * _posts/
 *Note: if you have any questions please raise an issue :)*
+
+#### 自用
+分类列表:  
+生活
+碎碎念
+数据库
+大数据
+命令行
+软件工程
+移动端
+算法
+爬虫
+测试
+翻译
+机器学习
+安全
+读书笔记
+云平台
+身份认证
+女性
+播客
+个人项目
+python
+js
+java
+devops
+ruby
+react
+mjml
+kotlin

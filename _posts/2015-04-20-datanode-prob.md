@@ -2,7 +2,7 @@
 layout: post
 title: "[CDH] datanode 存储空间溢出解决。"
 date: "2015-04-20"
-categories: cdh tech
+categories: 大数据
 tags:
   - cdh
 guid: urn:uuid:19a1314e-b25d-46a1-83a1-c0b3e3d0f5da
@@ -20,6 +20,6 @@ start-balance.sh脚本没找到
 机器添加hadoop之后，没有进行balance，以至于出现这种磁盘分配不均的问题    
 cdh的hdfs命令可以进行dn的blk均衡move    
 
-~~~vim
+```vim
 sudo -u hdfs hdfs balancer -threshold 5
-~~~
+```

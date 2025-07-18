@@ -1,7 +1,7 @@
 ---
 title: "[JX3] 当我沉迷每个赛季的竞技场的时候我在沉迷什么"
 layout: post
-categories: jx3
+categories: 生活
 date: "2020-11-23"
 guid: urn:uuid:0ebf51a0-4b45-4953-9d95-744348b053a6
 tags:

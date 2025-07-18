@@ -2,7 +2,7 @@
 layout: post
 title: "[Sqoop] 基本使用要点和 mysql 相关的一个 Tip。"
 date: "2015-03-16"
-categories: db tech
+categories: 数据库
 tags: 
   - sqoop
   - mysql

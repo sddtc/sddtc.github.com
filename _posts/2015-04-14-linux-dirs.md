@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "[Shell] tar & scp & du, etc.. 命令."
-categories: tech shell
+categories: 命令行
 tags:
   - shell
 guid: urn:uuid:76552c5a-3e32-437a-9e49-ad545aa470b0

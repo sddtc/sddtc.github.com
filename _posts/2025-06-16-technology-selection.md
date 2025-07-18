@@ -1,7 +1,7 @@
 ---
 title: "当你做技术选型时需要考虑的"
 layout: post
-categories: sddtc
+categories: 软件工程
 date: "2025-06-16"
 guid: urn:uuid:a5f23103-8fc1-4bab-be1b-d2c21691661a
 tags:

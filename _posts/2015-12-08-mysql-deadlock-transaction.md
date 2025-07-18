@@ -2,7 +2,7 @@
 layout: post
 title: "[MYSQL]记一次mysql的Deadlock found when trying to get lock; try restarting transaction。"
 date: "2015-12-08"
-categories: db mysql
+categories: 大数据
 tags: [java, mysql]
 guid: urn:uuid:cb6cb0b1-be92-4f1f-a64a-62724177ced3
 ---

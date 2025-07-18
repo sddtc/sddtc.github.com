@@ -1,7 +1,7 @@
 ---
 title: "该网站在某些区域被阻止, 例如: 中国"
 layout: post
-categories: sddtc
+categories: 碎碎念
 date: "2025-07-03"
 guid: urn:uuid:e0ab1109-6e12-4054-91e4-35a5192309f1
 tags:

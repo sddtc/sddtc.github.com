@@ -1,7 +1,7 @@
 ---
 title: "花匠"
 layout: post
-categories: sddtc
+categories: 生活
 date: "2023-12-26"
 guid: urn:uuid:e8360d6e-b533-4e9c-9dbd-8f5f1a90248e
 tags:

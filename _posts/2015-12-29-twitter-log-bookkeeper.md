@@ -2,7 +2,7 @@
 layout: post
 title: "Twitter 高性能分布式日志系统架构解析。"
 date: "2015-12-29"
-categories: log
+categories: 软件工程
 tags: [log]
 guid: urn:uuid:52844cd3-de95-411e-83f1-4e4051ce0c7d
 ---

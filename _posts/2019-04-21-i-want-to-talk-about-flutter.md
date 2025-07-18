@@ -1,7 +1,7 @@
 ---
 title: "[GDG] 关于 Flutter 的一些小事"
 layout: post
-categories: flutter
+categories: 移动端
 date: "2019-04-21"
 guid: urn:uuid:b58720f0-c42d-4782-88db-fd3ac3a1a359
 tags:

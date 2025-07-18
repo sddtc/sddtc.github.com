@@ -2,7 +2,7 @@
 title: "浸泡。"
 layout: post
 date: "2017-10-31"
-categories: life
+categories: 生活
 guid: urn:uuid:ba404166-5cea-4a1e-a6d1-0c604dd98c77
 tags:
   - life

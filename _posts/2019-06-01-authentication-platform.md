@@ -1,7 +1,7 @@
 ---
 title: "[Authentication] 7大平台的第三方登录参考手册"
 layout: post
-categories: auth
+categories: 身份认证
 date: "2019-06-01"
 guid: urn:uuid:3ee54bdf-b400-4c33-bcb2-38d5b79dbd44
 tags:

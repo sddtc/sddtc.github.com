@@ -1,7 +1,7 @@
 ---
 title: "<商业就是这样>听后感"
 layout: post
-categories: sddtc
+categories: 播客
 date: "2024-02-03"
 guid: urn:uuid:5079a1bf-884c-4d65-b47b-d248a355d9d0
 tags:

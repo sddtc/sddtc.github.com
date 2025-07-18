@@ -2,7 +2,7 @@
 layout: post
 title: "wechat 通过抓包获取图片方法实践。"
 date: "2016-01-28"
-categories: wechat
+categories: 爬虫
 tags: [iOS]
 guid: urn:uuid:7ee46d88-b3ce-4f1f-bde0-2c753c6f926f
 ---

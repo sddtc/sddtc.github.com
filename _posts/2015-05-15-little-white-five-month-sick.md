@@ -3,7 +3,7 @@ title: "白社长的五月病很严重呢。"
 layout: post
 guid: urn:uuid:792f6a0e-d939-4974-bd61-dd88fa9b644f
 date: "2016-05-15"
-categories: life
+categories: 生活
 tags:
   - life
 ---

@@ -2,7 +2,7 @@
 layout: post
 title: "[Python] 关于 Python 的 Thread 介绍。"
 date: "2015-03-23"
-categories: python tech
+categories: python
 tags:
   - python
 guid: urn:uuid:5b121efd-ee64-4c32-985e-4b7a9fa29128

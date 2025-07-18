@@ -3,7 +3,7 @@ title: "2016 年度总结。"
 layout: post
 date: "2017-03-03"
 guid: urn:uuid:83e7450d-5451-4147-8c39-c4e6ba788b52
-categories: life
+categories: 生活
 tags:
   - life
   - summary

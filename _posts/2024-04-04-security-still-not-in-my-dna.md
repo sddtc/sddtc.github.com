@@ -1,7 +1,7 @@
 ---
 title: "安全并没有被刻入到我的DNA里面"
 layout: post
-categories: security
+categories: 安全
 date: "2024-04-04"
 guid: urn:uuid:d450756b-2392-41ce-84b9-c6910d9a5c75
 tags:

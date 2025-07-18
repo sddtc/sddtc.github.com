@@ -2,7 +2,7 @@
 layout: post
 title: "[MYSQL] 服务器配置文件的修改 Tips。"
 date: "2015-03-16"
-categories: db tech
+categories: 数据库
 tags:
   - mysql
 guid: urn:uuid:43e490e5-14cd-410a-8638-39233a9f4b9b

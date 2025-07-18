@@ -1,7 +1,7 @@
 ---
 title: "对于简单的 XSS 攻击的概念梳理"
 layout: post
-categories: security
+categories: 安全
 date: "2019-09-06"
 guid: urn:uuid:28b12cf0-4508-45d1-aaa5-8dde60d94eb5
 tags:

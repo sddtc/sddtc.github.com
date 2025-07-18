@@ -2,7 +2,7 @@
 layout: post
 title: "[UML]类之间的关系。"
 date: "2015-08-24"
-categories: uml
+categories: 软件工程
 tags: [uml]
 guid: urn:uuid:09a5d329-b467-44f7-96b1-f9b87382cc78
 ---

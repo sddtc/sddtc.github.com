@@ -2,7 +2,7 @@
 layout: post
 title: "[Impala] 和 Hive 的异同比较。"
 date: "2015-04-29"
-categories: db impala hive tech
+categories: 大数据
 tags:
   - impala
   - hive

@@ -1,7 +1,7 @@
 ---
 title: "中型项目组织的自治团队模式思考"
 layout: post
-categories: team
+categories: 软件工程
 date: "2024-03-22"
 guid: urn:uuid:f357efba-de1a-4159-a8c3-573e5d386c4b
 tags:

@@ -2,7 +2,7 @@
 title: "用 TDD 进行 rails_admin 开发"
 layout: post
 date: "2017-07-22"
-categories: tdd rails
+categories: 软件工程
 guid: urn:uuid:7f274e1d-2d32-4eba-835b-b75e2005fbb8
 tags:
   - rails

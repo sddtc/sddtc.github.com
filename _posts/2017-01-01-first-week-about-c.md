@@ -3,7 +3,7 @@ title: "来到一个新环境总会有些新收获。"
 layout: post
 guid: urn:uuid:15149a04-5ce0-4c73-a84a-e1dd2ff7803f
 date: "2017-01-01"
-categories: gradle
+categories: 软件工程
 tags:
   - gradle
   - jenkins

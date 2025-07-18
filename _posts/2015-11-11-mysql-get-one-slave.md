@@ -2,7 +2,7 @@
 layout: post
 title: "[MYSQL]搭建从库的方法教程。"
 date: "2015-11-11"
-categories: db mysql
+categories: 大数据
 tags: [mysql]
 guid: urn:uuid:dd045882-6567-468e-9069-9a3c33f2759b
 ---

@@ -2,7 +2,7 @@
 title: "新浪微博自动登录脚本"
 layout: post
 date: "2017-04-25"
-categories: script
+categories: 个人项目
 guid: urn:uuid:c1f408c5-0427-44d4-a282-924c60b85ab6
 tags:
   - python

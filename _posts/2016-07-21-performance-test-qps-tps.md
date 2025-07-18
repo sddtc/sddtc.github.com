@@ -3,7 +3,7 @@ title: "性能测试 QPS 和 TPS 的概念解读。"
 layout: post
 guid: urn:uuid:e45ee877-718b-447a-a379-ed956dd5a782
 date: "2016-06-26"
-categories: qa
+categories: 测试
 tags:
   - QA
 ---

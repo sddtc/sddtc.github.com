@@ -2,7 +2,7 @@
 layout: post
 title: "idea-IC 版和其它的碎碎念。"
 date: "2015-10-29"
-categories: idea
+categories: 碎碎念
 tags: [IDE, java]
 guid: urn:uuid:f1f1a21b-a50b-424c-9554-6e6386b6122a
 ---

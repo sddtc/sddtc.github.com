@@ -2,7 +2,7 @@
 layout: post
 title: "最近生活的简单总结。"
 date: "2015-07-29"
-categories: chore
+categories: 生活
 tags: [chore]
 guid: urn:uuid:bf1c8ffa-ba3c-4916-b56f-a618b20b8924
 ---

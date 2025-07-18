@@ -2,7 +2,7 @@
 layout: post
 title: "[Mac] 终端的配置文件定义与修改."
 date: "2015-08-01"
-categories: mac shell
+categories: 命令行
 tags: [mac]
 guid: urn:uuid:a0bba4ce-f211-4f3c-baac-7f754a217f93
 ---

@@ -1,7 +1,7 @@
 ---
 title: "《函数式编程思维》 读书笔记"
 layout: post
-categories: book
+categories: 读书笔记
 date: "2019-02-07"
 guid: urn:uuid:0d534c3c-3078-403t7-801f-320a8332b2fb
 tags:

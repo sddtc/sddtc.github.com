@@ -1,7 +1,7 @@
 ---
 title: "[ML Ninja] Coursera 第二阶段第一课 Quiz"
 layout: post
-categories: ml
+categories: 机器学习
 guid: urn:uuid:b3ef70bd-be67-4b87-88da-a0ed6739f361
 tags:
   - ML Ninja

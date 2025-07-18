@@ -2,9 +2,9 @@
 layout: post
 title: "一篇纯粹为了凑字数的文。"
 date: "2015-03-19"
-categories: chore
+categories: 碎碎念
 tags:
-  - chore
+  - life
 guid: urn:uuid:2befc398-5215-49b2-a505-89730d507cba
 ---
 

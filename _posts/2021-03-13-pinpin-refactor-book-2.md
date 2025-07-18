@@ -1,7 +1,7 @@
 ---
 title: "[读书笔记] 品品《重构》这本书嗷 - 中"
 layout: post
-categories: book
+categories: 读书笔记
 date: "2021-03-13"
 guid: urn:uuid:2071efe8-d27e-488c-b7a8-f5c2652831ff
 tags:

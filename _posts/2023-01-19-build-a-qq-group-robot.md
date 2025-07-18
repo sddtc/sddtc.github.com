@@ -1,7 +1,7 @@
 ---
 title: "站巨人肩膀之徒手开发QQ群机器人来满足帮会日常需求"
 layout: post
-categories: sddtc
+categories: 个人项目
 date: "2023-01-19"
 guid: urn:uuid:4f7b5036-193b-4f68-a8f3-d066b5830f30
 tags:

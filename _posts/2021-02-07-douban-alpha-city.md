@@ -1,7 +1,7 @@
 ---
 title: "记忆中的乌托邦 - 豆瓣阿尔法城"
 layout: post
-categories: js
+categories: 生活
 date: "2021-02-07"
 guid: urn:uuid:028f00c7-dd22-4572-b982-655723d96659
 tags:

@@ -3,7 +3,7 @@ title: "[Shell] 正常和异常退出的控制命令。"
 layout: post
 guid: urn:uuid:f7fba600-15c8-4df4-af1b-b0ad5712a5df
 date: "2017-01-24"
-categories: shell
+categories: 命令行
 tags:
   - shell
 ---

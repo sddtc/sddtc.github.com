@@ -2,7 +2,7 @@
 layout: post
 title: "[Swift] 斯坦福大学冬季课程 iOS8 Swift 学习笔记。"
 date: "2015-08-27"
-categories: swift
+categories: 移动端
 tags: [swift]
 guid: urn:uuid:85554b63-e9f0-4454-8ca7-fbcf272a2fad
 ---

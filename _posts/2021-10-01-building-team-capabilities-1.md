@@ -1,7 +1,7 @@
 ---
 title: "Team work"
 layout: post
-categories: sddtc
+categories: 软件工程
 date: "2021-10-01"
 guid: urn:uuid:80fd3bac-caca-4c98-a2bb-158e23f5331e
 tags:

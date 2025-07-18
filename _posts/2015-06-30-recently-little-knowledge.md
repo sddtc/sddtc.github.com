@@ -2,7 +2,7 @@
 layout: post
 title: "[Storm] 介绍和 kafka 相关命令脚本。"
 date: "2015-06-30"
-categories: storm kafka
+categories: 大数据
 tags: [storm]
 guid: urn:uuid:77290b8e-e34e-44cd-b084-99ad330e2d96
 ---

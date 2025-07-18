@@ -1,7 +1,7 @@
 ---
 title: "为什么我不喜欢工作在维护型大型工程上?"
 layout: post
-categories: sddtc
+categories: 软件工程
 date: "2023-05-28"
 guid: urn:uuid:9f7e199e-0226-407f-a0a8-b562909b3080
 tags:

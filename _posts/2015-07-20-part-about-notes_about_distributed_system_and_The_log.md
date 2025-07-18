@@ -2,7 +2,7 @@
 layout: post
 date: "2015-07-20"
 title: "[Log]关于 The-Log 这篇文章的摘要。"
-categories: translation log
+categories: 大数据
 tags: [log]
 guid: urn:uuid:e54e5c13-eda4-4433-a2bb-28ab01d7ed4e
 ---

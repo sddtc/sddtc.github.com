@@ -1,7 +1,7 @@
 ---
 title: "[Javascript] winston 日志设置指南"
 layout: post
-categories: js winston
+categories: js
 guid: urn:uuid:d6c971cb-64d7-47a3-bf8a-d95b8c20024e
 tags:
   - javascript

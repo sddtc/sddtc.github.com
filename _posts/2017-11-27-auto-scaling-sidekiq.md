@@ -3,7 +3,7 @@ title: "[Sidekiq] How to autoscale instances depending upon Sidekiq queue size"
 layout: post
 guid: urn:uuid:3c128d5d-dd95-4bec-8c55-99e33d49da06
 date: "2017-11-27"
-categories: sidekiq
+categories: devops
 tags:
   - aws
   - sidekiq

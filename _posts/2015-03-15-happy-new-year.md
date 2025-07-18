@@ -2,7 +2,7 @@
 layout: post
 title: "Happy-New-Year,2015!!!"
 date: 2015-03-15 20:19:00
-categories: life
+categories: 生活
 tags:
   - life
 guid: urn:uuid:c239f897-24b9-4faa-b032-2efd209bbb9c

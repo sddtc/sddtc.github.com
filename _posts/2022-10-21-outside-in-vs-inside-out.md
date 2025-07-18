@@ -1,7 +1,7 @@
 ---
 title: "业务开发是前端驱动后端？亦或是后端提供服务给前端？"
 layout: post
-categories: tech
+categories: 软件工程
 date: "2022-10-21"
 guid: urn:uuid:cc755c77-3e1c-4350-9e0e-3ff86c729440
 tags:

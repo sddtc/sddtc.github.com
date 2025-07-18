@@ -1,7 +1,7 @@
 ---
 title: "[Authentication] 身份认证生存指南"
 layout: post
-categories: auth
+categories: 身份认证
 date: "2019-05-25"
 guid: urn:uuid:a04fae19-bf50-4df4-97f9-d102ef6d9ae2
 tags:

@@ -2,7 +2,7 @@
 layout: post
 title: "[Algorithm]图的广度优先搜索实现。"
 date: "2015-11-22"
-categories: algo
+categories: 算法
 tags: [algorithm]
 guid: urn:uuid:dc1595e5-2297-484a-8688-6808d8f12e51
 ---

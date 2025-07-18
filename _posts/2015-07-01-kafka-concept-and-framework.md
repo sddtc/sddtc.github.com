@@ -2,7 +2,7 @@
 layout: post
 title: "[Kafka] 概念详解与架构特性。"
 date: "2015-07-01"
-categories: kafka
+categories: 大数据
 tags: [kafka]
 guid: urn:uuid:52ea5e3d-c004-401d-ad63-a33c766eb7ce
 ---

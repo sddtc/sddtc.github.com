@@ -2,7 +2,7 @@
 title: "关于 RA 的一些必须掌握的 tips"
 layout: post
 date: "2017-08-01"
-categories: rails ruby
+categories: ruby
 guid: urn:uuid:035dab89-3c15-48c3-be1e-43961682d17f
 tags:
   - rails

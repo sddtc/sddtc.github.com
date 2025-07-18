@@ -2,7 +2,7 @@
 layout: post
 title: "[algorithms] Insertion Sort List 解决方案。"
 date: "2015-09-23"
-categories: algo
+categories: 算法
 tags: [algorithms]
 guid: urn:uuid:22a07a54-fe0a-4caa-bc60-75bcb06769aa
 ---

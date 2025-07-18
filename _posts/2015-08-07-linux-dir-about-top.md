@@ -2,7 +2,7 @@
 layout: post
 date: '2015-08-07'
 title: "[Linux]关于 top 命令的说明."
-categories: top shell
+categories: 命令行
 tags: [linux]
 guid: urn:uuid:c762d7b8-191e-49f6-95ae-442faee0267e
 ---

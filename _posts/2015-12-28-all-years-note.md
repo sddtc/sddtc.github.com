@@ -2,7 +2,7 @@
 layout: post
 title: "2015 年度总结"
 date: "2015-12-28"
-categories: life
+categories: 生活
 tags: [life]
 guid: urn:uuid:9a45410a-47a1-45f9-bd9c-f6e3b97651e2
 ---

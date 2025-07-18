@@ -2,7 +2,7 @@
 layout: post
 title: "豆瓣和 python 的一个小故事。"
 date: "2015-03-27"
-categories: python tech
+categories: python
 tags:
   - python
 guid: urn:uuid9b3ee784-620b-4541-a1d1-0f74ae58f2b5

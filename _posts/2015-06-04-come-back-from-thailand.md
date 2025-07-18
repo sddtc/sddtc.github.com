@@ -2,9 +2,9 @@
 layout: post
 title: "从泰国玩肥来辣，嘻嘻。"
 date: "2015-06-04"
-categories: chore
+categories: 碎碎念
 tags:
-  - chore
+  - life
 guid: urn:uuid:821c03fb-f6c7-4fe5-8a68-57427be70883
 ---
 
