@@ -3,9 +3,9 @@ encoding: utf-8
 # SEO
 title: 大蜕
 description: 大蜕的个人博客
-keywords: 大蜕,Blog,sddtc,JavaScript
+keywords: 大蜕, sddtc, blog
 author: sddtc
-footerText: 'Copyright © 2021'
+footerText: 'Copyright © 2025'
 
 # theme
 permalink: /posts/:year/:month/:day/:title.html
@@ -24,14 +24,12 @@ baseurl: ''
 menu:
   - title: 首页
     url: /
-  - title: 归类
+  - title: 分类
     url: /pages/categories.html
-  - title: 搜索
-    url: /pages/search.html
   - title: 关于
     url: /pages/about.html
-  - title: 伙伴
-    url: /pages/friends.html
+  - title: 项目
+    url: /pages/projects.html
 
 # 点击页面文字冒出特效,不需要请设置为false
 extClickEffect: true
