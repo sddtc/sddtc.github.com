@@ -1,0 +1,29 @@
+{
+  "name": "sddtc.github.com",
+  "version": "1.0.0",
+  "description": "个人部落格",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "sddtc",
+    "blog"
+  ],
+  "author": "sddtc",
+  "license": "ISC",
+  "type": "module",
+  "homepage": "https://www.sddtc.florist",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2",
+    "@11ty/eleventy-img": "^6.0.4",
+    "@11ty/eleventy-navigation": "^1.0.4",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.1",
+    "luxon": "^3.7.1",
+    "zod": "^4.0.5",
+    "zod-validation-error": "^3.5.3"
+  },
+  "dependencies": {
+    "@zachleat/heading-anchors": "^1.0.3"
+  }
+}

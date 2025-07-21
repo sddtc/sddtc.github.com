@@ -1,7 +1,6 @@
 _site/
-*.swp
-*.swo
-stylesheets/.sass-cache
-.sass-cache
+node_modules/
+
 .DS_Store
 .idea
+.cache
