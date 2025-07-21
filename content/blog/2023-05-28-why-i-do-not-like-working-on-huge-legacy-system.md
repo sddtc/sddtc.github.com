@@ -1,7 +1,7 @@
 ---
 title: 为什么我不喜欢工作在维护型大型工程上?
-tags: 软件工程
 date: 2023-05-28
+tags: software engineer
 ---
 
 陈旧的, 停止演进的系统就像一个长满细菌的怪兽一样. 今年才把《[白色巨塔](https://movie.douban.com/subject/2150220/)

@@ -1,7 +1,7 @@
 ---
 title: 来到一个新环境总会有些新收获
 date: 2017-01-01
-tags: 软件工程
+tags: software engineer
 ---
 
 第一周,学到的东西也很多.

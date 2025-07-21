@@ -1,6 +1,6 @@
 ---
 title: 关于 .well-known 规范的那些事 (1)
-tags: 身份认证
+tags: auth
 date: 2018-08-28
 ---
 

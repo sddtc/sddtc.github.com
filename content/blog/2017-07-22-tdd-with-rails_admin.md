@@ -1,7 +1,7 @@
 ---
 title: 用 TDD 进行 rails_admin 开发
 date: 2017-07-22
-tags: 软件工程
+tags: software engineer
 ---
 
 ### 背景

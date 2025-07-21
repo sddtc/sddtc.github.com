@@ -1,7 +1,7 @@
 ---
 title: kafka的consumer的主要流程讲解
 date: 2015-06-09
-tags: 大数据
+tags: big data
 ---
 
 ### Consumer主要流程如下:

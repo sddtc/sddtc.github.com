@@ -1,7 +1,7 @@
 ---
 title: Twitter 高性能分布式日志系统架构解析
 date: 2015-12-29
-tags: 软件工程
+tags: software engineer
 ---
 
 ### 本文是关于Twitter 分布式日志系统 DistributedLog/BookKeeper的摘要

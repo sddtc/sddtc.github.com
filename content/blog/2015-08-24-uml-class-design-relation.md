@@ -1,7 +1,7 @@
 ---
 title: UML类之间的关系
 date: 2015-08-24
-tags: 软件工程
+tags: software engineer
 ---
 
 * 依赖关系(Dependence)

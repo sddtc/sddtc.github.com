@@ -1,7 +1,7 @@
 ---
 title: 技术雷达 Continuous Compliance - 持续合规性：确保整个软件生命周期的安全性
-tags: 安全
 date: 2024-04-04
+tags: security
 ---
 
 Continuous Compliance对于我来说是个既熟悉又陌生的短语, 在我看来是继 CI(Continuous Integration)-持续集成, CD(Continuous Deployment/Delivery)

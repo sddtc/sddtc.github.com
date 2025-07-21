@@ -1,6 +1,6 @@
 ---
 title: 使用 Gradle 插件发布 Android library 到 maven 远程仓库
-tags: 移动端
+tags: mobile
 date: 2021-02-22
 ---
 

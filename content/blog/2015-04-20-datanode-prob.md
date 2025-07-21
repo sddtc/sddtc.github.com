@@ -1,7 +1,7 @@
 ---
 title: datanode存储空间溢出解决
 date: 2015-04-20
-tags: 大数据
+tags: big data
 ---
 
 今天遇到了一个关于cdh集群的hadoop问题

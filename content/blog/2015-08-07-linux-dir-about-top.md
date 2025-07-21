@@ -1,7 +1,7 @@
 ---
 date: 2015-08-07
 title: Linux关于top命令的说明
-tags: 命令行
+tags: shell
 ---
 
 ### top命令关键参数解析:

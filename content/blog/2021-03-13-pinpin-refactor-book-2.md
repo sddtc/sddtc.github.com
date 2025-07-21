@@ -1,6 +1,6 @@
 ---
 title: 品品《重构》这本书嗷 - 中
-tags: 读书笔记
+tags: book notes
 date: 2021-03-13
 ---
 

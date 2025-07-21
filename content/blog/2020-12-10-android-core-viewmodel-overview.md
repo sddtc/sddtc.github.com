@@ -1,6 +1,6 @@
 ---
 title: 再谈 ViewModel
-tags: 移动端
+tags: mobile
 date: 2020-12-10
 ---
 

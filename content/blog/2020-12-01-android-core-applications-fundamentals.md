@@ -1,6 +1,6 @@
 ---
 title: Fundamentals 是基本原理的意思
-tags: 移动端
+tags: mobile
 date: 2020-12-01
 ---
 

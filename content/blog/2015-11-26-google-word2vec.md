@@ -1,7 +1,7 @@
 ---
 title: 解读 word2vec 项目
 date: 2015-11-26
-tags: 算法
+tags: algorithm
 ---
 
 ### 什么是[word2vec](https://code.google.com/p/word2vec/)

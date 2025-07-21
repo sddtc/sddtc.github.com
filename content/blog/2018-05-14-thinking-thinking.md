@@ -1,6 +1,6 @@
 ---
 title: 《少有人走的路》 读书笔记
-tags: 读书笔记
+tags: book notes
 date: 2018-05-14
 ---
 

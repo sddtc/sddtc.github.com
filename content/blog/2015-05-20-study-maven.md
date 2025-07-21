@@ -1,6 +1,6 @@
 ---
 title: Maven集成打包配置说明
-tags: 软件工程
+tags: software engineer
 date: 2015-05-20
 ---
 

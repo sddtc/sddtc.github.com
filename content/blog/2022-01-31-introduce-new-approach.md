@@ -1,6 +1,6 @@
 ---
 title: 在团队中引入新技术的3个原则
-tags: 软件工程
+tags: software engineer
 date: 2022-01-31
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Impala和Hive的异同比较
 date: 2015-04-29
-tags: 大数据
+tags: big data
 ---
 
 ### Impala相对于Hive所使用的优化技术

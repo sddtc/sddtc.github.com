@@ -1,6 +1,6 @@
 ---
 title: 最佳实践什么的 可太有魅力了
-tags: 移动端
+tags: mobile
 date: 2020-12-08
 ---
 

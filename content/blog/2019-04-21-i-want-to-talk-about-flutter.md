@@ -1,6 +1,6 @@
 ---
 title: 关于 Flutter 的一些小事
-tags: 移动端
+tags: mobile
 date: 2019-04-21
 ---
 

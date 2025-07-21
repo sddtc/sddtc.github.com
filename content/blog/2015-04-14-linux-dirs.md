@@ -1,6 +1,6 @@
 ---
 title: shell常用压缩命令
-tags: 命令行
+tags: shell
 date: 2015-04-14
 ---
 

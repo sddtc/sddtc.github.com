@@ -1,7 +1,7 @@
 ---
 title: Git版本管理相关命令合集
 date: 2015-08-27
-tags: 命令行
+tags: shell
 ---
 
 ### .gitignore 在查看 `git status` 时不能过滤文件和文件夹

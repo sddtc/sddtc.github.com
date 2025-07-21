@@ -1,6 +1,6 @@
 ---
 title: Best Practices For Writing Bash scripts
-tags: 命令行
+tags: shell
 date: 2018-08-12
 ---
 

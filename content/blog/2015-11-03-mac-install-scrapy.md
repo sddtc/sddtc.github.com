@@ -1,7 +1,7 @@
 ---
 title: Scrapy的 mac 安装 scrapy 实践
 date: 2015-11-03
-tags: 爬虫
+tags: spider
 ---
 
 以前用ubuntu的时候，装过scrapy，很顺利. 自己换了电脑之后，发现官网没有针对mac安装scrapy的说明，特此记录一下

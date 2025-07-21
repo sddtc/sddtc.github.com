@@ -1,6 +1,6 @@
 ---
 title: RBAC 与 ABAC
-tags: 身份认证
+tags: auth
 date: 2019-09-10
 ---
 

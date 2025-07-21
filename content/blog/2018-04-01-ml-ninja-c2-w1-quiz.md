@@ -1,6 +1,6 @@
 ---
 title: Coursera 第二阶段第一课 Quiz
-tags: 机器学习
+tags: machine learning
 date: 2018-04-01
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: 性能测试 QPS 和 TPS 的概念解读
 date: 2016-06-26
-tags: 测试
+tags: quality engineer
 ---
 
 本文转自[性能测试基础知识—QPS和TPS](https://dearhwj.gitbooks.io/itbook/content/test/performance_test_qps_tps.html)

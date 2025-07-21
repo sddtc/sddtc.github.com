@@ -1,6 +1,6 @@
 ---
 title: 身份认证生存指南
-tags: 身份认证
+tags: auth
 date: 2019-05-25
 ---
 

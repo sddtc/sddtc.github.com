@@ -1,7 +1,7 @@
 ---
 title: Sort Colors 解决方案
 date: 2015-12-01
-tags: 算法
+tags: algorithm
 ---
 
 Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.

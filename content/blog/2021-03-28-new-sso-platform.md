@@ -1,6 +1,6 @@
 ---
 title: 登录系统的蜕变之路
-tags: 身份认证
+tags: auth
 date: 2021-03-28
 ---
 

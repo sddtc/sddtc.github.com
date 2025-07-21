@@ -1,7 +1,7 @@
 ---
 title: Sqoop基本使用要点和mysql相关的一个Tip
 date: 2015-03-16
-tags: 数据库
+tags: database
 ---
 
 ### sqoop 相关命令使用:

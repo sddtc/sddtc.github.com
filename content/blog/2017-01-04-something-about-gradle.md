@@ -1,7 +1,7 @@
 ---
 title: 关于 Gradle 打 jar 包解决方案
 date: 2017-01-04
-tags: 软件工程
+tags: software engineer
 ---
 
 感谢周围的人让我接触到了gradle,从此我要和maven说再见.

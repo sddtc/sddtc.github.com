@@ -1,7 +1,7 @@
 ---
 title: 一台电脑同时支持 github 和 gitlab 的提交
 date: 2016-03-01
-tags: 命令行
+tags: shell
 ---
 
 好久没有更新博客了，以后积攒的好东西还会记录下来的. 这次记录下让公司的Gitlab和在家的Github的代码可以在住的地方和公司无缝提交代码. github的id\_rsa和id\_rsa.pub已经存在，也是git的global账户

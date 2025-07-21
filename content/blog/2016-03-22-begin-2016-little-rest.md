@@ -1,7 +1,7 @@
 ---
 title: 2016 一个新的开始
 date: 2016-03-22
-tags: 生活
+tags: life
 ---
 
 

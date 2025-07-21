@@ -1,7 +1,7 @@
 ---
 title: Shell正常和异常退出的控制命令
 date: 2017-01-24
-tags: 命令行
+tags: shell
 ---
 
 需要在 shell 脚本中获取 java 调用的 System.exit() 的值, System.exit(-1), 则 $? 的值为255

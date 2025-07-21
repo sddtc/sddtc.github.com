@@ -1,7 +1,7 @@
 ---
 title: npm国内镜像配置方法
 date: 2017-03-22
-tags: 软件工程
+tags: software engineer
 ---
 
 通过npm下载vue-cli脚手架,由于源的问题一直报错:

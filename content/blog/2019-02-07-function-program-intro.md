@@ -1,6 +1,6 @@
 ---
 title: 《函数式编程思维》 读书笔记
-tags: 读书笔记
+tags: book notes
 date: 2019-02-07
 ---
 

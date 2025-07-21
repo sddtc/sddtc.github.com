@@ -1,6 +1,6 @@
 ---
 title: Android KTX【卡通侠神马的
-tags: 移动端
+tags: mobile
 date: 2021-01-11
 ---
 

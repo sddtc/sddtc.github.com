@@ -1,6 +1,6 @@
 ---
 title: 读 《这就是软件工程师》 有感
-tags: 读书笔记
+tags: book notes
 date: 2021-02-28
 ---
 
