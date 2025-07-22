@@ -4,7 +4,10 @@
   "description": "个人部落格",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npx @11ty/eleventy",
+    "start": "npx @11ty/eleventy --serve --quiet",
+    "debugstart": "cross-env DEBUG=Eleventy* npx @11ty/eleventy --serve --quiet",
+    "build-ghpages": "npx @11ty/eleventy --pathprefix=/sddtc.github.com/"
   },
   "keywords": [
     "sddtc",
@@ -24,6 +27,7 @@
     "zod-validation-error": "^3.5.3"
   },
   "dependencies": {
-    "@zachleat/heading-anchors": "^1.0.3"
+    "@zachleat/heading-anchors": "^1.0.3",
+    "netlify-plugin-cache": "^1.0.3"
   }
 }
