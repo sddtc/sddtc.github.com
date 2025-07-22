@@ -1,13 +1,8 @@
-# 切换了博客引擎
+## 个人博客项目
+人为什么要写博客? 至少之于我是知识分享, 慢慢发现它也在不知不觉的记录自己的来时路. 
 
-## 2023.12.26 域名更名为 sddtc.florist
-
-## homura and lovelive
-* homura是魔法少女小圆里面的一个角色  
-* lovelive是我14年遇到的，最棒的组合     
-* 成长的路略苦闷,但结果还是失败的话,只能说你什么都不是  
-
-## Changelog
+### 历史事件
+* 2025-07-22 切换了博客静态页面生成工具, 从jekyll切换为11ty
 * 2023-12-26 domain changed: `homuralovelive.com` -> `sddtc.florist`
 * 2021-01-11 new design Using [tmaize-blog](https://github.com/TMaize/tmaize-blog)
 * 2020-11-18 Warm theme 😮
@@ -17,35 +12,21 @@
 * 2016-03-22 new design Using [lhzhang](http://lhzhang.com/) Jekyll theme
 * 2015-04-22 new design Using [lagom](https://github.com/swanson/lagom/) Jekyll theme
 
-## Development
-### 准备
-安装ruby(保持依赖最新是个好习惯, 不是最新也不会有问题), 运行下方的脚本:
-**In Docker**
-```bash
-auto/start
-```
+### 存档
+#### sddtc.florist
+* sddtc 是我的网络代号.  
+* florist 寓意我是一个花匠.  
+#### homura and lovelive
+* homura是魔法少女小圆里面的一个角色  
+* lovelive是我14年遇到的，最棒的组合     
+* 成长的路略苦闷,但结果还是失败的话,只能说你什么都不是  
 
-更新: 2025-07-18 本人在docker运行jekyll一直报错, 解决ing.  
-缓兵之计可以本地安装`jekyll`并直接运行 `jekyll serve` 然后打开 `localhost:4000`.
+### 本地启动
 
-### 创建新文章
-```bash
-./auto/create-new-post.sh {文章的标题}
 ```
-文章的标题同时也是生成的文章链接的 URI 组成部分。 例如:  
+npm i
+npx @11ty/eleventy --serve
 ```
-./auto/create-new-post.sh "hello-word"
-```
-生成的博客文章地址为: `https://www.sddtc.florist/sddtc/life/2019/12/28/hello-world.html`  
-建议: 文章名称为英语并且用 `-` 分隔，请勿使用空格分隔。  
-1. 文章名称为英语目的是为了使生成的 URI 部分是英语，后期文章的名称可以在内容页进行修改  
-2. 请勿使用空格的原因是脚本(`/auto/create-new-post.sh`)没有进行编码保护，容易产生异常  
-## Licence and Copyright
-Following files, directories and their contents are copyright sddtc Chang. You may not reuse anything therein without my permission:
-* about.html
-* images/
-* _posts/
-*Note: if you have any questions please raise an issue :)*
 
 #### 自用
 分类列表:  
