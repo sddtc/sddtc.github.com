@@ -1,4 +1,11 @@
-<h1>Tags</h1>
+---js
+const eleventyNavigation = {
+	key: "标签",
+	order: 2
+};
+---
+
+<h2>标签列表</h2>
 
 <ul>
 {% for tag in collections | getKeys | filterTagList | sortAlphabetically %}

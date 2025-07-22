@@ -1,7 +1,7 @@
 ---
 title: idea-IC 版和其它的碎碎念
 date: 2015-10-29
-tags: self talking
+tags: self-talking
 ---
 
 idea IC版真的缺失了几个小功能，以前没发现...

@@ -20,3 +20,8 @@ body {
 a {
 	text-decoration: none;
 }
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}

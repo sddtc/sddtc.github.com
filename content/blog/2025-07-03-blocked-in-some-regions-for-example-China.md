@@ -1,7 +1,7 @@
 ---
 title: 该网站在某些区域被阻止, 例如 中国
 date: 2025-07-03
-tags: self talking
+tags: self-talking
 ---
 
 > The cdn.jsdelivr.net domain is currently experiencing issues in some regions, with reports of it being blocked in China and Egypt,
