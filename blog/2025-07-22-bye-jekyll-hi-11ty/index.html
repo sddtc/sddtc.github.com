@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>博客静态页面生成工具从jekyll切换为11ty, 告别ruby 拥抱js</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="jekyll-11ty-ruby-js">博客静态页面生成工具从jekyll切换为11ty, 告别ruby 拥抱js</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2025-07-22">22 July 2025</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/js/" class="post-tag">js</a>, </li>
+	<li>标签: <a href="/sddtc.github.com/tags/ruby/" class="post-tag">ruby</a></li>
+</ul>
+
+<p>从我知道github自带<code>gh-pages</code>特性那会儿, 便把个人博客从自建服务器迁移到了这里,也快11年了(第一篇文章发布于2014年), 后来知道了一些便宜的域名服务, 换过2个域名. 从GoDaddy平台换成了<a href="https://porkbun.com/">porkbun</a>. 然而静态页面生成器一直使用github官方推荐的jekyll, 也用爱发电换了好几个主题, 最近的<a href="https://github.com/TMaize/tmaize-blog">tmaize</a>主题确实是我一直很喜欢的.. 但是!! 这两天还是谨慎思考(花了一个下午的时间), 彻底放弃jekyll, 也是要从一个一直困惑我的报错开始...<br>
+容器化启动项目是一个习惯, 它可以不依赖电脑本地的环境, 用一个docker image文件, 包含着项目需要的依赖, 运行环境, 很方便的让你快速启动. 一直以来我用了jekyll的image在本地启动博客:</p>
+<pre class="language-yml" tabindex="0"><code class="language-yml"><span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">jekyll</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> jekyll/jekyll<span class="token punctuation">:</span>latest
+    <span class="token key atrule">command</span><span class="token punctuation">:</span> <span class="token string">"jekyll serve"</span>
+    <span class="token key atrule">working_dir</span><span class="token punctuation">:</span> /app
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> sddtc_blog
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> $PWD<span class="token punctuation">:</span>/srv/jekyll
+      <span class="token punctuation">-</span> .<span class="token punctuation">:</span>/app
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">"4000:4000"</span>
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token key atrule">JEKYLL_UID</span><span class="token punctuation">:</span> <span class="token number">1001</span>
+      <span class="token key atrule">JEKYLL_GID</span><span class="token punctuation">:</span> <span class="token number">1001</span></code></pre>
+<p>这一段我也不得不吐槽, <code>JEKYLL_UID</code>和<code>JEKYLL_GID</code> 还是后来加上的, 因为一些ruby升级还是gem升级啥的导致权限问题之类的, 当时也花了好多时间解决. 然而那还是解决了的, 然而这一次的错误:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">/usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/conflict.rb:47:in <span class="token variable"><span class="token variable">`</span>conflicting_dependencies': undefined method <span class="token variable">`</span></span>request<span class="token string">' for nil:NilClass (NoMethodError)
+    [@failed_dep.dependency, @activated.request.dependency]
+                                       ^^^^^^^^
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/exceptions.rb:61:in `conflicting_dependencies'</span>
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/exceptions.rb:55:in <span class="token variable"><span class="token variable">`</span>initialize'
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver.rb:193:in <span class="token variable">`</span></span>exception<span class="token string">'
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver.rb:193:in `raise'</span>
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver.rb:193:in <span class="token variable"><span class="token variable">`</span>rescue <span class="token keyword">in</span> resolve'
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver.rb:191:in <span class="token variable">`</span></span>resolve<span class="token string">'
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/request_set.rb:411:in `resolve'</span>
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/request_set.rb:423:in <span class="token variable"><span class="token variable">`</span>resolve_current'
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:230:in <span class="token variable">`</span></span>finish_resolve<span class="token string">'
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:287:in `block in activate_bin_path'</span>
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:285:in <span class="token variable"><span class="token variable">`</span>synchronize'
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:285:in <span class="token variable">`</span></span>activate_bin_path<span class="token string">'
+	from /usr/local/bin/bundle:25:in `&lt;main>'</span>
+/usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/molinillo/lib/molinillo/resolution.rb:317:in <span class="token variable"><span class="token variable">`</span>raise_error_unless_state': Unable to satisfy the following requirements: <span class="token punctuation">(</span>Gem::Resolver::Molinillo::VersionConflict<span class="token punctuation">)</span>
+- <span class="token variable">`</span></span>bundler <span class="token punctuation">(</span><span class="token operator">=</span> <span class="token number">2.7</span>.0<span class="token punctuation">)</span><span class="token variable"><span class="token variable">`</span> required by <span class="token variable">`</span></span>user-specified dependency<span class="token variable"><span class="token variable">`</span>
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/molinillo/lib/molinillo/resolution.rb:299:in <span class="token variable">`</span></span>block <span class="token keyword">in</span> unwind_for_conflict<span class="token string">'
+	from &lt;internal:kernel>:90:in `tap'</span>
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/molinillo/lib/molinillo/resolution.rb:297:in <span class="token variable"><span class="token variable">`</span>unwind_for_conflict'
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/molinillo/lib/molinillo/resolution.rb:682:in <span class="token variable">`</span></span>attempt_to_activate<span class="token string">'
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/molinillo/lib/molinillo/resolution.rb:254:in `process_topmost_state'</span>
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/molinillo/lib/molinillo/resolution.rb:182:in <span class="token variable"><span class="token variable">`</span>resolve'
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/molinillo/lib/molinillo/resolver.rb:43:in <span class="token variable">`</span></span>resolve<span class="token string">'
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver.rb:190:in `resolve'</span>
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/request_set.rb:411:in <span class="token variable"><span class="token variable">`</span>resolve'
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/request_set.rb:423:in <span class="token variable">`</span></span>resolve_current<span class="token string">'
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:230:in `finish_resolve'</span>
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:287:in <span class="token variable"><span class="token variable">`</span>block <span class="token keyword">in</span> activate_bin_path'
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:285:in <span class="token variable">`</span></span>synchronize<span class="token string">'
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:285:in `activate_bin_path'</span>
+	from /usr/local/bin/bundle:25:in `<span class="token operator">&lt;</span>main<span class="token operator">></span>'</code></pre>
+<p>首先想到了升级bundle, 升级本地依赖, 定位这依赖冲突到底冲突在了哪里. &lt;--- 至少从这个堆栈里根本看不出来谁和谁冲突了. 所以没定位出来哈哈哈哈QAQ. 然后开始病急乱投医整自己本地的ruby版本, 发现又有3.1.0又有3.3.0但是<code>gem env</code>又展示了多版本, 于是安装了rbenv(ruby的多版本管理工具), 配置进了.zshrc还是报错. 其实写到这里我想, 或许把bunde再降回2.5.x或许和ruby 3.1.0就兼容了, 但是这种对于ruby的缺乏兴趣与理解让我太痛苦了. 一想到未来还要解决这些乱七八糟的问题, 我宁愿被js折磨. 于是决定拥抱js工具.</p>
+<p>那么那么, 切换一个新的静态页面生成工具需要几步呢?</p>
+<h2 id="">第一步, 选择一个工具🔧</h2>
+<p>基于JS的静态页面生成工具有很多,Gatsby, Astro, 11ty, next, etc. 且快速确定了目标: <a href="https://www.11ty.dev/">Eleventy</a>. 毕竟它的slogan:</p>
+<blockquote>
+<p>Eleventy is a simpler static site generator.</p>
+</blockquote>
+<p>简单这个词一下子就击中了我的心.<br>
+或者稍微对比一下也会发现:</p>
+<ul>
+<li>For large, content-rich sites with a React focus, Gatsby is a strong contender.</li>
+<li>Astro excels at building content-driven websites where minimal JavaScript and fast performance are crucial.</li>
+<li>11ty is a great choice for simpler static sites that value speed and flexibility with various templating languages.</li>
+<li>Next.js offers a balance between static site generation and dynamic rendering, making it suitable for a wide range of projects.</li>
+</ul>
+<h2 id="-2">第二步, 本地调试新工具</h2>
+<p>如果类似的经验不多, 建议使用新工具开启新的github分支, 在能保证自己现有博客一直能运行的前提下尝试新东西. 否则可能会出现进退两难的情况, 有一些挫败感.<br>
+在梳理了<a href="https://github.com/11ty/eleventy-base-blog">eleventy-base-blog</a>的博客结构之后我在主分支直接操作了.</p>
+<ul>
+<li>初始化package.json, 安装eleventy-base-blog里面的依赖</li>
+<li>创建/复制eleventy-base-blog相关的文件夹和文件: _config, _data, _includes, css, public, .nojekyll, eleventy.config.js 和 netlify.toml</li>
+<li>创建/复制eleventy-base-blog的content文件夹和文件: content的blog是真实的博客文章, 因此我把自己的143篇文章全部复制到blog文件夹下, 删除示例文章</li>
+<li>本地运行: <code>npx @11ty/eleventy --serve</code></li>
+</ul>
+<p><strong>开始处理错误:</strong></p>
+<ol>
+<li>每篇文章的开头保持统一格式, 有title, date和tags(tags必须是英文,不能是中文, 否则会报错&lt;--这也贼坑), 例如:</li>
+</ol>
+<pre><code>
+---
+title: 该网站在某些区域被阻止, 例如 中国
+date: 2025-07-03
+tags: self-talking
+---
+
+</code></pre>
+<ol start="2">
+<li>文章内容的&quot;#&quot; 需要处理一下</li>
+</ol>
+<p>2个错误处理完就能启动成功了, 只不过只有在这个时候我才发现文章多也不好, 至少开头之前用jekyll的时候就不一致, 大量的体力工作, 心里全是恨, 想写脚本的心情此刻来到了最高峰.</p>
+<h2 id="-3">第三步, 自定义样式</h2>
+<p>11ty默认的博客样式是<a href="https://demo-base-blog.11ty.dev/">蓝色调</a>, 在参考了<a href="https://colorhunt.co/">colorhunt</a>之后选择了绿色调于是添加了自定义css文件<a href="https://github.com/sddtc/sddtc.github.com/blob/main/css/customized-theme.css">customized-theme.css</a>. 这个文件会覆盖默认样式, 保持独立. 在软件工程领域里, 对修改关闭, 对扩展开放是好实践.<br>
+因为<code>base.njk</code>文件是博客系统的基础文件, css文件自然要在这里进行额外的声明来保证它的加载, 因此添加一行:</p>
+<pre class="language-html" tabindex="0"><code class="language-html">
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">></span></span><span class="token style"><span class="token language-css"><span class="token punctuation">{</span>% include <span class="token string">"css/customized-theme.css"</span> %<span class="token punctuation">}</span></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>它保证了自定义的css文件内容会被打包到统一的css文件里.<br>
+而css文件夹也是在根目录下</p>
+<h2 id="js">第四步, 添加自定义js脚本</h2>
+<p>google页面统计和一些俏皮的脚本(鼠标点击出现二十四字社会主义核心价值观😉)也需要迁移. 类似于css脚本方式. 具体可以参考<a href="https://github.com/sddtc/sddtc.github.com/blob/main/_includes/layouts/base.njk#L51">代码片段</a></p>
+<h2 id="-4">第五步, 部署!</h2>
+<p>部署之后就404了, 于是紧急查看文档: <a href="https://www.11ty.dev/docs/deployment/#deploy-an-eleventy-project-to-git-hub-pages">Deploy an Eleventy project to GitHub pages</a><br>
+快速修复之后上线了.</p>
+<p>之后再研究研究css, 让博客好看一些<br>
+再研究研究11ty, 看看有什么好玩的插件</p>
+<p>谢谢大家的观看! 鞠躬!</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2025-07-03-blocked-in-some-regions-for-example-China/">该网站在某些区域被阻止, 例如 中国</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2025-07-22-bye-jekyll-hi-11ty/` was built on 2025-07-22T10:39:37.198Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>
