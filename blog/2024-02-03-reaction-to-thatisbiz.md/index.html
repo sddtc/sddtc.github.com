@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>&lt;商业就是这样&gt;听后感</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="">&lt;商业就是这样&gt;听后感</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2024-02-03">03 February 2024</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/podcast/" class="post-tag">podcast</a></li>
+</ul>
+
+<p>去年 12 月下载了小宇宙. 在上下班的路上开始收听播客. 在此之前一直是网易云的日推陪伴我, 也偶尔为了学习英语听听开言的节目. 到今天为止我看了看自己 62 小时的总收听时长还是有些惊讶的,
+当然不出意外的是我都只听了一款节目. 也就是标题所说. 遇见它也是靠着首页推荐啦, 感激.
+两位主播我都很喜欢, 在节目一集一集的收听里, 不但能感受到他们表达见解时谦逊严谨的词语, 也同样感受到了每一期功课做的也是相当的充分. 商业就是这样讲的是各种各样不同领域的商业模式, 商业案例,
+外行的我听起来新奇又感觉那每一个案例都充满着舒服的逻辑. 在身上同样会背负着写各种“案例”的压力之下, 听起来还是熟悉又陌生的.
+这篇文章想记录下我听过之后那些印象深刻的记忆点, 毕竟未来听更多新奇的故事之后, 我并不想轻易让这宝贵的 62 小时沉寂.</p>
+<ul>
+<li>各种和牙齿有关的技术是中国本土化的成功营销</li>
+<li>原来破产也有很多区别, 破产并不完全代表公司就灭亡了, 也理解了瑞幸咖啡当时的破产到底是什么. 真是外行看热闹, 内行看门道</li>
+<li>lululemon 的商业案例大概是我第一次听到了社区文化这个词汇, 而瑜伽这项运动确实也有一定的天花板, 也让我突然明白很多产品从诞生开始, 就能通过受众群体而一眼分析出其商业的前景</li>
+<li>manner 咖啡真的好喝! 诞生于上海, 虽然取名的单词和他想表达的含义有点子怪, 但是也是这期节目让我明白口味的一致性基本上才算是基操. 根本不喝牛奶的我始终忘不了喝的那一口燕麦拿铁dirty</li>
+<li>国货美妆让我明白产品细分领域的创新, 空间是多么的有限, 而化妆品巨头们所涉猎的领域也是相当的广阔</li>
+<li>小米造车那期还是2021年的节目, 而收听它的时候小米汽车刚刚在发布会官宣. 因为主播之一肖老师的擅长领域之一就是汽车, 我也听了很多关于汽车的知识, 也大概理解了电动汽车的诞生, 确实意义非凡,
+它给了多少企业崛起的好机会, 毕竟油车的巨头, 想要轻易的分蛋糕根本痴心妄想, 德系车的历史和技术和市场份额, 而电车的兴起才是游戏的开始. 又听到了宁德时代的故事, 听到了吉利和沃尔沃的故事,
+企业家的格局和坚持真的缔造了很多传奇故事啊, 感叹</li>
+<li>莱卡镜头让我明白原来只要你制造出来的镜头系数满足标准, 就可以打出莱卡的名号, 而不是必须购买莱卡厂商生产的产品才行</li>
+<li>安踏的故事让我明白公司文化的相对自由, 鼓励创新的重要性, 类似的还有那期特许经营的商业模式是最成功的商业模式之一不接受反驳, 因为简单的契约反而能够激发足够的能量, 基于彼此的了解和信任, 放手去做
+要比规则和流程的控制奇妙多了</li>
+<li>内容营销虽然好但是难, 主要还是要靠积累, 且知识的传播也是工作而已, 与其说更高的社会责任感和使命感, 也不是要完全这么认为</li>
+<li>马斯克是天才, 但是一开始也是接 NASA 的单子活下去的! 美国版北斗虽然很酷, 但是制度不一样就是完全不一样的. 而海底电缆原来一开始是靠谷歌, 亚马逊, Facebook 这些巨头的投入才建设
+起来的, 他们自己也因为这些基础设施的建设能够降低不可估量的成本, 真是双赢啊, 感叹, 当然也因为海底电缆的建立, 我们的网费没有高的可怕</li>
+<li>链家是贝壳的数字化方案啊[笑, 我一直搞不清楚他们的联系与区别, 顺丰自己造机场, 做典型的物流模式方案, 真酷呢</li>
+<li>验证码的发明家真牛! 充分利用每个人才是王道啊, 简直教科书般的“不费吹灰之力”, 做了大事! 申请技术专利也是正经事</li>
+<li>滴滴的商业模式真的不知道能不能按照预想的进行下去, 不过本人最近搭滴滴的体验可不是很好的. 有了更全面的角度看待这家公司, 怎么说呢, 道阻且长吧</li>
+</ul>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2023-12-26-sddtc-is-a-florist.md/">花匠</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2024-03-22-thinking-of-in-progress-autonomous-team/">中型项目组织的自治团队模式思考</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2024-02-03-reaction-to-thatisbiz.md/` was built on 2025-07-22T04:14:15.689Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

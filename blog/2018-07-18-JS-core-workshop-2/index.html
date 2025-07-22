@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>JS The Core (2)</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="js-the-core-2">JS The Core (2)</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2018-07-18">18 July 2018</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/js/" class="post-tag">js</a></li>
+</ul>
+
+<p><strong>This article covers ES2017+ runtime system.</strong></p>
+<p><a href="#Environment">丨- Environment</a>
+<a href="#Closure">丨- Closure</a>
+<a href="#This">丨— This</a></p>
+<h1 id="environment">Environment</h1>
+<p>每个<em>execution context</em>都有一个关联的<em>lexical environment</em>.</p>
+<blockquote>
+<h3 id="def-9-lexical-environment-a-lexical-environment-is-a-structure-used-to-define-association-between-identifiers-appearing-in-the-context-with-their-values-each-environment-can-have-a-reference-to-an-optional-parent-environment">Def. 9: Lexical environment: A lexical environment is a structure used to define association between identifiers appearing in the context with their values. Each environment can have a reference to an optional parent environment</h3>
+</blockquote>
+<p>所以在一个<em>scope</em>里,  <em>environment</em>是变量,  方法,  类的存储空间. 从技术上讲,  environment是一组由<em>environment record</em>(将<em>identifiers</em>映射到值的实际存储表)和对父项的引用(可以为空)组成.
+例如:</p>
+<pre><code>let x = 10;
+let y = 20;
+function foo(z) {
+  let x = 100;
+  return x + y + z;
+}
+
+console.log(foo(30)); //150;
+</code></pre>
+<p>从逻辑上讲,  这提醒我们上面讨论过的<em>prototype chain</em>. <em>identifiers resolution</em>的规则非常相似: 如果在自己的<em>environment</em>中找不到变量, 则会尝试在<em>parent environment</em>中, 父级的父级中查找它,  等等 - 直到<em>the whole environment</em>为止.</p>
+<blockquote>
+<h3 id="def-10-identifier-resolution-the-process-of-resolving-a-variable-binding-in-an-environment-chain-an-unresolved-binding-results-to-referenceerror">Def. 10: Identifier resolution: the process of resolving a variable (binding) in an environment chain. An unresolved binding results to ReferenceError</h3>
+</blockquote>
+<p>这解释了为什么变量x被解析为100,  但不是10 - 它直接在foo的自己的<em>environment</em>中找到; 为什么我们可以访问参数z - 它也只存储在<em>activation environment</em>中; 以及为什么我们可以访问变量y - 它在<em>parent environment</em>中找到. 与<em>prototypes</em>类似, 几个<em>child environments</em>可以共享相同的<em>parent environment</em>:</p>
+<p>例如,  两个<em>global functions</em>共享相同的<em>global environment</em>. <em>environment</em>记录因<em>type</em>而异. 有<em>object environment</em>记录和<em>declarative environment</em>记录. 在<em>declarative</em>记录之上还有<em>function environment</em>记录和<em>module environment</em>记录. 记录的每种类型都只针对它的<em>properties</em>.</p>
+<p>但是, <em>identifier resolution</em>的通用机制在所有<em>environments</em>中都很常见, 并且不依赖于记录的类型. <em>object environment</em>记录可以是<em>global environment</em>的记录. 这样的记录也有关联的绑定对象,  它可以存储记录中的一些<em>properties</em>,  但不是其他属性, 反之亦然. 绑定对象也可以作为<code>this</code>提供.
+例如:</p>
+<pre><code>var xEnvironment = 10;
+let yEnvironment = 20;
+
+console.log(
+  xEnvironment,
+  yEnvironment,
+)
+
+console.log(
+  this.xEnvironment,
+  this.yEnvironment,
+)
+
+this['not valid ID'] = 30;
+
+console.log(
+  this['not valid ID'],
+);
+</code></pre>
+<p>请注意, 绑定对象的存在是为了覆盖<em>legacy constructs</em>,  如<code>var</code>-declarations和<code>with</code>-statements,  它们也将它们的对象作为绑定对象提供. 当<em>environment</em>被表示为简单对象时,  这些都是历史原因.</p>
+<p>目前, <em>environment model</em>更加优化, 但结果我们无法再访问绑定像访问<em>properties</em>. 我们已经看到<em>environment</em>是如何通过父链接相关的. 现在我们将看到一个<em>environment</em>如何<em>outlive</em>创造它的<em>context</em>. 这是我们即将讨论的闭包机制的基础.</p>
+<h1 id="closure">Closure</h1>
+<p>ECMAScript中的函数是一流的. Functions是函数式编程的基础, 它们在JavaScript中被很好地支持.</p>
+<blockquote>
+<h3 id="def-11-first-class-function-a-function-which-can-participate-as-a-normal-data-be-stored-in-a-variable-passed-as-an-argument-or-returned-as-a-value-from-another-function">Def. 11: First-class function: a function which can participate as a normal data: be stored in a variable,  passed as an argument,  or returned as a value from another function.</h3>
+</blockquote>
+<p>与一流的functions的概念相关的是所谓的&quot;Funarg问题&quot;(&quot;A problem of a functional argument&quot;),  它出现在functions不得不处理<em>free variables</em>时.</p>
+<blockquote>
+<h3 id="def-12-free-variable-a-variable-which-is-neither-a-parameter-nor-a-local-variable-of-this-function">Def. 12: Free variable: a variable which is neither a parameter,  nor a local variable of this function.</h3>
+</blockquote>
+<p>让我们来分析下Funarg问题:
+例如:</p>
+<pre><code>let x = 10;
+
+function foo() {
+  console.log(x);
+}
+
+function bar(funArg) {
+  let x = 20;
+  funArg(); // 10,  not 20!
+}
+
+// Pass `foo` as an argument to `bar`.
+bar(foo);
+</code></pre>
+<p>对于函数foo, 变量x是<em>free variables</em>. 当foo函数被激活时(通过funArg参数) - 它应该在哪里解析x的绑定？从创建函数的外部作用域或调用者作用域当函数被调用时？正如我们所看到的, 调用者即bar函数也为x提供了绑定 - 值为20.
+上述用例被称为<strong>downwards funarg problem</strong>(向下漏斗问题), 即在确定绑定的正确环境时的模糊性：它应该是创建时的环境还是被调用时的环境？ 这是通过使用<em>static scope</em>的协议解决的, 也就是创建时的<em>scope</em></p>
+<blockquote>
+<h3 id="def-13-static-scope-a-language-implements-static-scope-if-only-by-looking-at-the-source-code-one-can-determine-in-which-environment-a-binding-is-resolved">Def. 13: Static scope: a language implements static scope,  if only by looking at the source code one can determine in which environment a binding is resolved.</h3>
+</blockquote>
+<p><em>static scope</em>(静态作用域)有时也被称为<em>lexical scope</em>(词法作用域), 而后被称为<em>lexical environments</em>. 从技术上讲, <em>static scope</em>是通过捕获<em>function is created</em>的环境来实现的.</p>
+<blockquote>
+<h3 id="def-14-closure-a-closure-is-a-function-which-captures-the-environment-where-it-s-defined-further-this-environment-is-used-for-identifier-resolution">Def. 14: Closure: A closure is a function which captures the environment where it’s defined. Further this environment is used for identifier resolution.</h3>
+</blockquote>
+<p>在<em>a new fresh activation</em>环境中调用函数,  该环境存储局部变量和参数. <em>the activation environment</em>的<em>parent</em>环境设置为函数的闭包环境, 从而产生<em>the lexical scope</em>语义.
+例如:</p>
+<pre><code>function fooFoo() {
+  let x = 10;
+
+  function bar() {
+    return x;
+  }
+
+  return bar;
+}
+
+let xFoo = 20;
+let barFoo = fooFoo();
+
+barFoo();// 10,  not 20!
+</code></pre>
+<p>同样, 从技术上讲, 它与捕获<em>the definition environment</em>的机制没有区别. 就在这种情况下, 如果我们没有关闭, fooFoo的<em>the activation environment</em>将被<em>destroyed</em>.</p>
+<p>但是我们捕获了它, 所以它不能被<em>deallocated</em>, 并且被保留 - 以支持<em>static scope</em>语义.</p>
+<p>通常对闭包有一个不完全的理解 - 通常开发人员只依照<em>upward</em>的funarg问题来考虑闭包(实际上它确实更有意义).但是, 正如我们所看到的, <em>upward</em>和<em>downwards</em>的funarg问题的技术机制完全相同 - 并且是<em>the static scope</em>的机制.</p>
+<p>如上所述, 与<em>prototypes</em>类似, 可以跨多个闭包共享相同的父环境. 这允许访问和改变共享数据,
+例如：</p>
+<pre><code>function createCounter() {
+  let count = 0;
+
+  return {
+    increment() {count++; return count;},
+    decrement() {count--; return count;},
+  };
+}
+
+let counter = createCounter();
+console.log(
+  counter.increment(),  //1
+  counter.decrement(),  //0
+  counter.increment(),  //1
+);
+</code></pre>
+<p>由于在包含count变量的作用域内创建了闭包 <em>increment</em>和<em>decrement</em>, 因此它们<em>share this parent scope</em>. 也就是说, 捕获总是&quot;by-reference&quot;发生 - 意味着存储了对整个父环境的引用.
+某些语言可以捕获&quot;by-value&quot;, <em>making copy of</em> 被捕获的<em>variable</em>, 并且不允许在父作用域中更改它.</p>
+<p>但是在Javascript中, 要记得, 它始终是对父作用域的引用. <em>implementations</em>可以优化该步骤, 不捕获整个<em>environment</em>. 捕获<em>used free-variables</em>, 但它们仍然保持<em>parent scopes</em>中可变数据的不变性.</p>
+<p>所有<em>identifiers</em>都是<em>statically scoped</em>.但是有一个值在ECMAScript中是<em>dynamically scoped</em>.它就是<em>this</em></p>
+<h1 id="this">This</h1>
+<p>TBC</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2018-06-24-JS-core-workshop/">JS The Core</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2018-08-05-why-typescript/">Why typescript ?</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2018-07-18-JS-core-workshop-2/` was built on 2025-07-22T04:14:15.683Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>2016 年度总结</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="2016">2016 年度总结</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2017-03-03">03 March 2017</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/life/" class="post-tag">life</a></li>
+</ul>
+
+<h3 id="2016-2">2016年度总结</h3>
+<p>如果用简短的语句来形容自己的2016，大概就是做了一个影响自己人生整个轨迹的抉择，因为我从北京离开回家了，这其中的原因很简单，于自己的主观意识，是为了家人</p>
+<h3 id="">事业</h3>
+<p>去年过年后回北京的时候,换了一家电商公司去做推荐,因为公司环境和气氛,还有里面成熟的各种框架系统,都让我受益匪浅,也看到了阿里系风格的公司是什么样,年底的时候回家了,在西安有幸加入了我十分喜欢和尊敬的ThoughtWorks,开始了自己的新生活.</p>
+<p>总结了作为北漂时候的收获,学习到了很多东西</p>
+<h4 id="-2">知识框架</h4>
+<p><img src="content/media/img/201703031.png" alt="知识框架"></p>
+<p>对于一个有五年工作经验的程序员来说,这张图恰好让我看到了自己的特点:
+优点:
+工程的搭建和开发部署都很ok,说明在功能开发上技能强势
+不足:
+软件架构和用户体验方面技能贫瘠:
+1.由于自己没有经历完整网站的前后端开发,因此没有交互能力,总而言之,离全栈工程师还有很远的路要走
+2.没有系统学习软件架构的理论知识,没有分析钻研过如今大型网站的架构设计,文章看了很多,没有总结和提炼</p>
+<h4 id="-3">技能树</h4>
+<p><img src="content/media/img/201703032.png" alt="技能树"></p>
+<p>图中蓝色是工作中用到的,另外的是自己根据兴趣学习的
+这些年加班也好,加班也罢总之就是疯狂的加班嘻嘻🙃,在工作中学到了很多东西
+很多自己喜欢的,感兴趣的东西也在自己虎头蛇尾中没有了然后,关于这一点,大概还是会懒惰
+2017年我会及时分阶段进行新技能的构建,希望能学习、分享、深入很多有趣的东西</p>
+<h3 id="-4">家人</h3>
+<p>和奶奶的感情是没法用言语来表达的,她是我整个童年,少年,青年的陪伴,2016年她去了天堂.对我的影响,大概是那种一想到就会流泪的难过.回家的决定也能解脱一部分父母的压力,也终于回来陪伴奶奶.</p>
+<h3 id="-5">旅游</h3>
+<p>2016年中旬,和前同事一起去了东京
+作为一个动漫宅踏入秋叶原看到巨大的EVA和LL海报简直要尖叫出声;
+夜晚的迪士尼真是梦想中的游乐场;
+吃到了真真正正本土的寿司;
+清澈蔚蓝的天空和那午夜12点仍旧热闹非凡的地铁站;
+礼貌热心的霓虹人和像日剧里他们真的中午坐在街心花园吃便当的样子;
+新宿那令人瞠目结舌有20多个出口的地铁站;
+还有四月一日君寻里如出一辙的街边摊关东煮,都让我回味无穷
+还有机会的话,我会再次去</p>
+<h3 id="-6">生活</h3>
+<p>去年开始玩暴雪的守望屁股,依然和一群伙伴,到现在依然很喜欢,
+毕竟,这个世界,需要英雄.
+大概能隐隐约约记得的
+买了一套大众经典版的乐高校车
+和Soul一起参加Lily的婚礼,我们俩竟然在等车前一起去了网吧还玩的很开心
+认识了一群有趣的北京土著,在鼓楼的Cheers里度过了很多个周五之夜
+大概在北京搬了第五次家,一个人住了一居室一段时间,爸妈去望京陪我了蛮久,喜欢我爸做的小龙虾,他的厨艺总能让我成功舍弃掉外面的很多诱惑🙃
+舍不得以前帝都的那些可以陪我一起喝酒的伙伴,没有好好告别,因为不想告别
+离开北京之前终于去了故宫
+大姑妈和姐姐在帝都都特别的厉害,姐姐是我永远最厉害和最正面的榜样,他们都很好
+回西安之后,也有我很珍惜的伙伴,从今以后,要好好和他们在一起😉</p>
+<p>以上。</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2017-01-24-something-about-shell/">Shell正常和异常退出的控制命令</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2017-03-15-something-about-spring-cloud/">Spring-Cloud概念理解和部署</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2017-03-03-all-years-note/` was built on 2025-07-22T04:14:15.678Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

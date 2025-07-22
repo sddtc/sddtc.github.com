@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>由 java.lang.NoSuchMethodError 引发的思考之二进制兼容性</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="java-lang-nosuchmethoderror">由 java.lang.NoSuchMethodError 引发的思考之二进制兼容性</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2020-11-16">16 November 2020</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/kotlin/" class="post-tag">kotlin</a></li>
+</ul>
+
+<h4 id="">故事背景</h4>
+<p>当我写后端的时候，时不时的让程序抛出几个 5XX 的错误不在话下。当我写前端的时候，时不时的在浏览器的 dev tool 看到几个 js 错误堆栈也是基操基操。直到最近开始自己的 mobile 生涯，用 kotlin 写 Android。你或许想象不到，带给我最震撼的不是一个个精致好看体验极佳的手机应用，而是因为简单的错误直接造成的 crash 异常。crash 给人的感觉就是大脑嗡嗡的体验。最近遇见过几起小事件，抽个时间一一记录一下 ：）</p>
+<p>由于我们尝试使用 MFE(Micro-Front-End) 的思想来改进应用程序的扩展性和灵活性，所以在开发工程中我们有一个母应用 A，有一个子应用 B。集成方式是 B 作为 <code>library</code> 集成在 A 内。
+A 和 B 分别依赖了一个第三方库，使用库中的相同方法。 在第三库进行了升级之后，B 应用没有升级对应的新版本而 A 应用对该第三方库进行了版本的升级。 造成的结果是用户在试图进入 B 应用页面的时候造成了 crash。</p>
+<p>已知的前提： 这个第三方库不是所谓的 <code>break changes</code> 式升级。
+之后在回顾的时候我学到了一个词： <code>Binary Compatibility</code></p>
+<h4 id="binary-compatibility">什么是 Binary Compatibility?</h4>
+<p>用维基百科的话来说，有个词是 <code>Binary-code compatibility</code>. 二进制代码的兼容性是计算机系统的属性，意味着他们可以运行相同的可执行代码，通常是指机器代码。另外还有一个概念叫做源代码兼容性(<code>Source-code compatibility</code>)，这次我不会做过多了解。
+对于一般操作系统上的已编译程序，二进制兼容性通常意味着不仅两台计算机的 CPU 指令集是二进制兼容的，还意味着操作系统和 API 的接口和行为以及与之相对应的 ABI 足够相等，即&quot;兼容&quot;。</p>
+<p>在看到维基这部分的解释，我对产生 crash 的原因产生了疑惑，我不知道这种抽象的概念是如何和语言层次产生出某种关联性的，于是我看到了一些文章，更贴近于 kotlin 的特点。</p>
+<h4 id="kotlin">Kotlin 的兼容性说明</h4>
+<p><a href="https://mirrors.segmentfault.com/kotlin/compatibility.html">英文文档链接</a>
+兼容性意味着回答这个问题：
+对于给定的两个版本的 Kotlin(例如，1.2 和 1.1.5)，为一个版本编写的代码可以与另一个版本一起使用吗？
+<code>OV</code> means <code>Old version</code>. <code>NV</code> means <code>Newer version</code></p>
+<ul>
+<li>
+<p>C - 完全兼容</p>
+<ul>
+<li>语言
+<ul>
+<li>无语法改动</li>
+<li>有新增/删除的警告/提示</li>
+</ul>
+</li>
+<li>API(<code>kotlin-stdlib-*</code>、 <code>kotlin-reflect-*</code>)
+<ul>
+<li>无 API 改动</li>
+<li>可能添加/删除带有警告级的弃用项</li>
+</ul>
+</li>
+<li>二进制(ABI)
+<ul>
+<li>运行时：二进制代码通用</li>
+<li>编译：二进制代码通用</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>BCLA - 语言和 API 向后兼容</p>
+<ul>
+<li>语言
+<ul>
+<li>可能会在 NV 中删除 OV 中已弃用的语法</li>
+<li>除此之外，OV 中可编译的所有代码都可以在 NV 中编译(除去 bug*)</li>
+<li>可能在 NV 中添加新语法</li>
+<li>在 NV 中可以提升 OV 的一些限制</li>
+<li>可能添加/删除新的警告/提示</li>
+</ul>
+</li>
+<li>API(<code>kotlin-stdlib-*</code>、 <code>kotlin-reflect-*</code>)
+<ul>
+<li>可能添加新的 API</li>
+<li>可能添加/删除带有警告级的弃用项</li>
+<li>警告项级的弃用项可能在 NV 中提升到 ERROR 级或者 HIDDEN 级</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>BCB — 二进制向后兼容</p>
+<ul>
+<li>二进制(ABI)
+<ul>
+<li>运行时：NV 的二进制代码可以在 OV 的二进制代码工作的任何地方使用</li>
+<li>NV 编译器：针对 OV 二进制编译的代码可针对 NV 二进制编译</li>
+<li>OV 编译器可能不接受 NV 二进制(例如，展示较新语言特性或 API 的二进制)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>BC — 完全向后兼容</p>
+<ul>
+<li>BC = BCLA &amp; BCB</li>
+</ul>
+</li>
+<li>
+<p>EXP — 实验性的功能</p>
+<ul>
+<li>例如 协程，不受兼容性限制，这类功能需要选择开启才能使用，而无需编译器警告。 实验性功能至少向后兼容补丁程序版本更新，但是不保证次要版本更新程序具有任何兼容性。</li>
+</ul>
+</li>
+<li>
+<p>NO —无兼容性保证</p>
+<ul>
+<li>我们会尽力提供顺利的迁移，但不能给出任何保证为每个不兼容的子系统单独规划迁移</li>
+</ul>
+</li>
+</ul>
+<p>不得不说第一次发现语言的更新的兼容性这么讲究。 也许一门快速成长的语言都有类似的特性，而我以前一直使用 java 却没有注意过。 使用 Typescript 也一直在看它又又又又拥有了哪些新的语法糖。
+直到开始写 Android, 而且是作为 MFE 的组件的位置，使用了一些依赖， 依赖总和母应用/其它 MFEs 产生冲突。 冲突使程序 crash, 这种感觉才愈发的强烈。</p>
+<p>那么很明显我们的问题是第三方应用的兼容性出现了问题，和 Kotlin 这门语言的兼容性没有强依赖关系，只是关于二进制兼容性这个词有了更清晰的理解而已。</p>
+<h4 id="-2">第三方库的版本升级详解</h4>
+<p>第三方库 sddtcLibraryV1.0 有如下功能:</p>
+<pre class="language-kotlin" tabindex="0"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">SddtcData</span><span class="token punctuation">(</span><span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">,</span> <span class="token keyword">val</span> id<span class="token operator">:</span> String <span class="token operator">=</span> <span class="token string-literal singleline"><span class="token string">"1111-2222-3333-4444"</span></span><span class="token punctuation">)</span></code></pre>
+<p>编译后的二进制代码:</p>
+<pre class="language-kotlin" tabindex="0"><code class="language-kotlin"><span class="token comment">// $FF: synthetic method</span>
+<span class="token keyword">public</span> <span class="token function">SddtcClass</span><span class="token punctuation">(</span>String var1<span class="token punctuation">,</span> String var2<span class="token punctuation">,</span> int var3<span class="token punctuation">,</span> DefaultConstructorMarker var4<span class="token punctuation">)</span>
+
+<span class="token comment">//where var1 and var2 represent the paremeters name and Id,</span>
+<span class="token comment">//var3 is the mask for default values and we can ignore var4</span></code></pre>
+<p>第三方库 sddtcLibraryV1.1 更新了功能:</p>
+<pre class="language-kotlin" tabindex="0"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">SddtcData</span><span class="token punctuation">(</span><span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">,</span> <span class="token keyword">val</span> id<span class="token operator">:</span> String <span class="token operator">=</span> <span class="token string-literal singleline"><span class="token string">"1111-2222-3333-4444"</span></span><span class="token punctuation">,</span> <span class="token keyword">val</span> email<span class="token operator">:</span> String <span class="token operator">=</span> <span class="token string-literal singleline"><span class="token string">"changhbaga@gmail.com"</span></span><span class="token punctuation">)</span></code></pre>
+<p>编译后的二进制代码:</p>
+<pre class="language-kotlin" tabindex="0"><code class="language-kotlin"><span class="token comment">// $FF: synthetic method</span>
+<span class="token keyword">public</span> <span class="token function">SddtcClass</span><span class="token punctuation">(</span>String var1<span class="token punctuation">,</span> String var2<span class="token punctuation">,</span> String var3<span class="token punctuation">,</span> int var4<span class="token punctuation">,</span> DefaultConstructorMarker var5<span class="token punctuation">)</span>
+
+<span class="token comment">//where var1 ,var2, var3 represent the paremeters name,Id and state,</span>
+<span class="token comment">//var4 is the mask for default values and we can ignore var5</span></code></pre>
+<p>那么当我们使用时:</p>
+<pre class="language-kotlin" tabindex="0"><code class="language-kotlin"><span class="token keyword">val</span> result <span class="token operator">=</span> <span class="token function">SddtcClass</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string-literal singleline"><span class="token string">"sddtc"</span></span><span class="token punctuation">)</span></code></pre>
+<p>For v1.0:</p>
+<pre class="language-kotlin" tabindex="0"><code class="language-kotlin">new <span class="token function">SddtcClass</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"sddtc"</span></span><span class="token punctuation">,</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span><span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>DefaultConstructorMarker<span class="token punctuation">)</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>For v1.1:</p>
+<pre class="language-kotlin" tabindex="0"><code class="language-kotlin">new <span class="token function">SddtcClass</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"sddtc"</span></span><span class="token punctuation">,</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span><span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span><span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>DefaultConstructorMarker<span class="token punctuation">)</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>需要注意这两个版本都来自于解析这段 Kotlin 代码: <code>val result = SddtcClass(name=&quot;sddtc&quot;)</code></p>
+<p><strong>情景一:</strong></p>
+<p>母应用A/子应用B都依赖 <code>sddtcLibraryV1.0</code> 时， 当依赖更新为 <code>sddtcLibraryV1.1</code> A和B在重新编译后均不会出现任何问题。</p>
+<p><strong>情景二:</strong></p>
+<p>母应用 A 依赖 <code>sddtcLibraryV1.1</code>
+子应用 B 依赖 <code>sddtcLibraryV1.0</code></p>
+<p>在编译时, 编译为不同版本的机器码
+在依赖冲突解决时，由于我们使用 gradle 并且在遇到两个不同版本的依赖时最终会将高版本的依赖打进 apk 中，其它依赖会被删除因此最终的包只有 <code>sddtcLibraryV1.1</code>
+在运行时，子应用会寻找要解析的 <code>sddtcLibraryV1.0</code> 签名而签名并不存在，因此抛出 <code>NoSuchMethodError: init&lt;&gt;</code> 错误。</p>
+<h4 id="-3">那么这种情况该怎么解决？</h4>
+<p>不得不说这是一个开放性问题，还没有绝对答案。 也有人遇到了类似的问题还没有答案 <a href="https://discuss.kotlinlang.org/t/binary-compatibility-for-constructors-with-default-values/11385">Binary compatibility for constructors with default values
+</a></p>
+<p>想法一：
+既然运行时只有一个依赖版本存在，那么我们应该在编译时也强制只能有一个版本的依赖存在，提前暴露问题。</p>
+<p>想法二：
+舍弃默认构造参数的语法糖， 显示的实现满足所有参数排列的构造方法。</p>
+<p>未完待续...</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2019-12-28-my-annual-rank-2019/">我的 2019 年度总结</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2020-11-23-jx3-jjc-thoughts/">当我沉迷每个赛季的竞技场的时候我在沉迷什么</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2020-11-16-kotlin-compatibility-intro/` was built on 2025-07-22T04:14:15.685Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>当你做技术选型时需要考虑的</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="">当你做技术选型时需要考虑的</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2025-06-16">16 June 2025</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/software-engineer/" class="post-tag">software engineer</a></li>
+</ul>
+
+<p>软件工程是手段,不是目的. 不论是做企业软件开发, 做产品验证 POC 还是个人产品开发, 你总会在不同的时刻考虑技术框架, 亦或是不用框架; 考虑使用某个工具 A 而非工具 B, 使用云平台 C 还是读取文件使用缓存策略, 都是基于现阶段, 以及未来(短期)可能会出现的可能性的考虑. 毕竟有句很火的话</p>
+<blockquote>
+<p>先做一个垃圾出来</p>
+</blockquote>
+<p>并不是说你做出来的东西是“垃圾”, 而是说简单/粗糙是开始的好起点.</p>
+<p>最近使用 <code>mui+vite+vitest+supabase+vercel</code> 快速搭建了一个站点, 借此来记录一些经验.
+首先确定开发工具, 写前端首选 <code>vscode</code>, 对于 <code>js</code> 语法高亮的支持好
+其次选择前端框架, 测试框架, 这次选择了 <a href="https://vite.dev/">vite</a> + React + <a href="https://vitest.dev/">vitest</a>. 用 <code>Material UI+React</code> 搭建了简单的页面, 本地调试了样式与功能.
+在选择云部署平台的时候参照了目前网络上<a href="https://gist.github.com/imba-tjd/d73258f0817255dbe77d64d40d985e76">推荐的免费云平台</a>, 各有各的优劣, 主要考虑的方面有:</p>
+<ol>
+<li>免费额度: 如果是 POC, 那么使用免费的云平台是为了降低成本, 快速验证</li>
+<li>域名污染: 指的是很多平台会绑定固定的域名, 例如 <a href="https://vercel.com/home">vercel</a></li>
+<li>安全性: 如果你选择是无后端服务或者其他BaaS, 那么后期要考虑支持 <code>client credentials</code> 服务</li>
+<li>语言支持</li>
+<li>易用性</li>
+</ol>
+<p>最终选择了 <a href="https://vercel.com/home">vercel</a>, 合适的免费配额, 快速的部署流程, 和 <code>github repo</code> 的集成简单, 再加上本人有年包的域名服务, vercel 也能方便的进行配置.
+将本地的项目进行远端部署就需要一个构建工具, <a href="https://vite.dev/">vite</a> 引起了我的注意, 因为初始化项目时并没有使用 CRA(create-react-app脚手架), 我并不是一个热衷于通过简单的却未知的命令来启动项目的人, 因为丰富的依赖和配置让我并不能立刻意识到它们都是做什么的, 也让本身简单的事情复杂化. 毕竟新增容易, 但是删除的成本是巨大的. 在没有搞清楚之前, 为什么要埋下一颗小小的炸弹呢😄, btw: 今年2月14日的文章<a href="https://react.dev/blog/2025/02/14/sunsetting-create-react-app">Sunsetting Create React App</a>也意味着 CRA 不再被官方推荐使用.
+目前 vite.config.js 的内容仅有:</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">{</span> defineConfig <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'vite'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> configDefaults <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'vitest/config'</span>
+<span class="token keyword">import</span> react <span class="token keyword">from</span> <span class="token string">'@vitejs/plugin-react'</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token function">defineConfig</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token literal-property property">plugins</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token function">react</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">test</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">globals</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">environment</span><span class="token operator">:</span> <span class="token string">'jsdom'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">setupFiles</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'./vitest-setup.js'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">coverage</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">reporter</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'text'</span><span class="token punctuation">,</span> <span class="token string">'json'</span><span class="token punctuation">,</span> <span class="token string">'html'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">exclude</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token operator">...</span>configDefaults<span class="token punctuation">.</span>exclude<span class="token punctuation">,</span>
+        <span class="token string">'src/index.jsx'</span>
+      <span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
+<p>其中 <code>globals: true</code> 是为了解决跑一个测试文件的多个单元测试时, 避免 <code>render</code> 重复的元素, 保证每次的 dom 挂载时全局时是被其它单测可见的. <code>environment: 'jsdom'</code> 和 <code>'./vitest-setup.js'</code> 是为了 components 测试模拟真实的浏览器html dom树. 项目在本地跑单测时, 而非用户真实的使用场景(浏览器内部), 而是在 js 的运行时环境(node), 于是使用 <code>jsdom</code> 是为了保证组件的渲染和行为能够模拟用户的使用场景. 见<a href="https://testing-library.com/docs/svelte-testing-library/setup/#vitest">testing-library: add vitest-setup.js</a>.
+最后 <code>coverage</code> 的配置是为了理直气壮的不为 <code>src/index.jsx</code> 写测试😉.
+<a href="https://supabase.com/">supabase</a> 是众多免费开源数据库平台, 通过jwt token(client level, service level) 来提供读写服务, 其中可以配置 row level policy 来保证用户对于数据的权限验证. 选择它也是因为它的使用性简单, 但是访问速度在此打出一个小问号吧.</p>
+<p>在考虑测试框架和测试金字塔时选择 <code>vitest</code> + (组件单测+业务逻辑单测)+页面集成测试+UI测试.
+其中 <code>vitest</code> 基本上可以平替 <code>jest</code>: 提供 <code>describe, it, expect, vi, beforeEach</code> 等方法. 其中在 <code>mock</code> 的使用上有小小差别. 例如 <code>vitest</code> 需要使用 <code>vi.hoisted</code> 方法来进行 mock 函数的声明.
+而在测试 react 组件时依然使用 <code>@testing-library/react</code> 的 <code>render, screen, fireEvent</code> 等方法.
+写下这些的时候突然想起之前为一个产品设计测试金字塔, 其实最难的并不是设计, 而是让他人理解, 在大家提起 “为什么要写测试”, “如果写了 xx 是不是就不用写 yy&quot;, &quot;zz 这么难写有什么意义&quot; 之类的困惑. 我想, 首先测试的编写是用自动化的程序简化人工验证的繁琐, 其次编写测试程序是促使开发人员切换产品的角度思考问题; 最后对于测试类型的抉择和删减的讨论, 我想说, 如果测试能解决问题, 存在就是合理的.</p>
+<p>最后的最后再配置下自己的 eslint, 一整个项目就完备了 🎉
+以上.</p>
+<p>文后话:
+挂载VPN时 docker 下载镜像一直报错</p>
+<blockquote>
+<p>Error response from daemon: Get &quot;https://registry-1.docker.io/v2/&quot;: context deadline exceeded (Client.Timeout exceeded while awaiting headers)</p>
+</blockquote>
+<p>本机使用 colima 启动 docker, 查了半天也没找到解决方案, 放弃使用 colima, 下载 docker desktop 解决了问题. 真是柳暗花明又一村 😎</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2024-12-09-2024-ending/">2024快要结束啦</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2025-06-24-xhs-robot/">小红书自动发笔记机器人</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2025-06-16-technology-selection/` was built on 2025-07-22T04:14:15.689Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

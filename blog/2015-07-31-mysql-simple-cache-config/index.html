@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>MYSQL服务器端的高级优化实践</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="mysql">MYSQL服务器端的高级优化实践</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2015-07-31">31 July 2015</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/big-data/" class="post-tag">big data</a></li>
+</ul>
+
+<h3 id="">背景:</h3>
+<p>因为资源争用的问题,跑数据和业务的query迟迟很难执行完毕，都相对比较紧急，吃饭的运维的同学看到我的屏幕，说了一句。。mysql配置查询缓存了吗。。真是一语惊醒。。</p>
+<h3 id="-2">解决方式：</h3>
+<p>上网查询了配置mysql缓存的方法，希望能1.检测服务器是否正确配置了缓存机制2.如果没有赶紧配上3.代码层面是解决的下一步方案，因为我在编写代码的时候每个sql都检查过索引和执行效果</p>
+<p>主要有以下几个参数：
+1.query_cache_type</p>
+<pre class="language-vim" tabindex="0"><code class="language-vim">mysql<span class="token operator">></span> select @@query_cache_type<span class="token punctuation">;</span></code></pre>
+<p>结果类型有3种:0代表关闭查询缓存OFF;1代表开启ON;（DEMAND）代表当sql语句中有SQL_CACHE关键词时才缓存;
+① 在query_cache_type打开的情况下，如果你不想使用缓存，需要指明:select sql_no_cache id,name from tableName;
+② 当sql中用到mysql函数，也不会缓存
+这一步,服务器是ON,也就是打开了</p>
+<p>2.have_query_cache: 系统变量,设置查询缓存是否可用</p>
+<pre class="language-vim" tabindex="0"><code class="language-vim">mysql<span class="token operator">></span>show variables like <span class="token string">'have_query_cache'</span><span class="token punctuation">;</span></code></pre>
+<p>value:YES</p>
+<p>这一步,服务器是YES,也就是可用的</p>
+<p>3.query_cache_size:表示查询缓存大小,也就是分配内存大小给查询缓存,如果你分配大小为0,那么第一步(1)和第二步(2)起不到作用,还是没有任何效果</p>
+<pre class="language-vim" tabindex="0"><code class="language-vim">mysql<span class="token operator">></span>select @@global<span class="token operator">.</span>query_cache_size<span class="token punctuation">;</span></code></pre>
+<p>这一步,服务器应该是默认值0,因此可以判断,服务器没有正确开启查询缓存,接下来就简单啦,赋值～然而也并没有那么简单,想到我们的服务器上面有多个项目在跑,内存的分配显然不能太过大手笔,因此大家就自己估量不要影响其它,另外，默认是0也是mysql5.0下出现的,6应该不是如此</p>
+<pre class="language-vim" tabindex="0"><code class="language-vim">mysql<span class="token operator">></span><span class="token keyword">set</span> @@global<span class="token operator">.</span>query_cache_size<span class="token operator">=</span><span class="token number">5242880</span><span class="token punctuation">;</span></code></pre>
+<p>4.query_cache_limit 控制缓存结果最大值:当你查询缓存数结果数据超过这个值就不会进行缓存。缺省为1M，也就是超过了1M查询结果就不会缓存</p>
+<pre class="language-vim" tabindex="0"><code class="language-vim">mysql<span class="token operator">></span>select @@global<span class="token operator">.</span>query_cache_limit<span class="token punctuation">;</span></code></pre>
+<p>通过以上四步，打开了查询缓存</p>
+<hr>
+<p>mysql查询缓存相关变量</p>
+<pre class="language-vim" tabindex="0"><code class="language-vim">mysql<span class="token operator">></span>show variables like <span class="token string">'%query_cache%'</span><span class="token punctuation">;</span></code></pre>
+<p>此处需要配图...</p>
+<hr>
+<p>查看缓存状态</p>
+<pre class="language-vim" tabindex="0"><code class="language-vim">mysql<span class="token operator">></span>show status like <span class="token string">'Qcache%'</span><span class="token punctuation">;</span></code></pre>
+<p>此处需要配图...</p>
+<p>5.key_read</p>
+<pre class="language-vim" tabindex="0"><code class="language-vim">mysql<span class="token operator">></span>show status like <span class="token string">'%key_read%'</span><span class="token punctuation">;</span></code></pre>
+<p>Key_reads 代表命中磁盘的请求个数， Key_read_requests 是总数。命中磁盘的读请求数除以读请求总数就是不中比率 —— 在本例中每 1,000 个请求，大约有 0.6 个没有命中内存。如果每 1,000 个请求中命中磁盘的数目超过 1 个，就应该考虑增大关键字缓冲区了。</p>
+<p>6.key_buffer_size 这个参数是用来设置索引块（index blocks）缓存的大小，它被所有线程共享，严格说是它决定了数据库索引处理的速度，尤其是索引读的速度。</p>
+<pre class="language-vim" tabindex="0"><code class="language-vim">mysql<span class="token operator">></span>select @@global<span class="token operator">.</span>key_buffer_size<span class="token punctuation">;</span></code></pre>
+<p>innodb_buffer_pool_size 这个参数和MyISAM的key_buffer_size有相似之处，但也是有差别的。这个参数主要缓存innodb表的索引，数据，插入数据时的缓冲。为Innodb加速优化首要参数。</p>
+<hr>
+<p>Qcache_free_blocks：目前还处于空闲状态的Query Cache中内存 Block数目
+Qcache_free_memory：目前还处于空闲状态的 Query Cache 内存总量
+Qcache_hits：Query Cache 命中次数
+Qcache_inserts：向 Query Cache 中插入新的 Query Cache 的次数，也就是没有命中的次数
+Qcache_lowmem_prunes：当 Query Cache 内存容量不够，需要从中删除老的 Query Cache 以给新的 Cache 对象使用的次数
+Qcache_not_cached：没有被 Cache 的 SQL 数，包括无法被 Cache 的 SQL 以及由于 query_cache_type 设置的不会被 Cache 的 SQL
+Qcache_queries_in_cache：目前在 Query Cache 中的 SQL 数量
+Qcache_total_blocks：Query Cache 中总的 Block 数量</p>
+<hr>
+<p>检查查询缓存使用情况: 检查是否从查询缓存中受益的最简单的办法就是检查缓存命中率
+当服务器收到SELECT 语句的时候，Qcache_hits 和Com_select 这两个变量会根据查询缓存的情况进行递增
+查询缓存命中率的计算公式是：Qcache_hits/(Qcache_hits + Com_select)</p>
+<pre class="language-vim" tabindex="0"><code class="language-vim">mysql<span class="token operator">></span> show global status like <span class="token string">'%Com_select%'</span><span class="token punctuation">;</span></code></pre>
+<p>query_cache_min_res_unit的配置是一柄”双刃剑”，默认是4KB，设置值大对大数据查询有好处，但如果你的查询都是小数据 查询，就容易造成内存碎片和浪费</p>
+<hr>
+<p>查询缓存碎片率 = Qcache_free_blocks / Qcache_total_blocks * 100%
+如果查询缓存碎片率超过20%，可以用FLUSH QUERY CACHE整理缓存碎片，或者试试减小query_cache_min_res_unit，如果你的查询都是小数据量的话
+查询缓存利用率 = (query_cache_size - Qcache_free_memory) / query_cache_size * 100%
+查询缓存利用率在25%以下的话说明query_cache_size设置的过大，可适当减小;查询缓存利用率在80%以上而且 Qcache_lowmem_prunes &gt; 50的话说明query_cache_size可能有点小，要不就是碎片太多
+查询缓存命中率 = (Qcache_hits - Qcache_inserts) / Qcache_hits * 100%
+示例服务器 查询缓存碎片率 = 20.46%，查询缓存利用率 = 62.26%，查询缓存命中率 = 1.94%，命中率很差，可能写操作比较频繁吧，而且可能有些碎片</p>
+<hr>
+<p>优化提示：
+如果Qcache_lowmem_prunes 值比较大，表示查询缓存区大小设置太小，需要增大
+如果Qcache_free_blocks 较多，表示内存碎片较多，需要清理，flush query cache
+根据《High Performance MySQL》中所述，关于query_cache_min_res_unit大小的调优，书中给出了一个计算公式，
+可以供调优设置参考：query_cache_min_res_unit = (query_cache_size - Qcache_free_memory) / Qcache_queries_in_cache</p>
+<hr>
+<p>该文章转自<a href="http://blog.sina.com.cn/s/blog_75ad10100101by7j.html">mysql查询缓存打开、设置、参数查询、性能变量意思</a></p>
+<p>另一篇优化详解<a href="http://blog.csdn.net/wulantian/article/details/11043121">myql优化，启动mysql缓存机制，实现命中率100%</a></p>
+<hr>
+<p>背景:
+执行一个用到了索引的sql，表150w数据，行为是copy，但是processlist显示writing to net,觉得很奇怪，继而查询解决方案，发现了一个参数，设置之后该状态消失</p>
+<p>主要参数：
+max_allowed_packet 说明:mysql根据配置文件会限制server接受的数据包大小
+默认该配置是1M,因此一定是150w数据结果超过限制，导致反复读取</p>
+<pre class="language-vim" tabindex="0"><code class="language-vim"><span class="token operator">/</span><span class="token operator">/</span>查看
+mysql<span class="token operator">></span>select @@max_allowed_packet<span class="token punctuation">;</span>
+<span class="token operator">/</span><span class="token operator">/</span>设置为20M
+mysql<span class="token operator">></span><span class="token keyword">set</span> @@global<span class="token operator">.</span>max_allowed_packet<span class="token operator">=</span><span class="token number">20971520</span><span class="token punctuation">;</span></code></pre>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-07-29-life-recently/">最近生活的简单总结</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-08-01-mac-profile-path/">Mac终端的配置文件定义与修改</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2015-07-31-mysql-simple-cache-config/` was built on 2025-07-22T04:14:15.672Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>最佳实践什么的 可太有魅力了</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="">最佳实践什么的 可太有魅力了</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2020-12-08">08 December 2020</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/mobile/" class="post-tag">mobile</a></li>
+</ul>
+
+<blockquote>
+<p>Programming is a creative field, and building Android apps isn't an exception.</p>
+</blockquote>
+<p>👏 编程是一个极具创造性的领域，构建 Android 应用程序也不例外呢。</p>
+<h2 id="mobile">Mobile 的用户体验</h2>
+<p>在大多数情况下，桌面应用程序都只有一个单一的入口点来进入桌面应用程序，而后作为整体的进程运行。 相对而言 Android 应用程序要复杂得多。 典型的 Android 应用程序会包含多个应用程序组件：Activities, Fragments, Services, Content Providers 和 Broadcast Receivers 有关他们的概念请见<a href="https://www.sddtc.florist/sddtc/2020/12/01/android-core-applications-fundamentals.html">这里</a>。</p>
+<p>你可以在应用程序的 app manifest 中声明这些组件， 之后 Android 系统使用 manifest 文件来决定如何将您的应用程序集成到安卓设备的整体用户体验中。 一个能正常工作的 Android 应用程序往往包含多个组件，而且用户经常在短时间内与多个应用程序进行交互，因此应用程序需要适应/处理不同类型的用户驱动的交互行为和任务。</p>
+<p>举例来说，当你在自己喜欢的一款社交网络应用里分享一张照片，那么都会发生什么呢？ ：）</p>
+<ol>
+<li>该应用试图访问手机的照相机功能。这时，Android 系统会启动相机应用程序来处理该请求。 与此同时，用户其实已经离开了社交网络应用，但是这种切换体验仍然是无缝的。</li>
+<li>相机应用在被使用的过程中，用户可能还会触发其它的功能，例如启动文件选择器，这可能会启动另一个应用（文件管理应用）。</li>
+<li>最终照片拍摄/从相册中选取完毕之后，用户会返回到社交网络应用并分享出一张自己满意的照片。</li>
+</ol>
+<p>在整个过程中，用户都可能被电话或各种应用的通知所打扰。在这些中断操作后，用户仍希望能返回到社交应用中并恢复分享照片的用户旅程里。 总而言之，这种应用程序跳跃行为在移动设备上是很常见的，因此您的应用程序必须能够正确处理这些情景。
+然而需要记住的是，移动设备也会受到资源（例如内存）的限制，因此操作系统可能会随时终止某些应用程序进程，以便为新进程腾出空间。
+于是在这种环境下，您的应用程序组件可能会有个别无序的启动方式，而操作系统或用户可以随时销毁它们。由于这些事件不受你的控制，因此你不应在应用程序组件中存储任何应用程序的数据或状态，并且应用程序组件之间也不应该相互依赖。</p>
+<h2 id="-2">通用的两个设计原则</h2>
+<p>那么你也许会有一个疑问 🤔️， 如果不应该使用应用程序组件来存储应用程序数据和状态，那么该如何设计应用程序？</p>
+<h3 id="-3">关注点分离</h3>
+<p>遵循的最重要原则是关注点分离(<a href="https://en.wikipedia.org/wiki/Separation_of_concerns">SoC</a>)。
+将所有代码都实现在一个 Activity 或 Fragment 中是一个常见的错误。这些基于 UI 的类应仅包含处理 UI 和操作系统交互的逻辑。通过使这些类尽可能精简，可以避免许多与生命周期相关的问题。
+⚠️请记住，你不应该尝试拥有任何有关 Activity 和 Fragment 的实现；相反的，他们只是一些 Android 操作系统与你的应用之间协同的粘合类。操作系统可以根据用户交互或由于内存不足等系统状况而随时销毁它们。为了提供令人满意的用户体验和更可管理的应用程序维护体验，最好最大程度地减少对它们的依赖。</p>
+<h3 id="ui">从模型驱动 UI</h3>
+<p>另一个重要原则是，你应该从模型（最好是持久性模型）驱动 UI。模型是负责处理应用程序数据的组件。它们独立于应用程序中的 View 对象和应用程序组件，因此不受应用程序生命周期和相关问题的影响。</p>
+<p>Persistence 是一个理想的状态，原因如下：</p>
+<ul>
+<li>如果 Android 操作系统销毁了你的应用以释放资源，你的用户并不会丢失数据。</li>
+<li>如果网络连接不稳定或不可用，你的应用程序仍将继续运行。</li>
+</ul>
+<p>通过将你的应用基于模型类承担明确定义的数据管理职责，你的应用将更具可测试性和一致性。</p>
+<h2 id="-4">最佳实践</h2>
+<h3 id="avoid-designating-your-apps-entry-points-such-as-activities-services-and-broadcast-receivers-as-sources-of-data">Avoid designating your app's entry points—such as activities, services, and broadcast receivers—as sources of data.</h3>
+<blockquote>
+<p>避免将应用程序的入口 (Activities, Services 和 Broadcast receiver) 指定为数据源</p>
+</blockquote>
+<p>相反的，它们仅应与其他组件协调工作，来获取与该程序入口所需要的相关的数据子集。 每个应用程序组件的寿命都很短： 他们取决于用户的操作，和基于 Android 系统的当前的运行情况。</p>
+<h3 id="create-well-defined-boundaries-of-responsibility-between-various-modules-of-your-app">Create well-defined boundaries of responsibility between various modules of your app.</h3>
+<blockquote>
+<p>在应用程序的各个模块之间创建明确定义的职责范围。</p>
+</blockquote>
+<p>举例来讲，尽量避免在代码中的多个类/包中均定义从网络请求中加载数据的逻辑片段。 同样，不要在同一个类中定义多个无关的职责，例如数据缓存和数据绑定。</p>
+<h3 id="expose-as-little-as-possible-from-each-module">Expose as little as possible from each module.</h3>
+<blockquote>
+<p>尽可能少的暴露每个模块。</p>
+</blockquote>
+<p>不要轻易暴露一个模块的内部实现细节，哪怕你认为自己只会这样做一次/只有这一个。 你确实可能会在短期内获得一些好处，但是随着代码的发展，你将不得不同样收获一些技术债。</p>
+<h3 id="consider-how-to-make-each-module-testable-in-isolation">Consider how to make each module testable in isolation.</h3>
+<blockquote>
+<p>考虑如何使每个模块独立地可测试。</p>
+</blockquote>
+<p>举例来说，拥有定义明确的可从网络请求中获取数据的 API，可以使将数据持久化在本地数据库中的模块的测试变得更加轻松。 相反，如果您将来自这两个模块的逻辑混合写在一起，或者将网络请求逻辑代码分布在整个代码库中，则使得测试会变得更加困难，甚至不具有可测试性。</p>
+<h3 id="focus-on-the-unique-core-of-your-app-so-it-stands-out-from-other-apps">Focus on the unique core of your app so it stands out from other apps.</h3>
+<blockquote>
+<p>专注于您应用程序的独特核心，使其在其他应用程序中脱颖而出。</p>
+</blockquote>
+<p>不要一次又一次地写相同的样板代码来重新发明轮子。 相反，将时间和精力集中在使您的应用与众不同的方面，让 Android Architecture Components 和其他推荐的库来辅助你处理功能重复的部分。</p>
+<h3 id="persist-as-much-relevant-and-fresh-data-as-possible">Persist as much relevant and fresh data as possible.</h3>
+<blockquote>
+<p>尽可能多的展示足够新鲜的数据。</p>
+</blockquote>
+<p>如果坚持这个实践，即使用户的设备处于离线模式，用户也可以正常享受你的应用程序所提供的功能。 请记住，并非所有用户的网络都永远是稳定并且快速的。</p>
+<h3 id="assign-one-data-source-to-be-the-single-source-of-truth">Assign one data source to be the single source of truth.</h3>
+<blockquote>
+<p>持有一个单一数据源， 坚持 single source of truth.</p>
+</blockquote>
+<p>每当您的应用程序需要访问这些数据时，它都应始终源自这一单一的数据源。</p>
+<p>本文译自 <a href="https://developer.android.com/jetpack/guide#best-practices">jetpack-best-practices</a></p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2020-12-01-android-core-applications-fundamentals/">Fundamentals 是基本原理的意思</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2020-12-10-android-core-viewmodel-overview/">再谈 ViewModel</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2020-12-08-android-app-arch-best-practices/` was built on 2025-07-22T04:14:15.686Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

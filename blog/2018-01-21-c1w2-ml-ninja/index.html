@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Coursera 第一阶段第二课总结</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="coursera">Coursera 第一阶段第二课总结</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2018-01-21">21 January 2018</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/machine-learning/" class="post-tag">machine learning</a></li>
+</ul>
+
+<h3 id="binary-classification">binary-classification 二元分类</h3>
+<ul>
+<li>深度学习在进行<code>m</code>个训练集计算的时候，其实并不需要使用<code>for</code>循环</li>
+<li>神经网络的计算过程分为:<strong>正向传播</strong>和<strong>反向传播</strong>两个分开的过程</li>
+<li>该课程主讲逻辑回归：用于二元分类的算法</li>
+<li>识别猫咪的图片
+<ul>
+<li>RED GREEN BLUE 三个像素值矩阵</li>
+<li>定义一个<code>X</code>的向量矩阵成为特征向量</li>
+</ul>
+</li>
+<li>在二元分类问题中, 目标是训练出一个分类器
+<ul>
+<li>输入: 上面的<code>X</code></li>
+<li>输出: 结果标签<code>Y</code>:1|0</li>
+</ul>
+</li>
+</ul>
+<h3 id="logistic-regression">logistic-regression 逻辑回归</h3>
+<ul>
+<li>是一个学习算法: 用在监督学习问题中, 用于二元分类问题</li>
+<li>输出<code>Y’</code>值更像是一个概率, 趋近于1的<code>[0, 1)</code></li>
+<li>参数是<code>w</code>, <code>n_x</code>维向量, <code>b</code>是一个实数 这个公式??不太合理, 因为我们希望<code>Y’</code>在<code>[0, 1)</code>区间之内</li>
+<li><code>sigmoid</code>函数出场了</li>
+</ul>
+<h3 id="logistic-regression-cost-function">logistic-regression-cost-function 逻辑回归损失函数</h3>
+<ul>
+<li>为了训练<code>w</code>和<code>b</code>, 你需要定义一个成本函数</li>
+<li>训练样本<code>m</code>个</li>
+<li>损失函数(误差函数)用来衡量算法运行情况</li>
+<li>函数不太合适的话, 会有优化问题, 会造成多个局部最优解, 那么运用梯度下降法会找不到全局最优解</li>
+<li><strong>损失函数</strong>是针对<strong>单个</strong>训练样本</li>
+<li><strong>成本函数</strong>是在<strong>全体</strong>训练样本上的表现</li>
+</ul>
+<h3 id="gradient-descent">gradient-descent 梯度下降法</h3>
+<ul>
+<li>用梯度下降法来训练或者学习训练集的<code>w</code>, <code>b</code></li>
+<li><code>w</code>其实是可以为高维</li>
+<li>任意初始值都可以, 一般用<code>0</code>, <code>random</code>也可以但一般不用因为函数是凹的. 所以不论初始值是多少都应该能到达同一点</li>
+<li>通过迭代朝<strong>最陡</strong>的下坡方向走一步</li>
+<li>导数(斜率)就是针对<code>w</code>的导数, 即对参数<code>w</code>更新或者变化量</li>
+<li><code>α</code>是学习率, 以后会学习, 它控制每一次迭代, 也可称作步长</li>
+</ul>
+<h3 id="derivatives">derivatives 导数</h3>
+<ul>
+<li>微积分 导数</li>
+<li>对于一条直线 斜率永远都一样</li>
+</ul>
+<h3 id="computation-graph">computation-graph 流程推导图</h3>
+<ul>
+<li>一个神经网络的计算都是按照<strong>正向</strong>或者<strong>反向</strong>过程传输操作</li>
+<li><strong>反向</strong>一般用来计算对应的梯度或者导数</li>
+<li>这个视频的流程图解释了<strong>正向</strong>和<strong>反向</strong></li>
+<li><strong>从左向右</strong>可以计算出函数<code>J</code>的结果</li>
+<li><strong>从右往左</strong>是计算导数的最自然的方式, 下个视频介绍</li>
+</ul>
+<h3 id="derivatives-with-a-computation-graph">derivatives-with-a-computation-graph 流程推导图的导数计算</h3>
+<ul>
+<li>计算出函数<code>J</code>的导数</li>
+<li>首先 计算<code>J</code>对<code>v</code>的导数, 也就做完了一个反向步</li>
+<li>计算函数<code>J</code>对变量<code>a</code>的导数, 即<code>a</code>的改变量</li>
+<li>计算函数<code>J</code>对变量<code>u</code>的导数</li>
+</ul>
+<h3 id="logistic-regression-gradient-descent">logistic-regression-gradient-descent 逻辑回归的梯度下降法</h3>
+<ul>
+<li>怎样通过计算偏导数来实现逻辑回归的梯度下降算法</li>
+<li>核心关键: 记住相关的几个重要公式来实现上面的算法</li>
+<li>用流程图计算逻辑回归的梯度下降, 虽然大材小用但能更清晰的理解神经网络</li>
+<li>链式法则 微积分</li>
+</ul>
+<h3 id="gradient-descent-on-m-examples-m">gradient-descent-on-m-examples <code>m</code>个样本的梯度计算</h3>
+<ul>
+<li><code>m</code>个训练样本</li>
+<li>记住逻辑回归的重要公式</li>
+<li>初始化<code>0</code>, 循环<code>m</code>个求和</li>
+<li>显式<code>for</code>低效</li>
+<li><strong>向量化技术</strong>摆脱显式<code>for</code>循环, 在深度学习发展初期表现很棒, 可大大加速运算效率</li>
+<li>深度学习里的向量化技术相当重要, 因为数据集越来越大, 需要高效的解决方案</li>
+<li>甚至一个<code>for</code>都不需要</li>
+</ul>
+<p>相关链接:
+<a href="https://mooc.study.163.com/course/2001281002#/info">网易云课堂-神经网络和深度学习</a>
+<a href="https://www.coursera.org/specializations/deep-learning">Coursera</a></p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2017-12-09-my-annual-rank-2017/">我的 2017 年度总结</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2018-03-28-dont-believe-consumer-input/">论&#39;永远不要相信用户的输入&#39;</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2018-01-21-c1w2-ml-ninja/` was built on 2025-07-22T04:14:15.680Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

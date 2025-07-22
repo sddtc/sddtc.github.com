@@ -1,0 +1,749 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>关于 .well-known 规范的那些事 (1)</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="well-known-1">关于 .well-known 规范的那些事 (1)</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2018-08-28">28 August 2018</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/auth/" class="post-tag">auth</a></li>
+</ul>
+
+<h3 id="abstract">Abstract</h3>
+<blockquote>
+<p>OpenID Connect 1.0 is a simple identity layer on top of the OAuth 2.0 protocol. It enables Clients to verify the identity of the End-User based on the authentication performed by an Authorization Server, as well as to obtain basic profile information about the End-User in an interoperable and REST-like manner.</p>
+</blockquote>
+<p>OpenID Connect 1.0 是 OAuth 2.0 协议最上层的简单身份验证层. 它使客户端能够根据授权服务器执行的身份验证来验证最终用户的身份, 以及以可操作性和类似 Restful 的方式获取有关最终用户的基本配置文件信息.</p>
+<h3 id="intro">Intro</h3>
+<p>为了使 OpenID Connect 依赖方能够为最终用户使用 OpenID Connect 服务, 依赖方需要知道 OpenID Provider 的位置. OpenID Connect 使用 <code>WebFinger</code> 为最终用户定位 OpenID 提供程序.
+一旦 <code>OpenID Provider</code> 被确定, 该 <code>OpenID Provider</code> 的配置信息作为 JSON 文档从 <code>well-known</code> 的位置检索, 还包括有 OAuth2.0 的接口地址.</p>
+<h3 id="openid-provider-issuer-discovery">OpenID Provider Issuer Discovery</h3>
+<blockquote>
+<p>OpenID Provider Issuer Discovery 是一个确定 OpenID Provider 位置的过程</p>
+</blockquote>
+<p>关于 <code>GET /.well-known/webfinger?xxxxxx</code> 的一些标准</p>
+<h3 id="openid-provider-metadata">OpenID Provider Metadata</h3>
+<p><strong>issuer</strong>: 必选项</p>
+<ul>
+<li>HTTPS</li>
+<li>URL 不包含参数片段</li>
+<li><strong>If Issuer discovery is supported</strong>, his value MUST be identical to the issuer value returned by WebFinger.</li>
+<li>该值必须与 OpenID Provider 颁发的 Tokens 的 iss 值一致</li>
+</ul>
+<p><strong>authorization_endpoint</strong>: 必选项</p>
+<ul>
+<li>值是 OpenID Provider 的 OAuth 2.0 Authorization Endpoint</li>
+</ul>
+<p><strong>token_endpoint</strong>:</p>
+<ul>
+<li>值是 OpenID Provider 的 OAuth 2.0 Token Endpoint</li>
+<li>当 OpenID Provider <strong>仅仅</strong>实现了 <code>Implicit Flow</code> 时是非必须, 其余情况都是必选项</li>
+</ul>
+<p><strong>userinfo_endpoint</strong>: 推荐</p>
+<ul>
+<li>值是 OpenID Provider 的 UserInfo Endpoint</li>
+<li>HTTPS</li>
+<li><strong>可以</strong>包含端口号, 参数等</li>
+</ul>
+<p><strong>jwks_uri</strong>: 必选项</p>
+<ul>
+<li>OpenID Provider 的 JSON Web Key Set document</li>
+<li>用于验证 OpenID Provider 签名的签名密钥</li>
+<li><strong>可以</strong>包含服务器的加密密钥, 用来加密对服务器的请求. 当签名和加密密钥都可用时, <strong>必须</strong>要添加一个use(Key Use)参数来说明预期用途</li>
+</ul>
+<p><strong>registration_endpoint</strong>: 推荐</p>
+<ul>
+<li>值是 OpenID Provider 的 Dynamic Client Registration Endpoint</li>
+<li>据说谷歌<a href="https://accounts.google.com/.well-known/openid-configuration">google's well-known config</a>是不暴露这个端口因为不想让客户端通过此方式注册~</li>
+</ul>
+<p><strong>scopes_supported</strong>: 推荐</p>
+<ul>
+<li>服务器支持的 scope values</li>
+<li><strong>必须</strong>包含 <code>openid</code>, 服务端也可以选择不公开某些 scope values 哪怕已经支持</li>
+</ul>
+<p><strong>response_types_supported</strong>: 必选项</p>
+<ul>
+<li>OpenID Provider 支持的 response_type 列表</li>
+<li>Dynamic OpenID Provider <strong>必须</strong> 支持 <code>code, id_token</code> 和 <code>token, id_token</code></li>
+</ul>
+<p><strong>response_modes_supported</strong>: 可选项</p>
+<ul>
+<li>OpenID Provider 支持的 response_mode 列表</li>
+<li>缺省值 对于 Dynamic OpenID Providers 来说是 <code>[&quot;query&quot;, &quot;fragment&quot;]</code></li>
+</ul>
+<p><strong>grant_types_supported</strong> : 可选项</p>
+<ul>
+<li>OpenID Provider 的 OAuth 2.0 Grant Type values.</li>
+<li>Dynamic OpenID Providers <strong>必须</strong> 支持 <code>authorization_code</code> and <code>implicit Grant</code></li>
+<li>缺省值: <code>[&quot;authorization_code&quot;, &quot;implicit&quot;]</code></li>
+</ul>
+<p><strong>acr_values_supported</strong>: 可选项</p>
+<ul>
+<li>OpenID Provider 的 the Authentication Context Class References</li>
+</ul>
+<p><strong>subject_types_supported</strong>: 必选项</p>
+<ul>
+<li>OpenID Provider 的 the Subject Identifier types</li>
+<li>有效类型包括: <code>pairwise and public</code></li>
+</ul>
+<p><strong>id_token_signing_alg_values_supported</strong>: 必选项</p>
+<ul>
+<li>OpenID Provider 的 the JWS signing algorithms (alg values) for the ID Token to encode the Claims in a JWT.</li>
+<li><strong>必须</strong>包含算法 <code>RS256</code></li>
+<li>值可以为 <code>none</code>, 但是必须是建立在 <code>Authorization Endpoint</code> 返回值不返回任何 Token 的前提下, 例如 <code>code flow</code></li>
+</ul>
+<p><strong>id_token_encryption_alg_values_supported</strong>: 可选项</p>
+<ul>
+<li>OpenID Provider 的 JWE encryption algorithms (alg values) for the ID Token to encode the Claims in a JWT</li>
+</ul>
+<p><strong>id_token_encryption_enc_values_supported</strong>: 可选项</p>
+<ul>
+<li>OpenID Provider 的 JWE encryption algorithms (enc values) for the ID Token to encode the Claims in a JWT</li>
+</ul>
+<p><strong>userinfo_signing_alg_values_supported</strong>: 可选项</p>
+<ul>
+<li>UserInfo Endpoint 的 JWS signing algorithms (alg values) to encode the Claims in a JWT</li>
+<li>值可以为 <code>none</code></li>
+</ul>
+<p><strong>userinfo_encryption_alg_values_supported</strong>: 可选项</p>
+<ul>
+<li>UserInfo Endpoint 的 JWE encryption algorithms (alg values) to encode the Claims in a JWT</li>
+</ul>
+<p><strong>userinfo_encryption_enc_values_supported</strong>: 可选项</p>
+<ul>
+<li>UserInfo Endpoint 的 JWE encryption algorithms (enc values) to encode the Claims in a JWT</li>
+</ul>
+<p><strong>request_object_signing_alg_values_supported</strong>: 可选项</p>
+<ul>
+<li>OpenID Provider 的 JWS signing algorithms (alg values) for Request Objects</li>
+<li>服务端支持 <code>none and RS256</code></li>
+</ul>
+<p><strong>request_object_encryption_alg_values_supported</strong>: 可选项</p>
+<ul>
+<li>OpenID Provider 的 JWE encryption algorithms (alg values) for Request Objects</li>
+<li>These algorithms are used both when the Request Object is passed by value and when it is passed by reference</li>
+</ul>
+<p><strong>request_object_encryption_enc_values_supported</strong>: 可选项</p>
+<ul>
+<li>OpenID Provider 的 JWE encryption algorithms (enc values) for Request Objects</li>
+<li>These algorithms are used both when the Request Object is passed by value and when it is passed by reference</li>
+</ul>
+<p><strong>token_endpoint_auth_methods_supported</strong>: 可选项</p>
+<ul>
+<li>Token Endpoint 支持的 Client Authentication methods</li>
+<li>方法有 <code>client_secret_post</code>, <code>client_secret_basic</code>, <code>client_secret_jwt</code> 和 <code>private_key_jwt</code></li>
+<li>其它 authentication methods <strong>可能</strong> 在扩展中定义</li>
+<li>缺省值是 <code>clien_secret_basic</code> -- the HTTP Basic Authentication Scheme specified</li>
+</ul>
+<p><strong>token_endpoint_auth_signing_alg_values_supported</strong>: 可选项</p>
+<ul>
+<li>Token Endpoint 的 JWS signing algorithms (alg values) for the signature on the JWT used to authenticate the Client at the Token Endpoint for the <code>private_key_jwt</code> and <code>client_secret_jwt</code> authentication methods.</li>
+<li>服务端应该要支持 <code>RS256</code>. <strong>不可</strong>为 <code>none</code></li>
+</ul>
+<p><strong>display_values_supported</strong>: 可选项</p>
+<ul>
+<li>OpenID Provider 的 display parameter values</li>
+</ul>
+<p><strong>claim_types_supported</strong>: 可选项</p>
+<ul>
+<li>OpenID Provider 的 Claim Types</li>
+<li>该协议定义了 <code>normal</code>, <code>aggregated</code> 和 <code>distributed</code></li>
+<li>缺省为 <code>normal</code></li>
+</ul>
+<p><strong>claims_supported</strong>: 推荐</p>
+<ul>
+<li>OpenID Provider 可提供的 Claim Names of the Claims</li>
+<li>由于隐私或者其他原因, 这项的值可能不全</li>
+</ul>
+<p><strong>service_documentation</strong>: 可选项</p>
+<ul>
+<li>使用 OpenID Provider 的开发文档链接</li>
+<li>特别是当 OpenID Provider 不支持 Dynamic Client Registration, 那么需要提供一份文档来说明如何注册客户端</li>
+</ul>
+<p><strong>claims_locales_supported</strong>: 可选项</p>
+<ul>
+<li>Languages and scripts supported for values in Claims being returned</li>
+</ul>
+<p><strong>ui_locales_supported</strong>: 可选项</p>
+<ul>
+<li>Languages and scripts supported for the user interface</li>
+</ul>
+<p><strong>claims_parameter_supported</strong>: 可选项</p>
+<ul>
+<li>Boolean value specifying whether the OP supports use of the claims parameter, with true indicating support.</li>
+<li>缺省值为 <code>false</code></li>
+</ul>
+<p><strong>request_parameter_supported</strong>: 可选项</p>
+<ul>
+<li>Boolean value specifying whether the OP supports use of the request parameter, with true indicating support</li>
+<li>缺省值为 <code>false</code></li>
+</ul>
+<p><strong>request_uri_parameter_supported</strong>: 可选项</p>
+<ul>
+<li>Boolean value specifying whether the OP supports use of the request_uri parameter, with true indicating support</li>
+<li>缺省值为 <code>true</code></li>
+</ul>
+<p><strong>require_request_uri_registration</strong>: 可选项</p>
+<ul>
+<li>Boolean value specifying whether the OP requires any request_uri values used to be pre-registered using the request_uris registration parameter. Pre-registration is REQUIRED when the value is true.</li>
+<li>缺省值为 <code>false</code></li>
+</ul>
+<p><strong>op_policy_uri</strong>: 可选项</p>
+<ul>
+<li>URL that the OpenID Provider provides to the person registering the Client to read about the OP's requirements on how the Relying Party can use the data provided by the OP.</li>
+<li>The registration process SHOULD display this URL to the person registering the Client if it is given.</li>
+</ul>
+<p><strong>op_tos_uri</strong>: 可选项</p>
+<ul>
+<li>URL that the OpenID Provider provides to the person registering the Client to read about OpenID Provider's terms of service.</li>
+<li>The registration process SHOULD display this URL to the person registering the Client if it is given.</li>
+</ul>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2018-08-22-what-does-sddtc-say-one/">AWS Serverless 应用实践学习(1)</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2018-09-07-js-winston-config/">winston 日志设置指南</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2018-08-28-openid-well-known-one/` was built on 2025-07-22T04:14:15.683Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

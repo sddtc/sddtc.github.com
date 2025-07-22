@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>登录系统的蜕变之路</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="">登录系统的蜕变之路</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2021-03-28">28 March 2021</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/auth/" class="post-tag">auth</a></li>
+</ul>
+
+<blockquote>
+<p>“破壳而出是小鸡的生命哲学，打破旧有的阻碍和桎梏，因而得以获得新生” 一来自网络</p>
+</blockquote>
+<p>某房产领域的大型在线网站日增用户大概是五千，网站支持用户不需要登录就能搜索，浏览，分享自己心仪的房产。如果你需要咨询房屋的中介，则需要通过登录来完成一些定制化需求：填写申请租房信息，
+申请租赁商铺，对自己正在出售的房屋进行数据观测等...</p>
+<p>该网站运行了十年，它的登录系统面对日益增长的业务需求显得越来越心有余而力不足，于是在经历了思考，分析后认识到了新登录系统出现的必然性，最终在经历了设计，开发，测试，上线阶段之后，
+新版本的登录系统势如破竹，如获新生。</p>
+<p><strong>登录系统的界面</strong>往往是用户使用一个网站的入口，为了让网站知道并记住 “我是谁”，进一步为我存储，展示，推荐更丰富的内容来满足我对于各种知识消费的需求。
+一个简单的登录系界面可以是填写邮箱地址 + 密码来进行用户注册，之后用户可以使用这个凭证登录网站。</p>
+<p><picture><source type="image/avif" srcset="/sddtc.github.com/blog/2021-03-28-new-sso-platform/ROFAi6TtoM-1120.avif 1120w"><source type="image/webp" srcset="/sddtc.github.com/blog/2021-03-28-new-sso-platform/ROFAi6TtoM-1120.webp 1120w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2021-03-28-new-sso-platform/ROFAi6TtoM-1120.png" alt="2021-04-03-jWaug8-tb1" width="1120" height="600"></picture></p>
+<p>那么登录系统的后台一般是什么样子呢？
+<em>一个后台系统，一个数据库。</em></p>
+<p><strong>后台系统</strong>用于处理用户填写的邮箱地址和密码的正确性和有效性。例如在注册时检查邮箱地址是否已经存在， 密码是否符合网站密码策略。
+在登录时检查邮箱地址和密码是否匹配。在一些复杂场景中，后台系统还负责通过邮件服务发送欢迎邮件，通过手机运营商服务发送验证码信息。</p>
+<p><strong>数据库</strong>用于存储用户的信息。例如一张用户表会存储用户唯一的用户 ID，邮箱地址，加密之后的密码，手机号码等。</p>
+<p><picture><source type="image/avif" srcset="/sddtc.github.com/blog/2021-03-28-new-sso-platform/18ocXlmCnW-1966.avif 1966w"><source type="image/webp" srcset="/sddtc.github.com/blog/2021-03-28-new-sso-platform/18ocXlmCnW-1966.webp 1966w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2021-03-28-new-sso-platform/18ocXlmCnW-1966.png" alt="2021-04-03-BRii9Q-2" width="1966" height="578"></picture></p>
+<p>知道了这两个主要部分，我们需要知道另一个登录系统中重要的概念，<strong>令牌</strong>。
+在这篇文章中，令牌是后台系统通过用户登录网站生成的一个登录凭证，存放在 <code>HTTP Cookie</code> 中。在房产网站的上下文里，登录用户想要申请租房，在填写完租房信息后点击申请按钮，
+那么登录凭证会和用户填写的租房信息一并发送到后台系统，后台系统首先验证登录凭证是否正确有效，如果正确有效则用户成功申请租房。</p>
+<p>那么，该房产网站的登录系统为什么面对日益增长的业务需求显得越来越心有余而力不足呢？</p>
+<h4 id="-2">一、登录页面</h4>
+<p>该企业拥有 <code>ToB</code> 和  <code>ToC</code> 的不同用户群体，有超过五个在线的网站和若干个内部系统。随着业务和(<s>财力</s>)的发展该企业还在收购公司，每个网站有不同的登录页面。
+那么会有一个问题：这些网站都属于一个企业却无法带给用户统一的登录体验。用户在使用各个网站的同时感受不到在使用一个企业的不同产品。</p>
+<h4 id="-3">二、登录系统后台</h4>
+<p>不同的网站对应了不同的成熟运行的登录后台。那么登录系统的后台系统同样面临了几个问题：</p>
+<ol>
+<li>维护成本大。每个网站需要自己维护自己的登录系统。团队在日常实现新需求的同时还要解决各种登录相关的问题。</li>
+<li>同一个用户超过三十二个身份。用户同时使用了该企业不同网站的产品，造成一个用户有多个身份出现在该企业生态中，而企业却无法识别出这些用户，进而更加无法在生态中为用户构造统一的用户画像。对推荐，用户行为分析等业务场景造成阻碍。
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2021-03-28-new-sso-platform/1p2suIz0kc-1216.avif 1216w"><source type="image/webp" srcset="/sddtc.github.com/blog/2021-03-28-new-sso-platform/1p2suIz0kc-1216.webp 1216w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2021-03-28-new-sso-platform/1p2suIz0kc-1216.png" alt="2021-04-03-0xTjuf-3" width="1216" height="846"></picture></li>
+<li>数据库和数据表需要改造。企业的大部分系统服务已经部署在云平台上，而企业其中一个主要的网站的用户表仍然存放并维护在物理服务器的数据库中，并有计划在一个合适的时机也迁移到云平台上。而这张用户表的设计也出现了一个些坏味道：</li>
+</ol>
+<ul>
+<li>用户登录表除了存放了邮箱地址，加密后的密码信息，还存放了一些用户个人信息字段，例如，昵称，性别，生日。用户身份验证信息(邮箱地址，密码) 和用户画像信息(性别，年龄，生日)耦合。</li>
+<li>用户登录表存放了一些标识位字段，例如，用户是否有效，用户是否已删除，用户是否是黑名单用户。用户权限(黑名单，是否有效)信息渗透到用户表中。</li>
+<li>用户登录表存放了一些用于找回密码，验证登录邮箱，甚至第三方登录需要的相关令牌。这些令牌有时效性。也和用户身份验证信息强耦合。</li>
+</ul>
+<h4 id="-4">三、令牌</h4>
+<p>不同的网站维护着不同的令牌，我们以其中一个网站的令牌为例。我一直认为它的存在是企业最想解决的问题没有之一【完全站在技术的角度解读：</p>
+<ul>
+<li>该令牌失效日期过长(68 年)， 有安全隐患。试想用户使用一个公共电脑登录了自己的账户并且忘记退出导致令牌泄漏，而别有用心之人可能会企图通过该令牌获取用户在企业网站信息。</li>
+<li>该令牌没有设置 <code>HttpOnly</code> 的限制，导致它可以被网站嵌入的第三方 <code>JavaScript</code> 脚本获取，引入邮箱地址被泄露的隐患。</li>
+<li>该令牌已被多达七十二个系统正确或者不正确的使用，若想淘汰它，仿佛愚公移山。但是它带来的问题，淘汰它也是当务之急。</li>
+</ul>
+<blockquote>
+<p>“打破旧有的阻碍和桎梏”</p>
+</blockquote>
+<p>新的登录系统出现是为了解决旧系统遇到的这三大难题而出现的。</p>
+<h4 id="-5">一、技术选型</h4>
+<p>基于企业的大部分系统服务均部署在 AWS 的云平台上，于是对于 AWS Cognito 服务产生了浓厚的兴趣。而它恰好有一些新系统需要拥有的特点：</p>
+<ul>
+<li>有良好的登录页面风格，支持自定义主题</li>
+<li>天然支持第三方登录。例如，<code>Facebook, Apple, Google</code> 等</li>
+<li>拥有更安全的措施来保护用户登录。例如，<code>MFA</code>(多因子验证)</li>
+<li>经济型，支持依据负载的压力来弹性扩容</li>
+<li>有当前业界权威的身份认证和身份权限的标准做背书。例如，<code>OAuth2 &amp; OIDC</code></li>
+</ul>
+<p>新登录系统的架构基本如下：</p>
+<p><picture><source type="image/avif" srcset="/sddtc.github.com/blog/2021-03-28-new-sso-platform/pW_SrzGX7q-1342.avif 1342w"><source type="image/webp" srcset="/sddtc.github.com/blog/2021-03-28-new-sso-platform/pW_SrzGX7q-1342.webp 1342w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2021-03-28-new-sso-platform/pW_SrzGX7q-1342.png" alt="4" width="1342" height="846"></picture></p>
+<h4 id="-6">二、用户迁移</h4>
+<p>什么是用户迁移呢？之前有说过其中一个网站的旧登录系统的所有用户都存储在物理服务器的数据库中，包括邮箱地址和密码。那么在新登录系统上线的时候，会出现几个问题：</p>
+<ul>
+<li>我们不知道用户的原始密码是什么，无法直接导入到使用新密码算法的新登录系统</li>
+<li>在用户登录时，我们需要判断用户输入的邮箱地址和密码匹配，但我们不想在新登录系统中连接数据库。因为其它系统的旧登录系统也许不是数据库，那么我们需要适配各种各样不同的数据源，吃力不讨好。</li>
+<li>如果用户很久没有登录过，旧登录系统何时可以真正下线呢？</li>
+</ul>
+<p>之后我们使用了 <code>AWS DynamoDB</code> 服务做用户迁移。也在新登录系统的登录流程中通过强制用户修改密码的方式将用户存储在 <code>AWS Cognito</code> 服务中。</p>
+<h4 id="-7">三、瑕疵</h4>
+<p>新的登录系统解决了很多问题，也产生了一些新的问题。就像人总会有优点和缺点，系统也一样：</p>
+<ul>
+<li>不够完备的开发 + 测试体验。用户登录界面的前端系统基于 <code>Thymeleaf</code>，后端系统由 <code>AWS</code> 持有且缺乏本地开发环境。团队无法在本地调试修改后的前端页面，只能在 <code>DEV</code> 环境中测试。</li>
+<li>用户界面的前端系统没有很好的回滚策略。假如模版语法出现错误并且没有测试出来则用户会看到未经改造的默认页面，影响用户体验。</li>
+<li>用户的邮箱地址，手机号码，密码上云之后，对于安全性和数据备份造成不小的挑战。<code>AWS Cognito</code> 服务当时并没有提供用户备份的功能。我们计划使用定时任务读取 <code>Cognito API</code> 的方式同步用户信息。进行用户备份。</li>
+<li><code>MFA</code> 功能虽然香但是价格昂贵。就我个人观点，企业的大部分网站并没有完全开启 <code>MFA</code> 的功能，这样看来性价比很低。但从另一个角度，企业对于用户安全确实很在乎并且用心！</li>
+<li>灾备很难做。当 <code>AWS</code> 某个 <code>region</code> 的数据中心再次断电或者断网(咳咳)，我们该怎么切换一整套登录系统到 <code>AWS</code> 新的地区的可用的登录系统仍然是个值得讨论的话题。</li>
+<li>部署在线上的 <code>AWS Cognito</code> 的基础设施个别字段无法修改，仅支持新增。可能会产生技术债。并在每次团队想要更新或者使用 <code>AWS Cognito</code> 提供的属性的时候，要格外小心可能产生的副作用(这里请参考数据库学习之从入门到<s>删库跑路</s>)。</li>
+</ul>
+<p>尽管如此，我们仍在失败中学习，在痛点中进步。<code>AWS Cognito</code> 也不是银弹。我们只是体会到了它带来的巨大的便利，也承受了它带来的一些痛苦。</p>
+<blockquote>
+<p>“获得新生”</p>
+</blockquote>
+<h4 id="-8">上线之夜</h4>
+<p>事到如今，回想起新登录系统上线的夜晚依然使我热血澎湃。因为新登录系统有太多相对于旧登录系统的突破：</p>
+<ul>
+<li>各个网站的登录页面风格虽然高度统一，但仍然可以根据子系统的需求，灵活的定制出多语言，多不同颜色的主题，支持不同类型第三方登录的丰富体验。</li>
+<li>对于企业的全球化战略来说，各个国家和地区对于存储用户信息的法律要求各不相同，AWS 的多 <code>region</code> 保证企业可在不同地区部署 <code>AWS Cognito</code> 服务。进行用户信息存储本地化和信息内容的裁剪。</li>
+<li>企业成立了一个团队进行新登录系统的开发和维护，解决了其它团队仍要负责开发和维护各自登录系统的成本，使其它团队更加专注在各自的领域进行产品和市场的探索与构建。</li>
+<li>实现了统一用户画像的目标，企业身份信息高度统一。一个用户 ID 代表一个唯一的用户，通过这个用户 ID 能追踪到用户使用的企业的所有系统，为未来的产品路线提供更多的可能性。</li>
+<li>在新登录系统部署在云平台之后，我们利用了 AWS 的生态集成了 <code>AWS CloudWatch</code> 服务，轻松构建出产品团队关心的用户注册登录等行为数据。</li>
+<li>使用 <code>Severless</code> 架构，我们体会到根据请求量，用户量弹性收费的甜头。团队在交付过程中面对新技术也更加兴奋和高效。<s>我必须要说，<code>JS</code> 是世界上最好的语言!</s></li>
+<li>基于 <code>OAuth2.0</code> 的令牌更加安全可靠，对于协议的支持我们还引入了 <code>PKCE(Proof Key for Code Exchange)</code> 的补充，使企业的客户端也更加安全！</li>
+</ul>
+<h4 id="-9">后记</h4>
+<p>小小的用户登录系统有着大大的复杂性。随着商业的发展，业务的激增，对于用户管理的需求也会在有限的交付中迅速扩张，导致登录系统的可用性和扩展性都面临着挑战。
+不断的追求技术的最优解，追求符合业务模型的最优解是我在这次经历中感受很深的事。虽然还有很多未知的难题等着我们解决，作为程序员，抱着 “技术改变世界” 的热情，一定会创造出更多价值。</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2021-03-13-pinpin-refactor-book-2/">品品《重构》这本书嗷 - 中</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2021-04-10-with-cgc/">Coding Girls Club 和我</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2021-03-28-new-sso-platform/` was built on 2025-07-22T04:14:15.687Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

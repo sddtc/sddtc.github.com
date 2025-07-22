@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>论&#39;永远不要相信用户的输入&#39;</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="">论&#39;永远不要相信用户的输入&#39;</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2018-03-28">28 March 2018</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/security/" class="post-tag">security</a></li>
+</ul>
+
+<h3 id="-2">背景</h3>
+<p>前不久生产了一个新鲜的bug, 也是因为这个bug的影响让人不悦, 所以我想记录下来, 也算是给自己一个提醒, 并且关于这个bug, 也可以说是一个老生常谈的话题但是却似乎让人回味的很</p>
+<p>简单的一句话来说: 把用户输入的东西放在了URL里, 并且可以让服务端读取并处理, 恰巧encode方法没有按照'想象'把&amp;符号转义一下, 于是&amp;对于URL的query有多么特殊又不是不知道</p>
+<p>如果一开始就能敏锐的察觉到用户的输入有多么可怕就好了：）
+又不是没有听过那句话：永远不要相信用户的输入</p>
+<h3 id="-3">发散</h3>
+<p>于是还是去查找了一些相关的案例来了解下:</p>
+<p><strong>ShellShock漏洞</strong>
+此次曝出的ShellShock漏洞存在于Unix用户、Linux用户和系统管理员常常使用的GNU Bourne Again Shell（Bash）中，是一个允许远程执行代码的严重安全漏洞，其范围涵盖了绝大部分的Unix类操作系统，如Linux、BSD、MAC OS X等等。
+Bash是一款被用于控制众多Linux电脑上的命令提示符的软件，黑客可以利用Bash中的漏洞完全控制目标系统。据悉，该漏洞与Bash处理来自操作系统或调用Bash脚本的应用程序的环境变量有关。如果Bash是默认的系统shell，网络攻击者可以通过发送Web请求、secure shell、telnet会话或其它使用Bash执行脚本的程序攻击服务器和其它Unix和Linux设备。
+Bash除了可以将shell变量导出为环境变量，还可以将shell函数导出为环境变量。当前版本的Bash通过以函数名作为环境变量名，以“（）{”开头的字串作为环境变量的值来将函数定义导出为环境变量。此次曝出的漏洞在于Bash处理“函数环境变量”的时候，并没有以函数结尾“}”为结束，而是一直执行其后的shell命令。
+ShellShock漏洞可以直接在Bash支持的Web CGI环境下远程执行任意命令，攻击面广，影响范围大，一些路由器、堡垒机、VPN等网络设备将会是影响重灾区。而此前的&quot;Heartbleed bug&quot;漏洞则仅能够允许黑客监控用户电脑，但不会取得控制权。</p>
+<p><strong>路人甲的Case</strong>
+游戏购买平台, 用户可以购买道具, 但是没有对数值进行判断, 于是用户可以输入负数
+然而使用道具时没有判断正负, 于是用户拥有负数个道具并且不断做-1操作也不会有问题
+结果就是攻击者获得了大量的道具，并对数据库的完整性产生破坏。</p>
+<p><strong>路人乙的Case</strong>
+微信公众号开发: 用户管理文档中找到了获取用户基本信息
+在构造sql语句的时候，要特别注意单引号的使用，你看你这里在每个变量的两边显式地加入了单引号，那要是变量的字符串里本身就包含单引号怎么办呢？
+啊，变量的值怎么可能会有单引号啊，这一点我没想到诶。
+怎么不可能？你这里的值是微信用户的信息对吧，万一哪个家伙无聊在昵称里加了个单引号呢，这完全是可能的，这种时候你的sql语句就会被这个单引号提前封闭，就会产生语法错误，也就无法正常地执行了。更要命的是，这个时候用户单引号后面的部分就成为了sql命令的一部分被执行了，万一来个drop database之类的，再加个单引号把原来的部分还原，那这就成了典型的注入攻击了。到时候你哭都来不及。
+哇靠，原来还有这种操作啊，我如梦初醒，不觉后背发凉。之前听老大提起过在php时代著名的注入攻击的案例，没想到今天自己竟差点犯了这个错误，真是罪过。
+老大紧接着又指出另一个问题：你在接收到微信服务器返回的用户信息列表时，有检查它的类型吗？
+我有点疑惑，这个类型不是在微信的文档里写好的嘛，只能是JSON啊，难道这也需要检查吗？
+老大貌似看出了我的疑虑，问到：万一用户的信息里确实有一些特殊的字符，没办法用JSON的方式传输呢？是不是需要先将JSON做个序列化再传输呢？而你没有判断返回值的类型，完全按照JSON的格式来处理，这样后面有可能会出错的。
+我还是有点疑惑，不就是个昵称嘛，能有什么特别的字符呢？
+老大看了看我，建议我现在去试下微信修改昵称的功能。这不看还真不知道，在改昵称的时候原来可以插入表情的啊，还不止是微信官方提供的表情，而是能添加自己私藏的任意表情，表情是海量的，而JSON能识别的字符集是有限的，这么一来也就自然会出现一些JSON无法识别的字符。
+看到这，我算是相信了，于是又把类型检查给加上了，并且当接收到的类型是字符串时，对其进行了处理，消除了里面可能存在的非JSON字符。老大看了看我，这次算是露出了比较满意的表情。</p>
+<p>最后，又检查了一遍，为了验证刚才老大的两个想法，我还特意加了一个记录日志的操作，看看接收到的信息到底都是些啥。确认无误后，老大把程序更新到了线上。两三分钟后，更新完成，我迫不及待地尝试了下这个新功能。说来您还真别不信，线上用户的公众号总共有两万多关注者，这些人里面居然真的有人在昵称里使用了单引号，而且这类人还不少，大概三四百人里就有一个。而且返回的用户信息列表居然真的不全是JSON格式的，而是有部分string格式的，将这些string解析后得到的JSON里面，确实包含了一些无法识别的字符。</p>
+<h3 id="-4">总结</h3>
+<p>对于WEB程序开发人员来说，“永远不要相信用户的输入”这条准则可以引申为“永远不要相信客户端信息”，客户端信息包括请求的URL、cookie、提交的表单等，总之WebRequest的所有属性都不要相信。
+例如，有的设计者期望通使用客户端的JavaScript脚本进行输入数据检查，在服务端就省略了检查，这种做法是错误的。因为JavaScript可能被浏览器禁用，或者被客户端防火墙禁用，或者某种特殊的浏览器忽略了你的JavaScript，这些都会使客户端JavaScript失效或部分失效。</p>
+<p>正确的做法是在客户端和服务端都作相同的检查，客户端的检查的目的是为了界面的友好、节省用户的时间，服务端的检查才是为了数据的完整和安全。</p>
+<h3 id="emmmm">Emmmm</h3>
+<p>生动的一堂课
+有时候听过那些话, 但是没有经历的话, 还是有点差别
+经历了之后, 你就会发现, 你宁愿自己不让它发生🙃</p>
+<p>收藏一个有趣的链接：
+<a href="https://softwareengineering.stackexchange.com/questions/46716/what-technical-details-should-a-programmer-of-a-web-application-consider-before">What should every programmer know about web development?</a>
+其它：
+<a href="http://www.cnblogs.com/kucongzhi/archive/2010/07/12/1775796.html">可爱的路人甲Case</a>
+<a href="https://coolboygym.github.io/2017/11/03/do-not-trust-user-input/">可爱的路人乙Case</a></p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2018-01-21-c1w2-ml-ninja/">Coursera 第一阶段第二课总结</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2018-04-01-ml-ninja-c2-w1-quiz/">Coursera 第二阶段第一课 Quiz</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2018-03-28-dont-believe-consumer-input/` was built on 2025-07-22T04:14:15.680Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

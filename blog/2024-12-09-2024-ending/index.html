@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>2024快要结束啦</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="2024">2024快要结束啦</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2024-12-09">09 December 2024</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/life/" class="post-tag">life</a></li>
+</ul>
+
+<p>翻到了3天以前的友圈, 看到好友所描述的&quot;一事无成的一年&quot;, 那是按照每个月份描绘的一年<br>
+1月份他在祖国的北边看火山, 吃羊<br>
+2月份他跑到了厦门, 吃海鲜<br>
+3月份的时候他去了马来西亚, 吃到了那里的榴莲<br>
+4月份的时候他到达新加坡, 看鱼狮尾雕像<br>
+5月份, 他去了日本, 吃了和牛<br>
+6月份他去了加拿大, 吃burger<br>
+7月份回到了北京打卡各种景点<br>
+8月份再次抵达马来西亚<br>
+9月份的时候去了山东<br>
+10月份的时候又回到了加拿大<br>
+11月份的时候蒙特利尔下大雪<br>
+而这条消息发在12月份的早上10点半, 那天是周六</p>
+<p>发者有没有心我不知道, 但是我听到了自己震耳欲聋的沉默, 小心翼翼的回头品自己的这一年, 又是怎样的一年</p>
+<p>12月份的我换了第三个电脑, 800块不出意外的回购, 买了一个新的樱桃键盘, 这样一来, 上下班终于做到了各种意义的切换.<br>
+11月份我在干嘛, 天啊, 在乌鲁木齐和家人们待了5天, 遇到了大雪, 吃到了一年份量的羊肉, 很香. 跳脱出来深刻地感受到父亲对于他家乡的喜爱, 对于家族的珍惜. 小姑在一个夜晚带我9连胜上王者, 开打之前我是没有信心的, 开打之后宛如坐上了云霄飞车, 看看小姑的好友列表让我知道了什么是人以群分, 物以类聚. 听着小姑给我的建议, 不得不说哪怕是简单的道理, 没有对的人在对的时间告诉你, 你还是无法理解. 人就是这么奇怪的生物.<br>
+订阅了一整年的三联周刊, 每周都会收到一本, 阅读杂志的体验很美妙. 虽然之前有关注公众号但是也并没有用过多的时间阅读. 而杂志能够让我下班回来翻阅, 了解笔者文字的魅力. 也让我无法停止对于写作的魅力的思考.<br>
+项目推进了企业级敏捷框架, 学习和探索. 我也不得不思考, &quot;小敏捷&quot;在项目里都很难说贯彻的好了, 比如拥抱变化, 比如说敏捷宣言的价值高的那部分做到了哪些? 可工作的软件高于详尽的文档, 个体和互动高于流程和工具. 几乎把右边做了个遍. 乐观一点想, 或许&quot;企业级&quot;才能有效果 :).<br>
+10月份开心的事情是发现了银泰简直是二次元的天堂, 每一层都有数不尽的谷子店, 和各种表演, 大部分是宅舞. 大家自由的cos各种各样的角色,CP. 印象很深的就是蛇恋! 上一次被年轻人们的cos击中还是小排球上映那会儿, 真视觉盛宴.<br>
+不开心的事情🙂, 那便是第一次在项目上和一个组产生了超出我预期的拉扯. 就称之为A吧. 咱们用技术的角度思考问题, 提出问题, 讨论问题. 会被对方用没有相关技能, 生产旧系统不想动, 也没有排期为理由避重就轻. 再用自己的那套符合自己利益的方案, 不论这个方案在可复用性, 可扩展性, 可阅读性, 可维护性有多差. 只要选对了场合, 含糊了所有技术问题, 得到了领导们的理解, 把依托答辩试图猛猛扣在你的头上. 我属于比较容易生气的人, 但也因此看到了自己的天真. 如今我还常常思考, 和A之间的文化鸿沟, 社会环境的差异是否在当中有不可忽视的力量. 大家虽然在一个项目里, 但是生存之道不同, 甚至是面对同样的客户. 我看不透到底哪种是对的, 开始不断反省自己, 或用劣币淘汰良币的说法自我安慰. 今后该如何是好, 有些人或许能从中学习, 强大. 也有些人不屑于这个环境, 彻底离开. 而我呢, 试图站着罢了.<br>
+9月份走了很多遍朱雀门-南门-和平门, 喜欢看安静的鸭子和好奇的猫咪. 南门是游客们的门, 也是我们滴城门!<br>
+这个月听了一场古典音乐会的分享, 包括她之前分享过修行指南, 葡萄酒指北, 我的感觉是她除了不写代码, 啥都会干. 包括最近还在织毛物, 给Suki提产品反馈, 总之是个永远表面上很平静但其实里面已经碎了的感觉的人. 是我不太能理解的绿老头. 月底的时候和另一个组里滴伙伴做Showcase, 找回了做视频的感觉, 我们一起录音的记录回听起来还是很好笑, 或许做视频, 不断的做视频, 是一件重要的事.<br>
+8月份去了秦岭植物园, 购入了人生第一套休闲西装! 这个月也第一次很严肃的思考了离开项目的可能性, 那会儿最大的感受应该是不值得. 从个人风格, 个人追求, 性别现状等各个角度看, 都有不同的合理性. 大概有些人可以思考到共赢的要点, 如果我也在这些人里就好了🤤.<br>
+7月份去了广元, 一座房子在山上的城市. 组里第一次有了小伙伴的离开, 其实那时候我就在想, 离开和留下, 都不能说明什么. 每个人都有自己精彩的人生, 这原地也不是啥厉害东西, 而她云游四海的人生, 才是可望而不可及的珍贵呢.<br>
+6月份和组里的小伙伴一起征服了朱雀森林公园的2380米! 其实爬山不带厚衣服的我才暴露了离开父母生活就没有什么生活常识的可怕现实. 独立生活, 学习生活, 才是对生活最大的尊重. 这个月一直在帮忙做review, 没什么自己的时间, 浪费了生命.<br>
+5月份去了很多次曲江遗址公园, 一圈一圈的走着, 公园20分钟让身心愉悦.
+4月份在家休息了一周.
+3月份去了长沙, 橘子洲头, 毛主席雕塑! 喝到了茶颜悦色, 古德墨宁, 大香肠和臭豆腐! 五一广场太热闹了.<br>
+2月份过年, 在西安.
+1月份跨年那天大半夜被堵在了老城根, 打不上车与拥挤的人流, 路上的烟花, 不合脚的鞋子, 延迟下班了4个小时的公交车, 令人印象深刻回忆.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2024-04-04-security-still-not-in-my-dna/">安全并没有被刻入到我的DNA里面</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2025-06-16-technology-selection/">当你做技术选型时需要考虑的</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2024-12-09-2024-ending/` was built on 2025-07-22T04:14:15.689Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

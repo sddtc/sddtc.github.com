@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>2015 年度总结</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="2015">2015 年度总结</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2015-12-28">28 December 2015</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/life/" class="post-tag">life</a></li>
+</ul>
+
+<h3 id="2015-2">2015年终总结</h3>
+<p>2015年就要过去了，如果说用简单的几个字来总结，想想看，应该是苦辣酸甜
+其实学生时代的我应该是一个相当感性的人，也许那时候，家人惯着，奶奶爷爷宠着，我根本不需要争取什么，害怕什么
+今年当然也发生了相当大的事，奶奶的身体越来越不好，大概是10月更早开始的事情
+其实我啊，也不算是一个善于表达情感的人
+但人情世故，也算是懂得通透了些
+有些人会讲，我会偏向于理性，因为知道自己想要什么
+然而在每一个可以思考的时光里，各种疑问也会充斥在脑海，又或者，人们啊，都是这么过来的</p>
+<p>总结几个关键词</p>
+<h3 id="">新番和剧</h3>
+<p>看了纯情罗曼史三，本来是不喜欢人设的，还好坚持看完了，够纯情，够美好。
+纸牌屋第三季竟然没有看，一是网上没有资源，二是也没刻意去找，今天才发现这个事实。。
+补完了古惑仔系列，其实可能是天意吧，就在国庆的时候，就突然想看古惑仔了，并且补完，感触还是挺多的，关于义气、正直、勇敢和情义
+今年补看了非常多关于Lovelive、圆焰相关的MAD或是Live，日本人确实相当的认真，而认真的这种情绪感染力其实非常强，看了Live也真真可以打动到哭
+看了美国恐怖故事五、伪装夫妇、朝五晚九。喜欢gaga的气质、喜欢小天使内田，对海爷接这部剧表示惋惜，相比较而言，LastFriends还是心目中的第一。对于童话般的爱情剧我一直比较不感冒，若不是喜欢的人确实和&quot;面瘫&quot;的气质相符，估计会弃剧了辣~
+关于电影没有印象太深的，大概算是补完了柯南的剧场版、今敏的红辣椒很赞
+这样想来，我还是得把豆瓣用起来，比如我看过的那些经典，还是蛮想回味的。</p>
+<h3 id="-2">剑三</h3>
+<p>今年一直有坚持玩基三，毕竟亲友在，我就在。大概唯一的不同就是从PVE&amp;PVP双修渐渐过度到了PVP玩家，喜欢基三也确实喜欢基三的江湖世界，情怀也好、阵营荣誉感也罢，疾恶如仇、薄有俠名。想放松的时候，去马嵬驿护镖。在云湖就像成败决定者的田螺，也同样是个有手法的JJCer。基三大部分的故事都奇虐无比，这也是吸引我的一个点吧，不管怎么说，喜欢在一起玩的大家。</p>
+<h3 id="github">Github</h3>
+<p>从3月14日开始认真的更新自己的github，其实以前就一直在使用，只不过后来还删除了一些项目。关注了一些很棒的人，也关注了一些超赞的项目，主要是google、linkedin、twitter、facebook等的，自己的项目大概一直在持续的3-4个左右，同事推荐也开始使用AWS了，免费是一年。自己续了2个域名，在godaddy上，还有很多有趣的事，都在做着。</p>
+<h3 id="google">Google</h3>
+<p>其实高三毕业的时候，我就是一个谷歌重度用户。我最变态的强迫症就是每天回去的时候，上网如果打不开google的网页，我会生气到睡不着觉。当然，一直很稳定的用着翻墙工具。它依旧是今年对我而言非常重要的东西，Nexus4是我最喜欢的手机，用了2年之后，换了凤娘，就是接下来的关键字。</p>
+<h3 id="-3">苹果</h3>
+<p>感谢我了解了乔布斯的一些点点滴滴，从而改变了我对于苹果的产品的偏见。如果说谷歌是我对技术的热爱，那么苹果一定是我对产品的热爱。看了今年的苹晚，看了以前苹果的很多发布会，看了对于乔布斯的一些采访，了解了更多的点。如今，用着Mac和6的我，会好好地支持这一份热爱，也希望给妈妈买一个苹果的产品。</p>
+<h3 id="-4">家人和恋人</h3>
+<p>家人应该是今年让我心里最痛的事，独生子女是什么样的体验，就是这样。时常会想到小时候的我和奶奶在一起的点点点滴滴，爷爷也对我要求很高。一想到奶奶现在身体不舒服的样子，我就很难过。还有爸妈一直也很辛苦的照顾奶奶爷爷，只能更快的成长的我，除了乖，不能再做更多的事情。
+感情方面，蛮稳定的，也很感谢一直陪在我的身边，今年没有一起去旅行，是一个比较遗憾的事</p>
+<h3 id="-5">自己</h3>
+<p>说说工作和成长吧，从学习对于工具的使用，渐渐升华到对于工具的本质的理解。我觉得我和别人的差距，渐渐出现在，我知道自己要学什么，怎么学，和成为一个什么方向的人。优势是理想和现实的权衡，志同道合是非常重要的点，人都是会变的，和志同道合的人在一起就好了，路，有时候是需要一个人走的。
+相信会学到更多的东西，因为我比很多人，都要努力很多。</p>
+<h3 id="cp">CP们</h3>
+<p>七宿、炸贱、圆焰、萍萍&amp;银耳娘
+祝福很多人，他们幸福，我们也都会幸福的
+只要好好珍惜，脚踏实地的走每一步</p>
+<h4 id="-6">阿尔法城</h4>
+<p>关闭了，还是相当的寂寞
+就像豆瓣对于我的意义，从14年之前就渐渐变成了最熟悉的陌生人。那时候注销账户，就放弃了曾经最舍不得的友邻。
+人都是向前走的，再加上我将时间的分配越来越少的放在这些之上，也确实失去了很多
+可是，我们哪有那么多情感去烦恼、去忧郁、去表达、去怀念呢。
+如果说要变得强大，那只能付诸行动了。</p>
+<h4 id="-7">泰国</h4>
+<p>第一次出国，公司出游，现在想想还是特别的开心
+我们一起晚上出去嗨，去醉酒，去坐海艇，去吃热带水果，美好的回忆
+后来也带了很多礼物给家人
+世界那么大，出去走走真的很不错</p>
+<p>2015年，不夸张地说我像老了10岁，就像上次测心理年龄我几乎是60年的
+但是相信是更加的成熟了，头发变得很长，也还是酷酷的
+接下来的日子里，珍惜时光，乐观向上
+爱着爱我的人，更勇敢些：）</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-12-24-heap-sort/">堆排序特点解读和最佳实践</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-12-29-twitter-log-bookkeeper/">Twitter 高性能分布式日志系统架构解析</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2015-12-28-all-years-note/` was built on 2025-07-22T04:14:15.675Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

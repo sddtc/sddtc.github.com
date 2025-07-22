@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Jekyll的EI Capitan jekyll can not run 解决方案</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="jekyll-ei-capitan-jekyll-can-not-run">Jekyll的EI Capitan jekyll can not run 解决方案</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2015-10-14">14 October 2015</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/ruby/" class="post-tag">ruby</a></li>
+</ul>
+
+<p>EI Capitan是mac目前最新版的系统，作为更新强迫症患者总是第一时间更新, 只是这一次才发现，原来mac也会对用户安装的程序有细微的影响。。
+事情比较简单，更新了系统，jekyll用不了了. 多亏坐在我旁边好奇的lily发现了这个bug。。！
+本来本机安装的ruby的路径(/System/Library/Frameworks/Ruby.framework/Versions/2.0/usr/lib/ruby/gems/2.0.0/gems)下应该是有jekyll组件的. 没了重新安装时，出现了无法写入&quot;/usr/bin/jekyll&quot;的错误: no permission
+安装方式</p>
+<pre class="language-vim" tabindex="0"><code class="language-vim">sudo gem install jekyll</code></pre>
+<p>而后发现github上有很多人都提出了这个问题，应该是系统更新后，有些方式变了，由于我对ruby了解不多，在此先不做讨论
+解决方法</p>
+<ol>
+<li>将jekyll组件安装在用户路径之下</li>
+</ol>
+<pre class="language-vim" tabindex="0"><code class="language-vim">sudo gem install <span class="token operator">-</span><span class="token keyword">n</span> <span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span><span class="token builtin">bin</span> jekyll</code></pre>
+<ol start="2">
+<li>运行jekyll报错</li>
+</ol>
+<pre class="language-vim" tabindex="0"><code class="language-vim">➜  demo  jekyll serve <span class="token operator">-</span><span class="token operator">-</span>trace
+Configuration <span class="token keyword">file</span><span class="token punctuation">:</span> <span class="token operator">/</span>Users<span class="token operator">/</span>sddtc<span class="token operator">/</span>Code<span class="token operator">/</span>Jekyll<span class="token operator">/</span>demo<span class="token operator">/</span>_config<span class="token operator">.</span>yml
+            Source<span class="token punctuation">:</span> <span class="token operator">/</span>Users<span class="token operator">/</span>sddtc<span class="token operator">/</span>Code<span class="token operator">/</span>Jekyll<span class="token operator">/</span>demo
+       Destination<span class="token punctuation">:</span> <span class="token operator">/</span>Users<span class="token operator">/</span>sddtc<span class="token operator">/</span>Code<span class="token operator">/</span>Jekyll<span class="token operator">/</span>demo<span class="token operator">/</span>_site
+      Generating<span class="token operator">.</span><span class="token operator">.</span><span class="token operator">.</span>
+                    done<span class="token operator">.</span>
+I<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">2015</span><span class="token operator">-</span><span class="token number">10</span><span class="token operator">-</span>14T16<span class="token punctuation">:</span><span class="token number">18</span><span class="token punctuation">:</span><span class="token number">09.163411</span> #<span class="token number">4957</span><span class="token punctuation">]</span>  INFO <span class="token operator">-</span><span class="token operator">-</span> <span class="token punctuation">:</span> Celluloid <span class="token number">0.17</span><span class="token operator">.</span><span class="token number">2</span> <span class="token operator">is</span> running <span class="token keyword">in</span> BACKPORTED <span class="token keyword">mode</span><span class="token operator">.</span> <span class="token punctuation">[</span> http<span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>git<span class="token operator">.</span>io<span class="token operator">/</span>vJf3J <span class="token punctuation">]</span>
+<span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>celluloid<span class="token operator">-</span><span class="token number">0.17</span><span class="token operator">.</span><span class="token number">2</span><span class="token operator">/</span>lib<span class="token operator">/</span>celluloid<span class="token operator">/</span>calls<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">48</span><span class="token punctuation">:</span><span class="token keyword">in</span> `check'<span class="token punctuation">:</span> wrong <span class="token keyword">number</span> of arguments <span class="token punctuation">(</span><span class="token number">2</span> <span class="token keyword">for</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>ArgumentError<span class="token punctuation">)</span>
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>celluloid<span class="token operator">-</span><span class="token number">0.17</span><span class="token operator">.</span><span class="token number">2</span><span class="token operator">/</span>lib<span class="token operator">/</span>celluloid<span class="token operator">/</span>calls<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">26</span><span class="token punctuation">:</span><span class="token keyword">in</span> `dispatch'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>celluloid<span class="token operator">-</span><span class="token number">0.17</span><span class="token operator">.</span><span class="token number">2</span><span class="token operator">/</span>lib<span class="token operator">/</span>celluloid<span class="token operator">/</span><span class="token keyword">call</span><span class="token operator">/</span>sync<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">16</span><span class="token punctuation">:</span><span class="token keyword">in</span> `dispatch'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>celluloid<span class="token operator">-</span><span class="token number">0.17</span><span class="token operator">.</span><span class="token number">2</span><span class="token operator">/</span>lib<span class="token operator">/</span>celluloid<span class="token operator">/</span>cell<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">50</span><span class="token punctuation">:</span><span class="token keyword">in</span> `block <span class="token keyword">in</span> dispatch'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>celluloid<span class="token operator">-</span><span class="token number">0.17</span><span class="token operator">.</span><span class="token number">2</span><span class="token operator">/</span>lib<span class="token operator">/</span>celluloid<span class="token operator">/</span>cell<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">76</span><span class="token punctuation">:</span><span class="token keyword">in</span> `block <span class="token keyword">in</span> task'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>celluloid<span class="token operator">-</span><span class="token number">0.17</span><span class="token operator">.</span><span class="token number">2</span><span class="token operator">/</span>lib<span class="token operator">/</span>celluloid<span class="token operator">/</span>actor<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">339</span><span class="token punctuation">:</span><span class="token keyword">in</span> `block <span class="token keyword">in</span> task'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>celluloid<span class="token operator">-</span><span class="token number">0.17</span><span class="token operator">.</span><span class="token number">2</span><span class="token operator">/</span>lib<span class="token operator">/</span>celluloid<span class="token operator">/</span>task<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">44</span><span class="token punctuation">:</span><span class="token keyword">in</span> `block <span class="token keyword">in</span> initialize'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>celluloid<span class="token operator">-</span><span class="token number">0.17</span><span class="token operator">.</span><span class="token number">2</span><span class="token operator">/</span>lib<span class="token operator">/</span>celluloid<span class="token operator">/</span>task<span class="token operator">/</span>fibered<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">14</span><span class="token punctuation">:</span><span class="token keyword">in</span> `block <span class="token keyword">in</span> create'
+	from <span class="token punctuation">(</span>celluloid<span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token keyword">in</span> `remote procedure <span class="token keyword">call</span>'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>celluloid<span class="token operator">-</span><span class="token number">0.17</span><span class="token operator">.</span><span class="token number">2</span><span class="token operator">/</span>lib<span class="token operator">/</span>celluloid<span class="token operator">/</span><span class="token keyword">call</span><span class="token operator">/</span>sync<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">45</span><span class="token punctuation">:</span><span class="token keyword">in</span> `value'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>celluloid<span class="token operator">-</span><span class="token number">0.17</span><span class="token operator">.</span><span class="token number">2</span><span class="token operator">/</span>lib<span class="token operator">/</span>celluloid<span class="token operator">/</span>proxy<span class="token operator">/</span>sync<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">38</span><span class="token punctuation">:</span><span class="token keyword">in</span> `method_missing'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>listen<span class="token operator">-</span><span class="token number">2.7</span><span class="token operator">.</span><span class="token number">9</span><span class="token operator">/</span>lib<span class="token operator">/</span>listen<span class="token operator">/</span>listener<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">196</span><span class="token punctuation">:</span><span class="token keyword">in</span> `_init_actors'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>listen<span class="token operator">-</span><span class="token number">2.7</span><span class="token operator">.</span><span class="token number">9</span><span class="token operator">/</span>lib<span class="token operator">/</span>listen<span class="token operator">/</span>listener<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">77</span><span class="token punctuation">:</span><span class="token keyword">in</span> `block <span class="token keyword">in</span> <span class="token operator">&lt;</span>class<span class="token punctuation">:</span>Listener<span class="token operator">></span>'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>celluloid<span class="token operator">-</span>fsm<span class="token operator">-</span><span class="token number">0.20</span><span class="token operator">.</span><span class="token number">5</span><span class="token operator">/</span>lib<span class="token operator">/</span>celluloid<span class="token operator">/</span>fsm<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">176</span><span class="token punctuation">:</span><span class="token keyword">in</span> `instance_eval'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>celluloid<span class="token operator">-</span>fsm<span class="token operator">-</span><span class="token number">0.20</span><span class="token operator">.</span><span class="token number">5</span><span class="token operator">/</span>lib<span class="token operator">/</span>celluloid<span class="token operator">/</span>fsm<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">176</span><span class="token punctuation">:</span><span class="token keyword">in</span> `<span class="token keyword">call</span>'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>celluloid<span class="token operator">-</span>fsm<span class="token operator">-</span><span class="token number">0.20</span><span class="token operator">.</span><span class="token number">5</span><span class="token operator">/</span>lib<span class="token operator">/</span>celluloid<span class="token operator">/</span>fsm<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">129</span><span class="token punctuation">:</span><span class="token keyword">in</span> `transition_with_callbacks<span class="token operator">!</span>'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>celluloid<span class="token operator">-</span>fsm<span class="token operator">-</span><span class="token number">0.20</span><span class="token operator">.</span><span class="token number">5</span><span class="token operator">/</span>lib<span class="token operator">/</span>celluloid<span class="token operator">/</span>fsm<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">97</span><span class="token punctuation">:</span><span class="token keyword">in</span> `transition'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>listen<span class="token operator">-</span><span class="token number">2.7</span><span class="token operator">.</span><span class="token number">9</span><span class="token operator">/</span>lib<span class="token operator">/</span>listen<span class="token operator">/</span>listener<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">90</span><span class="token punctuation">:</span><span class="token keyword">in</span> `start'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>jekyll<span class="token operator">-</span>watch<span class="token operator">-</span><span class="token number">1.1</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>lib<span class="token operator">/</span>jekyll<span class="token operator">/</span>watcher<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token keyword">in</span> `watch'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>jekyll<span class="token operator">-</span><span class="token number">2.5</span><span class="token operator">.</span><span class="token number">3</span><span class="token operator">/</span>lib<span class="token operator">/</span>jekyll<span class="token operator">/</span>commands<span class="token operator">/</span>build<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">68</span><span class="token punctuation">:</span><span class="token keyword">in</span> `watch'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>jekyll<span class="token operator">-</span><span class="token number">2.5</span><span class="token operator">.</span><span class="token number">3</span><span class="token operator">/</span>lib<span class="token operator">/</span>jekyll<span class="token operator">/</span>commands<span class="token operator">/</span>build<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">38</span><span class="token punctuation">:</span><span class="token keyword">in</span> `process'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>jekyll<span class="token operator">-</span><span class="token number">2.5</span><span class="token operator">.</span><span class="token number">3</span><span class="token operator">/</span>lib<span class="token operator">/</span>jekyll<span class="token operator">/</span>commands<span class="token operator">/</span>serve<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">26</span><span class="token punctuation">:</span><span class="token keyword">in</span> `block <span class="token punctuation">(</span><span class="token number">2</span> levels<span class="token punctuation">)</span> <span class="token keyword">in</span> init_with_program'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>mercenary<span class="token operator">-</span><span class="token number">0.3</span><span class="token operator">.</span><span class="token number">4</span><span class="token operator">/</span>lib<span class="token operator">/</span>mercenary<span class="token operator">/</span>command<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">220</span><span class="token punctuation">:</span><span class="token keyword">in</span> `<span class="token keyword">call</span>'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>mercenary<span class="token operator">-</span><span class="token number">0.3</span><span class="token operator">.</span><span class="token number">4</span><span class="token operator">/</span>lib<span class="token operator">/</span>mercenary<span class="token operator">/</span>command<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">220</span><span class="token punctuation">:</span><span class="token keyword">in</span> `block <span class="token keyword">in</span> execute'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>mercenary<span class="token operator">-</span><span class="token number">0.3</span><span class="token operator">.</span><span class="token number">4</span><span class="token operator">/</span>lib<span class="token operator">/</span>mercenary<span class="token operator">/</span>command<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">220</span><span class="token punctuation">:</span><span class="token keyword">in</span> `each'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>mercenary<span class="token operator">-</span><span class="token number">0.3</span><span class="token operator">.</span><span class="token number">4</span><span class="token operator">/</span>lib<span class="token operator">/</span>mercenary<span class="token operator">/</span>command<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">220</span><span class="token punctuation">:</span><span class="token keyword">in</span> `execute'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>mercenary<span class="token operator">-</span><span class="token number">0.3</span><span class="token operator">.</span><span class="token number">4</span><span class="token operator">/</span>lib<span class="token operator">/</span>mercenary<span class="token operator">/</span>program<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">35</span><span class="token punctuation">:</span><span class="token keyword">in</span> `<span class="token keyword">go</span>'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>mercenary<span class="token operator">-</span><span class="token number">0.3</span><span class="token operator">.</span><span class="token number">4</span><span class="token operator">/</span>lib<span class="token operator">/</span>mercenary<span class="token operator">.</span>rb<span class="token punctuation">:</span><span class="token number">22</span><span class="token punctuation">:</span><span class="token keyword">in</span> `program'
+	from <span class="token operator">/</span>Library<span class="token operator">/</span>Ruby<span class="token operator">/</span>Gems<span class="token operator">/</span><span class="token number">2.0</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">/</span>gems<span class="token operator">/</span>jekyll<span class="token operator">-</span><span class="token number">2.5</span><span class="token operator">.</span><span class="token number">3</span><span class="token operator">/</span><span class="token builtin">bin</span><span class="token operator">/</span>jekyll<span class="token punctuation">:</span><span class="token number">20</span><span class="token punctuation">:</span><span class="token keyword">in</span> `<span class="token operator">&lt;</span><span class="token builtin">top</span> <span class="token punctuation">(</span>required<span class="token punctuation">)</span><span class="token operator">></span>'
+	from <span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span><span class="token builtin">bin</span><span class="token operator">/</span>jekyll<span class="token punctuation">:</span><span class="token number">23</span><span class="token punctuation">:</span><span class="token keyword">in</span> `load'
+	from <span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span><span class="token builtin">bin</span><span class="token operator">/</span>jekyll<span class="token punctuation">:</span><span class="token number">23</span><span class="token punctuation">:</span><span class="token keyword">in</span> `<span class="token operator">&lt;</span>main<span class="token operator">></span>'</code></pre>
+<ol start="3">
+<li>解决这个错误也是有人提出修改一下Celluloid的安装版本,用0.16.0</li>
+</ol>
+<pre class="language-vim" tabindex="0"><code class="language-vim">➜  demo  sudo gem install celluloid <span class="token operator">-</span><span class="token operator">-</span><span class="token keyword">version</span> <span class="token string">'=0.16.0'</span>
+Fetching<span class="token punctuation">:</span> timers<span class="token operator">-</span><span class="token number">4.0</span><span class="token operator">.</span><span class="token number">4</span><span class="token operator">.</span>gem <span class="token punctuation">(</span><span class="token number">100</span><span class="token operator">%</span><span class="token punctuation">)</span>
+Successfully installed timers<span class="token operator">-</span><span class="token number">4.0</span><span class="token operator">.</span><span class="token number">4</span>
+Fetching<span class="token punctuation">:</span> celluloid<span class="token operator">-</span><span class="token number">0.16</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">.</span>gem <span class="token punctuation">(</span><span class="token number">100</span><span class="token operator">%</span><span class="token punctuation">)</span>
+Successfully installed celluloid<span class="token operator">-</span><span class="token number">0.16</span><span class="token operator">.</span><span class="token number">0</span>
+Parsing documentation <span class="token keyword">for</span> timers<span class="token operator">-</span><span class="token number">4.0</span><span class="token operator">.</span><span class="token number">4</span>
+Installing <span class="token keyword">ri</span> documentation <span class="token keyword">for</span> timers<span class="token operator">-</span><span class="token number">4.0</span><span class="token operator">.</span><span class="token number">4</span>
+Parsing documentation <span class="token keyword">for</span> celluloid<span class="token operator">-</span><span class="token number">0.16</span><span class="token operator">.</span><span class="token number">0</span>
+Installing <span class="token keyword">ri</span> documentation <span class="token keyword">for</span> celluloid<span class="token operator">-</span><span class="token number">0.16</span><span class="token operator">.</span><span class="token number">0</span>
+<span class="token number">2</span> gems installed
+
+➜  demo  sudo gem uninstall celluloid <span class="token operator">-</span><span class="token operator">-</span><span class="token keyword">version</span> <span class="token string">'=0.17.2'</span>
+Successfully uninstalled celluloid<span class="token operator">-</span><span class="token number">0.17</span><span class="token operator">.</span><span class="token number">2</span></code></pre>
+<ol start="4">
+<li>可以查看一下本地安装的组件，没用的也可以删掉了</li>
+</ol>
+<pre class="language-vim" tabindex="0"><code class="language-vim">gem <span class="token keyword">list</span> <span class="token operator">-</span><span class="token operator">-</span>local</code></pre>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-10-08-linux-custom-date/">Shell自定义 date 命令</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-10-14-java-binary-search/">Java 实现二分法回忆片段和解决方案</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2015-10-14-EI-capitan-jekyll-can-not-run/` was built on 2025-07-22T04:14:15.673Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

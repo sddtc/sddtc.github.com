@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>斯坦福大学冬季课程 iOS8 Swift 学习笔记</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="ios8-swift">斯坦福大学冬季课程 iOS8 Swift 学习笔记</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2015-08-27">27 August 2015</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/mobile/" class="post-tag">mobile</a></li>
+</ul>
+
+<p>昨天偶然看到了一个斯坦福大学的公开课，具体是怎么个偶然法，我已经忘记了...但是iOS是一个很酷的东西,还是很值得学习的. 作为一个工程师，涉猎和理解，是相互的
+第1课-第4课：</p>
+<ol>
+<li>MVC: iOS的设计模式也同样遵循MVC，并且是不提倡M和V通信</li>
+<li>方法里面可以嵌套方法，前提是方法是私有的</li>
+</ol>
+<pre class="language-swift" tabindex="0"><code class="language-swift"><span class="token keyword">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">func</span> <span class="token function-definition function">learnOp</span><span class="token punctuation">(</span>op <span class="token punctuation">:</span><span class="token class-name">Op</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        knownOps<span class="token punctuation">[</span>op<span class="token punctuation">.</span>description<span class="token punctuation">]</span> <span class="token operator">=</span> op
+    <span class="token punctuation">}</span>
+
+    <span class="token function">learnOp</span><span class="token punctuation">(</span><span class="token class-name">Op</span><span class="token punctuation">.</span><span class="token class-name">BinaryOperation</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"×"</span></span><span class="token punctuation">,</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    knownOps<span class="token punctuation">[</span><span class="token string-literal"><span class="token string">"÷"</span></span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token class-name">Op</span><span class="token punctuation">.</span><span class="token class-name">BinaryOperation</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"÷"</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token short-argument">$1</span> <span class="token operator">/</span> <span class="token short-argument">$0</span><span class="token punctuation">}</span>
+    knownOps<span class="token punctuation">[</span><span class="token string-literal"><span class="token string">"+"</span></span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token class-name">Op</span><span class="token punctuation">.</span><span class="token class-name">BinaryOperation</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"+"</span></span><span class="token punctuation">,</span> <span class="token operator">+</span><span class="token punctuation">)</span>
+    knownOps<span class="token punctuation">[</span><span class="token string-literal"><span class="token string">"−"</span></span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token class-name">Op</span><span class="token punctuation">.</span><span class="token class-name">BinaryOperation</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"−"</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token short-argument">$1</span> <span class="token operator">-</span> <span class="token short-argument">$0</span><span class="token punctuation">}</span>
+    knownOps<span class="token punctuation">[</span><span class="token string-literal"><span class="token string">"√"</span></span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token class-name">Op</span><span class="token punctuation">.</span><span class="token class-name">UnaryOperation</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"√"</span></span><span class="token punctuation">,</span> sqrt<span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<ol start="3">
+<li>协议（Printable）</li>
+</ol>
+<pre class="language-swift" tabindex="0"><code class="language-swift"><span class="token keyword">private</span> <span class="token keyword">enum</span> <span class="token class-name">Op</span><span class="token punctuation">:</span> <span class="token class-name">Printable</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> <span class="token class-name">Operand</span><span class="token punctuation">(</span><span class="token class-name">Double</span><span class="token punctuation">)</span>
+    <span class="token keyword">case</span> <span class="token class-name">UnaryOperation</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Double</span> <span class="token operator">-></span> <span class="token class-name">Double</span><span class="token punctuation">)</span>
+    <span class="token keyword">case</span> <span class="token class-name">BinaryOperation</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token class-name">Double</span><span class="token punctuation">,</span> <span class="token class-name">Double</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">Double</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">var</span> description<span class="token punctuation">:</span> <span class="token class-name">String</span> <span class="token punctuation">{</span>
+        <span class="token keyword">get</span> <span class="token punctuation">{</span>
+            <span class="token keyword">switch</span> <span class="token keyword">self</span> <span class="token punctuation">{</span>
+            <span class="token keyword">case</span> <span class="token punctuation">.</span><span class="token class-name">Operand</span><span class="token punctuation">(</span><span class="token keyword">let</span> operand<span class="token punctuation">)</span> <span class="token punctuation">:</span>
+                <span class="token keyword">return</span> <span class="token string-literal"><span class="token string">"</span><span class="token interpolation-punctuation punctuation">\(</span><span class="token interpolation">operand</span><span class="token interpolation-punctuation punctuation">)</span><span class="token string">"</span></span>
+            <span class="token keyword">case</span> <span class="token punctuation">.</span><span class="token class-name">UnaryOperation</span><span class="token punctuation">(</span><span class="token keyword">let</span> symbol<span class="token punctuation">,</span> <span class="token omit keyword">_</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                <span class="token keyword">return</span> symbol
+            <span class="token keyword">case</span> <span class="token punctuation">.</span><span class="token class-name">BinaryOperation</span><span class="token punctuation">(</span><span class="token keyword">let</span> symbol<span class="token punctuation">,</span> <span class="token omit keyword">_</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                <span class="token keyword">return</span> symbol
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<ol start="4">
+<li>字典和数组</li>
+</ol>
+<pre class="language-swift" tabindex="0"><code class="language-swift"><span class="token keyword">private</span> <span class="token keyword">var</span> opStack <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token class-name">Op</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">//栈</span>
+<span class="token keyword">private</span> <span class="token keyword">var</span> knownOps <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token class-name">String</span><span class="token punctuation">:</span><span class="token class-name">Op</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">//字典</span></code></pre>
+<ol start="5">
+<li>
+<p>optional
+有一种类型叫做optional,应该是在没有强制转化之前，任何一个类型都是optional的. 这一点，在需要强类型的时候转化</p>
+</li>
+<li>
+<p>auto-layout
+一个长远的课题，布局总在最后整体使用，auto-layout应该是xcode4之后的新特性. 主要是相对位置的约束: 规定了至少应该有2个约束来固定一个位置</p>
+</li>
+<li>
+<p>继承和重载
+swift是支持重载的，并且是单继承，但是Objective-C不支持，因此当类继承UIViewController（NSObject），swift就不能很好地拥有重载的特性，公开课使用的xcode版本和我本机不一致，因此我暂时写了2个方法，还蛮多人遇到该问题</p>
+</li>
+</ol>
+<p>第8课：
+1.多MVC的一个思想，是用了栈
+即多个层是放在栈中，例如点击入栈，返回出栈
+2.初始化之前就需要使用的实例，需要判nil情况，实例后面添加问号</p>
+<p><a href="http://www.swiftv.cn/course/i7ahl5gn">斯坦福大学公开课-iOS8</a></p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-08-27-something-about-git-or-github/">Git版本管理相关命令合集</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-09-08-log4j-system-logs-printed/">Log4j-业务日志输出规则实践</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2015-09-05-stanford-ios8-swift/` was built on 2025-07-22T04:14:15.672Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

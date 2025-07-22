@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Git版本管理相关命令合集</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="git">Git版本管理相关命令合集</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2015-08-27">27 August 2015</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/shell/" class="post-tag">shell</a></li>
+</ul>
+
+<h3 id="gitignore-git-status">.gitignore 在查看 <code>git status</code> 时不能过滤文件和文件夹</h3>
+<p>在 .gitignore 添加 .idea 文件夹以过滤该文件夹, 但通过 <code>git status</code> 查看仍显示 .idea 文件夹的状态.
+原因: 在 git 库中已存在了这个文件, 之前 push 提交过该文件.
+.gitignore 文件只对还没有加入版本管理的文件起作用, 如果之前已经用 git 把这些文件纳入了版本库, 就不起作用.
+解决: 需要在 git 库中删除该文件, 更新 .gitignore 文件.</p>
+<pre class="language-vim" tabindex="0"><code class="language-vim">git rm <span class="token operator">-</span><span class="token operator">-</span>cached <span class="token operator">.</span>idea<span class="token operator">/</span></code></pre>
+<p>然后再次 <code>git status</code> 查看状态, .idea 文件夹不再显示状态.</p>
+<h3 id="">本地修改，但更新强制覆盖本地</h3>
+<pre class="language-vim" tabindex="0"><code class="language-vim">git fetch <span class="token operator">-</span><span class="token operator">-</span><span class="token keyword">all</span>
+git reset <span class="token operator">-</span><span class="token operator">-</span>hard origin<span class="token operator">/</span>$<span class="token punctuation">{</span>branch_name<span class="token punctuation">}</span></code></pre>
+<h3 id="-2">远程新建分支，拉取到本地</h3>
+<ol>
+<li>查看所有分支, 包括远程: <code>git branch -va</code></li>
+<li>切换到分支: <code>git checkout -b ${branch_name} origin/${branch_name}</code></li>
+<li>如果切到新分支, push 代码失败,执行:<code>git push -f origin ${branch_name}</code></li>
+</ol>
+<h3 id="-3">比较分支</h3>
+<pre class="language-vim" tabindex="0"><code class="language-vim">git <span class="token builtin">diff</span> master<span class="token operator">.</span><span class="token operator">.</span>test</code></pre>
+<p>如果不是查看每个文件的详细差别而是统计一下有哪些文件被改动, 有多少行被改动, 可使用<code>--stat</code> 参数. 例如:<code>git diff --stat</code></p>
+<h3 id="a-b">合并分支 A 文件到分支 B</h3>
+<pre class="language-vim" tabindex="0"><code class="language-vim">git checkout <span class="token operator">-</span><span class="token keyword">p</span> dev user<span class="token operator">.</span>java <span class="token operator">/</span><span class="token operator">/</span>不切换branch，把dev上的user<span class="token operator">.</span>java更新到当前分支
+git checkout dev feed<span class="token operator">.</span>java <span class="token operator">/</span><span class="token operator">/</span>去掉<span class="token operator">-</span><span class="token keyword">p</span>参数，新增该feed<span class="token operator">.</span>java文件</code></pre>
+<h3 id="master-fork">从 master 分支更新代码到 fork 分支</h3>
+<pre><code>git remote -v
+git remote add upstream ${master_repo_address}
+git fetch upstream
+git checkout master
+git merge upstream/master
+</code></pre>
+<h3 id="git-pull-vs-git-fetch-then-git-rebase">git pull vs git fetch then git rebase</h3>
+<ul>
+<li>Fetch vs Pull</li>
+</ul>
+<blockquote>
+<h3 id="git-fetch-just-updates-your-repo-data-but-a-git-pull-will-basically-perform-a-fetch-and-then-merge-the-branch-pulled">Git fetch just updates your repo data, but a git pull will basically perform a fetch and then merge the branch pulled.</h3>
+</blockquote>
+<ul>
+<li>Rebase vs Merge</li>
+</ul>
+<blockquote>
+<h3 id="in-contrast-rebasing-unifies-the-lines-of-development-by-re-writing-changes-from-the-source-branch-so-that-they-appear-as-children-of-the-destination-branch-effectively-pretending-that-those-commits-were-written-on-top-of-the-destination-branch-all-along">In contrast, rebasing unifies the lines of development by re-writing changes from the source branch so that they appear as children of the destination branch – effectively pretending that those commits were written on top of the destination branch all along.</h3>
+</blockquote>
+<p>综上所述, 使用 <code>git fetch</code> then <code>git rebase</code>, 替换 <code>git fetch</code> then <code>git merge</code> 的操作, 保证在查看 <code>git log --graph</code> 时只有一条主线, 一目了然.</p>
+<h3 id="git-log">查看 <code>git log</code></h3>
+<p><code>--oneline</code>: 查看历史记录的简洁版本.
+<code>--graph</code>: 查看历史中什么时候出现了分支、合并.
+<code>--no-merges</code>: 隐藏合并提交.
+例如:</p>
+<pre><code>git log --oneline --graph
+</code></pre>
+<h3 id="terminal-skills">Terminal skills</h3>
+<p>create branch: <code>git co -b sddtc-new-tmp</code>
+push branch to remote: <code>git push --set-upstream origin sddtc-new-tmp</code>
+remote branch has deleted, update it on local: <code>git fetch -p</code></p>
+<h3 id="merge-commits">Merge commits</h3>
+<ol>
+<li>You should select a commit record as a end tag: <code>git log</code></li>
+<li><code>git reset --soft ${commit-hash-value}</code></li>
+<li>Then <code>git st</code>, you will see the change have cached on local.</li>
+<li><code>git commit -m ${your comment}</code></li>
+<li>run <code>git push --force</code>, it will merge your past commit.</li>
+</ol>
+<p>If you push a commite, then you change files again, you can use below:</p>
+<ol>
+<li><code>git add .</code></li>
+<li><code>git commit --amend</code></li>
+<li><code>git push --force</code></li>
+</ol>
+<p>If you have account A, commit use account B, then you want change author, you can use below:
+<code>git commit --amend --author=&quot;Author Name &lt;email@address.com&gt;&quot;</code></p>
+<p><strong>Another case</strong>:
+For example, if your commit history is A-B-C-D-E-F with F as HEAD, and you want to change the author of C and D, then you would..</p>
+<ol>
+<li>Specify <code>git rebase -i B</code></li>
+<li>change the lines for both C and D to <code>edit</code></li>
+<li>Once the rebase started, it would first pause at C</li>
+<li>You would <code>git commit --amend --author=&quot;Author Name &lt;email@address.com&gt;&quot;</code></li>
+<li>Then <code>git rebase --continue</code></li>
+<li>It would pause again at D</li>
+<li>Then you would <code>git commit --amend --author=&quot;Author Name &lt;email@address.com&gt;&quot; again</code></li>
+<li><code>git rebase --continue</code></li>
+<li>The rebase would complete.</li>
+</ol>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-08-24-uml-class-design-relation/">UML类之间的关系</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-09-05-stanford-ios8-swift/">斯坦福大学冬季课程 iOS8 Swift 学习笔记</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2015-08-27-something-about-git-or-github/` was built on 2025-07-22T04:14:15.672Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>新浪微博自动登录脚本</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="">新浪微博自动登录脚本</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2017-04-25">25 April 2017</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/self-project/" class="post-tag">self-project</a></li>
+</ul>
+
+<h3 id="-2">背景</h3>
+<p>使用过weibo第三方登录api的人都知道在获取code值时,一般都需要手动打开浏览器获得跳转之后的地址,例如</p>
+<pre><code>https://www.sddtc.florist/?code=2156b2ef6161df36a27464728bb40e77
+</code></pre>
+<p>因为单纯用</p>
+<pre><code>response = urllib2.urlopen(request)
+</code></pre>
+<p>这样的方式无法正常的跳转,为此我曾保存过一个博主<a href="http://byrain.github.io/">byrain</a>的博文,他可以自动获取code的值,然而今天查看书签的时候突然发现他的博客更换主题文章都404了,于是想在此记录他曾记录的片段.</p>
+<h3 id="-3">获取方法</h3>
+<p>sina的登陆采取了RSA2加密的方式</p>
+<h4 id="-4">一、用户名密码加密</h4>
+<pre><code># encode username
+def get_username(user_id):
+    user_id_ = urllib.quote(user_id)
+    su = base64.encodestring(user_id_)[:-1]
+    return su
+
+#encode password
+def get_password_rsa(USER_PSWD, PUBKEY, servertime, nonce):
+    rsa_pubkey = int(PUBKEY, 16)
+    key_1 = int('10001', 16)
+    key = rsa.PublicKey(rsa_pubkey, key_1)
+    message = str(servertime) + &quot;\t&quot; + str(nonce) + &quot;\n&quot; + str(USER_PSWD)
+    passwd = rsa.encrypt(message, key)
+    passwd = binascii.b2a_hex(passwd)  # to 16
+    return passwd
+</code></pre>
+<p>来源网络,可以看出对于username的加密很简单,但是对于password的加密,就用到了PUBKEY, servertime,nonce这几个参数.</p>
+<h4 id="-5">二、参数获取</h4>
+<pre><code>def get_parameter():
+    name = con.USERID #set by your own
+    password = con.PASSWD  #set by your own
+    su = get_username(name)
+    url = &quot;https://login.sina.com.cn/sso/prelogin.php?entry=openapi&amp;callback=sinaSSOController.preloginCallBack&amp;su=&quot; + su + &quot;&amp;rsakt=mod&amp;checkpin=1&amp;client=ssologin.js(v1.4.15)&quot;
+    r = requests.get(url)
+    p = re.compile('\((.*)\)')
+    json_data = p.search(r.text).group(1)
+    data = json.loads(json_data)
+    PUBKEY = data['pubkey']
+    servertime = str(data['servertime'])
+    nonce = data['nonce']
+    rsakv = str(data['rsakv'])
+    sp = get_password_rsa(password, PUBKEY, servertime, nonce)
+    return servertime, nonce, rsakv, sp, su
+</code></pre>
+<p>来源网络,采用正则将返回的内容分离,提取所需信息,同时需要获得额外的rsakv,供之后的登陆使用.</p>
+<h4 id="ticket">三、获取ticket</h4>
+<p>有了这几个参数后,就可以获得自动授权所需要的ticket.</p>
+<pre><code>def get_ticket():
+    servertime, nonce, rsakv, sp, su = get_parameter()
+    header = {
+        'Accept': '*/*',
+        'Accept-Encoding': 'gzip,deflate,sdch',
+        'Accept-Language': 'zh,en-US;q=0.8,en;q=0.6,zh-TW;q=0.4,zh-CN;q=0.2',
+        'Connection': 'keep-alive',
+        'Content-Length': '565',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Host': 'login.sina.com.cn',
+        'Origin': 'https://api.weibo.com',
+        'Referer': 'https://api.weibo.com/oauth2/authorize?redirect_uri='
+                   +con.CALL_BACK+'&amp;response_type=code&amp;client_id='+con.APP_KEY,
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 '
+                      '(KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36'
+    }
+    content = {
+        'entry': 'openapi',
+        'gateway': '1',
+        'from': None,
+        'savestate': '0',
+        'useticket': '1',
+        'pagerefer': None,
+        'ct': '1800',
+        's': '1',
+        'vsnf': '1',
+        'vsnval': None,
+        'door': None,
+        'appkey': '3hXzQr',
+        'su': su,
+        'service': 'miniblog',
+        'servertime': servertime,
+        'nonce': nonce,
+        'pwencode': 'rsa2',
+        'rsakv': rsakv,
+        'sp': sp,
+        'sr': '1280*1024',
+        'encoding': 'UTF-8',
+        'cdult': '2',
+        'domain': 'weibo.com',
+        'prelt': '603',
+        'returntype': 'TEXT'
+    }
+    url = 'https://login.sina.com.cn/sso/login.php?client=ssologin.js(v1.4.15)'
+    r = requests.post(url=url, headers=header, data=content)
+    json_data = r.text
+    data = json.loads(json_data)
+    ticket = data['ticket']
+    return ticket
+</code></pre>
+<p>post到server端的信息如上,然后获取返回的内容里就有ticket.</p>
+<h4 id="-6">四、获得授权</h4>
+<pre><code>def get_code():
+    ticket = get_ticket()
+    header = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Referer': 'https://api.weibo.com/oauth2/authorize?redirect_uri='
+                   +con.CALL_BACK+'&amp;response_type=code&amp;client_id='+con.APP_KEY,
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 '
+                      '(KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36'
+    }
+    content = {
+        'action': 'submit',
+        'display': 'default',
+        'withOfficalFlag': '0',
+        'quick_auth': 'null',
+        'withOfficalAccount': '',
+        'scope': '',
+        'ticket': ticket,
+        'isLoginSina': '',
+        'response_type': 'code',
+        'regCallback': 'https://api.weibo.com/2/oauth2/authorize?'
+                       'client_id=' + con.APP_KEY +
+                       '&amp;response_type=code&amp;display=default&amp;redirect_uri=' +
+                       con.CALL_BACK + '&amp;from=&amp;with_cookie=',
+        'redirect_uri': con.CALL_BACK,
+        'client_id': con.APP_KEY,
+        'appkey62': '3hXzQr',
+        'state': '',
+        'verifyToken': 'null',
+        'from': '',
+        'switchLogin': '0',
+        'userId': con.USERID,
+        'passwd': &quot;&quot;
+    }
+    login_url = 'https://api.weibo.com/oauth2/authorize'
+    r = requests.post(login_url, data=content, headers=header, allow_redirects=False)
+    return_redirect_uri = r.headers['location']
+    print return_redirect_uri
+    code = return_redirect_uri[32:]
+    return code
+</code></pre>
+<p>授权的页面和之前登陆的页面并不是一个.在POST https://api.weibo.com/oauth2/内容的时候，会重定向,所以需要在requests.post里添加allow_redirects=False参数,获得302的返回header里包括了包含code码的url,提取出来就OK啦.</p>
+<h3 id="-7">使用说明</h3>
+<p>这部分代码有一些参数需要配置,包括APP_KEY,CLIENT_ID,USER_ID,USER_PASSWORD,都是需要在新浪微博的开发者平台注册
+新浪微博机器人可见我的项目<a href="https://github.com/universe-white-chief/weiborobot">weiborobot</a>,该项目在myConfig.py里面填写相应的参数值,是可以直接运行自动发微。</p>
+<p>以上。</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2017-04-01-2017-part-one/">2017 第一季度总结</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2017-07-03-2017-part-two/">2017 第二季度总结</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2017-04-25-weibo-auto-get-code-login/` was built on 2025-07-22T04:14:15.678Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

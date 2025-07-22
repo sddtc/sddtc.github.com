@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>关于 RA 的一些必须掌握的 tips</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="ra-tips">关于 RA 的一些必须掌握的 tips</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2017-08-01">01 August 2017</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/ruby/" class="post-tag">ruby</a></li>
+</ul>
+
+<h3 id="">一、开启白名单</h3>
+<p>只显示需要的model列表</p>
+<pre><code>config.included_models = [Brand, Product, Admin, Store]
+</code></pre>
+<h3 id="model-title">二、修改model的显示title</h3>
+<p>修改model的title, 修改model下拉框的默认'model #id'名称展示</p>
+<pre><code>config.model Brand do
+  object_label_method do
+    :custom_label_method
+  end
+end
+
+Brand.class_eval do
+  def custom_label_method
+    &quot;#{self.english_name}&quot;
+  end
+end
+</code></pre>
+<h3 id="model-title-2">三、当你新增或更新, 控制model显示不同的title</h3>
+<p>关键字: new_record? 代表新增</p>
+<pre><code>config.model Floor do
+  object_label_method do
+    :custom_label_method
+  end
+end
+
+Floor.class_eval do
+  def custom_label_method
+    if new_record?
+      &quot;Floor&quot;
+    else
+      &quot;#{store.name} - LEVEL #{level}&quot;
+    end
+  end
+end
+</code></pre>
+<h3 id="model-action">四、不显示model的个别action</h3>
+<p>有些model不需要默认的编辑、删除等action. 关键字:except</p>
+<pre><code>config.actions do
+  dashboard                     # mandatory
+  index                         # mandatory
+  new do
+    except [Brand]
+  end
+  export do
+    except [Brand]
+  end
+  bulk_delete
+  show
+  edit do
+    except [Brand]
+  end
+  delete do
+    except [Brand]
+  end
+end
+</code></pre>
+<h3 id="javascript">五、自定义引入javascript脚本</h3>
+<p>若需要动态引入js脚本
+1.在项目路径app/assets/javascripts目录下,新建rails_admin/custom目录，即 <code>app/assets/javascripts/rails_admin/custom</code>
+2.在1路径里面新建ui.js文件, ui.js内容:</p>
+<pre><code>//=require_tree .
+</code></pre>
+<p>3.可新建业务js文件,例如brand.js,和ui.js同级,内容示例:</p>
+<pre><code>$(document).on('keyup', '#bundle_set_sale_price', function () {
+    var sale_price = numberInputCheck($(&quot;#bundle_set_sale_price&quot;).val());
+    $(&quot;#bundle_set_sale_price&quot;).val(sale_price);
+
+    var count = $( &quot;#bundle_set_count option:selected&quot; ).text();
+    var sale_total_price = (sale_price * count).toFixed(2);
+    $(&quot;#bundle_set_sale_total_price&quot;).val(sale_total_price);
+});
+</code></pre>
+<h3 id="show-img">六、show页面显示img图片内容</h3>
+<p>在model详情页面显示图片</p>
+<pre><code>show do
+  field :background_img do
+    formatted_value do
+      bindings[:view].tag(:img, {:src =&gt; bindings[:object].background_img, :style =&gt; &quot;width:400px;height:300px&quot;})
+    end
+  end
+end
+</code></pre>
+<h3 id="show-field">七、show页面field字段的值自定义</h3>
+<p>在model详情页面,让某个字段展示其它内容,例如从数据库读取</p>
+<pre><code>show do
+  field :id
+  field :store_id do
+    formatted_value do
+      @store = StoresService.find_by_id(self.value)
+      @store.chinese_name + ' ' + @store.name
+    end
+  end
+end
+</code></pre>
+<h3 id="model">八、model设置枚举</h3>
+<p>model的count属性希望展示下拉列表,采用枚举</p>
+<pre><code>def count_enum
+  [5, 10, 15]
+end
+</code></pre>
+<h3 id="model-2">九、model编辑时提示信息自定义</h3>
+<p>默认是Required, 希望多加一些信息</p>
+<pre><code>edit do
+  include_all_fields
+  fields :images do
+    help &quot;Required - Please use 'Enter' for split multiple images&quot;
+  end
+end
+</code></pre>
+<h3 id="-2">十、表单渲染后设置默认值</h3>
+<p>表单渲染之后, 有些下拉框或者输入框需要一些默认值, 关键字: after_initialize</p>
+<pre><code>after_initialize do
+  if new_record?
+    self.name ||= 'POI'
+    self.lover ||= 'Root'
+  end
+end
+</code></pre>
+<h3 id="-3">十一、表单控制的唯一索引或联合索引</h3>
+<p>有些记录的个别字段需要保持唯一性, 除了db层面的控制, 表单层面也可以做一层控制, 关键字: validates_uniqueness_of. 单个索引:保证每条记录名称不重复</p>
+<pre><code>validates_uniqueness_of :name
+</code></pre>
+<p>联合索引:关键字scope内相当于是组合唯一索引, 保证记录不重复</p>
+<pre><code>validates_uniqueness_of :offer_id, scope: [:offer_id, :count]
+</code></pre>
+<h3 id="http">十二、设置HTTP请求超时时间</h3>
+<pre><code>timeout_seconds = 10
+
+RestClient::Request.execute(:method =&gt; :post,
+			    :url =&gt; url,
+			    :payload=&gt; request,
+			    :timeout =&gt; timeout_seconds,
+			    :open_timeout =&gt; timeout_seconds)
+</code></pre>
+<p>相关参考:
+<a href="http://guides.ruby.tw/ruby-rails-style-guides/zhCN/#intro">Ruby&amp;Rails 风格指导</a>
+<a href="https://doc.bccnsoft.com/docs/rails-guides-4.1-cn/testing.html">Rails 程序测试指南</a></p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2017-07-22-tdd-with-rails_admin/">用 TDD 进行 rails_admin 开发</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2017-08-17-my-jx3/">jx3八区绝代-关爱手癌患者协会</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2017-08-01-tips-about-railsadmin/` was built on 2025-07-22T04:14:15.679Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Github - JavaScript Game Engines 使用指南</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="github-javascript-game-engines">Github - JavaScript Game Engines 使用指南</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2021-02-10">10 February 2021</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/js/" class="post-tag">js</a></li>
+</ul>
+
+<p>最近想了解(<s>因为要写点啥你懂的</s>)一些用 js 写的绘制 2D 动画的库。于是窝找到了 <a href="https://github.com/collections/javascript-game-engines">javascript-game-engines</a></p>
+<h4 id="pixijs-the-html5-creation-engine-go">排行🥇 PixiJS — The HTML5 Creation Engine <a href="https://github.com/pixijs/pixi.js">-&gt; go</a></h4>
+<p><picture><source type="image/avif" srcset="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/JgZM34ppOV-898.avif 898w"><source type="image/webp" srcset="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/JgZM34ppOV-898.webp 898w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/JgZM34ppOV-898.png" alt="2021-02-10-220qqJ-QTqJO7" width="898" height="226"></picture></p>
+<p>目标是适应于所有设备，是快而轻量的 2D 库。
+PixiJS 是一个渲染库，可以让我们创建丰富的交互式图形，跨平台的应用程序和游戏。 无需深入研究 WebGL API 或处理浏览器和设备的兼容性。
+PixiJS 具有完备的 WebGL 支持，并在需要时可以无缝回退到 HTML5 的 Canvas。
+如果我们想相对快速的创建优美而精致的应用，而又不想过于深入的研究代码本身，同时还想要避免遇见兼容性问题，那么就尝试使用 PixiJS 的样子。</p>
+<h4 id="2-phaser-html5-game-framework-go">第 2⃣️ 名 Phaser - HTML5 Game Framework  <a href="https://github.com/photonstorm/phaser">-&gt; go</a></h4>
+<p><picture><source type="image/avif" srcset="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/fhm2XlzMV4-836.avif 836w"><source type="image/webp" srcset="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/fhm2XlzMV4-836.webp 836w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/fhm2XlzMV4-836.png" alt="2021-02-10-QUOw4z-2j9Elq" width="836" height="189"></picture></p>
+<p>一个快而有趣的 HTML5 游戏框架引擎。可以在台式机，移动 Web 浏览器提供 WebGL 和 Canvas 渲染。 可以使用第三方工具将你开发的游戏代码编译为支持 iOS/Android 系统的应用。
+我们可以使用 JS 或者 TS 语言开发。</p>
+<h3 id="3-melonjs-go">第 3⃣️ 名 melonJS <a href="https://github.com/melonjs/melonJS">-&gt; go</a></h3>
+<p><picture><source type="image/avif" srcset="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/1AOTvYjmLv-1696.avif 1696w"><source type="image/webp" srcset="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/1AOTvYjmLv-1696.webp 1696w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/1AOTvYjmLv-1696.png" alt="2021-02-11-AQyWfw-7VVFPh" width="1696" height="788"></picture></p>
+<p>一款轻量级的 HTML5 游戏框架引擎。功能介绍的非常详细：</p>
+<ul>
+<li>清新轻巧的 2D sprite-based 引擎</li>
+<li>一个独立的库（除了支持HTML5的浏览器外，不依赖其他任何库）</li>
+<li>与所有主流浏览器（Chrome，Safari，Firefox，Opera，Edge）和移动设备兼容</li>
+<li>适用于台式机和移动设备的快速 WebGL 渲染器，具有 Canvas 渲染的 fallback 功能</li>
+<li>高 DPI 分辨率和 Canvas 高级自动缩放</li>
+<li>Web 音频支持，可 fallback 到多通道 HTML5 音频</li>
+<li>轻巧的物理实现可确保较低的 cpu 要求</li>
+</ul>
+<p>等等...</p>
+<h3 id="4-kiwi-js-go">第 4⃣️ 名 Kiwi.js <a href="https://github.com/gamelab/kiwi.js">-&gt; go</a></h3>
+<p><picture><source type="image/avif" srcset="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/mJwcAGnPoD-2530.avif 2530w"><source type="image/webp" srcset="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/mJwcAGnPoD-2530.webp 2530w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/mJwcAGnPoD-2530.png" alt="2021-02-11-3PE8ba-orGJG2" width="2530" height="274"></picture></p>
+<p>Kiwi.js 号称是世界上最简单的基于 HTML5 的游戏框架。可以制作移动端或桌面端的游戏。我们着重于提供快速的 WebGL 渲染和补充工具，以制作出专业品质的游戏。
+Kiwi.js 使用 CocoonJS 发行游戏和创建应用程序。</p>
+<h3 id="5-crafty-js-go">第 5⃣️ 名 Crafty JS <a href="https://github.com/craftyjs/Crafty">-&gt; go</a></h3>
+<p><picture><source type="image/avif" srcset="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/kPPL_3W64K-2638.avif 2638w"><source type="image/webp" srcset="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/kPPL_3W64K-2638.webp 2638w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/kPPL_3W64K-2638.png" alt="2021-02-11-eJ5w5q-j6LFM0" width="2638" height="528"></picture></p>
+<p>Crafty 是一个 JavaScript 游戏库，可以帮助我们以结构化的方式创建游戏...</p>
+<h4 id="">主要特点：</h4>
+<ul>
+<li>定义了各种实体和组件 - 这是用一种干净且分离的方式来组织游戏元素。 无需继承！</li>
+<li>事件绑定 - 用于自定义事件的事件系统，可以随时随地触发并轻松绑定。</li>
+<li>不需要 dom 操作或自定义绘图。</li>
+</ul>
+<h4 id="-2">其他特点：</h4>
+<ul>
+<li>蓬勃发展的社区 - 论坛中随时提供帮助。</li>
+<li>社区贡献各种开源的模块 - 我们可以使用他们</li>
+<li>纯 JavaScript - 在所有主流浏览器中均可使用，并且可以与您喜欢的 js 库结合使用。</li>
+</ul>
+<h3 id="6-matter-js-go">第 6⃣️ 名 matter-js <a href="https://github.com/liabru/matter-js">-&gt; go</a></h3>
+<p><picture><source type="image/avif" srcset="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/PeVG08dBVL-1400.avif 1400w"><source type="image/webp" srcset="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/PeVG08dBVL-1400.webp 1400w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/PeVG08dBVL-1400.png" alt="2021-02-11-4RUcv3-FN12W0" width="1400" height="260"></picture></p>
+<p>Matter.js 是一个用于 Web 的 JavaScript 2D 物理引擎框架。
+功能介绍的也非常详细：</p>
+<ul>
+<li>各种物理体态，包括物理性质（质量，面积，密度等），恢复原状（弹性和非弹性碰撞），碰撞（宽相，中相和窄相）</li>
+<li>视图（翻译，缩放）</li>
+<li>碰撞查询（光线投射，区域测试）</li>
+<li>时间缩放（慢动作，加速）</li>
+<li>画布渲染器（支持矢量和纹理）</li>
+<li>用于创建，测试和调试世界的 MatterTools</li>
+<li>世界状态序列化（需要 resurrect.js ）</li>
+<li>跨浏览器和 Node.js 支持（Chrome，Firefox，Safari，IE8 +）</li>
+<li>兼容移动设备（触摸式，响应式）</li>
+<li>原始的 JavaScript 物理实现（不是端口）</li>
+</ul>
+<h3 id="7-stage-js-go">第 7⃣️ 名 stage.js <a href="https://github.com/shakiba/stage.js">-&gt; go</a></h3>
+<p><picture><source type="image/avif" srcset="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/C9yXGgpnJz-630.avif 630w"><source type="image/webp" srcset="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/C9yXGgpnJz-630.webp 630w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/C9yXGgpnJz-630.png" alt="2021-02-11-iM1jzX-V3Ov28" width="630" height="174"></picture></p>
+<p>Stage.js 是一个 2D 的 HTML5 Javascript 库，用于跨平台游戏开发，它轻量，快速，且开源。</p>
+<p>在列表的后面还有相当多的优秀的开源库，就我自己选型而言以上的这些已经够用了。 一方面是因为其他的很多都是与 3D 相关的和我的需求不符，一方面因为文档描述的相对而言过于简单了。
+就酱！
+除夕快乐！！ 🧨🧨🧨</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2021-02-07-douban-alpha-city/">记忆中的乌托邦 - 豆瓣阿尔法城</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2021-02-22-maven-publish-plugin-in-android/">使用 Gradle 插件发布 Android library 到 maven 远程仓库</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2021-02-10-spike-2d-js-tools/` was built on 2025-07-22T04:14:15.686Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

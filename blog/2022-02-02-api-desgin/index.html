@@ -1,0 +1,893 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>API 设计实践</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="api">API 设计实践</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2022-02-02">02 February 2022</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/software-engineer/" class="post-tag">software engineer</a></li>
+</ul>
+
+<p>给系统设计一套 API 不是一件简单的事情。 原则是否能被所有人真正理解， 是否能准确通过 API 来表达对资源的正确处理都是学习的目的。</p>
+<h3 id="api-2">设计 API 的简单原则</h3>
+<ul>
+<li>一致性</li>
+<li>显而易见性</li>
+<li>可组合性</li>
+<li>自解释</li>
+<li>可进化性</li>
+</ul>
+<h4 id="">一致性</h4>
+<p>在 API 中使用一致的术语。 例如， 统一使用驼峰， 或者统一使用蛇形命名</p>
+<h4 id="-2">显而易见性</h4>
+<ul>
+<li>为空值仍然返回 JSON 的 key，而不是从 payload 中直接移除 key</li>
+<li>对于创建(create)和删除(delete)操作， 在请求结果仍然显示相关的资源信息，以便开发人员可以在创建和删除后仍能看到完整的资源</li>
+<li>在分页的情况下，发送 <code>totalCount</code>、<code>nextPage</code>、<code>previousPage</code></li>
+</ul>
+<h4 id="-3">可组合性</h4>
+<ul>
+<li>API 不应绑定到任何特定的 workflow</li>
+<li>故事是由 API 驱动， 而非由 workflow 驱动</li>
+<li>将 workflow 保留在用户旅程中而不是 API 中</li>
+<li>API 不应该是数据库表结构的特定映射</li>
+</ul>
+<h4 id="-4">自解释</h4>
+<ul>
+<li>API 应该可以在没有编写 API 的团队干预的情况下使用</li>
+<li>规范和文档是 first-class 的实体，任何想要使用 API 的人都应该可以访问。 它们应该在发布之前进行测试（或至少手动验证）</li>
+</ul>
+<h4 id="-5">可进化性</h4>
+<ul>
+<li>规格变更应受监管</li>
+<li>应该能够添加新字段（关闭严格反序列化）</li>
+<li>尽可能设计通用的 URI 和响应格式（例如，代替 <code>homePhoneNumber</code>，使用 <code>phoneNumber: { type=”home” }</code>）</li>
+</ul>
+<h3 id="-6">资源的命名</h3>
+<h4 id="-7">集合：使用复数名词， 不包含唯一标识符</h4>
+<ul>
+<li>GET: 用于过滤、搜索、排序和分页。 对多个结果使用查询参数
+例如： 查询字符串 - 用于非资源属性 - <code>?sort=name?page=1?format=json</code></li>
+<li>POST: 用于创建集合的新成员</li>
+<li>PUT 和 DELETE: 很少用于处理集合。 通常用于更新集合而非更新集合中的个体</li>
+</ul>
+<h4 id="-8">单一资源：使用标识符（* 不要使用主键/递增数值）</h4>
+<ul>
+<li>GET:返回指定的资源</li>
+<li>PUT: 更新指定的资源。 并发控制以避免同时更新</li>
+<li>PATCH: 使用更改更新资源</li>
+<li>DELETE: 删除指定的资源</li>
+</ul>
+<p><em>Notes:</em>
+使用唯一标识符 - 不必是主键。 保证它们独特且可读即可</p>
+<h4 id="-9">嵌套资源</h4>
+<ul>
+<li>在父单一资源下可单独寻址的资源。 例如：用户的订单 - <code>users/1/orders</code></li>
+<li>尽量避免嵌套超过 2 层（可组合性）</li>
+<li>嵌套资源既作为嵌套集合存在，也作为嵌套单一资源存在</li>
+</ul>
+<h4 id="-10">具化的资源</h4>
+<p>具体化是将抽象概念具体化的行为（关注意图，而不是实体）， 这有时在 <code>RESTful</code> 建模中很有用。
+与简单的 CRUD 操作相反，具体化的资源通常代表更改的意图。 因此，他们倾向于避免使用 PUT 来支持对某些用户操作进行建模的不可变资源。</p>
+<h4 id="endpoints">非资源的 endpoints</h4>
+<p>可能有一些考虑迫使我们设计一个非资源性的 endpoint。 例如，您可能决定支持将信用卡搜索作为 POST 而不是 GET， 因为我们希望将信用卡号从 URL 中移除。
+在这种情况下，我们显然是有意打破了 REST 的统一接口架构约束。
+为了清楚地表明这是有意的，我们应该在路径上放置一个动词，将其标记为 RPC 而不是 RESTful</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>集合</td>
+<td>/orders</td>
+</tr>
+<tr>
+<td>单一资源</td>
+<td>/orders/1</td>
+</tr>
+<tr>
+<td>嵌套资源</td>
+<td>/orders/1/product</td>
+</tr>
+<tr>
+<td>具化资源</td>
+<td>/registrationRequest</td>
+</tr>
+<tr>
+<td>非资源型</td>
+<td>/creditCards/search</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-11">其它</h3>
+<ul>
+<li>避免使用动词。 REST 已经为您提供了动词。</li>
+<li>GET、 PUT 和 DELETE 应该是幂等的。 任何与输入请求有关的具有不确定结果的操作都应建模为 POST。 例如; PUT 应该总是返回，好像有什么改变了。 不应返回“未检测到更改”</li>
+<li>此外，GET 被定义为“安全”的，这意味着它不应影响服务器的状态。 GET 请求应该是可缓存的。</li>
+<li>如果不保证幂等性的 POST 操作需要幂等性，客户端可以传递带有客户端生成的 guid 的 Idempotency-Key 标头。 服务器可以确保只处理一条消息。</li>
+<li>不要让你的 API 变得啰嗦（细粒度与粗粒度）。 例如：单独的 POST 以添加喜欢、评论、标签等</li>
+</ul>
+<h3 id="api-3">API 版本化</h3>
+<ul>
+<li>
+<p><code>/api/v1/</code>
+<em>pros:</em>
+在 api URL 中清晰地进行版本控制
+<em>cons:</em>
+每次版本更改时，client 都需要更改 URL</p>
+</li>
+<li>
+<p><code>?v=1.0</code>
+<em>pros:</em>
+可选择是否使用包含版本控制的 API（可以使用默认版本）
+<em>cons:</em>
+client 太容易错过需要该版本</p>
+</li>
+<li>
+<p>In headers: <code>X-Version: 1.0</code>
+<em>pros:</em>
+将版本控制与 API 的其余部分分开
+<em>cons:</em>
+维护 headers</p>
+</li>
+<li>
+<p>Accept Header: <code>Accept: version=1.0</code>
+<em>pros:</em>
+无需创建自己的自定义标题
+<em>cons:</em>
+比 <code>query</code> 更不容易被发现</p>
+</li>
+<li>
+<p>使用 <code>Content Type</code> 进行版本控制: <code>content-type: application/&lt;custom content type&gt;</code>
+<em>pros:</em>
+version payload 和 API 本身一样具有意义
+<em>cons:</em>
+需要更多的开发人员成熟度</p>
+</li>
+</ul>
+<p>虽然 API 设计的最终目标是无版本化，但在日常开发中仍然要有计划的使用版本:</p>
+<ul>
+<li>将版本放在 URL 中: 允许您在浏览器中打开它, 通过电子邮件发送它, 添加书签。 在日志中也能清晰可见</li>
+<li>仅使用主要版本: API 使用者应该只关心重大更改。</li>
+<li>使用数字类型的版本号：不是像日期这样对消费者来说不重要的其他信息</li>
+<li>版本是必选项：否则为了向后兼容还必须支持未版本化的 URL。</li>
+</ul>
+<h3 id="api-4">API 认证</h3>
+<ul>
+<li>
+<p>Cookies</p>
+<ul>
+<li>简单， 不是很安全</li>
+</ul>
+</li>
+<li>
+<p>Basic Auth</p>
+<ul>
+<li>易于实施</li>
+<li>除非使用 SSL，否则不安全</li>
+<li>在每个请求中发送凭据</li>
+</ul>
+</li>
+<li>
+<p>Token Based Auth</p>
+<ul>
+<li>简单安全</li>
+<li>行业标准令牌 - 5 到 20 分钟后到期</li>
+<li>通常使用 JWT（JSON Web Tokens）</li>
+</ul>
+</li>
+<li>
+<p>OAuth</p>
+<ul>
+<li>第三方认证</li>
+<li>使用请求令牌和访问令牌</li>
+</ul>
+</li>
+</ul>
+<h3 id="api-5">API 网关</h3>
+<ul>
+<li>尽量减少内置的冗余功能， 例如 API 生命周期管理</li>
+<li>当有跨越团队边界时， 通过网关进行 service-to-service call</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>能力</th>
+<th>一般倾向于我们是否应该使用 api 网关执行此操作 ?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>截流 &amp; 定量</td>
+<td>是</td>
+</tr>
+<tr>
+<td>跟踪记录 API 活跃度</td>
+<td>是</td>
+</tr>
+<tr>
+<td>API 生命周期管理</td>
+<td>是</td>
+</tr>
+<tr>
+<td>认证</td>
+<td>也许</td>
+</tr>
+<tr>
+<td>缓存</td>
+<td>也许</td>
+</tr>
+<tr>
+<td>公布 API 文档</td>
+<td>也许</td>
+</tr>
+<tr>
+<td>负载均衡</td>
+<td>也许</td>
+</tr>
+<tr>
+<td>服务发现</td>
+<td>也许</td>
+</tr>
+<tr>
+<td>service mocks</td>
+<td>也许</td>
+</tr>
+<tr>
+<td>API 编写</td>
+<td>否</td>
+</tr>
+<tr>
+<td>数据转化</td>
+<td>否</td>
+</tr>
+<tr>
+<td>细粒度权限</td>
+<td>否</td>
+</tr>
+</tbody>
+</table>
+<h3 id="api-6">API 管理</h3>
+<ul>
+<li>
+<p>最佳实践</p>
+<ul>
+<li>规范驱动开发允许消费者在完全开发之前开始试验 API</li>
+<li>通过测试平台使用 API 规范，例如提供 API 调用存根实现的托管 OpenAPI 文件</li>
+</ul>
+</li>
+<li>
+<p>如何提供 API 规范</p>
+<ul>
+<li>单独的规范文件</li>
+<li>内联规范</li>
+</ul>
+</li>
+<li>
+<p>工具</p>
+<ul>
+<li>OpenAPI</li>
+<li>API 蓝图</li>
+<li>RAML</li>
+</ul>
+</li>
+</ul>
+<h3 id="api-7">API 文档</h3>
+<ul>
+<li>根据规范自动生成文档</li>
+<li>包括示例请求/响应</li>
+<li>支持多个版本</li>
+<li>支持自定义</li>
+<li>支持 stub 响应</li>
+<li>安全访问（文档和 API）</li>
+<li>使文档保持最新（将文档作为部署管道的一部分发布 - Dredd 工具）</li>
+<li>在文档旁边包含 SLO（服务水平目标）</li>
+</ul>
+<h3 id="-12">工具</h3>
+<ul>
+<li>Gelato (closely tied to Kong)</li>
+<li>Readme.io -Generates API documentation by parsing a hosted Swagger file</li>
+<li>Stoplight - handles integration with Auth0</li>
+<li>Swagger Hub</li>
+<li>Swagger-UI</li>
+<li>Apiary - Provides easy configuration of server mocks to prototype APIs</li>
+<li>API portal (Mulesoft)</li>
+<li>SmartDocs</li>
+<li>Swagger Editor</li>
+<li>API Studio</li>
+</ul>
+<h3 id="api-mocks">API Mocks</h3>
+<ul>
+<li>规范驱动开发</li>
+<li>先暴露 mock endpoints</li>
+<li>消费者驱动契约测试</li>
+<li>使用 mountebank 等工具针对不提供 mock endpoints 的 API 进行测试</li>
+<li>工具
+<ul>
+<li>mountebank</li>
+<li>sandbox</li>
+</ul>
+</li>
+</ul>
+<h3 id="-13">其它</h3>
+<ul>
+<li>分页
+<ul>
+<li>在 API URL 中使用 page number 和 page limit</li>
+</ul>
+</li>
+<li>使用 <code>E-Tags</code> 进行缓存
+<ul>
+<li>并发</li>
+<li>使用标头 If-Match 和 If-No-Match</li>
+<li>在请求中发送 If-Match 中的 E-Tag。 如果服务器上的标签匹配，则将进行更改。 否则，将返回错误代码</li>
+</ul>
+</li>
+<li>Functional API - （非 RESTful 的 Operational API）
+<ul>
+<li>例如：重启机器，重新计算总价，计算税务</li>
+<li>不是构建 RPC API 的理由</li>
+<li>文档化</li>
+<li>可以使用其他 REST 动词，例如 OPTIONS、HEAD、LINK</li>
+</ul>
+</li>
+<li>异步 API
+<ul>
+<li>非 REST 解决方案很有用 - Comet、gRPC、SignalR、Firebase、Socket.IO 等。</li>
+</ul>
+</li>
+</ul>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2022-01-31-introduce-new-approach/">在团队中引入新技术的3个原则</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2022-02-13-my-annual-note-2021/">我的 2021 年度总结</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2022-02-02-api-desgin/` was built on 2025-07-22T04:14:15.688Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

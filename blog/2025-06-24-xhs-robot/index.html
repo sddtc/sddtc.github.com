@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>小红书自动发笔记机器人</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="">小红书自动发笔记机器人</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2025-06-24">24 June 2025</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/self-project/" class="post-tag">self-project</a></li>
+</ul>
+
+<p>我总是对社交网络自动化有很大的兴趣, 之前研究发微博机器人, QQ机器人, 豆瓣机器人, 也是因为我玩这些 app. 如今
+终于轮到了小红书. 虽然小红书没有开发者平台, 但是仍然可以从抓取并分析网络请求再通过代码实现自动发笔记的功能. 整个实现最精彩的地方就是对于请求体中 <code>x-s</code> 键值的破解, 目前我用到了 <a href="https://github.com/ReaJason/xhs">ReaJason/xhs</a> 里的 sign 功能, 也打算下一步再实现一个 JS 版本.</p>
+<p>本篇文章将列举小红书一些创作者平台的核心APIs</p>
+<h4 id="1">1. 通过关键字获取话题列表详情</h4>
+<p>在笔记的内容里如果需要引入话题列表, 通过该 API 能获取需要的tag的关键字段.</p>
+<p><strong>POST</strong> <code>https://edith.xiaohongshu.com/web_api/sns/v1/search/topic</code></p>
+<p><em>request headers:</em></p>
+<ul>
+<li><code>Cookie</code></li>
+<li><code>Origin</code>: <code>https://creator.xiaohongshu.com</code></li>
+<li><code>Content-Type</code>: <code>application/json;charset=UTF-8</code></li>
+</ul>
+<p><em>request body:</em></p>
+<pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"keyword"</span><span class="token operator">:</span> <span class="token string">"比格"</span><span class="token punctuation">,</span>
+  <span class="token property">"suggest_topic_request"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">""</span><span class="token punctuation">,</span>
+    <span class="token property">"desc"</span><span class="token operator">:</span> <span class="token string">"#比格"</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"page"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"page_size"</span><span class="token operator">:</span> <span class="token number">20</span><span class="token punctuation">,</span>
+    <span class="token property">"page"</span><span class="token operator">:</span> <span class="token number">1</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h4 id="2-file-id-credentials">2. 获取图片的 file id 列表和 相关 credentials</h4>
+<p>获取上传图片需要的关键信息.</p>
+<p><strong>GET</strong> <code>https://creator.xiaohongshu.com/api/media/v1/upload/web/permit?biz_name=spectrum&amp;scene=image&amp;file_count=1&amp;version=1&amp;source=web</code>
+其中 file_count 根据你要上传的图片数量而改变, 继而返回的 file id数量也于此相关.</p>
+<p><em>request headers:</em></p>
+<ul>
+<li><code>Cookie</code></li>
+<li><code>Referer</code>: <code>https://creator.xiaohongshu.com/publish/publish?from=tab_switch</code></li>
+<li><code>X-S</code>: 需要通过一些工具获得. 本人从 <a href="https://github.com/ReaJason/xhs">ReaJason/xhs</a> 的 /sign 接口获取</li>
+</ul>
+<h4 id="3">3. 上传图片</h4>
+<p><strong>PUT</strong> <code>https://ros-upload.xiaohongshu.com/{file_id}</code></p>
+<p><em>request headers:</em></p>
+<ul>
+<li><code>Cookie</code></li>
+<li><code>Content-Type</code>: <code>image/jpeg</code></li>
+<li><code>X-Cos-Security-Token</code>: 值从 No.2 的返回值获取</li>
+<li><code>Origin</code>: <code>https://creator.xiaohongshu.com</code></li>
+</ul>
+<p><em>request body:</em>
+image 的 binary 类型</p>
+<h4 id="4">4. 发布笔记</h4>
+<p><strong>POST</strong> <code>https://edith.xiaohongshu.com/web_api/sns/v2/note</code></p>
+<p><em>request headers:</em></p>
+<ul>
+<li><code>Cookie</code></li>
+<li><code>Content-Type</code>: <code>application/json;charset=UTF-8</code></li>
+<li><code>Origin</code>: <code>https://creator.xiaohongshu.com</code></li>
+<li><code>X-S</code>: 需要通过一些工具获得. 本人从 <a href="https://github.com/ReaJason/xhs">ReaJason/xhs</a> 的 /sign 接口获取</li>
+<li><code>X-T</code> 需要通过一些工具获得. 本人从 <a href="https://github.com/ReaJason/xhs">ReaJason/xhs</a> 的 /sign 接口获取</li>
+</ul>
+<p><em>request body:</em></p>
+<pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"common"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"normal"</span><span class="token punctuation">,</span>
+    <span class="token property">"note_id"</span><span class="token operator">:</span> <span class="token string">""</span><span class="token punctuation">,</span>
+    <span class="token property">"source"</span><span class="token operator">:</span> <span class="token string">"{\"type\":\"web\",\"ids\":\"\",\"extraInfo\":\"{\\\"systemId\\\":\\\"web\\\"}\"}"</span><span class="token punctuation">,</span>
+    <span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">"小比格"</span><span class="token punctuation">,</span>
+    <span class="token property">"desc"</span><span class="token operator">:</span> <span class="token string">"﻿#比格犬就是世界上最好的小狗[话题]#﻿"</span><span class="token punctuation">,</span>
+    <span class="token property">"ats"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"hash_tag"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"67dba606000000001d010ac8"</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"比格犬就是世界上最好的小狗"</span><span class="token punctuation">,</span>
+        <span class="token property">"link"</span><span class="token operator">:</span> <span class="token string">"https://www.xiaohongshu.com/page/topics/67dba60601d4000000000001?naviHidden=yes"</span><span class="token punctuation">,</span>
+        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"topic"</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"business_binds"</span><span class="token operator">:</span> <span class="token string">"{\"version\":1,\"noteId\":0,\"bizType\":0,\"noteOrderBind\":{},\"notePostTiming\":{},\"noteCollectionBind\":{\"id\":\"\"},\"noteSketchCollectionBind\":{\"id\":\"\"},\"coProduceBind\":{\"enable\":false},\"noteCopyBind\":{\"copyable\":false},\"interactionPermissionBind\":{\"commentPermission\":0},\"optionRelationList\":[]}"</span><span class="token punctuation">,</span>
+    <span class="token property">"privacy_info"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"op_type"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+      <span class="token property">"type"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+      <span class="token property">"user_ids"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"goods_info"</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"biz_relations"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"image_info"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"images"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"file_id"</span><span class="token operator">:</span> <span class="token string">"spectrum/HYyKFIJ01wmBc3x2xaRRMfgLuR1zR0Gp7tk5uAM79ccq_kQ"</span><span class="token punctuation">,</span>
+        <span class="token property">"width"</span><span class="token operator">:</span> <span class="token number">510</span><span class="token punctuation">,</span>
+        <span class="token property">"height"</span><span class="token operator">:</span> <span class="token number">510</span><span class="token punctuation">,</span>
+        <span class="token property">"metadata"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token property">"source"</span><span class="token operator">:</span> <span class="token number">-1</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"stickers"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token property">"version"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+          <span class="token property">"floating"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"extra_info_json"</span><span class="token operator">:</span> <span class="token string">"{\"mimeType\":\"image/jpeg\"}"</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"video_info"</span><span class="token operator">:</span> <span class="token null keyword">null</span>
+<span class="token punctuation">}</span></code></pre>
+<p>以上的 request body 里只有以下部分节点可变, 其余部分硬编码即可:</p>
+<ul>
+<li>title</li>
+<li>desc</li>
+<li>hash_tag</li>
+<li>images</li>
+</ul>
+<p>其中 desc 中的话题的前后需要添加不可见字符<code>0xfeff</code>, 否则不会被识别为话题.</p>
+<p>除了上述的 API 之外, 很多开源项目有点赞、评论、发布视频笔记等 API. 可以根据个人需求进行定制, 我没有用到
+就不在此列举了.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2025-06-16-technology-selection/">当你做技术选型时需要考虑的</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2025-07-03-blocked-in-some-regions-for-example-China/">该网站在某些区域被阻止, 例如 中国</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2025-06-24-xhs-robot/` was built on 2025-07-22T04:14:15.690Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

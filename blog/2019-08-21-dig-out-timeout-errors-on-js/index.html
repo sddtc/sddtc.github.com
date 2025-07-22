@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>浅淡 ETIMEDOUT &amp; ESOCKETTIMEDOUT &amp; Socket hang up</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="etimedout-and-esockettimedout-and-socket-hang-up">浅淡 ETIMEDOUT &amp; ESOCKETTIMEDOUT &amp; Socket hang up</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2019-08-21">21 August 2019</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/js/" class="post-tag">js</a></li>
+</ul>
+
+<h3 id="">背景</h3>
+<p>当线上服务正常运行了一段时间, 应用的请求量的呈线性增长姿势的时候, 我们发现日志里多了三种错误日志. 类型分别为 <code>ETIMEDOUT</code>, <code>ESOCKETTIMEDOUT</code> 和 <code>Socket hang up</code>, 由于我个人对于这三种错误的认知极其有限，于是想要借此机会整理思绪.</p>
+<h3 id="-2">错误事例</h3>
+<p><strong>ETIMEDOUT</strong></p>
+<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token literal-property property">RequestError</span><span class="token operator">:</span> Error<span class="token operator">:</span> <span class="token constant">ETIMEDOUT</span>
+    at <span class="token keyword">new</span> <span class="token class-name">RequestError</span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">-</span>promise<span class="token operator">-</span>core<span class="token operator">/</span>lib<span class="token operator">/</span>errors<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">14</span><span class="token operator">:</span><span class="token number">15</span><span class="token punctuation">)</span>
+    at Request<span class="token punctuation">.</span>plumbing<span class="token punctuation">.</span><span class="token function">callback</span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">-</span>promise<span class="token operator">-</span>core<span class="token operator">/</span>lib<span class="token operator">/</span>plumbing<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">87</span><span class="token operator">:</span><span class="token number">29</span><span class="token punctuation">)</span>
+    at Request<span class="token punctuation">.</span><span class="token constant">RP</span>$callback <span class="token punctuation">[</span><span class="token keyword">as</span> _callback<span class="token punctuation">]</span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">-</span>promise<span class="token operator">-</span>core<span class="token operator">/</span>lib<span class="token operator">/</span>plumbing<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">46</span><span class="token operator">:</span><span class="token number">31</span><span class="token punctuation">)</span>
+    at self<span class="token punctuation">.</span><span class="token function">callback</span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">/</span>request<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">185</span><span class="token operator">:</span><span class="token number">22</span><span class="token punctuation">)</span>
+    at Request<span class="token punctuation">.</span><span class="token function">emit</span> <span class="token punctuation">(</span>events<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">198</span><span class="token operator">:</span><span class="token number">13</span><span class="token punctuation">)</span>
+    at Request<span class="token punctuation">.</span>EventEmitter<span class="token punctuation">.</span><span class="token function">emit</span> <span class="token punctuation">(</span>domain<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">448</span><span class="token operator">:</span><span class="token number">20</span><span class="token punctuation">)</span>
+    at Timeout<span class="token punctuation">.</span><span class="token operator">&lt;</span>anonymous<span class="token operator">></span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">/</span>request<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">852</span><span class="token operator">:</span><span class="token number">16</span><span class="token punctuation">)</span>
+    at Timeout<span class="token punctuation">.</span><span class="token function">_onTimeout</span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>async<span class="token operator">-</span>listener<span class="token operator">/</span>glue<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">188</span><span class="token operator">:</span><span class="token number">31</span><span class="token punctuation">)</span>
+    at <span class="token function">ontimeout</span> <span class="token punctuation">(</span>timers<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">436</span><span class="token operator">:</span><span class="token number">11</span><span class="token punctuation">)</span>
+    at <span class="token function">tryOnTimeout</span> <span class="token punctuation">(</span>timers<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">300</span><span class="token operator">:</span><span class="token number">5</span><span class="token punctuation">)</span>
+    at <span class="token function">listOnTimeout</span> <span class="token punctuation">(</span>timers<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">263</span><span class="token operator">:</span><span class="token number">5</span><span class="token punctuation">)</span>
+    at Timer<span class="token punctuation">.</span><span class="token function">processTimers</span> <span class="token punctuation">(</span>timers<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">223</span><span class="token operator">:</span><span class="token number">10</span><span class="token punctuation">)</span></code></pre>
+<p><strong>ESOCKETTIMEDOUT</strong></p>
+<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token literal-property property">RequestError</span><span class="token operator">:</span> Error<span class="token operator">:</span> <span class="token constant">ESOCKETTIMEDOUT</span>
+    at <span class="token keyword">new</span> <span class="token class-name">RequestError</span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">-</span>promise<span class="token operator">-</span>core<span class="token operator">/</span>lib<span class="token operator">/</span>errors<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">14</span><span class="token operator">:</span><span class="token number">15</span><span class="token punctuation">)</span>
+    at Request<span class="token punctuation">.</span>plumbing<span class="token punctuation">.</span><span class="token function">callback</span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">-</span>promise<span class="token operator">-</span>core<span class="token operator">/</span>lib<span class="token operator">/</span>plumbing<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">87</span><span class="token operator">:</span><span class="token number">29</span><span class="token punctuation">)</span>
+    at Request<span class="token punctuation">.</span><span class="token constant">RP</span>$callback <span class="token punctuation">[</span><span class="token keyword">as</span> _callback<span class="token punctuation">]</span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">-</span>promise<span class="token operator">-</span>core<span class="token operator">/</span>lib<span class="token operator">/</span>plumbing<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">46</span><span class="token operator">:</span><span class="token number">31</span><span class="token punctuation">)</span>
+    at self<span class="token punctuation">.</span><span class="token function">callback</span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">/</span>request<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">185</span><span class="token operator">:</span><span class="token number">22</span><span class="token punctuation">)</span>
+    at Request<span class="token punctuation">.</span><span class="token function">emit</span> <span class="token punctuation">(</span>events<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">198</span><span class="token operator">:</span><span class="token number">13</span><span class="token punctuation">)</span>
+    at Request<span class="token punctuation">.</span>EventEmitter<span class="token punctuation">.</span><span class="token function">emit</span> <span class="token punctuation">(</span>domain<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">448</span><span class="token operator">:</span><span class="token number">20</span><span class="token punctuation">)</span>
+    at ClientRequest<span class="token punctuation">.</span><span class="token operator">&lt;</span>anonymous<span class="token operator">></span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">/</span>request<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">819</span><span class="token operator">:</span><span class="token number">16</span><span class="token punctuation">)</span>
+    at Object<span class="token punctuation">.</span><span class="token function">onceWrapper</span> <span class="token punctuation">(</span>events<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">286</span><span class="token operator">:</span><span class="token number">20</span><span class="token punctuation">)</span>
+    at ClientRequest<span class="token punctuation">.</span><span class="token function">emit</span> <span class="token punctuation">(</span>events<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">198</span><span class="token operator">:</span><span class="token number">13</span><span class="token punctuation">)</span>
+    at ClientRequest<span class="token punctuation">.</span>EventEmitter<span class="token punctuation">.</span><span class="token function">emit</span> <span class="token punctuation">(</span>domain<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">448</span><span class="token operator">:</span><span class="token number">20</span><span class="token punctuation">)</span>
+    at TLSSocket<span class="token punctuation">.</span><span class="token function">emitRequestTimeout</span> <span class="token punctuation">(</span>_http_client<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">662</span><span class="token operator">:</span><span class="token number">40</span><span class="token punctuation">)</span>
+    at Object<span class="token punctuation">.</span><span class="token function">onceWrapper</span> <span class="token punctuation">(</span>events<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">286</span><span class="token operator">:</span><span class="token number">20</span><span class="token punctuation">)</span>
+    at TLSSocket<span class="token punctuation">.</span><span class="token function">emit</span> <span class="token punctuation">(</span>events<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">198</span><span class="token operator">:</span><span class="token number">13</span><span class="token punctuation">)</span>
+    at TLSSocket<span class="token punctuation">.</span>EventEmitter<span class="token punctuation">.</span><span class="token function">emit</span> <span class="token punctuation">(</span>domain<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">448</span><span class="token operator">:</span><span class="token number">20</span><span class="token punctuation">)</span>
+    at TLSSocket<span class="token punctuation">.</span>Socket<span class="token punctuation">.</span><span class="token function">_onTimeout</span> <span class="token punctuation">(</span>net<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">442</span><span class="token operator">:</span><span class="token number">8</span><span class="token punctuation">)</span>
+    at <span class="token function">ontimeout</span> <span class="token punctuation">(</span>timers<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">436</span><span class="token operator">:</span><span class="token number">11</span><span class="token punctuation">)</span>
+    at <span class="token function">tryOnTimeout</span> <span class="token punctuation">(</span>timers<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">300</span><span class="token operator">:</span><span class="token number">5</span><span class="token punctuation">)</span>
+    at <span class="token function">listOnTimeout</span> <span class="token punctuation">(</span>timers<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">263</span><span class="token operator">:</span><span class="token number">5</span><span class="token punctuation">)</span>
+    at Timer<span class="token punctuation">.</span><span class="token function">processTimers</span> <span class="token punctuation">(</span>timers<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">223</span><span class="token operator">:</span><span class="token number">10</span><span class="token punctuation">)</span></code></pre>
+<p><strong>Socket hang up</strong></p>
+<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token literal-property property">RequestError</span><span class="token operator">:</span> Error<span class="token operator">:</span> socket hang up
+    at <span class="token keyword">new</span> <span class="token class-name">RequestError</span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">-</span>promise<span class="token operator">-</span>core<span class="token operator">/</span>lib<span class="token operator">/</span>errors<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">14</span><span class="token operator">:</span><span class="token number">15</span><span class="token punctuation">)</span>
+    at Request<span class="token punctuation">.</span>plumbing<span class="token punctuation">.</span><span class="token function">callback</span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">-</span>promise<span class="token operator">-</span>core<span class="token operator">/</span>lib<span class="token operator">/</span>plumbing<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">87</span><span class="token operator">:</span><span class="token number">29</span><span class="token punctuation">)</span>
+    at Request<span class="token punctuation">.</span><span class="token constant">RP</span>$callback <span class="token punctuation">[</span><span class="token keyword">as</span> _callback<span class="token punctuation">]</span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">-</span>promise<span class="token operator">-</span>core<span class="token operator">/</span>lib<span class="token operator">/</span>plumbing<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">46</span><span class="token operator">:</span><span class="token number">31</span><span class="token punctuation">)</span>
+    at self<span class="token punctuation">.</span><span class="token function">callback</span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">/</span>request<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">185</span><span class="token operator">:</span><span class="token number">22</span><span class="token punctuation">)</span>
+    at Request<span class="token punctuation">.</span><span class="token function">emit</span> <span class="token punctuation">(</span>events<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">198</span><span class="token operator">:</span><span class="token number">13</span><span class="token punctuation">)</span>
+    at Request<span class="token punctuation">.</span>EventEmitter<span class="token punctuation">.</span><span class="token function">emit</span> <span class="token punctuation">(</span>domain<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">448</span><span class="token operator">:</span><span class="token number">20</span><span class="token punctuation">)</span>
+    at Request<span class="token punctuation">.</span><span class="token function">onRequestError</span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">/</span>request<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">881</span><span class="token operator">:</span><span class="token number">8</span><span class="token punctuation">)</span>
+    at ClientRequest<span class="token punctuation">.</span><span class="token function">emit</span> <span class="token punctuation">(</span>events<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">203</span><span class="token operator">:</span><span class="token number">15</span><span class="token punctuation">)</span>
+    at ClientRequest<span class="token punctuation">.</span>EventEmitter<span class="token punctuation">.</span><span class="token function">emit</span> <span class="token punctuation">(</span>domain<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">448</span><span class="token operator">:</span><span class="token number">20</span><span class="token punctuation">)</span>
+    at TLSSocket<span class="token punctuation">.</span><span class="token function">socketCloseListener</span> <span class="token punctuation">(</span>_http_client<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">364</span><span class="token operator">:</span><span class="token number">11</span><span class="token punctuation">)</span>
+    at TLSSocket<span class="token punctuation">.</span><span class="token function">emit</span> <span class="token punctuation">(</span>events<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">203</span><span class="token operator">:</span><span class="token number">15</span><span class="token punctuation">)</span>
+    at TLSSocket<span class="token punctuation">.</span>EventEmitter<span class="token punctuation">.</span><span class="token function">emit</span> <span class="token punctuation">(</span>domain<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">448</span><span class="token operator">:</span><span class="token number">20</span><span class="token punctuation">)</span>
+    at _handle<span class="token punctuation">.</span><span class="token function">close</span> <span class="token punctuation">(</span>net<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">606</span><span class="token operator">:</span><span class="token number">12</span><span class="token punctuation">)</span>
+    at <span class="token constant">TCP</span><span class="token punctuation">.</span><span class="token function">done</span> <span class="token punctuation">(</span>_tls_wrap<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">388</span><span class="token operator">:</span><span class="token number">7</span><span class="token punctuation">)</span></code></pre>
+<h3 id="-3">概念</h3>
+<p>其实这三种错误信息均来源于 Node.js, Node.js 底层使用了 <a href="http://www.gnu.org/software/libc/">glibc库</a>, ETIMEDOUT 错误是 glibc 库在 socket 连接时使用的 connect 函数中定义的错误类型. V8 引擎在 glibc 库时还会加入自定义的错误类型， 许多错误情况还是和 glibc 中的定义保持了一致.</p>
+<p>connect 函数的定义为：int connect(int socket, struct sockaddr addr, socklen_t length)
+connect 函数会使用文件描述符 (file descripto). socket 表示 socket 发起连接，sockaddr 通过 addr 和 length 这两个参数来指定. (这个 socket 一般是其他机器的 socket，而且必须已经配置成了服务器)
+一般情况下, connect 函数会等待服务器响应请求才返回. 当然也可以将 socket 设置为非阻塞模式来不等待响应就快速返回 (可参考 nginx 是怎么使用 socket).</p>
+<p>connect 最初是作为多线程程序的取消点定义的, 因此开发者需要确保线程取消后释放了占用的资源 (例如内存、文件描述符、semaphore) 等.</p>
+<p>关于 ETIMEDOUT 是连接尝试超时.
+关于 ESOCKETTIMEDOUT 我的理解为, 如果服务器段的 socket 都处在忙碌状态, 无法分配出新的 socket, 请求新 socket 会一直处在 pending 状态, 于是会造成 timeout.
+关于 Socket hang up 错误, 当客户端等待请求的 response, 然而连接断开了. 于是会抛出该错误.</p>
+<h3 id="tips">Tips</h3>
+<h3 id="-4">错误类型</h3>
+<p>connect 函数正常的返回值为 0, 在有错误时会返回 -1. 函数中定义了如下错误条件:</p>
+<ol>
+<li>EBADF: sockt 不是有效的文件描述符 (file descriptor)</li>
+<li>ENOTSOCK: 文件描述符 socket 不是 socket</li>
+<li>EADDRNOTAVAIL: 指定的地址在远程机器上不可用</li>
+<li>EAFNOSUPPORT: socket 不支持 addr 的命名空间</li>
+<li>EISCONN: socket 已经连接</li>
+<li>ETIMEDOUT: 连接尝试超时</li>
+<li>ECONNREFUSED: 服务器主动拒绝建立连接</li>
+<li>ENETUNREACH: 从本机到给定 addr 的网络不通</li>
+<li>EADDRINUSE: 给定 addr 的 socket 地址已经在使用 (这种错误最常见, 我们有时候本地已经启动了一个 Node.js 程序, 再次启动会看到这个错误, 也就是端口号已经被占用了)</li>
+<li>EINPROGRESS: socket 是非阻塞的, 连接不能立即建立. 可以使用 select 来确定连接完全建立的时间. 参考等待 I/O . 在连接完全建立前如果在相同的 socket 上调用 connect, 会以 EALREADY 失败.</li>
+<li>EALREADY:: socket 是非阻塞的而且有一个挂起的连接 (参考上面的 EINPROGRESS)</li>
+</ol>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2019-06-01-authentication-platform/">7大平台的第三方登录参考手册</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2019-09-06-simple-understanding-about-xss-cors/">对于简单的 XSS 攻击的概念梳理</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2019-08-21-dig-out-timeout-errors-on-js/` was built on 2025-07-22T04:14:15.685Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

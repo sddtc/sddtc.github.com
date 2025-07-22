@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>《少有人走的路》 读书笔记</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="">《少有人走的路》 读书笔记</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2018-05-14">14 May 2018</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/book-notes/" class="post-tag">book notes</a></li>
+</ul>
+
+<p>最近一直在研读 <a href="https://book.douban.com/series/8110">少有人走的路</a>, 越往后看越豁然开朗, 似乎越来越与自己的思想密切相关了, 分享和记录书中一些段落</p>
+<hr>
+<p>倾听孩子讲话的时间本就有限, 许多父母在这有限的时间里也不肯用心倾听. 他们可能认为, 假装倾听和有选择地倾听, 已经是真正的倾听了. 其实, 这是在自我欺骗. 目的是为了掩盖他们自己的懒惰. 真正的倾听, 不论时间多么短暂, 都需要付出相当大的努力。</p>
+<hr>
+<p>哲学家圣·奥古斯丁说过: &quot;如果你兼有爱和付出两种禀赋, 就可以随心所欲地做你想做的一切事情。&quot;</p>
+<hr>
+<p>邪恶的本质就是用谎言来维护病态的自我. 换句话说, 邪恶总是隐藏在谎言中。</p>
+<hr>
+<p>爱是为了促进自己和他人心智成熟, 而不断拓展自我界限, 实现自我完善的一种意愿. 这个定义告诉我们, 爱的最终目的, 是自我完善。</p>
+<hr>
+<p>爱不是百依百顺, 不是坠入情网, 不是大包大揽, 爱一个人就要让他独立, 不管是自己的父母、妻子、还是儿女, 如果你的行为阻碍了他们心智的成熟, 那就不是真正的爱。</p>
+<hr>
+<p>在听某些著名人士演讲时, 我常想提一些问题, 一些急欲知道的问题, 并表达一些自己的看法--不管是公开说, 还是私下交流。 但我常常欲言又止, 因为我太害羞了, 害怕被拒绝, 担心被人看作傻瓜。</p>
+<p>经过一些时间, 我终于问自己: &quot;你这样害羞, 什么问题都不敢问, 这样会改善你的生活吗? 你本应该提问, 但害羞让退了回来。 你自己想一想, 害羞究竟是在帮助你, 还是在限制你?&quot; 一旦我这样自问, 答案就一清二楚了, 它限制了我的发展。</p>
+<p>我承认这会让人胆怯, 但这正是勇气之所在。 让我十分惊讶的是, 没有几个人真正理解什么是勇气, 多数人认为勇气就是不害怕。 现在让我来告诉你： 不害怕不是勇气, 它是某种脑损伤； 勇气是尽管你感觉害怕, 但仍能迎难而上; 尽管你感觉痛苦, 但仍能直接面对。 当你这样做的时候, 你会发现战胜恐惧不仅使你变得强大, 而且还让你向成熟迈进了一大步。</p>
+<hr>
+<p>治疗一个人痛苦的最好方法, 往往不是设法消除痛苦, 而是应该与他一起承受。 我们必须学会聆听和分担他人的痛苦, 这也是意识成长的全部内容。 随着意识的成长, 我们能更加看清他人的把戏和伎俩, 同时也能更深切地体会他们的沉重和悲哀。</p>
+<hr>
+<p>人们个性不同, 却容易犯同样的错误, 他们相信自己知道如何思考和沟通。 事实上, 多数人根本不了解自己这样想和这样做的真正原因。 一旦深入追问, 就很容易发现, 他们对于真实的思考与沟通知之甚少。</p>
+<p>从当心理医生的经验和平时的观察中, 我总结出缺乏完善思考的种种常见错误。 其中之一就是根本不去思考; 另一个错误是, 根据肤浅的逻辑、成见与标签妄自揣测; 还有一个问题是, 认为思考与沟通无须努力, 甚至认为思考是浪费时间。</p>
+<p>像学习的能力主要依赖思考一样, 我们思考的能力也主要依赖学习。 人类与动物最重要的区别就是学习能力。</p>
+<hr>
+<p>所有的精神失调都是思想失调。 有极端精神症状的人, 比如精神分裂症, 很明显是思想混乱的受害者, 他们的思想与现实距离非常遥远, 日常生活也很混乱。</p>
+<p>大多数接受治疗的人不是患有神经官能症, 就是人格失调症。</p>
+<p>一切心理疾病都源于混乱的思考, 而一切混乱和草率的思考都源于人们逃避问题和痛苦的趋向。 周密而完善的思考是一个非常痛苦的过程, 只有不畏艰难、勇敢向前的人, 才能真正做到。</p>
+<p>的确, 要有勇气才能与众不同。 如果我们选择独立思考, 就必须随时准备承受打击, 接受被认为古怪与愤世嫉俗的可能。 我们也许会被当成体制边缘的人, 代表着异类与反常, 而要想追求心智成熟, 就必须用于思考, 勤于思考。</p>
+<p>当我们独立思考时, 我们必须担负起所有因果纠缠的压力。 这种独立总是与痛苦为伴, 所以独立而深入的思考必须承受无止境的痛苦。</p>
+<hr>
+<p>在对问题的认识上, 我们要综合看待、灵活处理, 虽然这需要我们去权衡、去抉择, 其过程会让我们痛苦, 但这是成长之路必不可少的前提条件。 只有具备了这种平衡意识, 我们的情商才会提高、心智才会成熟。 反之, 刻板地处理问题, 一直停留在非此即彼的思维定式上, 这就是一种幼稚的表现, 它只会让我们的人生之路停滞不前。</p>
+<p>为了避免走入极端, 我们必须接受悖论。 我非常欣赏一位哲学教授针对学生提问做出的回答。学生问： &quot;教授, 听说您相信所有真理的本质都是似是而非的, 是这样吗?&quot; 教授答: &quot;是, 也不是。&quot; 综合考虑问题就是这样一种思维定式。</p>
+<p>综合考虑不仅对我们想问题是必要的, 对我们行动来说同样必要。 行动的全面性, 就是实践。 实践意味着将你的行动与你的思想有机地结合起来。 甘地说过：如果没有落实到行动, 思想又有什么意义? 显然, 我们要把自己的行动与理念结合起来, 使自己成为一个全面的人。</p>
+<hr>
+<p>是什么把人类同其它生物区分开来? 不是我们能抓住东西的拇指, 不是我们能发声的喉咙, 也不是我们巨大的脑容量, 而是我们极端缺乏动物的本性, 我们没有太多预先设置并遗传下来的行为模式。 比起人类来, 这些因素赋予了其他生物更多的固定不变的本性。</p>
+<hr>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2018-04-01-ml-ninja-c2-w1-quiz/">Coursera 第二阶段第一课 Quiz</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2018-06-24-JS-core-workshop/">JS The Core</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2018-05-14-thinking-thinking/` was built on 2025-07-22T04:14:15.680Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

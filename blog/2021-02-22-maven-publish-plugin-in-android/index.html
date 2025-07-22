@@ -1,0 +1,660 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>使用 Gradle 插件发布 Android library 到 maven 远程仓库</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="gradle-android-library-maven">使用 Gradle 插件发布 Android library 到 maven 远程仓库</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2021-02-22">22 February 2021</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/mobile/" class="post-tag">mobile</a></li>
+</ul>
+
+<p>最近在项目里更新了 <code>gradle</code> 插件到 <code>6.1.1</code> 之后发现它支持使用 <code>maven-publish</code> 这个插件来打包发布并部署到 <code>maven</code> 的内部远程仓库去。简单记录下，希望能帮助到需要的人。</p>
+<p>之前项目使用 <code>maven</code> 的 <code>uploadArchives</code>:</p>
+<script src="https://gist.github.com/sddtc/5150832cf51d4dd439d8ec7d1c2d6403.js"></script>
+<p>这种方式没什么问题，一直都可以运行的很好。 如果不是遇见了一些问题，在繁忙的日常你很难跑去更新工作得好好滴东西 😑
+我们的 Android 项目是基于 <code>Kotlin</code> 的 <code>Koin</code> + <code>apollo-android</code> 的 <code>MFE</code> 架构。 项目使用的一些第三方依赖很新，他们更新版本的速度真的惊人 😳
+直到有一天在我试图将 <code>apollo-android</code> 从 <code>2.3.1</code> 升级到 <code>2.4.2</code> 时发现打包发布失败了。 堆栈错误信息:</p>
+<pre class="language-bash" tabindex="0"><code class="language-bash"><span class="token operator">></span> Task uploadArchives FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed <span class="token keyword">for</span> task <span class="token string">'uploadArchives'</span><span class="token builtin class-name">.</span>
+<span class="token operator">></span> Could not publish configuration <span class="token string">'archives'</span>
+   <span class="token operator">></span> Cannot publish artifact <span class="token string">'metadata.json'</span> <span class="token punctuation">(</span>/Users/xxx/app/build/generated/metadata/apollo/debugAndroidTest/service/metadata.json<span class="token punctuation">)</span> as it does not exist.
+
+* Try:
+Run with <span class="token parameter variable">--info</span> or <span class="token parameter variable">--debug</span> option to get <span class="token function">more</span> log output. Run with <span class="token parameter variable">--scan</span> to get full insights.
+
+* Exception is:
+org.gradle.api.tasks.TaskExecutionException: Execution failed <span class="token keyword">for</span> task <span class="token string">'uploadArchives'</span><span class="token builtin class-name">.</span>
+        at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.lambda<span class="token variable">$executeIfValid</span><span class="token variable">$1</span><span class="token punctuation">(</span>ExecuteActionsTaskExecuter.java:205<span class="token punctuation">)</span>
+        at org.gradle.internal.Try<span class="token variable">$Failure</span>.ifSuccessfulOrElse<span class="token punctuation">(</span>Try.java:263<span class="token punctuation">)</span>
+        at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeIfValid<span class="token punctuation">(</span>ExecuteActionsTaskExecuter.java:203<span class="token punctuation">)</span>
+        at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.execute<span class="token punctuation">(</span>ExecuteActionsTaskExecuter.java:184<span class="token punctuation">)</span>
+        at org.gradle.api.internal.tasks.execution.CleanupStaleOutputsExecuter.execute<span class="token punctuation">(</span>CleanupStaleOutputsExecuter.java:109<span class="token punctuation">)</span>
+        at org.gradle.api.internal.tasks.execution.FinalizePropertiesTaskExecuter.execute<span class="token punctuation">(</span>FinalizePropertiesTaskExecuter.java:46<span class="token punctuation">)</span>
+        at org.gradle.api.internal.tasks.execution.ResolveTaskExecutionModeExecuter.execute<span class="token punctuation">(</span>ResolveTaskExecutionModeExecuter.java:62<span class="token punctuation">)</span>
+<span class="token punctuation">..</span>.</code></pre>
+<p>于是去查看了相关的 <code>issues</code>, 果然也有人遇见了同样的问题。
+说到这个我真的忍不住吐槽最近更新了我的手机 <code>Google Camera</code> app，直接导致前置摄像头打不开害闪退 🙃， 去 <code>Goggle Play</code> 商店查看评论发现大家都遇到了同样的问题。。
+也是万万妹想到大公司也会出现这么致命的问题 = =。。 因为这个 <code>Crush</code> 最近真的开机支付连脸部识别都失效，哎。如果不是真爱，<s>谁会用 Android 机啊</s>咳咳。
+扯远了，回到正题来说，出现异常的原因是 <code>apollo-android</code> 试图在 <a href="https://github.com/apollographql/apollo-android/blob/main/apollo-gradle-plugin/src/main/kotlin/com/apollographql/apollo/gradle/internal/ApolloPlugin.kt#L91">这一行</a> 为
+<code>UnitTests/AndroidTests</code> 添加 <code>metadata.json</code>。 但是很有可能项目的 <code>UnitTests/AndroidTests</code> 中 <code>metadata.json</code> 是不会被生成的。因为通常这些目录不会有 <code>graphql</code> 相关的文件。</p>
+<h4 id="">为了解决这个问题其实有两个方案：</h4>
+<ul>
+<li>用 <code>maven-publish</code> 插件来替代 <code>maven</code> 插件打包发布吧，用过的人都说好！不仅能解决问题，它还是 Google 官网推崇滴打包方式嗷！</li>
+<li>如果你就是要用 <code>maven</code> 的 <code>uploadArchives</code> 打包，那就只能等这个问题被修复, 或者你一直使用没有问题的 <code>2.3.1</code> 版本就好</li>
+</ul>
+<p>然而回到一开始，他们更新版本的速度之快一方面修复了一些 bug, 修复了一些 issue, 更有可能修复一些安全隐患，所以升级是必要的。 <s>更新了之后前置摄像头更新坏了也是有概率发生的</s>
+更新的脚本非常简单，因为 <code>maven-publish</code>  插件非常强大:</p>
+<script src="https://gist.github.com/sddtc/4a6bfb152ac332cad1931555bda7bc17.js"></script>
+<h4 id="-2">有几点需要注意:</h4>
+<ul>
+<li>将 <code>publishing</code> 放在 <code>afterEvaluate</code> 生命周期函数里</li>
+<li><code>release(MavenPublication)</code> 的 <code>release</code> 可以是任何有意义的名字，它和生成的 Task 名字有关</li>
+</ul>
+<h3 id="-3">接下来我们简单说下细节</h3>
+<p><picture><source type="image/avif" srcset="/sddtc.github.com/blog/2021-02-22-maven-publish-plugin-in-android/5A7dX5yul0-1540.avif 1540w"><source type="image/webp" srcset="/sddtc.github.com/blog/2021-02-22-maven-publish-plugin-in-android/5A7dX5yul0-1540.webp 1540w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2021-02-22-maven-publish-plugin-in-android/5A7dX5yul0-1540.png" alt="2021-02-23-4YWFw1-BZNhGU" width="1540" height="574"></picture></p>
+<h4 id="-4">发布什么</h4>
+<p><code>Gradle</code> 需要知道要我们在发布时需要哪些文件和信息。 通常是 <code>artifacts</code> 和 <code>metadata</code> 的集合， <code>Gradle</code> 将其定义为 <code>publication</code> 。</p>
+<p>举例来说, 你打包发布到远端 <code>maven</code> 仓库的内容可以包括:</p>
+<ul>
+<li>一个或多个 <code>artifacts</code>（通常由项目构建）</li>
+<li><code>metadata</code> 文件，用来描述发布的组件</li>
+<li><code>pom</code> 文件, 标识主要的 <code>artifacts</code> 及其第三方依赖库。 主要的 <code>artifact</code> 通常是项目的生产 <code>jar</code> 包， 辅助的可能由 <code>-sources</code> 和 <code>-javadoc</code> 的 <code>jar</code> 组成。</li>
+</ul>
+<p>另外，<code>Gradle</code> 还会发布上述所有内容的校验和，并在配置时发布签名。从 <code>Gradle 6.0</code> 开始，多了 <code>SHA256</code> 和 <code>SHA512</code>  的校验和文件。</p>
+<p>代码示例:</p>
+<pre class="language-bash" tabindex="0"><code class="language-bash"><span class="token punctuation">..</span>.
+task androidSourcesJar<span class="token punctuation">(</span>type: Jar<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    archiveClassifier.set<span class="token punctuation">(</span><span class="token string">'sources'</span><span class="token punctuation">)</span>
+    from android.sourceSets.main.java.source
+<span class="token punctuation">}</span>
+
+publishing <span class="token punctuation">{</span>
+        publications <span class="token punctuation">{</span>
+            release<span class="token punctuation">(</span>MavenPublication<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                from<span class="token punctuation">(</span>components<span class="token punctuation">[</span><span class="token string">"release"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+                pom <span class="token punctuation">{</span>
+                    groupId <span class="token operator">=</span> <span class="token string">'sddtc-company-v-'</span>
+                    version <span class="token operator">=</span> <span class="token string">'1.0.0'</span>
+                    artifactId <span class="token operator">=</span> <span class="token string">'app-name'</span>
+                <span class="token punctuation">}</span>
+                artifact<span class="token punctuation">(</span>androidSourcesJar<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+<span class="token punctuation">..</span>.
+<span class="token punctuation">}</span></code></pre>
+<h4 id="-5">发布到哪里</h4>
+<p><code>Gradle</code> 需要知道在发布的存储库地址。 该存储库提供了各种组件。 <code>Gradle</code> 需要与远程仓库进行交互，因此我们必须提供存储库的类型及其位置。</p>
+<p>代码示例:</p>
+<pre class="language-bash" tabindex="0"><code class="language-bash">repositories <span class="token punctuation">{</span>
+    maven <span class="token punctuation">{</span>
+        credentials <span class="token punctuation">{</span>
+            username getRepositoryUsername<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            password getRepositoryPassword<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        url getRepositoryUrl<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        println<span class="token punctuation">(</span><span class="token string">"> Configure maven repo: <span class="token variable">${url}</span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h4 id="-6">发行方式你会选择哪种</h4>
+<p><code>Gradle</code> 会自动为发布和存储库的所有可能组合生成发布任务(除了贴心还能说啥)，从而使我们可以将任何组件发布到任何存储库。
+如果要发布到 <code>maven</code> 存储库，则 <code>Task</code> 的类型为 <code>PublishToMavenRepository</code>，而对于 <code>Ivy</code> 存储库，任务的类型为 <code>PublishToIvyRepository</code>。</p>
+<p>代码示例:</p>
+<pre class="language-bash" tabindex="0"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token builtin class-name">set</span> <span class="token parameter variable">-xeuo</span> pipefail
+
+<span class="token builtin class-name">echo</span> <span class="token string">"+++ :buildkite: Publishing library to maven"</span>
+./gradlew clean publishReleasePublicationToMavenRepository</code></pre>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/">Github - JavaScript Game Engines 使用指南</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2021-02-28-this-is-software-engineer/">读 《这就是软件工程师》 有感</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2021-02-22-maven-publish-plugin-in-android/` was built on 2025-07-22T04:14:15.687Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

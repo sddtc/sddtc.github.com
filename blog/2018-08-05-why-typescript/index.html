@@ -1,0 +1,660 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Why typescript ?</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="why-typescript">Why typescript ?</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2018-08-05">05 August 2018</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/js/" class="post-tag">js</a></li>
+</ul>
+
+<h3 id="">背景</h3>
+<p>使用 JS 有一定时间了, 最近开始学习并使用 Typescript, 而我们可爱的 Tomasz 分享了一个很棒的书, 正所谓万事皆有因果, 今日先分享一切的<strong>因</strong> 🎧</p>
+<blockquote>
+<p>Typescript 最终会编译为 Javascript, 于是程序执行时的语言是 Javascript (不论是在浏览器端亦或是服务器端).</p>
+</blockquote>
+<h3 id="typescript">那么, 为什么要用 TypeScript ？</h3>
+<p>TypeScript 语言有两个主要的目标:</p>
+<ul>
+<li>为 JavaScript 提供 <strong>Optional</strong> 的类型体系</li>
+<li>提供从未来 JavaScript 发行版本到当前 JavaScript engines 的计划功能</li>
+</ul>
+<p>对以上两个目标的渴望, 是建立在以下特点之上:</p>
+<h3 id="the-typescript-type-system">The TypeScript type system</h3>
+<p>也许你会问, 为什么要给 Javascript 添加&quot;类型&quot; ?</p>
+<p>类型已经被广泛证明能够提高代码质量, 增强可阅读性. 大型团队(谷歌, 微软, Facebook)不断得出这个结论. 特别:</p>
+<ul>
+<li>在进行重构时, 类型可以提高您的敏捷性. 编译器捕获错误比在运行时失败更好.</li>
+<li>类型是您可以拥有的最佳文档形式之一. 函数签名是一个定理, 而函数体是证明.</li>
+</ul>
+<p>然而, 类型有一种低调的方式实现. TypeScript 非常讲究保持入门门槛尽可能低.</p>
+<p>那么怎么实现这一目标呢?</p>
+<h4 id="javascript-typescript">JavaScript 即 TypeScript</h4>
+<p>TypeScript 为 JavaScript 代码提供编译时类型安全性. 鉴于它的名字, 这并不奇怪. 最棒的是这些类型是完全可选的. 您的 JavaScript 代码 <code>.js</code> 文件可以重命名为 <code>.ts</code> 文件, TypeScript 仍然会返回与原始 JavaScript 文件等效的有效 <code>.js</code> 文件. TypeScript 是有意且严格地是 JavaScript 的超集, 具有可选的类型检查.</p>
+<h4 id="-2">类型可以是隐式的</h4>
+<p>TypeScript 将尝试尽可能多地推断出类型信息, 以便在代码开发过程中以最小的生产成本为您提供类型安全性. 例如, 在下面的示例中, TypeScript 推断出 <code>foo</code> 的类型是 <code>number</code>, 并将在第二行显示错误, 如下所示:</p>
+<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token keyword">var</span> foo <span class="token operator">=</span> <span class="token number">123</span><span class="token punctuation">;</span>
+foo <span class="token operator">=</span> <span class="token string">'456'</span><span class="token punctuation">;</span> <span class="token comment">// Error: cannot assign `string` to `number`</span>
+
+<span class="token comment">// Is foo a number or a string?</span></code></pre>
+<p>这种类型推断很有用. 如果您运行以上代码, 则在代码其他部分, 您无法确定 <code>foo</code> 到底是数字类型还是字符串类型. 这些问题经常出现在大型代码库里. 我们稍后将深入探讨类型推断规则.</p>
+<h4 id="-3">类型可以是显式的</h4>
+<p>正如我们之前提到的, TypeScript 会尽可能安全地推断, 但是您可以显式的指定类型:</p>
+<ol>
+<li>帮助编译器识别类型, 更重要的是为下一个必须阅读代码的开发人员提供更多的信息(可能是未来的你！）</li>
+<li>强制执行编译器看到的内容, 就是您认为应该看到的内容.  这就是您对代码的理解与代码的算法分析(由编译器完成)相匹配.</li>
+</ol>
+<p>TypeScript 使用后缀类型注释.</p>
+<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token keyword">var</span> <span class="token literal-property property">foo</span><span class="token operator">:</span> number <span class="token operator">=</span> <span class="token number">123</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> <span class="token literal-property property">foo</span><span class="token operator">:</span> number <span class="token operator">=</span> <span class="token string">'123'</span><span class="token punctuation">;</span> <span class="token comment">// Error: cannot assign a `string` to a `number`</span></code></pre>
+<h4 id="-4">类型是结构型的</h4>
+<p>在某些语言中, 静态类型会强迫你做没有必要的定义, 即使您知道代码可以正常工作, 语言语义也会迫使您复制内容. 在 TypeScript 中, 因为我们希望它对于具有最小认知过载的 JavaScript 开发人员来说很容易, 所以类型是结构性的. 例如:</p>
+<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token keyword">interface</span> <span class="token class-name">Point2D</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">x</span><span class="token operator">:</span> number<span class="token punctuation">;</span>
+    <span class="token literal-property property">y</span><span class="token operator">:</span> number<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">interface</span> <span class="token class-name">Point3D</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">x</span><span class="token operator">:</span> number<span class="token punctuation">;</span>
+    <span class="token literal-property property">y</span><span class="token operator">:</span> number<span class="token punctuation">;</span>
+    <span class="token literal-property property">z</span><span class="token operator">:</span> number<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">var</span> <span class="token literal-property property">point2D</span><span class="token operator">:</span> Point2D <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token literal-property property">x</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token literal-property property">y</span><span class="token operator">:</span> <span class="token number">10</span> <span class="token punctuation">}</span>
+<span class="token keyword">var</span> <span class="token literal-property property">point3D</span><span class="token operator">:</span> Point3D <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token literal-property property">x</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token literal-property property">y</span><span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token literal-property property">z</span><span class="token operator">:</span> <span class="token number">20</span> <span class="token punctuation">}</span>
+<span class="token keyword">function</span> <span class="token function">iTakePoint2D</span><span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">point</span><span class="token operator">:</span> Point2D</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">/* do something */</span> <span class="token punctuation">}</span>
+
+<span class="token function">iTakePoint2D</span><span class="token punctuation">(</span>point2D<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// exact match okay</span>
+<span class="token function">iTakePoint2D</span><span class="token punctuation">(</span>point3D<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// extra information okay</span>
+<span class="token function">iTakePoint2D</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">x</span><span class="token operator">:</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Error: missing information `y`</span></code></pre>
+<h4 id="javascript">类型错误不会阻塞 JavaScript</h4>
+<p>为了便于您将 JavaScript 代码迁移到 TypeScript, 即使存在编译错误, 默认情况下 TypeScript 也会尽可能地编译为有效的 JavaScript. 例如:</p>
+<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token keyword">var</span> foo <span class="token operator">=</span> <span class="token number">123</span><span class="token punctuation">;</span>
+foo <span class="token operator">=</span> <span class="token string">'456'</span><span class="token punctuation">;</span> <span class="token comment">// Error: cannot assign a `string` to a `number`</span></code></pre>
+<p>也会被编译为:</p>
+<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token keyword">var</span> foo <span class="token operator">=</span> <span class="token number">123</span><span class="token punctuation">;</span>
+foo <span class="token operator">=</span> <span class="token string">'456'</span><span class="token punctuation">;</span></code></pre>
+<p>因此, 您可以将 JavaScript 代码逐步升级为 TypeScript. 这与其他语言编译器的工作方式有很大不同, 也是转向 TypeScript 的另一个原因.</p>
+<h4 id="ambient">类型可以是 ambient 的</h4>
+<p>TypeScript 的主要设计目标是使您能够安全、 轻松地使用 TypeScript 中的现有 JavaScript 库. TypeScript 通过 <code>declaration</code> 来做到这一点. TypeScript 为您提供了一个 <code>sliding scale</code>, 表明您希望在 <code>declaration</code> 中投入多少, 您付出的努力越多, 您获得的类型安全 + 代码就越多. 请注意, 大多数流行的 JavaScript 库的定义已经由 DefinitelyTyped 社区为您编写, 因此对于大多数用途:</p>
+<ol>
+<li>定义文件已存在.</li>
+<li>或者至少, 您已经拥有大量经过深思熟虑的 TypeScript 声明模板列表.</li>
+</ol>
+<p>作为如何编写自己的声明文件的快速示例, 请考虑 <code>jquery</code> 的一个简单示例. 默认情况下(正如预期的良好 JS 代码). TypeScript 要求您在使用变量之前声明(即在某处使用 <code>var</code>):</p>
+<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'.awesome'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Error: cannot find name `$`</span></code></pre>
+<p>若要快速修复, 你可以告诉 TypeScript 确实存在一个名为 <code>$</code> 的东西:</p>
+<pre class="language-javascript" tabindex="0"><code class="language-javascript">declare <span class="token keyword">var</span> <span class="token literal-property property">$</span><span class="token operator">:</span> any<span class="token punctuation">;</span>
+<span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'.awesome'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Okay!</span></code></pre>
+<p>如果您愿意, 可以基于此基本定义构建并提供更多信息以帮助保护您免受错误的影响:</p>
+<pre class="language-javascript" tabindex="0"><code class="language-javascript">declare <span class="token keyword">var</span> <span class="token literal-property property">$</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">(</span>selector<span class="token operator">:</span>string<span class="token punctuation">)</span><span class="token operator">:</span> any<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'.awesome'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Okay!</span>
+<span class="token function">$</span><span class="token punctuation">(</span><span class="token number">123</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Error: selector needs to be a string</span></code></pre>
+<h4 id="future-javascript-now">Future JavaScript =&gt; Now</h4>
+<p>TypeScript 提供了许多针对当前 JavaScript 引擎(仅支持 <code>ES5</code> 等)在 <code>ES6</code> 中规划的功能. <code>The typescript team</code> 正在积极地添加这些功能, 这个列表只会随着时间的推移而变大, 我们将在其自己的部分中介绍. 一个关于 <code>class</code> 的示例:</p>
+<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token keyword">class</span> <span class="token class-name">Point</span> <span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter"><span class="token keyword">public</span> <span class="token literal-property property">x</span><span class="token operator">:</span> number<span class="token punctuation">,</span> <span class="token keyword">public</span> <span class="token literal-property property">y</span><span class="token operator">:</span> number</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">add</span><span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">point</span><span class="token operator">:</span> Point</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Point</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>x <span class="token operator">+</span> point<span class="token punctuation">.</span>x<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>y <span class="token operator">+</span> point<span class="token punctuation">.</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> p1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Point</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> p2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Point</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> p3 <span class="token operator">=</span> p1<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>p2<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// { x: 10, y: 30 }</span></code></pre>
+<p>可爱的橘猫般的 <code>=&gt; </code> 功能：</p>
+<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token keyword">var</span> <span class="token function-variable function">inc</span> <span class="token operator">=</span> <span class="token parameter">x</span> <span class="token operator">=></span> x<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span></code></pre>
+<p>译自:
+<a href="https://basarat.gitbooks.io/typescript/content/docs/why-typescript.html">basarat.gitbooks.io/typescript</a></p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2018-07-18-JS-core-workshop-2/">JS The Core (2)</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2018-08-06-codebashing-java/">Codebashing</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2018-08-05-why-typescript/` was built on 2025-07-22T04:14:15.683Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

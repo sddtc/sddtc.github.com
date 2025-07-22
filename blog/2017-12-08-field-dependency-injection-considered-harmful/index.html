@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>请不要再使用字段注入依赖的方式啦</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="">请不要再使用字段注入依赖的方式啦</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2017-12-08">08 December 2017</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/translation/" class="post-tag">translation</a></li>
+</ul>
+
+<h3 id="-2">背景</h3>
+<p>使用字段直接依赖注入的方式非常流行, 从使用Spring框架开始到现在, 我们大概都是从: 写配置文件(xml) -&gt; 写<code>setter</code>方法 -&gt; 添加<code>@Autowired</code> 一路走到现在.
+然而, 字段注解依赖有一些不方便的地方和缺点, 从你明白的那一刻开始, 或许我们可以改掉这个习惯.</p>
+<h3 id="-3">注解方式</h3>
+<p>通常有三种比较主流的依赖注入方式: 构造函数, <code>setter</code>方法注入, 字段添加注解注入.
+让我们看下实现方式, 如下:</p>
+<h4 id="constructor-NaN">Constructor</h4>
+<pre class="language-java" tabindex="0"><code class="language-java"><span class="token keyword">private</span> <span class="token class-name">DependencyA</span> dependencyA<span class="token punctuation">;</span>
+<span class="token keyword">private</span> <span class="token class-name">DependencyB</span> dependencyB<span class="token punctuation">;</span>
+<span class="token keyword">private</span> <span class="token class-name">DependencyC</span> dependencyC<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Autowired</span>
+<span class="token keyword">public</span> <span class="token function">DI</span><span class="token punctuation">(</span><span class="token class-name">DependencyA</span> dependencyA<span class="token punctuation">,</span> <span class="token class-name">DependencyB</span> dependencyB<span class="token punctuation">,</span> <span class="token class-name">DependencyC</span> dependencyC<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>dependencyA <span class="token operator">=</span> dependencyA<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>dependencyB <span class="token operator">=</span> dependencyB<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>dependencyC <span class="token operator">=</span> dependencyC<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h4 id="setter">Setter</h4>
+<pre class="language-java" tabindex="0"><code class="language-java"><span class="token keyword">private</span> <span class="token class-name">DependencyA</span> dependencyA<span class="token punctuation">;</span>
+<span class="token keyword">private</span> <span class="token class-name">DependencyB</span> dependencyB<span class="token punctuation">;</span>
+<span class="token keyword">private</span> <span class="token class-name">DependencyC</span> dependencyC<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Autowired</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setDependencyA</span><span class="token punctuation">(</span><span class="token class-name">DependencyA</span> dependencyA<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>dependencyA <span class="token operator">=</span> dependencyA<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token annotation punctuation">@Autowired</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setDependencyB</span><span class="token punctuation">(</span><span class="token class-name">DependencyB</span> dependencyB<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>dependencyB <span class="token operator">=</span> dependencyB<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token annotation punctuation">@Autowired</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setDependencyC</span><span class="token punctuation">(</span><span class="token class-name">DependencyC</span> dependencyC<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>dependencyC <span class="token operator">=</span> dependencyC<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h4 id="field">Field</h4>
+<pre class="language-java" tabindex="0"><code class="language-java"><span class="token annotation punctuation">@Autowired</span>
+<span class="token keyword">private</span> <span class="token class-name">DependencyA</span> dependencyA<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Autowired</span>
+<span class="token keyword">private</span> <span class="token class-name">DependencyB</span> dependencyB<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Autowired</span>
+<span class="token keyword">private</span> <span class="token class-name">DependencyC</span> dependencyC<span class="token punctuation">;</span></code></pre>
+<h3 id="-4">发现什么了吗?</h3>
+<p>字段注解的方式实现起来是三种里面最简单明了的, 可读性高 你的类只需要专注于自己的实现, 仅仅需要添加一个<code>@Autowired</code>即可
+没有多余代码的干扰: 没有构造函数, 没有<code>setter</code>函数的实现方式, 哪怕<code>Java</code>本身是一个非常<code>重</code>的语言, 字段注解的方式看起来那么友好和干净</p>
+<h3 id="-5">或许违背了单一职责原则?</h3>
+<p>字段注解注入依赖太容易实现了以至于你在不知不觉中添加了更多的依赖, 你可以添加6个, 10个甚至一打 如果当初你选择了构造函数的注入方式, 那么想象一下拥有12个参数的构造函数会多么的惊悚?
+那个时候你会发现似乎有点问题了: 当一个类的依赖膨胀, 说明它自己背负了太多职责. 这样违反了我们希望每个类只有单一职责的初衷. 当问题暴露, 我们可以通过重构的方式拆分、 分解出多个符合条件的类来完成我们想完成的事.
+然而不幸的是, 当我们使用了字段注解注入, 这个问题不是那么容易暴露出来</p>
+<h3 id="-6">隐式依赖</h3>
+<p>使用DI容器意味着类不再负责管理自己的依赖关系. <code>DI</code>容器从类中获取依赖关系. 其它类负责提供相关性 - <code>DI</code>容器或在测试中手动分配它们. 当类不再负责获得它的依赖时, 它应该使用接口 - 方法或构造函数清楚地传达它们. 这样就很清楚这个类需要什么以及它是可选的(<code>setters</code>)还是强制的(构造函数).</p>
+<h3 id="di">DI容器的耦合性</h3>
+<p><code>DI</code>框架的核心思想之一是: 托管类不应该依赖所使用的<code>DI</code>容器. 换句话说, 它应该只是一个普通的<code>POJO</code>, 可以独立实例化, 只要你传递了所有必需的依赖关系即可. 这样, 你可以在单元测试中实例化它, 而无需启动<code>DI</code>容器并单独进行测试(容器将更多的是集成测试). 如果没有容器耦合, 则可以将该类用作托管或非托管, 甚至可以切换到新的<code>DI</code>框架.</p>
+<p><strong>但是</strong>, 当直接注入字段时, 不提供实例化具有所有必需依赖项的类的方法. 这意味着:</p>
+<ul>
+<li>有一种方法(通过调用默认构造函数)在缺少某些依赖的情况下使用 new 创建对象, 则将导致<code>NullPointerException</code>.</li>
+<li>这样的类不能在<code>DI</code>容器(测试，其他模块)之外重复使用, 因为除了反射之外, 没有办法为它提供所需的依赖关系.</li>
+</ul>
+<h3 id="-7">不可变性</h3>
+<p>与构造函数不同的是, 我们不能使用字段注入将依赖关系定义为<code>final</code>类型, 于是对象是可变的.</p>
+<h3 id="setter-2">使用构造函数还是使用Setter?</h3>
+<p>如果舍弃字段依赖注入的方式, 那么我们选择构造函数还是<code>setter</code>? 这是一个好问题:)</p>
+<h4 id="setters">Setters</h4>
+<p>应该使用Setter来注入可选的依赖关系. 类没有提供时也能够正常运行. 对象实例化后, 依赖关系可以随时更改. 视情况而定, 这可能不是一个绝妙的方式. 因为有时我们需要拥有一个不可变的对象.
+然而, 有时在运行时更改对象的协作者是很好的 - 比如<code>JMX</code>托管的<code>MBean</code>.</p>
+<p><code>Spring 3.x</code> 的<a href="https://docs.spring.io/spring/docs/3.1.x/spring-framework-reference/html/beans.html#d0e2778">官方文档</a> 鼓励我们尽量使用<code>setter</code>方法:</p>
+<blockquote>
+<h4 id="the-spring-team-generally-advocates-setter-injection-because-large-numbers-of-constructor-arguments-can-get-unwieldy-especially-when-properties-are-optional-setter-methods-also-make-objects-of-that-class-amenable-to-reconfiguration-or-re-injection-later-management-through-jmx-mbeans-is-a-compelling-use-case">&quot;The Spring team generally advocates setter injection, because large numbers of constructor arguments can get unwieldy, especially when properties are optional. Setter methods also make objects of that class amenable to reconfiguration or re-injection later. Management through JMX MBeans is a compelling use case.</h4>
+</blockquote>
+<blockquote>
+<h4 id="some-purists-favor-constructor-based-injection-supplying-all-object-dependencies-means-that-the-object-is-always-returned-to-client-calling-code-in-a-totally-initialized-state-the-disadvantage-is-that-the-object-becomes-less-amenable-to-reconfiguration-and-re-injection">Some purists favor constructor-based injection. Supplying all object dependencies means that the object is always returned to client (calling) code in a totally initialized state. The disadvantage is that the object becomes less amenable to reconfiguration and re-injection.&quot;</h4>
+</blockquote>
+<h4 id="constructors">Constructors</h4>
+<p>构造函数注入对强制性依赖是有利的. 我们认定那些依赖是对象所必须需要的功能. 通过在构造函数中提供这些对象, 可以确保该对象在构建时立即使用. 在构造函数中分配的字段也可以是<code>final</code>类型的，允许对象完全不可变或至少保护其必需的字段.
+使用构造函数提供依赖关系的一个后果是: 以这种方式构造的两个对象之间的循环依赖不再可能(与setter注入不同). 这实际上是一个好事而不是限制. 我们应该避免循环依赖, 这通常是一个糟糕的设计的标志. 因此这样做可以防止这种现象产生.</p>
+<p>另一个优点是, 如果使用<code>spring 4.3+</code>, 你可以完全分离你的类与DI框架. 原因是<code>Spring</code>现在支持一个构造函数的<a href="https://spring.io/blog/2016/03/04/core-container-refinements-in-spring-framework-4-3">隐式构造函数注入</a>. 这意味着你不再需要在你的类中使用DI注解.
+当然, 你可以通过在给定类的<code>spring</code>配置中明确地配置<code>DI</code>来达到同样的效果, 这样做可以使整个过程变得简单.</p>
+<p>有趣的是, 在<code>Spring 4.x</code>中, <a href="https://docs.spring.io/spring/docs/4.2.x/spring-framework-reference/html/beans.html#beans-constructor-injection">官方文档</a>不再给我们建议尽量使用<code>setter</code>而不用构造函数了:)</p>
+<blockquote>
+<h4 id="the-spring-team-generally-advocates-constructor-injection-as-it-enables-one-to-implement-application-components-as-immutable-objects-and-to-ensure-that-required-dependencies-are-not-null-furthermore-constructor-injected-components-are-always-returned-to-client-calling-code-in-a-fully-initialized-state-as-a-side-note-a-large-number-of-constructor-arguments-is-a-bad-code-smell-implying-that-the-class-likely-has-too-many-responsibilities-and-should-be-refactored-to-better-address-proper-separation-of-concerns">&quot;The Spring team generally advocates constructor injection as it enables one to implement application components as immutable objects and to ensure that required dependencies are not null. Furthermore constructor-injected components are always returned to client (calling) code in a fully initialized state. As a side note, a large number of constructor arguments is a bad code smell, implying that the class likely has too many responsibilities and should be refactored to better address proper separation of concerns.</h4>
+</blockquote>
+<blockquote>
+<h4 id="setter-injection-should-primarily-only-be-used-for-optional-dependencies-that-can-be-assigned-reasonable-default-values-within-the-class-otherwise-not-null-checks-must-be-performed-everywhere-the-code-uses-the-dependency-one-benefit-of-setter-injection-is-that-setter-methods-make-objects-of-that-class-amenable-to-reconfiguration-or-re-injection-later">Setter injection should primarily only be used for optional dependencies that can be assigned reasonable default values within the class. Otherwise, not-null checks must be performed everywhere the code uses the dependency. One benefit of setter injection is that setter methods make objects of that class amenable to reconfiguration or re-injection later.&quot;</h4>
+</blockquote>
+<h2 id="-8">总结</h2>
+<p>综上所述, 我们应该尽量避免通过字段注解的方式注入依赖. 作为替代, 您应该使用构造函数或<code>setter</code>方法来注入您的依赖关系.
+两者都有其优点和缺点, 具体选择取决于具体的情况.
+但是, 由于这些方法可以混合使用, 所以这两种方法并不互斥, 你可以在一个类中同时使用<code>setter</code>和构造函数注入. 构造函数更适合于强制性的依赖关系, 并且在不变性的时候. <code>Setter</code>更适合可选的依赖关系.</p>
+<p>本文译自<a href="http://vojtechruzicka.com/field-dependency-injection-considered-harmful/">Field Dependency Injection Considered Harmful</a></p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2017-11-27-auto-scaling-sidekiq/">Sidekiq的How to autoscale instances depending upon Sidekiq queue size</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2017-12-09-my-annual-rank-2017/">我的 2017 年度总结</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2017-12-08-field-dependency-injection-considered-harmful/` was built on 2025-07-22T04:14:15.679Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>

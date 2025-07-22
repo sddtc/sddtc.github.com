@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>技术雷达 Continuous Compliance - 持续合规性：确保整个软件生命周期的安全性</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="continuous-compliance">技术雷达 Continuous Compliance - 持续合规性：确保整个软件生命周期的安全性</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2024-04-04">04 April 2024</time></li>
+	<li>标签: <a href="/sddtc.github.com/tags/security/" class="post-tag">security</a></li>
+</ul>
+
+<p>Continuous Compliance对于我来说是个既熟悉又陌生的短语, 在我看来是继 CI(Continuous Integration)-持续集成, CD(Continuous Deployment/Delivery)
+-持续部署/交付之后的一个新概念
+但是我并不知道应该如何汉译Compliance. 持续合规? 不管怎么说, 我坚信合规性在企业中越来越重要, 不论是政府企业, 民营企业.
+法律法规在软件交付行业里一定会越来越合理且严格.
+本文是通过阅读一些文章(都在文章底部链接🔗)硬核翻译过来的, 仅供学习交流使用</p>
+<h3 id="">什么是持续合规性?</h3>
+<p>持续合规性是一种确保组织的运营和实践持续符合监管要求、行业标准和内部政策的方法。它涉及对组织的<strong>流程</strong>、<strong>数据</strong>和<strong>系统</strong>
+进行持续监控和评估，以实时或近实时地识别和解决合规违规行为。</p>
+<h3 id="-2">为什么持续合规很重要?</h3>
+<p>持续合规是一项重要实践，尤其是在医疗保健、金融和数据隐私等高度监管的行业，严格遵守法律法规对于避免法律、财务和声誉风险至关重要。
+它可以帮助组织及时了解不断变化的监管环境，并降低合规违规行为长期未被发现的可能性。
+可以公平地说，持续合规性是有效 DevSecOps 流程的最终目标。</p>
+<h3 id="-3">实践它的益处</h3>
+<ul>
+<li>对组织运营的实时监控可减少不合规事件与其检测之间的延迟。</li>
+<li>持续合规可以减少违规行为被忽视的可能性，从而减少罚款、法律问题和声誉损害。</li>
+<li>用自动合规性检查代替手动合规性检查可以提高效率，并节省大量时间和资源。</li>
+<li>持续合规性可以帮助确保组织的运营与法规变化保持一致。</li>
+<li>持续合规性解决方案可以适应组织不断变化的需求和不断增长的合规性要求，以确保即使在流程扩展时也能保持有效性。</li>
+<li>由于持续合规性会生成可直接提交给监管机构的报告，因此整个流程得到简化，透明度也有所提高。</li>
+<li>可以通过保持强有力的合规态势来提高您的竞争优势，特别是为了吸引优先考虑合规性的客户/顾客。</li>
+</ul>
+<h3 id="-4">实践它的挑战</h3>
+<ul>
+<li>持续合规系统的设计和实施可能很复杂，特别是在具有不同运营和合规要求的大型组织中。</li>
+<li>对于较小的组织来说，整合持续合规技术、流程和基础设施的初始投资可能是巨大的。</li>
+<li>在实时收集、管理和分析大量数据的同时确保数据准确性和隐私是一项重大挑战。</li>
+<li>组织需要具有技能和专业知识的人员来运营和维护持续的合规系统。</li>
+<li>法规和合规性要求可能会发生变化，组织必须相应地适应耗时的变化。</li>
+<li>误报警报的风险可能会导致时间和资源的浪费，而漏报则可能导致未发现合规违规行为。</li>
+<li>实施持续合规通常需要组织内部的文化转变，需要员工接受并理解其重要性。</li>
+</ul>
+<p>通过整合特定活动、遵循最佳实践并利用正确的工具和技术，可以确保整个软件生命周期的持续合规性。</p>
+<h3 id="-5">有助于实现持续合规的活动</h3>
+<h4 id="security-scanning">安全扫描：(Security scanning)</h4>
+<p>通过根据预定义的安全策略、行业标准和监管要求持续监控组织的系统、应用程序和网络基础设施，可以实现持续的合规性。这种持续合规的过程可以帮助实时或定期识别和解决安全漏洞、错误配置和潜在威胁。</p>
+<h4 id="penetration-testing">渗透测试：(Penetration testing)</h4>
+<p>通过定期进行渗透测试，可以实现持续的合规性。 定期执行此操作可以帮助测试公司的安全防御，主动识别其应用程序和网络基础设施中的漏洞和弱点。</p>
+<h4 id="vulnerability-management">漏洞管理：(Vulnerability management)</h4>
+<p>通过设计和维护强大的漏洞管理流程，公司可以实现持续的合规性。 明确的漏洞管理流程（包括但不限于漏洞修复计划）可以降低安全风险、确保遵守法规并保持强大的安全态势。</p>
+<h4 id="risk-assessment">风险评估：(Risk assessment)</h4>
+<p>通过不断评估风险，可以确保遵守监管要求和行业标准，同时有效减轻潜在威胁。 这是另一项可以帮助展示持续合规性的活动。</p>
+<h3 id="-6">一些工具</h3>
+<h4 id="ast">应用程序安全测试 (AST) 工具</h4>
+<p>AST 工具的使用展示了一种主动且正式的应用程序安全方法。 AST 工具可以帮助评估漏洞、确保遵守法规并响应新出现的威胁，从而降低组织发生不合规和安全事件的风险。
+可用于实现持续合规性的不同 AST 工具包括：</p>
+<ul>
+<li>静态应用程序安全测试 (SAST) 工具</li>
+<li>动态应用程序安全测试 (DAST) 工具</li>
+<li>交互式应用程序安全测试 (IAST) 工具</li>
+</ul>
+<h4 id="sca">软件组成分析 (SCA) 工具</h4>
+<p>软件组合分析 (SCA) 工具可确保按照许可协议、安全标准和内部策略管理第三方组件，从而帮助组织保持合规性、最大限度地降低法律风险并提高应用程序安全性。 因此，通过积极解决第三方组件问题，组织可以实现持续合规性并降低安全事件的风险。</p>
+<h4 id="-7">云安全工具</h4>
+<p>云安全工具可帮助组织在动态云环境中保持持续合规性。这些工具可帮助组织确保其基于云的资产和数据的安全、满足监管要求并遵守 FedRAMP 合规计划等行业标准。</p>
+<h4 id="-8">基础设施安全工具</h4>
+<p>基础设施安全工具可帮助组织保持持续合规性并保护关键基础设施组件。 这些工具在确保组织 IT 环境的安全性和合规性方面发挥着关键作用。</p>
+<h3 id="-9">最佳实践系列</h3>
+<p>持续合规是一个持续的过程，需要警惕、整合和适应性。 以下是保持持续合规性的最佳实践：</p>
+<h4 id="-10">构建安全文化</h4>
+<p>教育员工安全的重要性并实现文化转变并不是一件容易的事。 但一旦实现，整个组织都会有一种非常有益的感觉。</p>
+<h4 id="sdlc-software-development-lifecycle">将安全性集成到 SDLC(software development lifecycle) 中</h4>
+<p>在很长一段时间内，安全始终是事后才想到的。 但现在，随着网络威胁的日益复杂，对安全的需求显而易见。将安全实践向左转移是几乎每个组织都会受益的最佳实践。</p>
+<h4 id="-11">自动化安全测试和漏洞管理</h4>
+<p>自动化的作用对于实现持续合规性至关重要。 特别是由于大多数合规实践都是手动的，因此速度缓慢且效率低下。 通过引入自动化，合规性不仅变得快速高效，而且还成为改善安全状况的主要因素。</p>
+<h4 id="-12">监控和衡量合规性</h4>
+<p>如果不持续/定期监控安全态势，则无法了解系统中存在的漏洞和弱点。它也是验证法规和标准遵守情况、降低风险和维护数据安全的基本手段。</p>
+<h3 id="-13">总结</h3>
+<p>在当今快速发展的威胁形势下，持续合规不仅是最佳实践，而且是必要的。持续合规性需要对组织的流程和控制进行一致的监控、测量和调整，以确保遵守法律要求、行业标准和内部政策。
+好处是显而易见的：降低风险、数据安全、法律保护和声誉提升。 通过集成技术、自动化和主动方法，组织可以自信、高效地完成安全与合规之旅。
+在监管审查和数据保护从未如此重要的世界中，持续合规不仅仅是一种选择，更是对卓越和值得信赖的承诺。</p>
+<h3 id="reference">Reference:</h3>
+<ul>
+<li><a href="https://www.linkedin.com/pulse/continuous-compliance-ensuring-security-throughout-your-software-5yqef/">Continuous Compliance: Ensuring Security Throughout Your Software Lifecycle</a></li>
+<li><a href="https://secureframe.com/hub/grc/continuous-compliance">What Is Continuous Compliance + How To Achieve It</a></li>
+</ul>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2024-03-22-thinking-of-in-progress-autonomous-team/">中型项目组织的自治团队模式思考</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2024-04-04-security-still-not-in-my-dna/">安全并没有被刻入到我的DNA里面</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2024-04-04-learning-continuous-compliance/` was built on 2025-07-22T04:14:15.689Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>
