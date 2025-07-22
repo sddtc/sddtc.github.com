@@ -25,3 +25,9 @@ a {
 .post-tag {
 	font-style: normal;
 }
+
+blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
