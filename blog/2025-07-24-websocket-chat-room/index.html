@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>中型项目组织的自治团队模式思考</title>
+		<title>搭建基于websocket的在线多人聊天室</title>
 		<meta name="description" content="个人博客.">
 		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
 		<meta name="generator" content="Eleventy v3.1.2">
@@ -530,29 +530,44 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 			<heading-anchors>
 				
 
-<h1 id="">中型项目组织的自治团队模式思考</h1>
+<h1 id="websocket">搭建基于websocket的在线多人聊天室</h1>
 
 <ul class="post-metadata">
-	<li><time datetime="2024-03-22">22 March 2024</time></li>
+	<li><time datetime="2025-07-24">24 July 2025</time></li>
 	标签:
-	<li><a href="/sddtc.github.com/tags/software-engineer/" class="post-tag">software engineer</a></li>
+	<li><a href="/sddtc.github.com/tags/js/" class="post-tag">js</a>, </li>
+	<li><a href="/sddtc.github.com/tags/websocket/" class="post-tag">websocket</a></li>
 </ul>
 
-<p>“人在江湖, 身不由己” 常常指的是在有限的环境里面被迫适应, 因而无可奈何的改变自己的自嘲的话罢了.
-去年有幸加入了一个中等规模的项目, 里面有很不错的工程文化, 给我的感受便是每个团队有很高的话语权, 团队自治, 自己去实现各种功能服务. 自己去和上下游
-服务打交道. 自己做技术方案, 自己做持续交付. 但是渐渐的感觉到很多事情并不是那么简单:</p>
+<p>不论是chatGPT还是DeepSeek, 目前用户的交互界面仍然是以聊天框的形式出现, 其背后都离不开WebSocket技术.</p>
+<blockquote>
+<p>WebSocket 是一种在客户端和服务器之间提供全双工通信的协议，允许实时、双向的数据传输。它通过持久连接而不是传统的请求-响应模式，减少了延迟和网络流量，适用于需要实时交互的应用，如在线游戏和聊天应用.</p>
+</blockquote>
+<p>我所喜欢的很多网页游戏也都是用了它, 比如<a href="https://multiplayerpiano.com/">多人在线弹钢琴</a>. 突然发现书签里&quot;useless-but-fun&quot;文件夹的好多链接如今也无法访问了, 我猜测归根到底一些平台改变了收费模式, 作者如今还没有更新它们.<br>
+最近也是完成了一个在线聊天室, 撒花🎉</p>
+<blockquote>
+<p><a href="https://chat.sddtc.florist/">sddtc's chat room</a>.</p>
+</blockquote>
+<p>其中前后端分离两个仓库, 前端部署在<a href="https://vercel.com/home">Vercel平台</a>, 后端部署在<a href="https://www.render.com/">Render</a>, 数据存储部分用了 MongoDB Atlas.<br>
+一开始没有拆分项目, 然而Vercel平台的免费版本并不支持长链接, 它提供的后端平台是以 serverless 函数的形式出现. 也就意味着每次请求的处理都需要是无状态的. 所以思索之下拆分了前后端, 也初次尝试了Render这个平台. 目前体验还不错. 另外一个注意的点便是跨域的安全问题. 前后端部署在不同的域名之下, 如果使用cookie等安全规范严格的技术, 是要处理该问题的, 其中一个办法便是将它们放在统一的域名下. 所以有自己的域名还是有很多方便之处的.</p>
+<p><strong>前端项目使用:</strong></p>
 <ul>
-<li>我觉得可以中心化的东西因为一些声音开始去中心化</li>
-<li>一开始就可以去中心化的实践却先中心化的实现再计划“推翻” 而违背精益思想</li>
-<li>跨团队建模这个事情推行困难, 大量重复的模型、逻辑, 以及还没有被挖掘出价值的数据. 也因为团队的高度自治各自为王甚至很难找到机会一起思考, 讨论. 更别说落地了.</li>
-<li>没有提供极好 API 文档化的实践土壤, 在 API 和 events 共存的情况下边界不清</li>
-<li>微服务架构的发展还在业务领域苦苦挣扎, 甚至衍生不出类似于中台的东西.</li>
+<li>React + Vite, 这个组合部署在Vercel非常顺畅. 见<a href="/sddtc.github.com/blog/2025-06-16-technology-selection/">当你做技术选型时需要考虑的</a></li>
+<li><a href="https://github.com/pmndrs/zustand">zustand</a>, 使用了一个React状态库来处理组件刷新行为</li>
+<li>socket.io-client 在和ws库对比之后使用了socket.io的客户端, 文档很不错</li>
+<li><a href="https://tailwindcss.com/">tailwindcss</a> + <a href="https://daisyui.com/">daisyui-Tailwind CSS plugin</a> 新学习了这一套样式组合, 搭建出来的网站更好看了.</li>
 </ul>
-<p>也读过一些书, 知道软件开发都是在各种各样的约束之下才是现实世界本来的样子, 很多问题也是能找到一些合理的现实因素, 那是做为软件开发过程中理所当然的妥协. 但是哪些该妥协哪些不该妥协一直是让我有些痛苦的.
-也曾想过为什么一个运行了很久的项目竟是这样, 也见过快速发展不断扩张的部门的样子, 也见过已经进入大气层的样子. 所以也会安尝试自我安慰, 这种成长中的项目, 大概应该再多等等, 多看看, 多试试.
-但是留给我的时间好像不多了, 日常繁杂都是尘埃. 所有的困惑、痛苦的出口, 那才是星辰大海.</p>
+<p><strong>后端项目使用:</strong></p>
+<ul>
+<li>socket.io</li>
+<li>express  nodeJS的web框架</li>
+<li><a href="https://mongoosejs.com/">mongoose</a>  管理mongoDB的ODM库</li>
+<li>MongoDB Atlas.  聊天记录和简单的用户管理用了下mongoDB的cloud平台存储</li>
+</ul>
+<p>整个下来的感受还是很开心的, 因为从0到1是勇气的开始, 而1到100便是日积月累的循规蹈矩. 2个项目打算在测试完善之后开源, 基于WebSocket技术的应用还是很有趣的.<br>
+以上.</p>
 
-<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2024-02-03-reaction-to-thatisbiz.md/">&lt;商业就是这样&gt;听后感</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2024-04-04-learning-continuous-compliance/">技术雷达 Continuous Compliance - 持续合规性：确保整个软件生命周期的安全性</a></li>
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2025-07-22-bye-jekyll-hi-11ty/">博客静态页面生成工具从jekyll切换为11ty, 告别ruby 拥抱js</a></li>
 </ul>
 
 			</heading-anchors>
@@ -574,7 +589,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2024-03-22-thinking-of-in-progress-autonomous-team/` was built on 2025-07-24T06:20:06.607Z -->
+		<!-- This page `/blog/2025-07-24-websocket-chat-room/` was built on 2025-07-24T06:20:06.609Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>
