@@ -24,7 +24,7 @@
     "@11ty/eleventy-navigation": "^1.0.4",
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.1",
     "luxon": "^3.7.1",
-    "zod": "^4.0.10",
+    "zod": "^4.0.13",
     "zod-validation-error": "^4.0.1"
   },
   "dependencies": {
