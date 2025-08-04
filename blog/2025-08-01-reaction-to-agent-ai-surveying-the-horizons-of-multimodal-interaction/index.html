@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Agent AI: Surveying the Horizons of Multimodal Interaction 读后感</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+
+blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+/**
+ * prism.js Twilight theme
+ * Based (more or less) on the Twilight theme originally of Textmate fame.
+ * @author Remy Bach
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+	color: white;
+	background: none;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	text-shadow: 0 -.1em .2em black;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+pre[class*="language-"],
+:not(pre) > code[class*="language-"] {
+	background: hsl(0, 0%, 8%); /* #141414 */
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	border-radius: .5em;
+	border: .3em solid hsl(0, 0%, 33%); /* #282A2B */
+	box-shadow: 1px 1px .5em black inset;
+	margin: .5em 0;
+	overflow: auto;
+	padding: 1em;
+}
+
+pre[class*="language-"]::-moz-selection {
+	/* Firefox */
+	background: hsl(200, 4%, 16%); /* #282A2B */
+}
+
+pre[class*="language-"]::selection {
+	/* Safari */
+	background: hsl(200, 4%, 16%); /* #282A2B */
+}
+
+/* Text Selection colour */
+pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+	text-shadow: none;
+	background: hsla(0, 0%, 93%, 0.15); /* #EDEDED */
+}
+
+pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+code[class*="language-"]::selection, code[class*="language-"] ::selection {
+	text-shadow: none;
+	background: hsla(0, 0%, 93%, 0.15); /* #EDEDED */
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	border-radius: .3em;
+	border: .13em solid hsl(0, 0%, 33%); /* #545454 */
+	box-shadow: 1px 1px .3em -.1em black inset;
+	padding: .15em .2em .05em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: hsl(0, 0%, 47%); /* #777777 */
+}
+
+.token.punctuation {
+	opacity: .7;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.tag,
+.token.boolean,
+.token.number,
+.token.deleted {
+	color: hsl(14, 58%, 55%); /* #CF6A4C */
+}
+
+.token.keyword,
+.token.property,
+.token.selector,
+.token.constant,
+.token.symbol,
+.token.builtin {
+	color: hsl(53, 89%, 79%); /* #F9EE98 */
+}
+
+.token.attr-name,
+.token.attr-value,
+.token.string,
+.token.char,
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable,
+.token.inserted {
+	color: hsl(76, 21%, 52%); /* #8F9D6A */
+}
+
+.token.atrule {
+	color: hsl(218, 22%, 55%); /* #7587A6 */
+}
+
+.token.regex,
+.token.important {
+	color: hsl(42, 75%, 65%); /* #E9C062 */
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+
+/* Markup */
+.language-markup .token.tag,
+.language-markup .token.attr-name,
+.language-markup .token.punctuation {
+	color: hsl(33, 33%, 52%); /* #AC885B */
+}
+
+/* Make the tokens sit above the line highlight so the colours don't look faded. */
+.token {
+	position: relative;
+	z-index: 1;
+}
+
+.line-highlight.line-highlight {
+	background: hsla(0, 0%, 33%, 0.25); /* #545454 */
+	background: linear-gradient(to right, hsla(0, 0%, 33%, .1) 70%, hsla(0, 0%, 33%, 0)); /* #545454 */
+	border-bottom: 1px dashed hsl(0, 0%, 33%); /* #545454 */
+	border-top: 1px dashed hsl(0, 0%, 33%); /* #545454 */
+	margin-top: 0.75em; /* Same as .prism’s padding-top */
+	z-index: 0;
+}
+
+.line-highlight.line-highlight:before,
+.line-highlight.line-highlight[data-end]:after {
+	background-color: hsl(215, 15%, 59%); /* #8794A6 */
+	color: hsl(24, 20%, 95%); /* #F5F2F0 */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+<h1 id="agent-ai-surveying-the-horizons-of-multimodal-interaction">Agent AI: Surveying the Horizons of Multimodal Interaction 读后感</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2025-08-01">01 August 2025</time></li>
+	标签:
+	<li><a href="/sddtc.github.com/tags/ai/" class="post-tag">AI</a>, </li>
+	<li><a href="/sddtc.github.com/tags/book-notes/" class="post-tag">book notes</a></li>
+</ul>
+
+<p>前几天小某书刷到了李飞飞参与的这篇论文 这周花了两天时间看完了(<a href="https://arxiv.org/abs/2401.03568">Agent AI: Surveying the Horizons of Multimodal Interaction</a>). 看的时候播客也听不了了, 眼睛和脑子一边看内容一边二次翻译, 也意识到自己的专注力好像提高了.<br>
+提到人工智能, 那么我心目中的NO.1非<a href="https://movie.douban.com/subject/5980670/">《疑犯追踪》</a>莫属: 人类创造出程序代码, 交互接口是显示器、耳机. 程序的输入是国际象棋的一盘盘棋局, 人类干预与之下棋, 在下棋的过程中通过每一步博弈, 最终得出胜利或者失败, 并传达隐晦的人类情感表达和更抽象的哲思:</p>
+<blockquote>
+<p>&quot;象棋的可能棋局数比宇宙中的原子的数量还多，没人能预料到一切，即便是你。
+这也就是说，第一步会很令人害怕，因为它是距离结局最远的一步，在这一步与终点之间充满了无穷无尽的可能性。
+但这也意味着，即使你走错一步，接下来也会有无数种补救的方法。
+所以放松，出招就好。&quot;
+--《疑犯追踪》</p>
+</blockquote>
+<p>程序还有一段神奇的代码, 它能迭代自己, 从屏幕中你能看到它在编写自己, 只要有电, 它就能没日没夜的编写自己, 这也是我觉得最智能的地方, 不依赖人类的编写, 自己编写自己.<br>
+再之后呢, 程序的输入更加丰富: 通过真实世界的摄像头收集大量的视频、音频数据. 用来分析剧中几位主角是否处在安全的环境, 一旦有危险产生, 通过预测制定出计划来帮助主角们逃离危险.<br>
+这个AI的特点是有极为严格的道德约束, 极为智慧绝不做恶. 通过自己的逻辑指定了唯一超级管理员和除了显示器、耳机之外的交互接口: 一位人类(阿根QAQ), 如今我大概理解编剧是想表达让阿根作为交互接口是因为想表达AI已经能够像人一样思考, 有情感和有局限<br>
+如果说这是一个“品学兼优”的好AI, 那么剧里的反派AI就是一个吸收了更多的数据集且不被约束的程序代码, 它可以随意的执行各种指令, 毫无节制的利用资源追杀主角们, 最终把她们逼到走投无路, 也把我逼成了BE美学人.<br>
+这部剧至今仍让我回味的另一个原因是论文里面提出的 Multimodal 就是一系列的 AI agent 的集合, 包括视频和音频, 还有游戏等agent协作起来处理问题. 如今想来真是异曲同工之妙啊.</p>
+<p>读论文很多概念都不太清楚, 需要反复学习, 先从论文里面的图片开始理解:</p>
+<blockquote>
+<p>我们将“Agent AI”定义为一类能够感知视觉刺激、语言输入和其他基于环境的数据，并能产生有意义的具体动作的交互式系统。具体来说，我们探索旨在通过结合外部知识、多感官输入和人类反馈，基于下一个具体化动作预测来改进agent的系统。</p>
+</blockquote>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/o-CpkdOcxT-2234.avif 2234w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/o-CpkdOcxT-2234.webp 2234w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/o-CpkdOcxT-2234.png" alt="" width="2234" height="1952"></picture>  
+<p><strong>X轴:</strong> 真实的世界, 虚拟世界, Agent 范式, 具身智能(强调有物理身体的智能体通过与物理环境进行交互而获得智能的人工智能研究范式), 各种AI产品<br>
+<strong>Y轴:</strong>  理论, 数据, 基础设施, 应用<br>
+<strong>Z轴:</strong>  Agent 的范式(基本理念和实施套路)</p>
+<p>从右上角向左下角看, 有游戏产品, 健康领域的产品; 无人驾驶, 脑机接口, 机械臂; 泛化的agent, 助理, LLM, VLM, 传感器那些; VR/VA, 3D; 哲学, 物理学等等</p>
+<p>很多概念都是熟悉又陌生, 也有很多新概念, 不过这样看来人工智能确实迎来了蓬勃的发展</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/hU3_pO3EgH-2500.avif 2500w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/hU3_pO3EgH-2500.webp 2500w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/hU3_pO3EgH-2500.png" alt="" width="2500" height="1664"></picture>
+<p>论文结合了很多游戏领域的内容和虚拟现实的模拟, Agent AI 强调环境的重要性, 例如视频会议室有白板、放映机、桌子和凳子; 蓝色公交车旁边的红色广告牌🪧等. 图内也表明 AI Agent 需要为每个新任务收集大量训练数据， 这对于许多领域来说可能是昂贵的，甚至是不可能的</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/PwZGt_57a9-1354.avif 1354w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/PwZGt_57a9-1354.webp 1354w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/PwZGt_57a9-1354.png" alt="" width="1354" height="1344"></picture>
+<p>论文提到, Agents通常使用强化学习 (RL) 或模仿学习 (IL) 中的连续反馈循环进行训练, 从随机初始化的策略开始. 然而这种方法在陌生环境中获取初始奖励时面临挑战， 尤其是在奖励稀少或仅在long-step交互结束时才可用的情况下. 因此，一个更好的解决方案是使用通过模仿学习(IL)训练的拥有长期记忆的agent，它可以从专家数据中学习策略，并通过图中 所示的智能涌现(Emergent Intelligence)改进对未知环境空间的探索和利用. 专家特征可以帮助agent更好地探索和利用未知环境空间.<br>
+Agent AI 可以直接从专家数据中学习策略和新范式. 传统的模仿学习(IL) 中， agent会模仿专家演示者的行为来学习策略. 然而，直接学习专家策略并非总是最佳方法， 因为agent可能无法很好地泛化到未知情况. 为了解决这个问题， 我们建议学习一个具有情境提示或隐式奖励函数的agent， 该函数可以捕捉专家行为的关键方面， 如图中所示。这为拥有长期记忆的agent提供了从专家演示中学习到的物理世界行为数据， 用于执行任务. 这有助于克服现有的模仿学习的缺点， 例如需要大量的专家数据以及在复杂任务中可能出现的错误.</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/nJQP6SDL9f-2602.avif 2602w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/nJQP6SDL9f-2602.webp 2602w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/nJQP6SDL9f-2602.png" alt="" width="2602" height="1736"></picture>
+<p>When employing LLM/VLMs for a human-machine collaboration system, it is essential to note that these operate as
+black boxes, generating unpredictable output. This uncertainty can become crucial in a physical setup, such as operating
+actual robotics. An approach to address this challenge is constraining the focus of the LLM/VLM through prompt
+engineering. For instance, in robotic task planning from instructions, providing environmental information within the
+prompt has been reported to yield more stable outputs than relying solely on text (Gramopadhye and Szafir, 2022). This report is supported by the Minsky’s frame theory of AI (Minsky, 1975), suggesting that the problem space to be solved
+by LLM/VLMs is defined by the given prompts. Another approach is designing prompts to make LLM/VLMs include
+explanatory text to allow users understand what the model has focused on or recognized. Additionally, implementing
+a higher layer that allows for pre-execution verification and modification under human guidance can facilitate the
+operation of systems working under such guidance</p>
+<p>论文说, 在将 LLM/VLM 用于人机协作系统时， 必须注意到它们的操作是个黑盒，会产生不可预测的输出. 这种不确定性在物理设置（例如操作实际机器人）中至关重要. 应对这一挑战的一种方法是通过提示工程(prompt)来限制 LLM/VLM 的关注点. 例如， 在根据指令进行机器人任务规划时，在提示中提供环境信息比单纯依赖文本能产生更稳定的输出. 另一种方法是设计提示，使 LLM/VLM 包含解释性文本，以便用户了解模型关注或识别的内容. 此外，实现允许在人工指导下进行执行前验证和修改的更高层代码，可以促进在此类指导下的系统运行, 如上图所示.</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/8zn4Q_19s2-2408.avif 2408w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/8zn4Q_19s2-2408.webp 2408w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/8zn4Q_19s2-2408.png" alt="" width="2408" height="904"></picture>
+<p>论文提到了上图是一种用于训练 agent AI 的新范式.通过提出的框架实现以下几个目标：<br>
+• 利用现有的预训练模型和预训练策略，有效地引导我们的agents理解重要的模态信息，例如文本或视觉输入<br>
+• 支持足够的长期任务规划能力<br>
+• 整合一个记忆框架，允许将学习到的知识进行编码并在之后检索<br>
+• 允许利用环境反馈来有效地训练agent学习应该采取的行动</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/yxRp1Try5K-2452.avif 2452w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/yxRp1Try5K-2452.webp 2452w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/yxRp1Try5K-2452.png" alt="" width="2452" height="1006"></picture>
+<p>论文提到我们仍然可以像上图所示那样使用 LLM 和 LVM 初始化子模块， 但也可以使用agent令牌来训练模型，使其在特定领域（例如机器人技术）中执行agent行为</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/ecVCyXpcrd-2460.avif 2460w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/ecVCyXpcrd-2460.webp 2460w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/ecVCyXpcrd-2460.png" alt="" width="2460" height="1182"></picture>  
+<p>在上图我们可以将agent token与视觉和语言token相结合，生成一个用于训练多模态agent AI的统一接口.与使用大型专有 LLM 作为agent相比，使用agent transformer具有诸多优势, 论文提到了一些子优势.</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/_VgG9tQKi1-2416.avif 2416w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/_VgG9tQKi1-2416.webp 2416w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/_VgG9tQKi1-2416.png" alt="" width="2416" height="1598"></picture>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/latvG8dDwv-1306.avif 1306w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/latvG8dDwv-1306.webp 1306w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/latvG8dDwv-1306.png" alt="" width="1306" height="1652"></picture>
+<p>论文提到图 8 和图 9 使用 GPT-4V 进行高级描述和动作预测.图 8 展示了一些使用 GPT-4V 生成和编辑动作描述的定性示例.  Agent-enhanced文本开辟了一种利用游戏动作priors生成 3D 场景的新方法，有助于提升场景的自然度.因此，GPT-4V 可以生成与游戏视频相符的相关高级描述.</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/eLsgWKEyve-1182.avif 1182w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/eLsgWKEyve-1182.webp 1182w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/eLsgWKEyve-1182.png" alt="" width="1182" height="1554"></picture>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/NHF6QoMqXN-1122.avif 1122w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/NHF6QoMqXN-1122.webp 1122w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/NHF6QoMqXN-1122.png" alt="" width="1122" height="1360"></picture>
+<p>论文提到图 10 表明相对较小的agent架构可以针对训练期间未见过的 Minecraft 场景生成合理的输出.图 11 展示了模型的预测结果与真实人类玩家动作的对比，也表明了小型agent模型具有潜在的低级理解能力</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/kjsRSmSVZZ-2484.avif 2484w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/kjsRSmSVZZ-2484.webp 2484w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/kjsRSmSVZZ-2484.png" alt="" width="2484" height="1674"></picture>
+<p>很像分手厨房的游戏, 两个NPC伙伴和一个人类的游戏🎮</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/kFLILLvIYL-2370.avif 2370w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/kFLILLvIYL-2370.webp 2370w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/kFLILLvIYL-2370.png" alt="" width="2370" height="1592"></picture>
+<p>上图是为了介绍一项研究，是利用 ChatGPT 进行任务规划，并通过利用可供性(Affordance: 一个物体或环境元素所提供的“可供”人们进行某种行为的属性或特征)信息对其进行参数化来丰富计划，以促进有效和精确的执行.<br>
+这些指令与一组预定义的机器人动作和输出规范一起，被编译成提供给 ChatGPT 的综合提示，然后 ChatGPT 生成一系列分解的任务及其文本描述.</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/zehwMGo4UK-2434.avif 2434w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/zehwMGo4UK-2434.webp 2434w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/zehwMGo4UK-2434.png" alt="" width="2434" height="1480"></picture>
+<p>上图展示了基于 VirtualHome 进行agent模拟的定性结果.结果证明了论文里描述的方法具有合理的任务规划及其调整输出的灵活性，表明了方法的广泛适用性.</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/2Gl9INd0Is-2354.avif 2354w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/2Gl9INd0Is-2354.webp 2354w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/2Gl9INd0Is-2354.png" alt="" width="2354" height="848"></picture>
+<p>通过与 VLM 集成，LLM 赋能的任务规划可以扩展到功能更丰富的机器人系统. 上图展示了一个示例，其中使用 GPT-4V(ision) 在多模态输入环境中扩展了任务规划器，其中人类执行了机器人想要复制的动. 全部详情见 <a href="microsoft.github.io/GPT4Vision-Robot-Manipulation-Prompts">microsoft.github.io/GPT4Vision-Robot-Manipulation-Prompts</a></p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/WsZ5LQar4h-2390.avif 2390w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/WsZ5LQar4h-2390.webp 2390w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/WsZ5LQar4h-2390.png" alt="" width="2390" height="1416"></picture>
+<p>上图演示了如何使用文本输入让用户对 GPT-4V 的识别结果提供反馈以进行纠正.</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/gAIHuJrLlL-1506.avif 1506w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/gAIHuJrLlL-1506.webp 1506w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/gAIHuJrLlL-1506.png" alt="" width="1506" height="1282"></picture>
+<p>上图展示了场景分析器的示例输出.GPT-4V 成功地选择了与操作相关的对象.例如，当人类在桌子上移动一个垃圾盒时，输出中包含一张桌子，而对于打开冰箱的任务，输出则忽略了桌子.这些结果表明，场景分析器根据人类的动作对场景信息进行了编码.</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/W54nbigNTV-2100.avif 2100w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/W54nbigNTV-2100.webp 2100w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/W54nbigNTV-2100.png" alt="" width="2100" height="1206"></picture>
+<p>如上图所示，论文提出了一种新颖的强化跨模态匹配方法，该方法通过强化学习 (RL) 在局部和全局上强化跨模态基础.具体而言，利用匹配评判器提供内在奖励，以鼓励指令和轨迹之间的全局匹配，并利用推理导航器在局部视觉场景中进行跨模态基础训练.</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/XXSukQYfK2-2102.avif 2102w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/XXSukQYfK2-2102.webp 2102w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/XXSukQYfK2-2102.png" alt="" width="2102" height="1482"></picture> 
+<p>在上图，论文展示了 GPT-4V 等现代多模态agent在医疗保健领域中的当前能力和局限性.可以看到尽管 GPT-4V 对医院护理所涉及的设备和程序拥有丰富的内部知识，但它并不总是能够响应用户更具规范性或诊断性的查询.</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/dROclpbvI4-2182.avif 2182w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/dROclpbvI4-2182.webp 2182w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/dROclpbvI4-2182.png" alt="" width="2182" height="1576"></picture>
+<p>论文从两个方面研究了 VLM 代理在医学视频理解方面的表现.首先, 研究 VLM 代理在临床空间中识别重要患者护理活动的能力.
+其次，探索了 VLM 在超声波等技术含量更高的视频中的应用. 上图展示了 GPT-4V 目前在医院护理和医学视频分析方面的一些功能和局限.</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/RCdZ5cqU-b-2156.avif 2156w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/RCdZ5cqU-b-2156.webp 2156w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/RCdZ5cqU-b-2156.png" alt="" width="2156" height="1052"></picture>
+<p>并未过多说明.</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/Fue7t79hw6-2128.avif 2128w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/Fue7t79hw6-2128.webp 2128w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/Fue7t79hw6-2128.png" alt="" width="2128" height="1608"></picture>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/PJTPIgBWBc-2076.avif 2076w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/PJTPIgBWBc-2076.webp 2076w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/PJTPIgBWBc-2076.png" alt="" width="2076" height="1152"></picture>
+<p>图22和图23所示了基于知识的视觉问答和视觉语言检索任务是多模态机器学习中具有挑战性的任务，需要图像内容以外的知识.近期关于大规模 Transformer 的研究主要集中于最大化模型参数存储信息的效率.论文研究探索了一个不同的方面：多模态 Transformer 能否在决策过程中运用显性知识.</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/tOAMmm1BU9-2080.avif 2080w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/tOAMmm1BU9-2080.webp 2080w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/tOAMmm1BU9-2080.png" alt="" width="2080" height="1388"></picture>
+<p>并未过多说明.</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/1i4KTfzQLH-2104.avif 2104w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/1i4KTfzQLH-2104.webp 2104w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/1i4KTfzQLH-2104.png" alt="" width="2104" height="1112"></picture>
+<p>我们在上图中展示了两个示例输出.然而，现有的agents无法完全理解视频内容中精确、细粒度的视觉细节.视觉指令调整方法也存在类似的局限性，它们缺乏人类水平的通用感知能力，而多模态模型和agents仍有待解决这一问题.<br>
+指令调整后的模型在准确概括视频中可见的动作以及有效识别诸如图 25 中的“坐在长椅上的人”之类的动作方面表现出色.然而，它们有时会添加不正确的细节，例如“对着镜头微笑的人”，这表明它们在捕捉对话主题或视频氛围方面存在不足，而这些元素对于人类观察者来说显而易见.</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/cdM6j7ZtlR-2098.avif 2098w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/cdM6j7ZtlR-2098.webp 2098w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/cdM6j7ZtlR-2098.png" alt="" width="2098" height="1454"></picture>
+<p>上图所示的结果比较了不同视频agent在视频摘要任务上的表现.视频教学调整模型提供了准确的内容，但缺乏全面性和细节性，缺少一些具体的动作，例如有条不紊地使用扫帚测量树的高度.</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/xrcveGBgU7-1616.avif 1616w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/xrcveGBgU7-1616.webp 1616w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/xrcveGBgU7-1616.png" alt="" width="1616" height="1614"></picture>
+<p>论文中, 描述上图所示，我们主要使用 StackOverflow 获取初始问题，然后使用“Bing 搜索”API 检索与该问题对应的相关视频和音频.接下来，我们主要使用 GPT-4V 获取相关文本信息和高级视频描述.另一方面，我们通过 ASR 将关键帧音频转换为关键帧的低级片段描述.最后，我们使用 GPT-4V 生成令人信服的“幻觉”，作为视频问答任务的硬性负面查询.我们支持在视频当前帧中进行交互和问答，以及对整个高级视频描述的摘要.在推理过程中，我们还结合通过网络搜索获取的外部知识信息来提升回答能力.</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/NetE3jA887-2238.avif 2238w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/NetE3jA887-2238.webp 2238w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/NetE3jA887-2238.png" alt="" width="2238" height="1510"></picture>
+<p>整个 Alpaca 训练流程</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/QluZfsPa7w-1794.avif 1794w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/QluZfsPa7w-1794.webp 1794w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/QluZfsPa7w-1794.png" alt="" width="1794" height="1332"></picture>
+<p>如上图所示，论文提到为 Transformer 语言模型引入了一种新的建模范式，它从输入文本中检测并提取重要的逻辑结构和信息，然后通过精心设计的多层级逻辑投影将它们集成到输入嵌入中，从而将逻辑结构作为一种NLP agent注入到预先训练的语言模型中.</p>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/yBMTkBy5QA-1802.avif 1802w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/yBMTkBy5QA-1802.webp 1802w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/yBMTkBy5QA-1802.png" alt="" width="1802" height="1008"></picture>
+<p>如上图所示，知识选择器agent作为我们新颖的相互学习框架的一个组件进行训练，该框架迭代地训练知识选择器和阅读器.我们采用一种简单而新颖的方法，利用策略梯度来优化知识选择器agent，并利用阅读器的反馈来训练它选择一小段信息丰富的段落集合.这种方法避免了暴力搜索或手动设计的启发式算法，也不需要任何带注释的查询-文档对进行监督.论文提到了它证明了迭代训练阅读器和知识选择器agents可以在一些公共开放领域问答基准上获得更好的预测性能.</p>
+<p>以上就是论文55页以前的所有配图. 和内容结合在一起看也是蛮有趣的. 后面我还专门看了下所有论文参与者的个人介绍, 学生会介绍自己感兴趣的领域, 李飞飞的介绍是工作经历.没有感情全是年份系列.</p>
+<p>以上.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2025-07-24-websocket-chat-room/">搭建基于websocket的在线多人聊天室</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/` was built on 2025-08-04T06:25:08.191Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>
