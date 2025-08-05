@@ -26,8 +26,21 @@ a {
 	font-style: normal;
 }
 
+/* 引用 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
+}
+
+/* 单行代码 */
+code {
+	font-size: 13px;
+	background-color: #8AA624;
+	word-break: break-all;
+	padding: 3px 5px;
+	margin: 0 4px;
+	border-radius: 5px;
+	color: #eee;
+	transition: all 500ms ease;
 }

@@ -24,7 +24,7 @@ We have followed the following method:
 When you add a lifecycle hook, you have the option to be notified when the instance enters a wait state so that you can perform the corresponding custom action.
 So we put the autoscaling: EC2\_INSTANCE\_TERMINATE hook.
 
-```
+```shell
 @client.put_lifecycle_hook(
    auto_scaling_group_name: AUTO_SCALING_GROUP_NAME,
    lifecycle_hook_name: 'Auto-Scale-Ec2-Termination',
