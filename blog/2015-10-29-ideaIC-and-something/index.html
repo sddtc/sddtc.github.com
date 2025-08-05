@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/self-talking/" class="post-tag">self-talking</a></li>
 </ul>
 
-<p>idea IC版真的缺失了几个小功能，以前没发现...</p>
+<div class="page-post">
+  <p>idea IC版真的缺失了几个小功能，以前没发现...</p>
 <ol>
 <li>Maven依赖图没有</li>
 <li>Add Framework Support缺失一些插件,比如把一个项目自动转成web
@@ -563,6 +583,7 @@ org.quartz-scheduler的2.2.1版本的quartz和org.springframework的spring-conte
 </ol>
 <p>以上。</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-10-14-java-binary-search/">Java 实现二分法回忆片段和解决方案</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-11-03-mac-install-scrapy/">Scrapy的 mac 安装 scrapy 实践</a></li>
 </ul>
 
@@ -585,7 +606,7 @@ org.quartz-scheduler的2.2.1版本的quartz和org.springframework的spring-conte
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-10-29-ideaIC-and-something/` was built on 2025-08-05T06:08:55.035Z -->
+		<!-- This page `/blog/2015-10-29-ideaIC-and-something/` was built on 2025-08-05T06:54:41.440Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

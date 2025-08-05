@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/software-engineer/" class="post-tag">software engineer</a></li>
 </ul>
 
-<h3 id="">背景</h3>
+<div class="page-post">
+  <h3 id="">背景</h3>
 <p>最近在做一个小而有趣的项目, 用到了rails去搭建后台. 在RailsAdmin和ActiveAdmin中选择了前者, 理由除了RA的全自动化之外, 还有它本身作为管理后台的核心思想: 既是提供一套UI, 并使所有模块可直接使用. 在我看来, ActiveAdmin需要二次开发的灵活性更大所以开发工作更多. 那么这次就用TDD的思想来做一次完整的功能开发ヾ(=･ω･=)o</p>
 <h3 id="-2">说明</h3>
 <p>首先, 我们创建两个model: brand&amp;product; 其次, 引用了mocha这个测试框架:</p>
@@ -613,6 +633,7 @@ end
 <p>最近西安很热, 希望父上下下周能平安出院.</p>
 <p>以上.</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2017-07-03-2017-part-two/">2017 第二季度总结</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2017-08-01-tips-about-railsadmin/">关于 RA 的一些必须掌握的 tips</a></li>
 </ul>
 
@@ -635,7 +656,7 @@ end
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2017-07-22-tdd-with-rails_admin/` was built on 2025-08-05T06:08:55.042Z -->
+		<!-- This page `/blog/2017-07-22-tdd-with-rails_admin/` was built on 2025-08-05T06:54:41.446Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

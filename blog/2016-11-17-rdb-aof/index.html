@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/database/" class="post-tag">database</a></li>
 </ul>
 
-<h3 id="redis-persistence">Redis Persistence</h3>
+<div class="page-post">
+  <h3 id="redis-persistence">Redis Persistence</h3>
 <p><strong>Redis提供了不同范围的持久性选项:</strong></p>
 <ul>
 <li>RDB持久性 以指定的时间间隔执行数据集的时间点快照。</li>
@@ -664,6 +684,7 @@ Amazon S3和其他类似的服务是安装灾难恢复系统的好方法。只�
 重要的是要理解，如果没有以正确的方式编码，这个系统可能容易失败。至少确保在传输完成后，您可以验证文件大小（应该匹配您复制的文件之一），如果您使用VPS，则可能还有SHA1摘要。
 如果新备份的传输由于某种原因不起作用，您还需要某种独立的警报系统。</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2016-07-21-performance-test-qps-tps/">性能测试 QPS 和 TPS 的概念解读</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2017-01-01-first-week-about-c/">来到一个新环境总会有些新收获</a></li>
 </ul>
 
@@ -686,7 +707,7 @@ Amazon S3和其他类似的服务是安装灾难恢复系统的好方法。只�
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2016-11-17-rdb-aof/` was built on 2025-08-05T06:08:55.039Z -->
+		<!-- This page `/blog/2016-11-17-rdb-aof/` was built on 2025-08-05T06:54:41.443Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

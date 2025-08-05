@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/mobile/" class="post-tag">mobile</a></li>
 </ul>
 
-<p>最近在项目里更新了 <code>gradle</code> 插件到 <code>6.1.1</code> 之后发现它支持使用 <code>maven-publish</code> 这个插件来打包发布并部署到 <code>maven</code> 的内部远程仓库去。简单记录下，希望能帮助到需要的人。</p>
+<div class="page-post">
+  <p>最近在项目里更新了 <code>gradle</code> 插件到 <code>6.1.1</code> 之后发现它支持使用 <code>maven-publish</code> 这个插件来打包发布并部署到 <code>maven</code> 的内部远程仓库去。简单记录下，希望能帮助到需要的人。</p>
 <p>之前项目使用 <code>maven</code> 的 <code>uploadArchives</code>:</p>
 <script src="https://gist.github.com/sddtc/5150832cf51d4dd439d8ec7d1c2d6403.js"></script>
 <p>这种方式没什么问题，一直都可以运行的很好。 如果不是遇见了一些问题，在繁忙的日常你很难跑去更新工作得好好滴东西 😑
@@ -652,6 +672,7 @@ publishing <span class="token punctuation">{</span>
 <span class="token builtin class-name">echo</span> <span class="token string">"+++ :buildkite: Publishing library to maven"</span>
 ./gradlew clean publishReleasePublicationToMavenRepository</code></pre>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/">Github - JavaScript Game Engines 使用指南</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2021-02-28-this-is-software-engineer/">读 《这就是软件工程师》 有感</a></li>
 </ul>
 
@@ -674,7 +695,7 @@ publishing <span class="token punctuation">{</span>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2021-02-22-maven-publish-plugin-in-android/` was built on 2025-08-05T06:08:55.049Z -->
+		<!-- This page `/blog/2021-02-22-maven-publish-plugin-in-android/` was built on 2025-08-05T06:54:41.456Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/kotlin/" class="post-tag">kotlin</a></li>
 </ul>
 
-<h4 id="">故事背景</h4>
+<div class="page-post">
+  <h4 id="">故事背景</h4>
 <p>当我写后端的时候，时不时的让程序抛出几个 5XX 的错误不在话下。当我写前端的时候，时不时的在浏览器的 dev tool 看到几个 js 错误堆栈也是基操基操。直到最近开始自己的 mobile 生涯，用 kotlin 写 Android。你或许想象不到，带给我最震撼的不是一个个精致好看体验极佳的手机应用，而是因为简单的错误直接造成的 crash 异常。crash 给人的感觉就是大脑嗡嗡的体验。最近遇见过几起小事件，抽个时间一一记录一下 ：）</p>
 <p>由于我们尝试使用 MFE(Micro-Front-End) 的思想来改进应用程序的扩展性和灵活性，所以在开发工程中我们有一个母应用 A，有一个子应用 B。集成方式是 B 作为 <code>library</code> 集成在 A 内。
 A 和 B 分别依赖了一个第三方库，使用库中的相同方法。 在第三库进行了升级之后，B 应用没有升级对应的新版本而 A 应用对该第三方库进行了版本的升级。 造成的结果是用户在试图进入 B 应用页面的时候造成了 crash。</p>
@@ -686,6 +706,7 @@ A 和 B 分别依赖了一个第三方库，使用库中的相同方法。 在�
 舍弃默认构造参数的语法糖， 显示的实现满足所有参数排列的构造方法。</p>
 <p>未完待续...</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2019-12-28-my-annual-rank-2019/">我的 2019 年度总结</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2020-11-23-jx3-jjc-thoughts/">当我沉迷每个赛季的竞技场的时候我在沉迷什么</a></li>
 </ul>
 
@@ -708,7 +729,7 @@ A 和 B 分别依赖了一个第三方库，使用库中的相同方法。 在�
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2020-11-16-kotlin-compatibility-intro/` was built on 2025-08-05T06:08:55.048Z -->
+		<!-- This page `/blog/2020-11-16-kotlin-compatibility-intro/` was built on 2025-08-05T06:54:41.454Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/security/" class="post-tag">security</a></li>
 </ul>
 
-<h3 id="-2">背景</h3>
+<div class="page-post">
+  <h3 id="-2">背景</h3>
 <p>前不久生产了一个新鲜的bug, 也是因为这个bug的影响让人不悦, 所以我想记录下来, 也算是给自己一个提醒, 并且关于这个bug, 也可以说是一个老生常谈的话题但是却似乎让人回味的很</p>
 <p>简单的一句话来说: 把用户输入的东西放在了URL里, 并且可以让服务端读取并处理, 恰巧encode方法没有按照'想象'把&amp;符号转义一下, 于是&amp;对于URL的query有多么特殊又不是不知道</p>
 <p>如果一开始就能敏锐的察觉到用户的输入有多么可怕就好了：）
@@ -594,6 +614,7 @@ ShellShock漏洞可以直接在Bash支持的Web CGI环境下远程执行任意�
 <a href="http://www.cnblogs.com/kucongzhi/archive/2010/07/12/1775796.html">可爱的路人甲Case</a>
 <a href="https://coolboygym.github.io/2017/11/03/do-not-trust-user-input/">可爱的路人乙Case</a></p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2018-01-21-c1w2-ml-ninja/">Coursera 第一阶段第二课总结</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2018-04-01-ml-ninja-c2-w1-quiz/">Coursera 第二阶段第一课 Quiz</a></li>
 </ul>
 
@@ -616,7 +637,7 @@ ShellShock漏洞可以直接在Bash支持的Web CGI环境下远程执行任意�
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-03-28-dont-believe-consumer-input/` was built on 2025-08-05T06:08:55.043Z -->
+		<!-- This page `/blog/2018-03-28-dont-believe-consumer-input/` was built on 2025-08-05T06:54:41.448Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

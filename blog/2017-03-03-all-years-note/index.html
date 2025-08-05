@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/life/" class="post-tag">life</a></li>
 </ul>
 
-<h3 id="2016-2">2016年度总结</h3>
+<div class="page-post">
+  <h3 id="2016-2">2016年度总结</h3>
 <p>如果用简短的语句来形容自己的2016，大概就是做了一个影响自己人生整个轨迹的抉择，因为我从北京离开回家了，这其中的原因很简单，于自己的主观意识，是为了家人</p>
 <h3 id="">事业</h3>
 <p>去年过年后回北京的时候,换了一家电商公司去做推荐,因为公司环境和气氛,还有里面成熟的各种框架系统,都让我受益匪浅,也看到了阿里系风格的公司是什么样,年底的时候回家了,在西安有幸加入了我十分喜欢和尊敬的ThoughtWorks,开始了自己的新生活.</p>
@@ -597,6 +617,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 回西安之后,也有我很珍惜的伙伴,从今以后,要好好和他们在一起😉</p>
 <p>以上。</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2017-01-24-something-about-shell/">Shell正常和异常退出的控制命令</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2017-03-15-something-about-spring-cloud/">Spring-Cloud概念理解和部署</a></li>
 </ul>
 
@@ -619,7 +640,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2017-03-03-all-years-note/` was built on 2025-08-05T06:08:55.041Z -->
+		<!-- This page `/blog/2017-03-03-all-years-note/` was built on 2025-08-05T06:54:41.444Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

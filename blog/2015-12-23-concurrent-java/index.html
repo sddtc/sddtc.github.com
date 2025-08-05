@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/java/" class="post-tag">java</a></li>
 </ul>
 
-<h3 id="countdownlatch">CountDownLatch</h3>
+<div class="page-post">
+  <h3 id="countdownlatch">CountDownLatch</h3>
 <p>CountDownLatch in Java is a kind of synchronizer which allows one Thread to wait for one or more Threads before starts processing.</p>
 <p>CountDownLatch in Java is introduced on Java 5 along with other concurrent utilities like CyclicBarrier, Semaphore, ConcurrentHashMap and BlockingQueue in java.util.concurrent package.</p>
 <p>CountDownLatch works in Java, an example of CountDownLatch in Java and finally some worth noting points about this concurrent utility. You can also implement same functionality using  wait and notify mechanism in Java but it requires lot of code and getting it write in first attempt is tricky,  With CountDownLatch it can  be done in just few lines.</p>
@@ -572,6 +592,7 @@ ForkjoinTask
 AbstractQueuedSynchronizer
 TreeMap</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-12-22-day-day-up-for-silent/">关于 Java 泛型特性的理解</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-12-24-heap-sort/">堆排序特点解读和最佳实践</a></li>
 </ul>
 
@@ -594,7 +615,7 @@ TreeMap</p>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-12-23-concurrent-java/` was built on 2025-08-05T06:08:55.037Z -->
+		<!-- This page `/blog/2015-12-23-concurrent-java/` was built on 2025-08-05T06:54:41.441Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

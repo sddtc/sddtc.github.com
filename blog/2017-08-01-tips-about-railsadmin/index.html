@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/ruby/" class="post-tag">ruby</a></li>
 </ul>
 
-<h3 id="">一、开启白名单</h3>
+<div class="page-post">
+  <h3 id="">一、开启白名单</h3>
 <p>只显示需要的model列表</p>
 <pre><code>config.included_models = [Brand, Product, Admin, Store]
 </code></pre>
@@ -690,6 +710,7 @@ RestClient::Request.execute(:method =&gt; :post,
 <a href="http://guides.ruby.tw/ruby-rails-style-guides/zhCN/#intro">Ruby&amp;Rails 风格指导</a>
 <a href="https://doc.bccnsoft.com/docs/rails-guides-4.1-cn/testing.html">Rails 程序测试指南</a></p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2017-07-22-tdd-with-rails_admin/">用 TDD 进行 rails_admin 开发</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2017-08-17-my-jx3/">jx3八区绝代-关爱手癌患者协会</a></li>
 </ul>
 
@@ -712,7 +733,7 @@ RestClient::Request.execute(:method =&gt; :post,
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2017-08-01-tips-about-railsadmin/` was built on 2025-08-05T06:08:55.042Z -->
+		<!-- This page `/blog/2017-08-01-tips-about-railsadmin/` was built on 2025-08-05T06:54:41.446Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

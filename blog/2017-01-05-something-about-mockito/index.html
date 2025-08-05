@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/quality-engineer/" class="post-tag">quality engineer</a></li>
 </ul>
 
-<p>mockito,一种🌿口味的鸡尾酒🍸,用这种名字做的单元测试框架,一下就吸引了窝~ 这两天在搜索问题的时候,搜到了以前同事的博客,内心感到莫名的开心. 昨天斯托卡了下以前同事的简书博客,真为我们这群勤于更新博客的人感到骄傲😏</p>
+<div class="page-post">
+  <p>mockito,一种🌿口味的鸡尾酒🍸,用这种名字做的单元测试框架,一下就吸引了窝~ 这两天在搜索问题的时候,搜到了以前同事的博客,内心感到莫名的开心. 昨天斯托卡了下以前同事的简书博客,真为我们这群勤于更新博客的人感到骄傲😏</p>
 <h3 id="">背景</h3>
 <p>这几天写了一个项目,主要使用System.exit()来判断结果的成功与失败,在写单元测试的时候,需要用到可以调取这种静态方法的工具,因为System.exit(0)会使得JVM进程退出,之后是不会有返回结果的,于是有了这个特殊的需求,发现了PowerMock可以很好地满足这一点</p>
 <ol>
@@ -575,6 +595,7 @@ powermock<span class="token operator">-</span>api<span class="token operator">-<
 <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>“should <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span>”<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <p>这样可以得到关于 System.exit() 的期望返回结果</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2017-01-04-something-about-gradle/">关于 Gradle 打 jar 包解决方案</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2017-01-12-introduction-terraform/">Terraform基础设施即代码的概念理解</a></li>
 </ul>
 
@@ -597,7 +618,7 @@ powermock<span class="token operator">-</span>api<span class="token operator">-<
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2017-01-05-something-about-mockito/` was built on 2025-08-05T06:08:55.040Z -->
+		<!-- This page `/blog/2017-01-05-something-about-mockito/` was built on 2025-08-05T06:54:41.444Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

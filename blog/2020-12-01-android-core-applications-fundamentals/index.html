@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/mobile/" class="post-tag">mobile</a></li>
 </ul>
 
-<h3 id="">概要</h3>
+<div class="page-post">
+  <h3 id="">概要</h3>
 <p>Android 应用可是使用 Kotlin, Java, C++ 这些语言来构建. Android SDK tools 会将你的代码和数据, 资源文件一起编译成 APK 包. 一个 APK 包文件包含了所有和应用相关的资源文件, 并可以安装在支持 Android 系统的设备上。
 每一个 Android app 拥有属于它自己的安全沙盒, 主要的安全特性有以下几点:</p>
 <ul>
@@ -612,6 +632,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 <p>与 <em>Activities, Services, and Broadcast receivers</em> 不同, <em>Content providers</em> 不会被 <code>intent</code> 激活。它们被 ContentResolver 的请求作为目标时激活。 <em>content resolver handlers</em> 与 <em>Content providers</em> 的所有直接交互，通过调用 ContentResolver 对象上的方法。这就在 <em>Content providers</em> 和请求信息的组件之间保留了一层抽象（出于安全性考虑）。</p>
 <p>原文: <a href="https://developer.android.com/guide/components/fundamentals">Application Fundamentals</a></p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2020-11-23-jx3-jjc-thoughts/">当我沉迷每个赛季的竞技场的时候我在沉迷什么</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2020-12-08-android-app-arch-best-practices/">最佳实践什么的 可太有魅力了</a></li>
 </ul>
 
@@ -634,7 +655,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2020-12-01-android-core-applications-fundamentals/` was built on 2025-08-05T06:08:55.048Z -->
+		<!-- This page `/blog/2020-12-01-android-core-applications-fundamentals/` was built on 2025-08-05T06:54:41.454Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

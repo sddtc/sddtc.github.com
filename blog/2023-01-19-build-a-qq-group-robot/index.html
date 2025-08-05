@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/self-project/" class="post-tag">self-project</a></li>
 </ul>
 
-<p>剑网3玩家会在平时关心很多事情, 他们有自己的社交群体, 有自己的时间管理计划, 有最强大的硬盘配置
+<div class="page-post">
+  <p>剑网3玩家会在平时关心很多事情, 他们有自己的社交群体, 有自己的时间管理计划, 有最强大的硬盘配置
 毕竟时至今日我仍然想不通自己为什么会下载一款 80G+ 的端游
 到底是看不起软件开发的速度跟不上硬件发展的速度, 还是太看得起自己的经济实力</p>
 <p>但毫无疑问, 在活跃的各种 QQ 群里, 大家需要各种各样的信息, 例如:</p>
@@ -588,6 +608,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 <p>最后的最后, 一定要和大家分享一个视频(来自关爱手癌-宫聚仁), 太棒了🥹. 祝大家新的一年心想事成</p>
 <p><video width="auto%" preload="auto" muted="" controls=""><source src="https://www.sddtc.florist/media/video/2023-01-22-shouai.mp4" type="video/mp4"></video></p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2022-10-21-outside-in-vs-inside-out/">业务开发是前端驱动后端？亦或是后端提供服务给前端？</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2023-02-06-working-as-a-consultant-plus-engineer/">伴君如伴虎, 那些略感遗憾的事</a></li>
 </ul>
 
@@ -610,7 +631,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2023-01-19-build-a-qq-group-robot/` was built on 2025-08-05T06:08:55.050Z -->
+		<!-- This page `/blog/2023-01-19-build-a-qq-group-robot/` was built on 2025-08-05T06:54:41.457Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

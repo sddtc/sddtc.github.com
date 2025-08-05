@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/shell/" class="post-tag">shell</a></li>
 </ul>
 
-<h3 id="linux-shell-date">linux下的shell date命令通常获取系统时间,例如：</h3>
+<div class="page-post">
+  <h3 id="linux-shell-date">linux下的shell date命令通常获取系统时间,例如：</h3>
 <pre class="language-vim" tabindex="0"><code class="language-vim">start<span class="token operator">=</span>$<span class="token number">1</span>
 end<span class="token operator">=</span>$<span class="token number">2</span>
 
@@ -567,6 +587,7 @@ fi</code></pre>
 custom_end<span class="token operator">=</span>`date <span class="token operator">-</span><span class="token keyword">d</span> <span class="token string">"${end} +1 day"</span> <span class="token string">"+%Y-%m-%d"</span>`
 custom_start1<span class="token operator">=</span>`date <span class="token operator">-</span><span class="token operator">-</span>date<span class="token operator">=</span><span class="token string">''</span>$start<span class="token string">' +1 day'</span> <span class="token operator">+</span><span class="token string">'%F'</span>`</code></pre>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-09-28-cpjslides/">Concurrent Programming in Java 翻译这是个坑</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-10-14-EI-capitan-jekyll-can-not-run/">Jekyll的EI Capitan jekyll can not run 解决方案</a></li>
 </ul>
 
@@ -589,7 +610,7 @@ custom_start1<span class="token operator">=</span>`date <span class="token opera
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-10-08-linux-custom-date/` was built on 2025-08-05T06:08:55.034Z -->
+		<!-- This page `/blog/2015-10-08-linux-custom-date/` was built on 2025-08-05T06:54:41.440Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

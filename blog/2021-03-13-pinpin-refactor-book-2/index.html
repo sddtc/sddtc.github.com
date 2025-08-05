@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/book-notes/" class="post-tag">book notes</a></li>
 </ul>
 
-<p><picture><source type="image/avif" srcset="/sddtc.github.com/blog/2021-03-13-pinpin-refactor-book-2/-j8xPo9AgI-320.avif 320w"><source type="image/webp" srcset="/sddtc.github.com/blog/2021-03-13-pinpin-refactor-book-2/-j8xPo9AgI-320.webp 320w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2021-03-13-pinpin-refactor-book-2/-j8xPo9AgI-320.png" alt="2021-02-02-OB7st5-6Qdhz1" width="320" height="237"></picture></p>
+<div class="page-post">
+  <p><picture><source type="image/avif" srcset="/sddtc.github.com/blog/2021-03-13-pinpin-refactor-book-2/-j8xPo9AgI-320.avif 320w"><source type="image/webp" srcset="/sddtc.github.com/blog/2021-03-13-pinpin-refactor-book-2/-j8xPo9AgI-320.webp 320w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2021-03-13-pinpin-refactor-book-2/-j8xPo9AgI-320.png" alt="2021-02-02-OB7st5-6Qdhz1" width="320" height="237"></picture></p>
 <p>一个分层良好的系统, 应该将处理用户界面和处理业务逻辑的代码分开. 之所以决定把读书笔记分出来写是因为最近写 <code>Android</code> 发现分层真的很难良好. <code>viewmodel</code> 的责任太容易越线了.
 首先作者提出为什么把界面和业务逻辑分开是好的实践:</p>
 <ul>
@@ -565,6 +585,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 <h4 id="reference">Reference</h4>
 <p><a href="https://www.sddtc.florist/posts/2020/12/18/pinpin-refactor-book.html">[读书笔记] 品品《重构》这本书嗷</a></p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2021-02-28-this-is-software-engineer/">读 《这就是软件工程师》 有感</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2021-03-28-new-sso-platform/">登录系统的蜕变之路</a></li>
 </ul>
 
@@ -587,7 +608,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2021-03-13-pinpin-refactor-book-2/` was built on 2025-08-05T06:08:55.049Z -->
+		<!-- This page `/blog/2021-03-13-pinpin-refactor-book-2/` was built on 2025-08-05T06:54:41.456Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

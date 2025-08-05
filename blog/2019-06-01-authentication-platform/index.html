@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/auth/" class="post-tag">auth</a></li>
 </ul>
 
-<h2 id="facebook">Facebook</h2>
+<div class="page-post">
+  <h2 id="facebook">Facebook</h2>
 <p>开发者平台: <a href="https://developers.facebook.com/apps/">developers.facebook.com</a>
 Facebook 登录说明文档: <a href="https://developers.facebook.com/docs/facebook-login">Facebook-login</a></p>
 <p>优点：</p>
@@ -643,6 +663,7 @@ OAuth Apps说明文档: <a href="https://developer.github.com/apps/building-oaut
 <p>事实证明，Facebook &amp; Google 这两家公司的文档做得太完备了，出乎我的意料，满满的友好度和诚意， 尤其是对比了一下国内的一些开发说明文档。
 想自己开发APP的开发者，可以根据自己的APP风格，选择合适的第三方登陆平台。</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2019-05-25-authentication-guide/">身份认证生存指南</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2019-08-21-dig-out-timeout-errors-on-js/">浅淡 ETIMEDOUT &amp; ESOCKETTIMEDOUT &amp; Socket hang up</a></li>
 </ul>
 
@@ -665,7 +686,7 @@ OAuth Apps说明文档: <a href="https://developer.github.com/apps/building-oaut
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2019-06-01-authentication-platform/` was built on 2025-08-05T06:08:55.047Z -->
+		<!-- This page `/blog/2019-06-01-authentication-platform/` was built on 2025-08-05T06:54:41.452Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

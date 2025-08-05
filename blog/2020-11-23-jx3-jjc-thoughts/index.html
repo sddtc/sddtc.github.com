@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/life/" class="post-tag">life</a></li>
 </ul>
 
-<p>我是一个剑网三玩家，剑网三玩家有好多好多的 🏷️ : PVE, PVP, PV阵营, PV金, PV截图, PV贴吧, PV资历, PV奇遇..  由于工作时间的约束, 我大概转 PVP 很久了, 刚开始的时候
+<div class="page-post">
+  <p>我是一个剑网三玩家，剑网三玩家有好多好多的 🏷️ : PVE, PVP, PV阵营, PV金, PV截图, PV贴吧, PV资历, PV奇遇..  由于工作时间的约束, 我大概转 PVP 很久了, 刚开始的时候
 经常大攻防和战场. 那时候竞技场要组排, 我没有入坑. 直到后来开启了散排模式, 一发不可收拾的开始沉迷散排的竞技世界.
 那个时候什么都不在乎, 没有输赢的执念, 离铁分奴相距甚远, 享受和不同心法的随机排列组合. 哪怕我很清楚官配这种东西, 我也没有刻意的追求最优配置组排上分. 可能还是因为心态有点佛, 佛的原因
 是因为我知道自己投入不了太多的精力.
@@ -573,6 +593,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 </ul>
 <p>不说了, 回家竞技去了.</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2020-11-16-kotlin-compatibility-intro/">由 java.lang.NoSuchMethodError 引发的思考之二进制兼容性</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2020-12-01-android-core-applications-fundamentals/">Fundamentals 是基本原理的意思</a></li>
 </ul>
 
@@ -595,7 +616,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2020-11-23-jx3-jjc-thoughts/` was built on 2025-08-05T06:08:55.048Z -->
+		<!-- This page `/blog/2020-11-23-jx3-jjc-thoughts/` was built on 2025-08-05T06:54:41.454Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

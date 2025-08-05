@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/life/" class="post-tag">life</a></li>
 </ul>
 
-<p>又到了一年的末尾，做年度总结<s>白色相薄</s>的季节。刚才回顾了自己从 2016 年到 2019 年的总结，还是很微妙的，很多事情在变化，很多事情又没有变化。没有变化的那些，大概就是能构成
+<div class="page-post">
+  <p>又到了一年的末尾，做年度总结<s>白色相薄</s>的季节。刚才回顾了自己从 2016 年到 2019 年的总结，还是很微妙的，很多事情在变化，很多事情又没有变化。没有变化的那些，大概就是能构成
 &quot;人格&quot;的东西。 比如我一直在玩剑三 😂，比如我的手机两代都是谷歌亲儿子，比如我一直都在看动画，比如我一直很在意自己有没有好好读书，比如我一直都很喜欢含有咖啡因/酒精的饮料。</p>
 <p>今年发生了很多事情，因为新冠的原因没有和全家人一起过除夕，年假也是睡醒了通知你需要再多放一天睡醒了通知你延长上班时间最终开始漫长的 WFH 时期。 大概也是那个时候体会到国家真的强大了，
 那种对生命的尊重，那种执行的魄力，到经济受挫餐馆商场无法正常营业，甚至也切实的感觉到了公司因此受到的冲击，这种严峻时期的啊，感觉自己真的是渺小。</p>
@@ -574,6 +594,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 更多的使命来达成更多的事情。</p>
 <p>明年大概会很忙， 除了进行中的学习，需要再来一场知识的沉淀的总结。</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2020-12-18-pinpin-refactor-book/">品品《重构》这本书嗷</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2021-01-11-kotlin-ktx/">Android KTX【卡通侠神马的</a></li>
 </ul>
 
@@ -596,7 +617,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2020-12-27-my-annual-rank-2020/` was built on 2025-08-05T06:08:55.048Z -->
+		<!-- This page `/blog/2020-12-27-my-annual-rank-2020/` was built on 2025-08-05T06:54:41.455Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

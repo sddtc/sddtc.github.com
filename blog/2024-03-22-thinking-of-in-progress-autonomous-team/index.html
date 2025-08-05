@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/software-engineer/" class="post-tag">software engineer</a></li>
 </ul>
 
-<p>“人在江湖, 身不由己” 常常指的是在有限的环境里面被迫适应, 因而无可奈何的改变自己的自嘲的话罢了.
+<div class="page-post">
+  <p>“人在江湖, 身不由己” 常常指的是在有限的环境里面被迫适应, 因而无可奈何的改变自己的自嘲的话罢了.
 去年有幸加入了一个中等规模的项目, 里面有很不错的工程文化, 给我的感受便是每个团队有很高的话语权, 团队自治, 自己去实现各种功能服务. 自己去和上下游
 服务打交道. 自己做技术方案, 自己做持续交付. 但是渐渐的感觉到很多事情并不是那么简单:</p>
 <ul>
@@ -565,6 +585,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 也曾想过为什么一个运行了很久的项目竟是这样, 也见过快速发展不断扩张的部门的样子, 也见过已经进入大气层的样子. 所以也会安尝试自我安慰, 这种成长中的项目, 大概应该再多等等, 多看看, 多试试.
 但是留给我的时间好像不多了, 日常繁杂都是尘埃. 所有的困惑、痛苦的出口, 那才是星辰大海.</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2024-02-03-reaction-to-thatisbiz.md/">&lt;商业就是这样&gt;听后感</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2024-04-04-learning-continuous-compliance/">技术雷达 Continuous Compliance - 持续合规性：确保整个软件生命周期的安全性</a></li>
 </ul>
 
@@ -587,7 +608,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2024-03-22-thinking-of-in-progress-autonomous-team/` was built on 2025-08-05T06:08:55.051Z -->
+		<!-- This page `/blog/2024-03-22-thinking-of-in-progress-autonomous-team/` was built on 2025-08-05T06:54:41.458Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

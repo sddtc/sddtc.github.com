@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/ruby/" class="post-tag">ruby</a></li>
 </ul>
 
-<p>EI Capitan是mac目前最新版的系统，作为更新强迫症患者总是第一时间更新, 只是这一次才发现，原来mac也会对用户安装的程序有细微的影响。。
+<div class="page-post">
+  <p>EI Capitan是mac目前最新版的系统，作为更新强迫症患者总是第一时间更新, 只是这一次才发现，原来mac也会对用户安装的程序有细微的影响。。
 事情比较简单，更新了系统，jekyll用不了了. 多亏坐在我旁边好奇的lily发现了这个bug。。！
 本来本机安装的ruby的路径(/System/Library/Frameworks/Ruby.framework/Versions/2.0/usr/lib/ruby/gems/2.0.0/gems)下应该是有jekyll组件的. 没了重新安装时，出现了无法写入&quot;/usr/bin/jekyll&quot;的错误: no permission
 安装方式</p>
@@ -624,6 +644,7 @@ Successfully uninstalled celluloid<span class="token operator">-</span><span cla
 </ol>
 <pre class="language-vim" tabindex="0"><code class="language-vim">gem <span class="token keyword">list</span> <span class="token operator">-</span><span class="token operator">-</span>local</code></pre>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-10-08-linux-custom-date/">Shell自定义 date 命令</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-10-14-java-binary-search/">Java 实现二分法回忆片段和解决方案</a></li>
 </ul>
 
@@ -646,7 +667,7 @@ Successfully uninstalled celluloid<span class="token operator">-</span><span cla
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-10-14-EI-capitan-jekyll-can-not-run/` was built on 2025-08-05T06:08:55.035Z -->
+		<!-- This page `/blog/2015-10-14-EI-capitan-jekyll-can-not-run/` was built on 2025-08-05T06:54:41.440Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/big-data/" class="post-tag">big data</a></li>
 </ul>
 
-<h3 id="">此处必须引入一段写的非常彻底的文章片段:</h3>
+<div class="page-post">
+  <h3 id="">此处必须引入一段写的非常彻底的文章片段:</h3>
 <p>&quot;</p>
 <h3 id="mapreduce-4">首先讲讲物理实体，参入mapreduce作业执行涉及4个独立的实体：</h3>
 <p>客户端（client）：编写mapreduce程序，配置作业，提交作业，这就是程序员完成的工作；
@@ -595,6 +615,7 @@ Hdfs：保存作业的数据、配置信息等等，最后的结果也是保存�
 <p>参考资料:
 <a href="http://www.cnblogs.com/sharpxiajun/p/3151395.html">hadoop 学习笔记：mapreduce框架详解</a></p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-03-27-something-about-python-web/">豆瓣和python的一个小故事</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-04-14-linux-dirs/">shell常用压缩命令</a></li>
 </ul>
 
@@ -617,7 +638,7 @@ Hdfs：保存作业的数据、配置信息等等，最后的结果也是保存�
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-04-07-mr/` was built on 2025-08-05T06:08:55.027Z -->
+		<!-- This page `/blog/2015-04-07-mr/` was built on 2025-08-05T06:54:41.436Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/auth/" class="post-tag">auth</a></li>
 </ul>
 
-<h3 id="abstract">Abstract</h3>
+<div class="page-post">
+  <h3 id="abstract">Abstract</h3>
 <blockquote>
 <p>OpenID Connect 1.0 is a simple identity layer on top of the OAuth 2.0 protocol. It enables Clients to verify the identity of the End-User based on the authentication performed by an Authorization Server, as well as to obtain basic profile information about the End-User in an interoperable and REST-like manner.</p>
 </blockquote>
@@ -741,6 +761,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 <li>The registration process SHOULD display this URL to the person registering the Client if it is given.</li>
 </ul>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2018-08-22-what-does-sddtc-say-one/">AWS Serverless 应用实践学习(1)</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2018-09-07-js-winston-config/">winston 日志设置指南</a></li>
 </ul>
 
@@ -763,7 +784,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-08-28-openid-well-known-one/` was built on 2025-08-05T06:08:55.045Z -->
+		<!-- This page `/blog/2018-08-28-openid-well-known-one/` was built on 2025-08-05T06:54:41.450Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

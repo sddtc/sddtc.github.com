@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/mobile/" class="post-tag">mobile</a></li>
 </ul>
 
-<p>昨天偶然看到了一个斯坦福大学的公开课，具体是怎么个偶然法，我已经忘记了...但是iOS是一个很酷的东西,还是很值得学习的. 作为一个工程师，涉猎和理解，是相互的
+<div class="page-post">
+  <p>昨天偶然看到了一个斯坦福大学的公开课，具体是怎么个偶然法，我已经忘记了...但是iOS是一个很酷的东西,还是很值得学习的. 作为一个工程师，涉猎和理解，是相互的
 第1课-第4课：</p>
 <ol>
 <li>MVC: iOS的设计模式也同样遵循MVC，并且是不提倡M和V通信</li>
@@ -614,6 +634,7 @@ swift是支持重载的，并且是单继承，但是Objective-C不支持，因�
 2.初始化之前就需要使用的实例，需要判nil情况，实例后面添加问号</p>
 <p><a href="http://www.swiftv.cn/course/i7ahl5gn">斯坦福大学公开课-iOS8</a></p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-08-27-something-about-git-or-github/">Git版本管理相关命令合集</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-09-08-log4j-system-logs-printed/">Log4j-业务日志输出规则实践</a></li>
 </ul>
 
@@ -636,7 +657,7 @@ swift是支持重载的，并且是单继承，但是Objective-C不支持，因�
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-09-05-stanford-ios8-swift/` was built on 2025-08-05T06:08:55.033Z -->
+		<!-- This page `/blog/2015-09-05-stanford-ios8-swift/` was built on 2025-08-05T06:54:41.439Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

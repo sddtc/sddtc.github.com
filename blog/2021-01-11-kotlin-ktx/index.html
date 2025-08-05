@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/mobile/" class="post-tag">mobile</a></li>
 </ul>
 
-<p>Android KTX 是一组 Kotlin 扩展库。它被包含在 Android Jetpack 和其他 Android 库中。 KTX 扩展为 Jetpack，Android 平台和其他 API 提供简洁的，地道的 Kotlin
+<div class="page-post">
+  <p>Android KTX 是一组 Kotlin 扩展库。它被包含在 Android Jetpack 和其他 Android 库中。 KTX 扩展为 Jetpack，Android 平台和其他 API 提供简洁的，地道的 Kotlin
 语言用法。为此，这些扩展利用了以下几种 Kotlin 的语言功能：</p>
 <ul>
 <li>Extension functions</li>
@@ -583,6 +603,7 @@ sharedPreferences<span class="token punctuation">.</span><span class="token func
 最后，<code>SharedPreferences.edit()</code> 签名包含 <code>inline</code> 关键字。 此关键字告诉 <code>Kotlin</code> 编译器，每次使用该函数时，都应复制并粘贴（或内联）该函数的已编译字节码。 这样避免了每次调用此函数时为每个操作实例化新类的开销。</p>
 <p>这种使用 <code>lambda</code> 传递代码，应用于具有可被覆盖的默认值以及使用内联扩展功能将这些行为添加到现有 <code>API</code> 的模式是 <code>Android KTX</code> 库提供的典型增强功能。</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2020-12-27-my-annual-rank-2020/">我的 2020 年度总结</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2021-02-05-use-gists-in-blog-to-show-code-snapshot/">运用 Gists 来进行嵌套代码块管理</a></li>
 </ul>
 
@@ -605,7 +626,7 @@ sharedPreferences<span class="token punctuation">.</span><span class="token func
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2021-01-11-kotlin-ktx/` was built on 2025-08-05T06:08:55.049Z -->
+		<!-- This page `/blog/2021-01-11-kotlin-ktx/` was built on 2025-08-05T06:54:41.455Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

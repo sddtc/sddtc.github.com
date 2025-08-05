@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/big-data/" class="post-tag">big data</a></li>
 </ul>
 
-<p>2009年由Netflix发起的Netflix Prize百万美金竞赛，绝对是推荐系统领域最标致性的事件，这次比赛不但吸引了众多专业人士开始投身于推荐系统领域的研究工作，也让这项技术从学术圈真正地进入到了商业界，引发了热烈的讨论并逐渐深入到了商业的核心腹地，功德无量。当然，最受益的肯定还是Netflix公司自己，不仅大有取代Amazon成为新一代推荐引擎之王的架势，而且从商业回报本身上看也无疑取得了非常巨大的回报。7年过去了，Netflix推荐系统的现状如何呢？ResysChina将带来最新的深度解读。</p>
+<div class="page-post">
+  <p>2009年由Netflix发起的Netflix Prize百万美金竞赛，绝对是推荐系统领域最标致性的事件，这次比赛不但吸引了众多专业人士开始投身于推荐系统领域的研究工作，也让这项技术从学术圈真正地进入到了商业界，引发了热烈的讨论并逐渐深入到了商业的核心腹地，功德无量。当然，最受益的肯定还是Netflix公司自己，不仅大有取代Amazon成为新一代推荐引擎之王的架势，而且从商业回报本身上看也无疑取得了非常巨大的回报。7年过去了，Netflix推荐系统的现状如何呢？ResysChina将带来最新的深度解读。</p>
 <p>早年举办Netflix Prize竞赛的时候，Netflix推荐系统的主要目标是预测用户对某部影片的评分（1-5分），因为当年Netflix的主营业务还是DVD租赁，打分是Netflix最主要的获取用户反馈的方式。Netflix虽然仍然在使用着由Netflix Prize衍生出来的算法，但目前Netflix的核心业务模式已经转变为在线流媒体，因此Netflix可以从更多维度去了解用户的使用行为，比如，如何观看（使用什么设备、每天的什么时间，每周的哪天，观看的频度），用户是如何发现视频的，甚至是哪些视频已经推荐给了用户但并未被播放，等等。Netflix的最新用户数据：注册会员6500万人，每天观看视频的总时长1亿个小时。</p>
 <p>Netflix新一代推荐系统的承载形式是「会员首页」，这也是每个会员登录之后的第一页，平均每3小时的视频播放中就有2个小时是从这里发起的。大家都知道，首页几乎是所有产品最最重要的页面，Netflix敢于把首页基于推荐系统来驱动，一来说明他们对推荐系统的重视程度，二来也是表明他们对自己推荐技术的高度自信。</p>
 <h3 id="netflix-2">Netflix讲解了使用到的几种最核心的推荐算法。</h3>
@@ -573,6 +593,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 <p>Netflix的推荐在整个产品里面可以说是无处不在，从流播放时长来看，80%的用户选择都或多或少受到了推荐的影响。其余的20%来自于搜索，搜索也有自己的算法。用户通常都是搜索影片、演员或者是我们目录提供的基因；我们综合使用了信息检索及相关技术为用户提供最相关的搜索结果。但是，因为用户的搜索词也会经常触碰到不在我们库里的影片、演员或者是基因，再或者是一些宽泛概念，以至于搜索也变成了某种推荐问题。比如以下图三为例，1）左图是用户搜索「usual」的结果，推测用户很可能是要搜索影片「The Usual Suspects」，但这部影片Netflix库里没有，图中显示的搜索结果是基于这个推测做出的推荐结果；2）右图是用户搜索「fren」的结果，首先是显示名字里面包含fren的影片，左下角显示相关的演员，然后下面是推测用户是要找「French Movies」给出的推荐结果。在这些例子里面，当「搜索」没有结果的时候，推荐会接管用户请求给出来推荐结果。</p>
 <p>本文转自: <a href="https://mp.weixin.qq.com/s?__biz=MzA4OTk5OTQzMg==&amp;mid=2449231099&amp;idx=1&amp;sn=6ff30a52fbbe9d01ef022661c6325dc4">Netflix推荐系统的最新解读：算法、商业价值与创新</a></p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2016-04-17-distributed-cache-in-mapreduce/">分布式缓存在 MapReduce 上的使用</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2016-07-21-performance-test-qps-tps/">性能测试 QPS 和 TPS 的概念解读</a></li>
 </ul>
 
@@ -595,7 +616,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2016-06-26-netflix-recsys-methods/` was built on 2025-08-05T06:08:55.038Z -->
+		<!-- This page `/blog/2016-06-26-netflix-recsys-methods/` was built on 2025-08-05T06:54:41.443Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

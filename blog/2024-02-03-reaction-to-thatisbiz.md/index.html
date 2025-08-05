@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/podcast/" class="post-tag">podcast</a></li>
 </ul>
 
-<p>去年 12 月下载了小宇宙. 在上下班的路上开始收听播客. 在此之前一直是网易云的日推陪伴我, 也偶尔为了学习英语听听开言的节目. 到今天为止我看了看自己 62 小时的总收听时长还是有些惊讶的,
+<div class="page-post">
+  <p>去年 12 月下载了小宇宙. 在上下班的路上开始收听播客. 在此之前一直是网易云的日推陪伴我, 也偶尔为了学习英语听听开言的节目. 到今天为止我看了看自己 62 小时的总收听时长还是有些惊讶的,
 当然不出意外的是我都只听了一款节目. 也就是标题所说. 遇见它也是靠着首页推荐啦, 感激.
 两位主播我都很喜欢, 在节目一集一集的收听里, 不但能感受到他们表达见解时谦逊严谨的词语, 也同样感受到了每一期功课做的也是相当的充分. 商业就是这样讲的是各种各样不同领域的商业模式, 商业案例,
 外行的我听起来新奇又感觉那每一个案例都充满着舒服的逻辑. 在身上同样会背负着写各种“案例”的压力之下, 听起来还是熟悉又陌生的.
@@ -576,6 +596,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 <li>滴滴的商业模式真的不知道能不能按照预想的进行下去, 不过本人最近搭滴滴的体验可不是很好的. 有了更全面的角度看待这家公司, 怎么说呢, 道阻且长吧</li>
 </ul>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2023-12-26-sddtc-is-a-florist.md/">花匠</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2024-03-22-thinking-of-in-progress-autonomous-team/">中型项目组织的自治团队模式思考</a></li>
 </ul>
 
@@ -598,7 +619,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2024-02-03-reaction-to-thatisbiz.md/` was built on 2025-08-05T06:08:55.051Z -->
+		<!-- This page `/blog/2024-02-03-reaction-to-thatisbiz.md/` was built on 2025-08-05T06:54:41.457Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/java/" class="post-tag">java</a></li>
 </ul>
 
-<h3 id="">情景说明：</h3>
+<div class="page-post">
+  <h3 id="">情景说明：</h3>
 <p>处理日志文件数据，程序会将url解码，解码时抛出异常：URLDecoder: Illegal hex characters in escape (%) pattern For input String '&lt; ' or '= ' or '&lt;a'
 一般我们会将url解码之后持久化，例如、把%23解码为#，把%20解码为空格，或者把%3D解码为等号等. 然而大量的日志会在url加上未知的字符串，更不用说一些想要进行攻击的url形式了，如果单纯的对url进行如下的解码，显然会抛出异常：</p>
 <pre class="language-java" tabindex="0"><code class="language-java"><span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>net<span class="token punctuation">.</span></span><span class="token class-name">URLDecoder</span></span><span class="token punctuation">;</span>
@@ -569,6 +589,7 @@ url <span class="token operator">=</span> url<span class="token punctuation">.</
 
 url <span class="token operator">=</span> <span class="token class-name">URLDecoder</span><span class="token punctuation">.</span><span class="token function">decode</span><span class="token punctuation">(</span>url<span class="token punctuation">,</span> <span class="token string">"UTF-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-12-01-leetcode-sort-colors/">Sort Colors 解决方案</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-12-08-mysql-deadlock-transaction/">记一次mysql的Deadlock found when trying to get lock try restarting transaction</a></li>
 </ul>
 
@@ -591,7 +612,7 @@ url <span class="token operator">=</span> <span class="token class-name">URLDeco
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-12-02-java-urldecoder-decode/` was built on 2025-08-05T06:08:55.037Z -->
+		<!-- This page `/blog/2015-12-02-java-urldecoder-decode/` was built on 2025-08-05T06:54:41.441Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

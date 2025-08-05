@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/spider/" class="post-tag">spider</a></li>
 </ul>
 
-<p>今天无意中看到<a href="http://mp.weixin.qq.com/s?__biz=MjM5MzA0ODkyMA==&amp;mid=405276891&amp;idx=1&amp;sn=ebd98476ad94725d57d2570bde17e45d&amp;scene=23&amp;srcid=0128POvbcBkiuZTd9TG7aCs2#rd">developerWorks</a>的一篇抓微信红包图片的方法，在电脑上试了一下，第一次看到APP的数据包，还蛮新奇的，特此记录一下，等大年三十红包接口开放了，我们一家可以看免费图片了：）虽然并不想看【。
+<div class="page-post">
+  <p>今天无意中看到<a href="http://mp.weixin.qq.com/s?__biz=MjM5MzA0ODkyMA==&amp;mid=405276891&amp;idx=1&amp;sn=ebd98476ad94725d57d2570bde17e45d&amp;scene=23&amp;srcid=0128POvbcBkiuZTd9TG7aCs2#rd">developerWorks</a>的一篇抓微信红包图片的方法，在电脑上试了一下，第一次看到APP的数据包，还蛮新奇的，特此记录一下，等大年三十红包接口开放了，我们一家可以看免费图片了：）虽然并不想看【。
 有3个步骤(针对iPhone；安卓的在开发者平台那个APP有文章说明，在此不做记录)：</p>
 <h3 id="1-udid">1.获取自己手机的udid</h3>
 <p>连接iTunes，手机信息，点击'序列号'，会出现UDID</p>
@@ -568,6 +588,7 @@ or Wechat红包
 <h3 id="4-rvictl">4.事成之后,将自己的设备从rvictl移除</h3>
 <pre class="language-vim" tabindex="0"><code class="language-vim"><span class="token operator">></span>rvictl <span class="token operator">-</span><span class="token keyword">x</span> $<span class="token punctuation">{</span>udid<span class="token punctuation">}</span></code></pre>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-12-29-twitter-log-bookkeeper/">Twitter 高性能分布式日志系统架构解析</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2016-03-01-combine-github-and-gitlab/">一台电脑同时支持 github 和 gitlab 的提交</a></li>
 </ul>
 
@@ -590,7 +611,7 @@ or Wechat红包
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2016-01-28-wechat-picture-catch/` was built on 2025-08-05T06:08:55.038Z -->
+		<!-- This page `/blog/2016-01-28-wechat-picture-catch/` was built on 2025-08-05T06:54:41.442Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

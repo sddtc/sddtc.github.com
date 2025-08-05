@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/algorithm/" class="post-tag">algorithm</a></li>
 </ul>
 
-<p>Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.
+<div class="page-post">
+  <p>Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.
 Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.
 Could you come up with an one-pass algorithm using only constant space?</p>
 <p>解这道题，也可以再学习下 <a href="https://zh.wikipedia.org/zh/%E8%AE%A1%E6%95%B0%E6%8E%92%E5%BA%8F">计数排序</a></p>
@@ -582,6 +602,7 @@ Could you come up with an one-pass algorithm using only constant space?</p>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-11-26-google-word2vec/">解读 word2vec 项目</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-12-02-java-urldecoder-decode/">URLDecoder 处理文件的 case 小记</a></li>
 </ul>
 
@@ -604,7 +625,7 @@ Could you come up with an one-pass algorithm using only constant space?</p>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-12-01-leetcode-sort-colors/` was built on 2025-08-05T06:08:55.036Z -->
+		<!-- This page `/blog/2015-12-01-leetcode-sort-colors/` was built on 2025-08-05T06:54:41.441Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

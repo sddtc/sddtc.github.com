@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/women/" class="post-tag">women</a></li>
 </ul>
 
-<p>总是在想写点东西的时候发现肚子里的墨水真的好少。还是想聊聊自己从一个旁观者变成参与者的一些感触。</p>
+<div class="page-post">
+  <p>总是在想写点东西的时候发现肚子里的墨水真的好少。还是想聊聊自己从一个旁观者变成参与者的一些感触。</p>
 <p>第一个影响我的人，大概是我的奶奶。我的奶奶是一名小学老师，在我上小学的时候，虽然奶奶已经退休了，然而她很多同事在我上小学的时候都相当的关照我。奶奶一直希望我也成为一名老师，叛逆期的我总是说不要。然而教书育人，传承知识的基因大概一直都在我的身体里。
 高中之后我开始喜欢孙燕姿【<s>暴露年龄系列</s>，至今忘不掉那个炎热的夏天在六楼的家里，🎧 传来慵懒的&lt;&lt;一样的夏天&gt;&gt;那首歌，燕姿的声音，才华，性格同样潜移默化的影响着我。
 毕业之后我去了北京，那个时候家人能放心我一个人单挑 Boss 的主要原因还是因为姐姐在北京已经闯荡出了一片天地。姐姐同样是在奶奶的小皮鞭鞭策之下成长起来的，且是我身边最让我崇拜的人之一。没错我是个隐形姐控。她也是现在最支持我的人之一，我非常感激。
@@ -582,6 +602,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 最后就晒一张小小的奖状，下次继续努力。</p>
 <p><picture><source type="image/avif" srcset="/sddtc.github.com/blog/2021-04-10-with-cgc/jNZntY8EP_-729.avif 729w"><source type="image/webp" srcset="/sddtc.github.com/blog/2021-04-10-with-cgc/jNZntY8EP_-729.webp 729w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2021-04-10-with-cgc/jNZntY8EP_-729.jpeg" alt="2021-04-10-edlu6h-cgc" width="729" height="1031"></picture></p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2021-03-28-new-sso-platform/">登录系统的蜕变之路</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2021-07-03-tonality/">调性</a></li>
 </ul>
 
@@ -604,7 +625,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2021-04-10-with-cgc/` was built on 2025-08-05T06:08:55.049Z -->
+		<!-- This page `/blog/2021-04-10-with-cgc/` was built on 2025-08-05T06:54:41.456Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

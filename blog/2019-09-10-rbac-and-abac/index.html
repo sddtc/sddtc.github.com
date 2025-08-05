@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/auth/" class="post-tag">auth</a></li>
 </ul>
 
-<h2 id="abac-rbac">ABAC 还是 RBAC ?</h2>
+<div class="page-post">
+  <h2 id="abac-rbac">ABAC 还是 RBAC ?</h2>
 <p>Role Based Access Control 是从 1970 年发起的，被行业很好的接受并成为业内标准。然而伴随着 Attribute Based Access Control 的到来，许多公司将注意力转移到 ABAC 上来，因为他们体会到了这种粒度更加细致的权限分配所带来的优势。</p>
 <p>在深入了解 ABAC 之前，让我们先分别了解一下他们。</p>
 <h2 id="rbac">RBAC</h2>
@@ -585,6 +605,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 <p>所以，做适合自己的选择吧！ 嗷呜~</p>
 <p>本文译自：<a href="https://objectpartners.com/2017/06/16/abac-or-rbac/">ABAC or RBAC</a></p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2019-09-06-simple-understanding-about-xss-cors/">对于简单的 XSS 攻击的概念梳理</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2019-12-28-my-annual-rank-2019/">我的 2019 年度总结</a></li>
 </ul>
 
@@ -607,7 +628,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2019-09-10-rbac-and-abac/` was built on 2025-08-05T06:08:55.048Z -->
+		<!-- This page `/blog/2019-09-10-rbac-and-abac/` was built on 2025-08-05T06:54:41.453Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

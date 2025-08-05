@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/shell/" class="post-tag">shell</a></li>
 </ul>
 
-<h3 id="mac-2">Mac启动加载文件位置:可设置环境变量</h3>
+<div class="page-post">
+  <h3 id="mac-2">Mac启动加载文件位置:可设置环境变量</h3>
 <ol>
 <li>首先要知道你使用的 <code>Mac OS X</code> 是什么样的 <code>Shell</code>
 使用命令:</li>
@@ -573,6 +593,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 <pre class="language-vim" tabindex="0"><code class="language-vim">#<span class="token keyword">source</span> <span class="token operator">/</span>etc<span class="token operator">/</span><span class="token keyword">profile</span>
 $<span class="token keyword">source</span> <span class="token operator">.</span>bash_profile（这是文件名）</code></pre>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-07-31-mysql-simple-cache-config/">MYSQL服务器端的高级优化实践</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-08-07-linux-dir-about-top/">Linux关于top命令的说明</a></li>
 </ul>
 
@@ -595,7 +616,7 @@ $<span class="token keyword">source</span> <span class="token operator">.</span>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-08-01-mac-profile-path/` was built on 2025-08-05T06:08:55.032Z -->
+		<!-- This page `/blog/2015-08-01-mac-profile-path/` was built on 2025-08-05T06:54:41.438Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

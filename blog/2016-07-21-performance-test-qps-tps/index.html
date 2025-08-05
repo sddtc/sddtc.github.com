@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/quality-engineer/" class="post-tag">quality engineer</a></li>
 </ul>
 
-<p>本文转自<a href="https://dearhwj.gitbooks.io/itbook/content/test/performance_test_qps_tps.html">性能测试基础知识—QPS和TPS</a></p>
+<div class="page-post">
+  <p>本文转自<a href="https://dearhwj.gitbooks.io/itbook/content/test/performance_test_qps_tps.html">性能测试基础知识—QPS和TPS</a></p>
 <h3 id="">基本概念</h3>
 <p>QPS: Queries Per Second意思是“每秒查询率”，是一台服务器每秒能够相应的查询次数，是对一个特定的查询服务器在规定时间内所处理流量多少的衡量标准。
 TPS: 是TransactionsPerSecond的缩写，也就是事务数/秒。它是软件测试结果的测量单位。一个事务是指一个客户机向服务器发送请求然后服务器做出反应的过程。客户机在发送请求时开始计时，收到服务器响应后结束计时，以此来计算使用的时间和完成的事务个数，最终利用这些信息来估计得分。客户机使用加权协函数平均方法来计算客户机的得分，测试软件就是利用客户机的这些信息使用加权协函数平均方法来计算服务器端的整体TPS得分。
@@ -572,6 +592,7 @@ QPS（TPS）= 并发数/平均响应时间 或者 并发数 = QPS*平均响应�
 另外根据经验统计，对于1个JAVA开发的WEB系统（别的我没统计过，给不出数据），一般1台双CPU、2G内存的服务器上可支持的最大并发数不超过500个（这个状态下大部分操作都是超时报错而且服务器很容易宕机，其实没什么实际意义），可正常使用（单步非大数据量操作等待时间不超过20秒）的最大并发数不超过300个。
 假设你的10万同时在线用户转换的并发数是9000个，那么你最少需要这样的机器18台，建议不少于30台。当然，你要是买个大型服务器，里面装有200个CPU、256G的内存，千兆光纤带宽，就算是10万个并发用户，那速度，也绝对是嗖嗖的。</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2016-06-26-netflix-recsys-methods/">Netflix 推荐系统的最新解读：算法、商业价值与创新</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2016-11-17-rdb-aof/">Redis 的 RDB&amp;AOF 理解</a></li>
 </ul>
 
@@ -594,7 +615,7 @@ QPS（TPS）= 并发数/平均响应时间 或者 并发数 = QPS*平均响应�
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2016-07-21-performance-test-qps-tps/` was built on 2025-08-05T06:08:55.039Z -->
+		<!-- This page `/blog/2016-07-21-performance-test-qps-tps/` was built on 2025-08-05T06:54:41.443Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

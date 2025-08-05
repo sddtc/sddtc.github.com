@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/software-engineer/" class="post-tag">software engineer</a></li>
 </ul>
 
-<h3 id="log4j-2">log4j 业务日志打印配置</h3>
+<div class="page-post">
+  <h3 id="log4j-2">log4j 业务日志打印配置</h3>
 <p>日志通常分为两种：系统日志和业务数据日志
 Log4j由三个重要的组件构成：日志信息的优先级，日志信息的输出目的地，日志信息的输出格式。
 其中，Log4j提供的appender有以下几种：
@@ -645,6 +665,7 @@ dempOneCustomLog<span class="token operator">.</span><span class="token function
 <p>主要参考：<a href="http://houfeng0923.iteye.com/blog/1264849">日志框架（一）----- log4j使用</a>
 关于日志框架的源码参考：<a href="http://singleant.iteye.com/blog/934593">java日志，需要知道的几件事(commons-logging,log4j,slf4j,logback)</a></p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-09-05-stanford-ios8-swift/">斯坦福大学冬季课程 iOS8 Swift 学习笔记</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-09-23-insertion-sort-list/">Insertion Sort List 解决方案</a></li>
 </ul>
 
@@ -667,7 +688,7 @@ dempOneCustomLog<span class="token operator">.</span><span class="token function
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-09-08-log4j-system-logs-printed/` was built on 2025-08-05T06:08:55.034Z -->
+		<!-- This page `/blog/2015-09-08-log4j-system-logs-printed/` was built on 2025-08-05T06:54:41.439Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

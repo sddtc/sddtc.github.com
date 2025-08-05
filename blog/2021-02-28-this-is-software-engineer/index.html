@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/book-notes/" class="post-tag">book notes</a></li>
 </ul>
 
-<p>当我在书店看到这本书的时候, 这本书的全称是 《&quot;前途丛书&quot;这就是软件工程师》, 副标题是 '用代码改变世界的人'. 之所以从万书丛中 pick 了它完全是因为好奇到底
+<div class="page-post">
+  <p>当我在书店看到这本书的时候, 这本书的全称是 《&quot;前途丛书&quot;这就是软件工程师》, 副标题是 '用代码改变世界的人'. 之所以从万书丛中 pick 了它完全是因为好奇到底
 书里会把软件工程师描绘成什么样? 和我走了这么久的路有没有什么重合，或者说我会不会在不知不觉中已经走远了 🌚.</p>
 <p>当我看到书中介绍的四个作者, 看到了左耳朵耗子. 好巧不巧这是我今天第二次看/听到这个名字. 我知道左耳朵应该是很久以前了, 我对他每一篇文章都很熟悉, 喜欢他的文笔, 观点,
 和他充满魅力的写作风格. 也因为他我第一次知道了技术布道师这个名词. 书中有些内容他的 <a href="https://coolshell.cn/"><code>CoolShell</code></a> 中就有. 然而我依旧非常开心能在
@@ -593,6 +613,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 <p>最近思考很多关于如何将遇到的问题抽象化, 拆解, 并设计独立解决方案. 从这本书里大概更加验证了这条路是一条必经之路.</p>
 <p>以上。</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2021-02-22-maven-publish-plugin-in-android/">使用 Gradle 插件发布 Android library 到 maven 远程仓库</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2021-03-13-pinpin-refactor-book-2/">品品《重构》这本书嗷 - 中</a></li>
 </ul>
 
@@ -615,7 +636,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2021-02-28-this-is-software-engineer/` was built on 2025-08-05T06:08:55.049Z -->
+		<!-- This page `/blog/2021-02-28-this-is-software-engineer/` was built on 2025-08-05T06:54:41.456Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -552,7 +571,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/websocket/" class="post-tag">websocket</a></li>
 </ul>
 
-<p>不论是chatGPT还是DeepSeek, 目前用户的交互界面仍然是以聊天框的形式出现, 其背后都离不开WebSocket技术.</p>
+<div class="page-post">
+  <p>不论是chatGPT还是DeepSeek, 目前用户的交互界面仍然是以聊天框的形式出现, 其背后都离不开WebSocket技术.</p>
 <blockquote>
 <p>WebSocket 是一种在客户端和服务器之间提供全双工通信的协议，允许实时、双向的数据传输。它通过持久连接而不是传统的请求-响应模式，减少了延迟和网络流量，适用于需要实时交互的应用，如在线游戏和聊天应用.</p>
 </blockquote>
@@ -580,6 +600,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 <p>整个下来的感受还是很开心的, 因为从0到1是勇气的开始, 而1到100便是日积月累的循规蹈矩. 2个项目打算在测试完善之后开源, 基于WebSocket技术的应用还是很有趣的.<br>
 以上.</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2025-07-22-bye-jekyll-hi-11ty/">博客静态页面生成工具从jekyll切换为11ty, 告别ruby 拥抱js</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/">Agent AI: Surveying the Horizons of Multimodal Interaction 读后感</a></li>
 </ul>
 
@@ -602,7 +623,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2025-07-24-websocket-chat-room/` was built on 2025-08-05T06:08:55.052Z -->
+		<!-- This page `/blog/2025-07-24-websocket-chat-room/` was built on 2025-08-05T06:54:41.459Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/java/" class="post-tag">java</a></li>
 </ul>
 
-<h3 id="java-2">java泛型的优势</h3>
+<div class="page-post">
+  <h3 id="java-2">java泛型的优势</h3>
 <p>泛型的好处是在编译的时候检查类型安全，确保你只能把正确类型的对象放入集合中，避免了在运行时出现ClassCastException。</p>
 <p>泛型是通过类型擦除来实现的，编译器在编译时擦除了所有类型相关的信息，所以在运行时不存在任何类型相关的信息。
 例如List<String>在运行时仅用一个List来表示。这样做的目的，是确保能和Java 5之前的版本开发二进制类库进行兼容。
@@ -577,6 +597,7 @@ objectList = stringList;  //compilation error incompatible types</String></Objec
 通过使用Object作为类型，可以告知编译器该方法可以接受任何类型的对象，比如String或Integer。
 它们之间的第二点区别是，你可以把任何带参数的类型传递给原始类型List，但却不能把List<String>传递给接受List<Object>的方法，因为会产生变异错误。</Object></String></Object></Object></p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-12-17-leetcode-combinations/">Combinations解决方案</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-12-23-concurrent-java/">concurrent 包部分解读</a></li>
 </ul>
 
@@ -599,7 +620,7 @@ objectList = stringList;  //compilation error incompatible types</String></Objec
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-12-22-day-day-up-for-silent/` was built on 2025-08-05T06:08:55.037Z -->
+		<!-- This page `/blog/2015-12-22-day-day-up-for-silent/` was built on 2025-08-05T06:54:41.441Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

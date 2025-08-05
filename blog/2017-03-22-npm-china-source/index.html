@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/software-engineer/" class="post-tag">software engineer</a></li>
 </ul>
 
-<p>通过npm下载vue-cli脚手架,由于源的问题一直报错:</p>
+<div class="page-post">
+  <p>通过npm下载vue-cli脚手架,由于源的问题一直报错:</p>
 <pre><code>...shasum check failed for...
 </code></pre>
 <p>设置国内镜像:</p>
@@ -569,6 +589,7 @@ npm info underscore （如果上面配置正确这个命令会有字符串respon
 <p>本文转自:
 <a href="http://blog.csdn.net/enson16855/article/details/23299787">解决npm的'shasum check failed for..'错误(npm注册国内镜像介绍)</a></p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2017-03-15-something-about-spring-cloud/">Spring-Cloud概念理解和部署</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2017-04-01-2017-part-one/">2017 第一季度总结</a></li>
 </ul>
 
@@ -591,7 +612,7 @@ npm info underscore （如果上面配置正确这个命令会有字符串respon
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2017-03-22-npm-china-source/` was built on 2025-08-05T06:08:55.041Z -->
+		<!-- This page `/blog/2017-03-22-npm-china-source/` was built on 2025-08-05T06:54:41.445Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

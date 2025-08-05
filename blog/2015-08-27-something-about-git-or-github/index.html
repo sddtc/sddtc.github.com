@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/shell/" class="post-tag">shell</a></li>
 </ul>
 
-<h3 id="gitignore-git-status">.gitignore 在查看 <code>git status</code> 时不能过滤文件和文件夹</h3>
+<div class="page-post">
+  <h3 id="gitignore-git-status">.gitignore 在查看 <code>git status</code> 时不能过滤文件和文件夹</h3>
 <p>在 .gitignore 添加 .idea 文件夹以过滤该文件夹, 但通过 <code>git status</code> 查看仍显示 .idea 文件夹的状态.
 原因: 在 git 库中已存在了这个文件, 之前 push 提交过该文件.
 .gitignore 文件只对还没有加入版本管理的文件起作用, 如果之前已经用 git 把这些文件纳入了版本库, 就不起作用.
@@ -635,6 +655,7 @@ For example, if your commit history is A-B-C-D-E-F with F as HEAD, and you want 
 <li>The rebase would complete.</li>
 </ol>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-08-24-uml-class-design-relation/">UML类之间的关系</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-09-05-stanford-ios8-swift/">斯坦福大学冬季课程 iOS8 Swift 学习笔记</a></li>
 </ul>
 
@@ -657,7 +678,7 @@ For example, if your commit history is A-B-C-D-E-F with F as HEAD, and you want 
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-08-27-something-about-git-or-github/` was built on 2025-08-05T06:08:55.033Z -->
+		<!-- This page `/blog/2015-08-27-something-about-git-or-github/` was built on 2025-08-05T06:54:41.439Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

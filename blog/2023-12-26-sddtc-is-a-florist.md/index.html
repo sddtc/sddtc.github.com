@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/life/" class="post-tag">life</a></li>
 </ul>
 
-<p>今年最大的收获就是成为了一名“花匠”.也因为在准备续费域名的时候发现 godaddy 这家域名供应商有多么的离谱.定位问题的时候需要使用我的个人账号进行登陆,客服通过聊天窗口让我提供 2FA,无力吐槽.
+<div class="page-post">
+  <p>今年最大的收获就是成为了一名“花匠”.也因为在准备续费域名的时候发现 godaddy 这家域名供应商有多么的离谱.定位问题的时候需要使用我的个人账号进行登陆,客服通过聊天窗口让我提供 2FA,无力吐槽.
 后来就开始构思自己的新域名也换了新的平台,也算是一个新开始,也算是目前能想到的很满意的一个.
 其实经历了不多不少的事情,也看到了自己在一些方面的成长.包括从一种“宠爱饥渴症”的人设变得会看到他人的付出,思考和感受.
 我想,人和人之间必定存在差异,而我一直都是在遇到问题的时候,用不断输出观点的方式给人压迫感,试图解决问题,却什么也听不到,什么也看不到了.
@@ -564,6 +584,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 健身
 新的一年,真的真的,请多多指教.</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2023-05-28-why-i-do-not-like-working-on-huge-legacy-system/">为什么我不喜欢工作在维护型大型工程上?</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2024-02-03-reaction-to-thatisbiz.md/">&lt;商业就是这样&gt;听后感</a></li>
 </ul>
 
@@ -586,7 +607,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2023-12-26-sddtc-is-a-florist.md/` was built on 2025-08-05T06:08:55.051Z -->
+		<!-- This page `/blog/2023-12-26-sddtc-is-a-florist.md/` was built on 2025-08-05T06:54:41.457Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

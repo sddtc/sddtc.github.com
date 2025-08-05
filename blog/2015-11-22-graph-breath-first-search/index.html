@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/algorithm/" class="post-tag">algorithm</a></li>
 </ul>
 
-<h3 id="-2">图的广度优先搜索实现</h3>
+<div class="page-post">
+  <h3 id="-2">图的广度优先搜索实现</h3>
 <pre class="language-java" tabindex="0"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">GraphNode</span> <span class="token punctuation">{</span>
     <span class="token keyword">int</span> val<span class="token punctuation">;</span>
     <span class="token class-name">GraphNode</span> next<span class="token punctuation">;</span>
@@ -641,6 +661,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-11-11-mysql-get-one-slave/">MYSQL搭建从库的方法教程</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-11-25-leetcode-triangle-solution/">动态规划合集</a></li>
 </ul>
 
@@ -663,7 +684,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-11-22-graph-breath-first-search/` was built on 2025-08-05T06:08:55.036Z -->
+		<!-- This page `/blog/2015-11-22-graph-breath-first-search/` was built on 2025-08-05T06:54:41.440Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

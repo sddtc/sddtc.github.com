@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/big-data/" class="post-tag">big data</a></li>
 </ul>
 
-<p>今天遇到了一个关于cdh集群的hadoop问题
+<div class="page-post">
+  <p>今天遇到了一个关于cdh集群的hadoop问题
 其中一个datanode的存储空间突然接近满溢，还没查出来问题
 日志有报错
 比其它datanode多出来将近150G
@@ -562,6 +582,7 @@ start-balance.sh脚本没找到</p>
 cdh的hdfs命令可以进行dn的blk均衡move</p>
 <pre class="language-vim" tabindex="0"><code class="language-vim">sudo <span class="token operator">-</span><span class="token keyword">u</span> hdfs hdfs balancer <span class="token operator">-</span>threshold <span class="token number">5</span></code></pre>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-04-14-linux-dirs/">shell常用压缩命令</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-04-27-discard/">一个有趣的小哲学</a></li>
 </ul>
 
@@ -584,7 +605,7 @@ cdh的hdfs命令可以进行dn的blk均衡move</p>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-04-20-datanode-prob/` was built on 2025-08-05T06:08:55.028Z -->
+		<!-- This page `/blog/2015-04-20-datanode-prob/` was built on 2025-08-05T06:54:41.436Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

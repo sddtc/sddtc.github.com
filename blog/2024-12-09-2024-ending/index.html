@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/life/" class="post-tag">life</a></li>
 </ul>
 
-<p>翻到了3天以前的友圈, 看到好友所描述的&quot;一事无成的一年&quot;, 那是按照每个月份描绘的一年<br>
+<div class="page-post">
+  <p>翻到了3天以前的友圈, 看到好友所描述的&quot;一事无成的一年&quot;, 那是按照每个月份描绘的一年<br>
 1月份他在祖国的北边看火山, 吃羊<br>
 2月份他跑到了厦门, 吃海鲜<br>
 3月份的时候他去了马来西亚, 吃到了那里的榴莲<br>
@@ -582,6 +602,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 2月份过年, 在西安.
 1月份跨年那天大半夜被堵在了老城根, 打不上车与拥挤的人流, 路上的烟花, 不合脚的鞋子, 延迟下班了4个小时的公交车, 令人印象深刻回忆.</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2024-04-04-security-still-not-in-my-dna/">安全并没有被刻入到我的DNA里面</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2025-06-16-technology-selection/">当你做技术选型时需要考虑的</a></li>
 </ul>
 
@@ -604,7 +625,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2024-12-09-2024-ending/` was built on 2025-08-05T06:08:55.051Z -->
+		<!-- This page `/blog/2024-12-09-2024-ending/` was built on 2025-08-05T06:54:41.458Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

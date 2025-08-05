@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/life/" class="post-tag">life</a></li>
 </ul>
 
-<p>惊呆了今年竟然把年度总结忘记的一干二净。 过年期间写的也是之前上班时一直没时间更新的学习笔记。 果然随着时间的流逝， 随着心智的成长， 我的关注点变了 qaq。 去年经历的事情
+<div class="page-post">
+  <p>惊呆了今年竟然把年度总结忘记的一干二净。 过年期间写的也是之前上班时一直没时间更新的学习笔记。 果然随着时间的流逝， 随着心智的成长， 我的关注点变了 qaq。 去年经历的事情
 还是非常多的， 很重要。</p>
 <h2 id="">合作</h2>
 <p>每个人都会在自己的职业生涯中遇到选择， 十字路口前支持你选择 A 不选择 B 的东西都不太一样。 很多人都无法避开&quot;环境&quot;， 在这个环境里， 你会为什么事情努力， 被什么事情影响，
@@ -573,6 +593,7 @@ JJC活动来找到和工作中类似的点。 甚至游戏还给了我做视频�
 </blockquote>
 <p>新的一年， 写更多的文章， 为了成为领域专家而努力。</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2022-02-02-api-desgin/">API 设计实践</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2022-10-21-outside-in-vs-inside-out/">业务开发是前端驱动后端？亦或是后端提供服务给前端？</a></li>
 </ul>
 
@@ -595,7 +616,7 @@ JJC活动来找到和工作中类似的点。 甚至游戏还给了我做视频�
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2022-02-13-my-annual-note-2021/` was built on 2025-08-05T06:08:55.050Z -->
+		<!-- This page `/blog/2022-02-13-my-annual-note-2021/` was built on 2025-08-05T06:54:41.457Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

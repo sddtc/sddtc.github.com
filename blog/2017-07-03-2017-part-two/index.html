@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/life/" class="post-tag">life</a></li>
 </ul>
 
-<h3 id="">总结</h3>
+<div class="page-post">
+  <h3 id="">总结</h3>
 <p><img src="content/media/img/2017Part2.png" alt="2017第二季度"></p>
 <p>虽然是出差, 然而是北京, 一切都还算熟悉
 很苦, 美式一天天的喝着
@@ -578,6 +598,7 @@ cp的上线计划也沦陷</p>
 并且..恢复跑步(o´罒`o)</p>
 <p>以上。</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2017-04-25-weibo-auto-get-code-login/">新浪微博自动登录脚本</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2017-07-22-tdd-with-rails_admin/">用 TDD 进行 rails_admin 开发</a></li>
 </ul>
 
@@ -600,7 +621,7 @@ cp的上线计划也沦陷</p>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2017-07-03-2017-part-two/` was built on 2025-08-05T06:08:55.042Z -->
+		<!-- This page `/blog/2017-07-03-2017-part-two/` was built on 2025-08-05T06:54:41.446Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

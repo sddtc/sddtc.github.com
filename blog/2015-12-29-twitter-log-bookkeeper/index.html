@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/software-engineer/" class="post-tag">software engineer</a></li>
 </ul>
 
-<h3 id="twitter-distributedlog-bookkeeper">本文是关于Twitter 分布式日志系统 DistributedLog/BookKeeper的摘要</h3>
+<div class="page-post">
+  <h3 id="twitter-distributedlog-bookkeeper">本文是关于Twitter 分布式日志系统 DistributedLog/BookKeeper的摘要</h3>
 <p>Manhattan（Twitter的最终一致性分布式Key/Value数据库）
 1.可以使用日志来序列化所有的请求。co-ordinator 将请求写到日志中。所有的 replicas 从日志中按顺序读取请求，并修改本地的状态。这种解决问题的思路叫做 Pub/Sub。而日志就是 Pub/Sub 模式的基础。
 2.当数据被复制到多台机器上的时候，我们就需要保证数据的强一致性。否则，如果我们出现丢数据、数据不一致，那么势必影响到构建在分布式日志上的所有系统。如果日志都不能相信了，你的生活还能相信谁呢。
@@ -569,6 +589,7 @@ Writes 和 tailing reads 在意的是延时 (latency)，因为它关系到一个
 主要因为 Apache BookKeeper 提供的三个核心特性：I/O 分离、并行复制和容易理解的一致性模型。它们能够很好地满足我们对于持久化、多副本和一致性的要求。</p>
 <p>摘自：<a href="http://mp.weixin.qq.com/s?__biz=MzAwMDU1MTE1OQ==&amp;mid=403051208&amp;idx=1&amp;sn=1694ac05acbcb5ca53c88bfac8a68856&amp;scene=1&amp;srcid=1224xZuQ9QQ4sRmiPVdHTppL#wechat_redirect">【年度案例】Twitter高性能分布式日志系统架构解析</a></p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-12-28-all-years-note/">2015 年度总结</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2016-01-28-wechat-picture-catch/">wechat 通过抓包获取图片方法实践</a></li>
 </ul>
 
@@ -591,7 +612,7 @@ Writes 和 tailing reads 在意的是延时 (latency)，因为它关系到一个
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-12-29-twitter-log-bookkeeper/` was built on 2025-08-05T06:08:55.038Z -->
+		<!-- This page `/blog/2015-12-29-twitter-log-bookkeeper/` was built on 2025-08-05T06:54:41.442Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

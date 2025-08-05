@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/software-engineer/" class="post-tag">software engineer</a></li>
 </ul>
 
-<h3 id="">背景</h3>
+<div class="page-post">
+  <h3 id="">背景</h3>
 <p>在接触了SpringBoot之后,了解到其启动的便利,因为内置了tomcat的缘故,在集成的时候我们用gradlew命令启动jar包的形式直接部署后端应用,在build时会运行findbugs与checkstyle的task生成报告文件,添加jacoco的task分析单元测试覆盖率
 该后端应用特点:
 1.RESTful风格API接口作为数据提供方
@@ -590,6 +610,7 @@ Hystrix</p>
 <a href="https://github.com/Netflix/eureka/wiki">Netflix/eureka/wiki</a>
 <a href="http://www.jianshu.com/p/6d6b52c7624f">Spring Cloud Sleuth使用简介</a></p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2017-03-03-all-years-note/">2016 年度总结</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2017-03-22-npm-china-source/">npm国内镜像配置方法</a></li>
 </ul>
 
@@ -612,7 +633,7 @@ Hystrix</p>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2017-03-15-something-about-spring-cloud/` was built on 2025-08-05T06:08:55.041Z -->
+		<!-- This page `/blog/2017-03-15-something-about-spring-cloud/` was built on 2025-08-05T06:54:41.445Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

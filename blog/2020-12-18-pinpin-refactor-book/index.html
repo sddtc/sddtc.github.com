@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/book-notes/" class="post-tag">book notes</a></li>
 </ul>
 
-<p>书里首先介绍了重构这种行为朴素的优点：</p>
+<div class="page-post">
+  <p>书里首先介绍了重构这种行为朴素的优点：</p>
 <blockquote>
 <p>重构行为可以使责任的分配更为合理，使代码的维护更加轻松。 重构之后风格会迥异与过程化风格-后者也许是某些人习惯的风格。</p>
 </blockquote>
@@ -724,6 +744,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 </ol>
 <p>就不一一细说了, <s>其实是最近忙的没时间看书好好记笔记</s></p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2020-12-10-android-core-viewmodel-overview/">再谈 ViewModel</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2020-12-27-my-annual-rank-2020/">我的 2020 年度总结</a></li>
 </ul>
 
@@ -746,7 +767,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2020-12-18-pinpin-refactor-book/` was built on 2025-08-05T06:08:55.048Z -->
+		<!-- This page `/blog/2020-12-18-pinpin-refactor-book/` was built on 2025-08-05T06:54:41.455Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/software-engineer/" class="post-tag">software engineer</a></li>
 </ul>
 
-<p>陈旧的, 停止演进的系统就像一个长满细菌的怪兽一样. 今年才把《<a href="https://movie.douban.com/subject/2150220/">白色巨塔</a>
+<div class="page-post">
+  <p>陈旧的, 停止演进的系统就像一个长满细菌的怪兽一样. 今年才把《<a href="https://movie.douban.com/subject/2150220/">白色巨塔</a>
 》看完,顿时觉得医疗剧里面的医生和那种为大型旧系统维护的工程师之间或多或少有些共通之处.</p>
 <h3 id="-2">太多的第三方需求</h3>
 <p>理论上一个很多用户使用的系统本是一件令人开心的事情, 越多人使用说明产品越重要, 能帮助更多的人解决很多问题.
@@ -591,6 +611,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 但是响应变化也是很重要的一环呢, 对于热情负责的工程师来说, 信任他们要比当工具人产生的化学反应奇妙多了</p>
 <p>不过不过, 每个人还是要不断的学习, 毕竟“偷懒”是聪明的工程师会做的事, 如何“偷懒”, 一定不要停止思考涅.</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2023-02-06-working-as-a-consultant-plus-engineer/">伴君如伴虎, 那些略感遗憾的事</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2023-12-26-sddtc-is-a-florist.md/">花匠</a></li>
 </ul>
 
@@ -613,7 +634,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2023-05-28-why-i-do-not-like-working-on-huge-legacy-system/` was built on 2025-08-05T06:08:55.050Z -->
+		<!-- This page `/blog/2023-05-28-why-i-do-not-like-working-on-huge-legacy-system/` was built on 2025-08-05T06:54:41.457Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

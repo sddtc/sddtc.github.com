@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/auth/" class="post-tag">auth</a></li>
 </ul>
 
-<blockquote>
+<div class="page-post">
+  <blockquote>
 <p>“破壳而出是小鸡的生命哲学，打破旧有的阻碍和桎梏，因而得以获得新生” 一来自网络</p>
 </blockquote>
 <p>某房产领域的大型在线网站日增用户大概是五千，网站支持用户不需要登录就能搜索，浏览，分享自己心仪的房产。如果你需要咨询房屋的中介，则需要通过登录来完成一些定制化需求：填写申请租房信息，
@@ -646,6 +666,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 <p>小小的用户登录系统有着大大的复杂性。随着商业的发展，业务的激增，对于用户管理的需求也会在有限的交付中迅速扩张，导致登录系统的可用性和扩展性都面临着挑战。
 不断的追求技术的最优解，追求符合业务模型的最优解是我在这次经历中感受很深的事。虽然还有很多未知的难题等着我们解决，作为程序员，抱着 “技术改变世界” 的热情，一定会创造出更多价值。</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2021-03-13-pinpin-refactor-book-2/">品品《重构》这本书嗷 - 中</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2021-04-10-with-cgc/">Coding Girls Club 和我</a></li>
 </ul>
 
@@ -668,7 +689,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2021-03-28-new-sso-platform/` was built on 2025-08-05T06:08:55.049Z -->
+		<!-- This page `/blog/2021-03-28-new-sso-platform/` was built on 2025-08-05T06:54:41.456Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

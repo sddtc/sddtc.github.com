@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/big-data/" class="post-tag">big data</a></li>
 </ul>
 
-<h3 id="">准备环境：</h3>
+<div class="page-post">
+  <h3 id="">准备环境：</h3>
 <p>一台没开过bin-log的mysql数据库实例，在此基础上给该实例做两个数据库的从库, 并且不能停库，其中一个库有50G，是innodb引擎. 本来是拜托运维负责，但是由于使用环境特殊性自己做了尝试，在此记录一下过程. 并且做完之后还有一些问题，需要后续解决</p>
 <h3 id="bin-log">一、停止主库消息写入任务，保证该库只有读取任务，开启bin-log配置，重启主库</h3>
 <p>修改/etc/my.cnf文件：</p>
@@ -616,6 +636,7 @@ GROUP BY
 1.<a href="http://faq.comsenz.com/library/system/serviceext/serviceext_slave.htm">主MySQL设置</a>
 2.<a href="http://blog.csdn.net/mchdba/article/details/11354771">MySQL主库已经存在的基础上搭建从库的过程--&gt; （旧资料整理）</a></p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-11-03-mac-install-scrapy/">Scrapy的 mac 安装 scrapy 实践</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-11-22-graph-breath-first-search/">图的广度优先搜索实现</a></li>
 </ul>
 
@@ -638,7 +659,7 @@ GROUP BY
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-11-11-mysql-get-one-slave/` was built on 2025-08-05T06:08:55.035Z -->
+		<!-- This page `/blog/2015-11-11-mysql-get-one-slave/` was built on 2025-08-05T06:54:41.440Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/big-data/" class="post-tag">big data</a></li>
 </ul>
 
-<h3 id="impala-hive-2">Impala相对于Hive所使用的优化技术</h3>
+<div class="page-post">
+  <h3 id="impala-hive-2">Impala相对于Hive所使用的优化技术</h3>
 <p>1.没有使用MapReduce进行并行计算，虽然MapReduce是非常好的并行计算框架，但它更多的面向批处理模式，而不是面向交互式的SQL执行。与MapReduce相比：Impala把整个查询分成一执行计划树，而不是一连串的MapReduce任务，在分发执行计划后，Impala使用拉式获取数据的方式获取结果，把结果数据组成按执行树流式传递汇集，减少的了把中间结果写入磁盘的步骤，再从磁盘读取数据的开销。Impala使用服务的方式避免每次执行查询都需要启动的开销，即相比Hive没了MapReduce启动时间。
 2.使用LLVM产生运行代码，针对特定查询生成特定代码，同时使用Inline的方式减少函数调用的开销，加快执行效率。
 3.充分利用可用的硬件指令（SSE4.2）。
@@ -591,6 +611,7 @@ alter table test add <span class="token builtin">columns</span> <span class="tok
 <a href="http://tech.uc.cn/?p=1803">Impala 与 Hive 的比较</a>
 <a href="http://www.cloudera.com/content/cloudera/en/documentation/cloudera-impala/latest/topics/impala_alter_table.html">cloudera-impala</a></p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-04-27-vimrc/">vimrc总结的一份可通用样式</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-05-04-angular-js/">AngularJs的http请求要点和div的操作</a></li>
 </ul>
 
@@ -613,7 +634,7 @@ alter table test add <span class="token builtin">columns</span> <span class="tok
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-04-29-about-impala-and-hive/` was built on 2025-08-05T06:08:55.028Z -->
+		<!-- This page `/blog/2015-04-29-about-impala-and-hive/` was built on 2025-08-05T06:54:41.436Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

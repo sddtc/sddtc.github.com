@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/java/" class="post-tag">java</a></li>
 </ul>
 
-<h3 id="session-fixation">Session Fixation</h3>
+<div class="page-post">
+  <h3 id="session-fixation">Session Fixation</h3>
 <p>The principle of defense in depth (combining multiple best practices) is necessary for defending against Session Fixation attacks. These include to:</p>
 <p>1.Ensure that only server generated session values are accepted by the application.
 2.Upon a successful login, invalidate the original session value, and re-issue a new session value.
@@ -569,6 +589,7 @@ window.name document.referrer document.URL document.documentURI location locatio
 <p>In essence it allows the application to determine the answer to this simple question: Was the form that the user POSTed legitimately created by the application (valid) or by an unknown third party (invalid)?'</p>
 <p>Note wherever cryptographically secure pseudo-random number generation (pRNG) is required, the wheel should not be re-invented. Correct use of java.security.SecureRandom is strongly preferred over bespoke/custom random number generation code, the latter being extremely prone to developer error.</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2018-08-05-why-typescript/">Why typescript ?</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2018-08-09-mjml-tips/">使用 mjml 指南</a></li>
 </ul>
 
@@ -591,7 +612,7 @@ window.name document.referrer document.URL document.documentURI location locatio
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-08-06-codebashing-java/` was built on 2025-08-05T06:08:55.044Z -->
+		<!-- This page `/blog/2018-08-06-codebashing-java/` was built on 2025-08-05T06:54:41.449Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

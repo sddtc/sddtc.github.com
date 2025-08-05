@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/js/" class="post-tag">js</a></li>
 </ul>
 
-<p>最近想了解(<s>因为要写点啥你懂的</s>)一些用 js 写的绘制 2D 动画的库。于是窝找到了 <a href="https://github.com/collections/javascript-game-engines">javascript-game-engines</a></p>
+<div class="page-post">
+  <p>最近想了解(<s>因为要写点啥你懂的</s>)一些用 js 写的绘制 2D 动画的库。于是窝找到了 <a href="https://github.com/collections/javascript-game-engines">javascript-game-engines</a></p>
 <h4 id="pixijs-the-html5-creation-engine-go">排行🥇 PixiJS — The HTML5 Creation Engine <a href="https://github.com/pixijs/pixi.js">-&gt; go</a></h4>
 <p><picture><source type="image/avif" srcset="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/JgZM34ppOV-898.avif 898w"><source type="image/webp" srcset="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/JgZM34ppOV-898.webp 898w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/JgZM34ppOV-898.png" alt="2021-02-10-220qqJ-QTqJO7" width="898" height="226"></picture></p>
 <p>目标是适应于所有设备，是快而轻量的 2D 库。
@@ -617,6 +637,7 @@ Kiwi.js 使用 CocoonJS 发行游戏和创建应用程序。</p>
 就酱！
 除夕快乐！！ 🧨🧨🧨</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2021-02-07-douban-alpha-city/">记忆中的乌托邦 - 豆瓣阿尔法城</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2021-02-22-maven-publish-plugin-in-android/">使用 Gradle 插件发布 Android library 到 maven 远程仓库</a></li>
 </ul>
 
@@ -639,7 +660,7 @@ Kiwi.js 使用 CocoonJS 发行游戏和创建应用程序。</p>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2021-02-10-spike-2d-js-tools/` was built on 2025-08-05T06:08:55.049Z -->
+		<!-- This page `/blog/2021-02-10-spike-2d-js-tools/` was built on 2025-08-05T06:54:41.455Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

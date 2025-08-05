@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/security/" class="post-tag">security</a></li>
 </ul>
 
-<p>在学习专业的服务客户的第一课, 就有一个很响亮的口号, 叫做“把安全刻入你的DNA里”. 没想到过去了7年, 咱还是没刻进去. 就算已经把多账号切换做成了脚本灵活使用从不犯错, 把 <code>gapa(git add --patch)</code> review 代码的习惯养成.
+<div class="page-post">
+  <p>在学习专业的服务客户的第一课, 就有一个很响亮的口号, 叫做“把安全刻入你的DNA里”. 没想到过去了7年, 咱还是没刻进去. 就算已经把多账号切换做成了脚本灵活使用从不犯错, 把 <code>gapa(git add --patch)</code> review 代码的习惯养成.
 知道使用一些工具(<a href="https://github.com/gitleaks/gitleaks">gitleaks</a>)来在代码提交前扫描 token, secrets. 知道不能信任所有云平台, 要谨慎对待代码输出的每行日志信息, 必要时进行PII过滤,
 连异常堆栈信息也要严格清理. 也很了解扫描代码中关键字的流程: 即收集所有相关人员的开源账号, 定期在开源平台搜索关键字, 通知当事人及时处理或者开启事故处理响应流程.</p>
 <p>当我准备自信满满开启security之路时, 咱就是说以身试法整了个incident.
@@ -584,6 +604,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 <p>我是一个有很多缺点的人, 但希望不会因此自己蒙蔽了自己.
 又是一年清明节.</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2024-04-04-learning-continuous-compliance/">技术雷达 Continuous Compliance - 持续合规性：确保整个软件生命周期的安全性</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2024-12-09-2024-ending/">2024快要结束啦</a></li>
 </ul>
 
@@ -606,7 +627,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2024-04-04-security-still-not-in-my-dna/` was built on 2025-08-05T06:08:55.051Z -->
+		<!-- This page `/blog/2024-04-04-security-still-not-in-my-dna/` was built on 2025-08-05T06:54:41.458Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

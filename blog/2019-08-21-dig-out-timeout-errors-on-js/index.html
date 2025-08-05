@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/js/" class="post-tag">js</a></li>
 </ul>
 
-<h3 id="">背景</h3>
+<div class="page-post">
+  <h3 id="">背景</h3>
 <p>当线上服务正常运行了一段时间, 应用的请求量的呈线性增长姿势的时候, 我们发现日志里多了三种错误日志. 类型分别为 <code>ETIMEDOUT</code>, <code>ESOCKETTIMEDOUT</code> 和 <code>Socket hang up</code>, 由于我个人对于这三种错误的认知极其有限，于是想要借此机会整理思绪.</p>
 <h3 id="-2">错误事例</h3>
 <p><strong>ETIMEDOUT</strong></p>
@@ -631,6 +651,7 @@ connect 函数会使用文件描述符 (file descripto). socket 表示 socket �
 <li>EALREADY:: socket 是非阻塞的而且有一个挂起的连接 (参考上面的 EINPROGRESS)</li>
 </ol>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2019-06-01-authentication-platform/">7大平台的第三方登录参考手册</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2019-09-06-simple-understanding-about-xss-cors/">对于简单的 XSS 攻击的概念梳理</a></li>
 </ul>
 
@@ -653,7 +674,7 @@ connect 函数会使用文件描述符 (file descripto). socket 表示 socket �
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2019-08-21-dig-out-timeout-errors-on-js/` was built on 2025-08-05T06:08:55.047Z -->
+		<!-- This page `/blog/2019-08-21-dig-out-timeout-errors-on-js/` was built on 2025-08-05T06:54:41.453Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

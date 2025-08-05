@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/mobile/" class="post-tag">mobile</a></li>
 </ul>
 
-<h4 id="">背景知识</h4>
+<div class="page-post">
+  <h4 id="">背景知识</h4>
 <p>设计 <a href="https://developer.android.com/reference/androidx/lifecycle/ViewModel">ViewModel</a> 类的目的是为了以生命周期的方式来存储和管理 Android 应用中和 UI 相关的数据的。它帮助应用程序可以在屏幕旋转的时候仍然持有相关的数据， 换句话说， 想象一下你的应用程序可以显示出一个计数器并且可以点击一个按钮使它的值可以做加一操作，如果没有任何多余的代码逻辑处理， 当你旋转屏幕，你的应用界面适应了横屏模式，那么显示出来的累加值可能就会被清零了 😊， 因为数据的状态没有被正确的恢复。</p>
 <p>Android 框架负责管理 UI 控制器的生命周期，例如 Activities 的和 Fragments 的。 为了响应设备的事件或用户的操作, Android 框架本身可能会选择销毁或重新创建 UI 控制器， 而这些行为都不在你的控制之内。</p>
 <p>如果系统销毁或重新创建 UI 控制器，那么你存储在其中的所有与 UI 相关的临时数据都将丢失。 例如某个 Activity 包含了一个用户列表数据。 当配置更改了(例如旋转了屏幕)导致 Activity 被重新创建，那么该新创建出来的 Activity 必须重新获取用户列表。   对于结构简单数据， Activity 可以使用 <code>onSaveInstanceState()</code> 方法并从 <code>onCreate()</code> 中的 <code>bundle</code> 中还原其数据。 然而⚠️，此方法仅适用于可以先序列化然后反序列化的少量数据，而不适合潜在的大量数据： 例如用户列表或位图数据。</p>
@@ -665,6 +685,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 <li><a href="https://github.com/android/sunflower">Sunflower, a gardening app illustrating Android development best practices with Android Jetpack.</a></li>
 </ul>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2020-12-08-android-app-arch-best-practices/">最佳实践什么的 可太有魅力了</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2020-12-18-pinpin-refactor-book/">品品《重构》这本书嗷</a></li>
 </ul>
 
@@ -687,7 +708,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2020-12-10-android-core-viewmodel-overview/` was built on 2025-08-05T06:08:55.048Z -->
+		<!-- This page `/blog/2020-12-10-android-core-viewmodel-overview/` was built on 2025-08-05T06:54:41.454Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

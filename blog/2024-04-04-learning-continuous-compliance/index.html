@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/security/" class="post-tag">security</a></li>
 </ul>
 
-<p>Continuous Compliance对于我来说是个既熟悉又陌生的短语, 在我看来是继 CI(Continuous Integration)-持续集成, CD(Continuous Deployment/Delivery)
+<div class="page-post">
+  <p>Continuous Compliance对于我来说是个既熟悉又陌生的短语, 在我看来是继 CI(Continuous Integration)-持续集成, CD(Continuous Deployment/Delivery)
 -持续部署/交付之后的一个新概念
 但是我并不知道应该如何汉译Compliance. 持续合规? 不管怎么说, 我坚信合规性在企业中越来越重要, 不论是政府企业, 民营企业.
 法律法规在软件交付行业里一定会越来越合理且严格.
@@ -628,6 +648,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 <li><a href="https://secureframe.com/hub/grc/continuous-compliance">What Is Continuous Compliance + How To Achieve It</a></li>
 </ul>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2024-03-22-thinking-of-in-progress-autonomous-team/">中型项目组织的自治团队模式思考</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2024-04-04-security-still-not-in-my-dna/">安全并没有被刻入到我的DNA里面</a></li>
 </ul>
 
@@ -650,7 +671,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2024-04-04-learning-continuous-compliance/` was built on 2025-08-05T06:08:55.051Z -->
+		<!-- This page `/blog/2024-04-04-learning-continuous-compliance/` was built on 2025-08-05T06:54:41.458Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

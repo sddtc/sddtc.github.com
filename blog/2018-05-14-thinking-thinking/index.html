@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/book-notes/" class="post-tag">book notes</a></li>
 </ul>
 
-<p>最近一直在研读 <a href="https://book.douban.com/series/8110">少有人走的路</a>, 越往后看越豁然开朗, 似乎越来越与自己的思想密切相关了, 分享和记录书中一些段落</p>
+<div class="page-post">
+  <p>最近一直在研读 <a href="https://book.douban.com/series/8110">少有人走的路</a>, 越往后看越豁然开朗, 似乎越来越与自己的思想密切相关了, 分享和记录书中一些段落</p>
 <hr>
 <p>倾听孩子讲话的时间本就有限, 许多父母在这有限的时间里也不肯用心倾听. 他们可能认为, 假装倾听和有选择地倾听, 已经是真正的倾听了. 其实, 这是在自我欺骗. 目的是为了掩盖他们自己的懒惰. 真正的倾听, 不论时间多么短暂, 都需要付出相当大的努力。</p>
 <hr>
@@ -586,6 +606,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 <p>是什么把人类同其它生物区分开来? 不是我们能抓住东西的拇指, 不是我们能发声的喉咙, 也不是我们巨大的脑容量, 而是我们极端缺乏动物的本性, 我们没有太多预先设置并遗传下来的行为模式。 比起人类来, 这些因素赋予了其他生物更多的固定不变的本性。</p>
 <hr>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2018-04-01-ml-ninja-c2-w1-quiz/">Coursera 第二阶段第一课 Quiz</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2018-06-24-JS-core-workshop/">JS The Core</a></li>
 </ul>
 
@@ -608,7 +629,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-05-14-thinking-thinking/` was built on 2025-08-05T06:08:55.043Z -->
+		<!-- This page `/blog/2018-05-14-thinking-thinking/` was built on 2025-08-05T06:54:41.448Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

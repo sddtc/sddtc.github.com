@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/shell/" class="post-tag">shell</a></li>
 </ul>
 
-<pre class="language-vim" tabindex="0"><code class="language-vim"><span class="token keyword">set</span> <span class="token builtin">nocompatible</span> <span class="token comment">"去掉讨厌的有关vim一致性模式,避免以前版本的一些bug和局限.</span>
+<div class="page-post">
+  <pre class="language-vim" tabindex="0"><code class="language-vim"><span class="token keyword">set</span> <span class="token builtin">nocompatible</span> <span class="token comment">"去掉讨厌的有关vim一致性模式,避免以前版本的一些bug和局限.</span>
 <span class="token keyword">set</span> <span class="token keyword">number</span> <span class="token comment">"显示行号.</span>
 <span class="token keyword">set</span> <span class="token builtin">ruler</span> <span class="token comment">"显示当前光标的行列信息</span>
 <span class="token builtin">syntax</span> <span class="token keyword">on</span> <span class="token comment">"语法高亮显示.(这个肯定是要的.)</span>
@@ -593,6 +613,7 @@ nnoremap <span class="token operator">&lt;</span>space<span class="token operato
 <span class="token comment">"else</span>
 <span class="token string">""</span> <span class="token keyword">set</span> <span class="token builtin">backup</span></code></pre>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-04-27-discard/">一个有趣的小哲学</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-04-29-about-impala-and-hive/">Impala和Hive的异同比较</a></li>
 </ul>
 
@@ -615,7 +636,7 @@ nnoremap <span class="token operator">&lt;</span>space<span class="token operato
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-04-27-vimrc/` was built on 2025-08-05T06:08:55.028Z -->
+		<!-- This page `/blog/2015-04-27-vimrc/` was built on 2025-08-05T06:54:41.436Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

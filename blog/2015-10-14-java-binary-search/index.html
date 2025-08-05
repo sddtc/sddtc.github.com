@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/java/" class="post-tag">java</a></li>
 </ul>
 
-<p>今天突然就非常怀念在我的第一份工作的时候, 我们的老大曾经出了一道题: <strong>实现二分法算法</strong>. 这道题直到现在对我的影响依然很大. 其实说了这么多, 大家肯定会说这谁不会写啊, 结果写出来的往往就踩了那么几个坑
+<div class="page-post">
+  <p>今天突然就非常怀念在我的第一份工作的时候, 我们的老大曾经出了一道题: <strong>实现二分法算法</strong>. 这道题直到现在对我的影响依然很大. 其实说了这么多, 大家肯定会说这谁不会写啊, 结果写出来的往往就踩了那么几个坑
 首先让我们思考一个简单的问题: <strong>什么样的情况适合使用二分查找法?</strong>
 数组的值从小到大有序排列. 如果别人给你数组你就写也不问一下, 那是不是代表你在工作中也常常先动手后思考呢：）
 那么开始动手实现吧, 已知数组有序</p>
@@ -608,6 +628,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 7、位非( ~ )           位非是一元操作符
 位非：操作数的第n位为1, 那么结果的第n位为0, 反之。</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-10-14-EI-capitan-jekyll-can-not-run/">Jekyll的EI Capitan jekyll can not run 解决方案</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-10-29-ideaIC-and-something/">idea-IC 版和其它的碎碎念</a></li>
 </ul>
 
@@ -630,7 +651,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-10-14-java-binary-search/` was built on 2025-08-05T06:08:55.035Z -->
+		<!-- This page `/blog/2015-10-14-java-binary-search/` was built on 2025-08-05T06:54:41.440Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

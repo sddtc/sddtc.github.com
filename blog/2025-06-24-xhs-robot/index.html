@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/self-project/" class="post-tag">self-project</a></li>
 </ul>
 
-<p>我总是对社交网络自动化有很大的兴趣, 之前研究发微博机器人, QQ机器人, 豆瓣机器人, 也是因为我玩这些 app. 如今
+<div class="page-post">
+  <p>我总是对社交网络自动化有很大的兴趣, 之前研究发微博机器人, QQ机器人, 豆瓣机器人, 也是因为我玩这些 app. 如今
 终于轮到了小红书. 虽然小红书没有开发者平台, 但是仍然可以从抓取并分析网络请求再通过代码实现自动发笔记的功能. 整个实现最精彩的地方就是对于请求体中 <code>x-s</code> 键值的破解, 目前我用到了 <a href="https://github.com/ReaJason/xhs">ReaJason/xhs</a> 里的 sign 功能, 也打算下一步再实现一个 JS 版本.</p>
 <p>本篇文章将列举小红书一些创作者平台的核心APIs</p>
 <h4 id="1">1. 通过关键字获取话题列表详情</h4>
@@ -662,6 +682,7 @@ image 的 binary 类型</p>
 <p>除了上述的 API 之外, 很多开源项目有点赞、评论、发布视频笔记等 API. 可以根据个人需求进行定制, 我没有用到
 就不在此列举了.</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2025-06-16-technology-selection/">当你做技术选型时需要考虑的</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2025-07-03-blocked-in-some-regions-for-example-China/">该网站在某些区域被阻止, 例如 中国</a></li>
 </ul>
 
@@ -684,7 +705,7 @@ image 的 binary 类型</p>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2025-06-24-xhs-robot/` was built on 2025-08-05T06:08:55.052Z -->
+		<!-- This page `/blog/2025-06-24-xhs-robot/` was built on 2025-08-05T06:54:41.458Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

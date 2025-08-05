@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/security/" class="post-tag">security</a></li>
 </ul>
 
-<h3 id="">背景</h3>
+<div class="page-post">
+  <h3 id="">背景</h3>
 <p>前阵子想了解一些关于XSS攻击的知识，于是在网上翻阅了一些有关XSS的概念，于是我总结了下来，今天清理电脑的时候发现这篇文章，故提交之。</p>
 <h1 id="xss-cross-site-scripting">XSS - Cross-site scripting</h1>
 <ol>
@@ -610,6 +630,7 @@ PS：这个地址当然是没效的，只是举例子而已。</code></pre>
 <p>这个其实就是wifi流量劫持，中间人可以看到用户的每一个请求，可以在页面嵌入恶意代码，使用恶意代码获取用户的信息，可以返回钓鱼页面。</p>
 <p>https://www.cnblogs.com/index-html/p/wifi_hijack_3.html</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2019-08-21-dig-out-timeout-errors-on-js/">浅淡 ETIMEDOUT &amp; ESOCKETTIMEDOUT &amp; Socket hang up</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2019-09-10-rbac-and-abac/">RBAC 与 ABAC</a></li>
 </ul>
 
@@ -632,7 +653,7 @@ PS：这个地址当然是没效的，只是举例子而已。</code></pre>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2019-09-06-simple-understanding-about-xss-cors/` was built on 2025-08-05T06:08:55.047Z -->
+		<!-- This page `/blog/2019-09-06-simple-understanding-about-xss-cors/` was built on 2025-08-05T06:54:41.453Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

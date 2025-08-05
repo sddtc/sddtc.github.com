@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/machine-learning/" class="post-tag">machine learning</a></li>
 </ul>
 
-<h3 id="binary-classification">binary-classification 二元分类</h3>
+<div class="page-post">
+  <h3 id="binary-classification">binary-classification 二元分类</h3>
 <ul>
 <li>深度学习在进行<code>m</code>个训练集计算的时候，其实并不需要使用<code>for</code>循环</li>
 <li>神经网络的计算过程分为:<strong>正向传播</strong>和<strong>反向传播</strong>两个分开的过程</li>
@@ -635,6 +655,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 <a href="https://mooc.study.163.com/course/2001281002#/info">网易云课堂-神经网络和深度学习</a>
 <a href="https://www.coursera.org/specializations/deep-learning">Coursera</a></p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2017-12-09-my-annual-rank-2017/">我的 2017 年度总结</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2018-03-28-dont-believe-consumer-input/">论&#39;永远不要相信用户的输入&#39;</a></li>
 </ul>
 
@@ -657,7 +678,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-01-21-c1w2-ml-ninja/` was built on 2025-08-05T06:08:55.043Z -->
+		<!-- This page `/blog/2018-01-21-c1w2-ml-ninja/` was built on 2025-08-05T06:54:41.448Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

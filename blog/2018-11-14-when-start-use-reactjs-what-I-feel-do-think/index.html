@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/react/" class="post-tag">react</a></li>
 </ul>
 
-<h3 id="">背景</h3>
+<div class="page-post">
+  <h3 id="">背景</h3>
 <p>如果你有这样的经历，要在一周左右的时间对一个功能小而美的代码库添加一个完整的功能模块。
 而你没有相关的技术栈经验，该怎么样去整理保证最快的实践曲线呢？我有了一些小小的感触。</p>
 <h3 id="-2">心路历程</h3>
@@ -583,6 +603,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 肯定很多人会觉得，有那么多 quickStart，明明是可以做到更好的。
 那么时间怎么悄悄流逝，是我发现的一个关于自身更重要的一个问题。啊，人生啊。😔</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2018-10-23-my-jx3/">当我在说剑三我在说什么 2018 年的赛季</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2018-12-03-ie11-features/">关于 window.opener &amp; window.postMessage</a></li>
 </ul>
 
@@ -605,7 +626,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-11-14-when-start-use-reactjs-what-I-feel-do-think/` was built on 2025-08-05T06:08:55.046Z -->
+		<!-- This page `/blog/2018-11-14-when-start-use-reactjs-what-I-feel-do-think/` was built on 2025-08-05T06:54:41.451Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

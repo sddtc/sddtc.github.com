@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -552,7 +571,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/book-notes/" class="post-tag">book notes</a></li>
 </ul>
 
-<p>前几天小某书刷到了李飞飞参与的这篇论文 这周花了两天时间看完了(<a href="https://arxiv.org/abs/2401.03568">Agent AI: Surveying the Horizons of Multimodal Interaction</a>). 看的时候播客也听不了了, 眼睛和脑子一边看内容一边二次翻译, 也意识到自己的专注力好像提高了.<br>
+<div class="page-post">
+  <p>前几天小某书刷到了李飞飞参与的这篇论文 这周花了两天时间看完了(<a href="https://arxiv.org/abs/2401.03568">Agent AI: Surveying the Horizons of Multimodal Interaction</a>). 看的时候播客也听不了了, 眼睛和脑子一边看内容一边二次翻译, 也意识到自己的专注力好像提高了.<br>
 提到人工智能, 那么我心目中的NO.1非<a href="https://movie.douban.com/subject/5980670/">《疑犯追踪》</a>莫属: 人类创造出程序代码, 交互接口是显示器、耳机. 程序的输入是国际象棋的一盘盘棋局, 人类干预与之下棋, 在下棋的过程中通过每一步博弈, 最终得出胜利或者失败, 并传达隐晦的人类情感表达和更抽象的哲思:</p>
 <blockquote>
 <p>&quot;象棋的可能棋局数比宇宙中的原子的数量还多，没人能预料到一切，即便是你。
@@ -651,6 +671,7 @@ operation of systems working under such guidance</p>
 <p>以上就是论文55页以前的所有配图. 和内容结合在一起看也是蛮有趣的. 后面我还专门看了下所有论文参与者的个人介绍, 学生会介绍自己感兴趣的领域, 李飞飞的介绍是工作经历.没有感情全是年份系列.</p>
 <p>以上.</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2025-07-24-websocket-chat-room/">搭建基于websocket的在线多人聊天室</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/">SS+Trojan-Qt5+colima 配置docker proxy从而正常下载docker images</a></li>
 </ul>
 
@@ -673,7 +694,7 @@ operation of systems working under such guidance</p>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/` was built on 2025-08-05T06:08:55.053Z -->
+		<!-- This page `/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/` was built on 2025-08-05T06:54:41.459Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

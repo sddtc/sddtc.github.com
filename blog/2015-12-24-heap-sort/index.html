@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/algorithm/" class="post-tag">algorithm</a></li>
 </ul>
 
-<h3 id="heap-sort">堆排序（Heap Sort）</h3>
+<div class="page-post">
+  <h3 id="heap-sort">堆排序（Heap Sort）</h3>
 <p>堆排序（HeapSort）是一树形选择排序。
 堆排序的特点是：在排序过程中，将R[l..n]看成是一棵完全二叉树的顺序存储结构，利用完全二叉树中双亲结点和孩子结点之间的内在关系，在当前无序区中选择关键字最大（或最小）的记录.
 堆排序的时间复杂度是O(nlgn),与快速排序达到相同的时间复杂度. 但是在实际应用中,我们往往采用快速排序而不是堆排序. 这是因为快速排序的一个好的实现,往往比堆排序具有更好的表现. 堆排序的主要用途,是在形成和处理优先级队列方面. 另外, 如果计算要求是类优先级队列(比如, 只要返回最大或者最小元素, 只有有限的插入要求等), 堆同样是很适合的数据结构.
@@ -576,6 +596,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 然后用接下来的10亿个数,每次和这个最大堆堆顶进行对比, 比这个数还大的,就直接 抛弃, 比这个数小的话,就替代老的堆顶, 然后运行一次维护heap的操作,保持这个 最大堆的属性
 最后剩下来的最大堆就说我们想要的前10个最小的.(前10个最大的反过来实现即可)</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-12-23-concurrent-java/">concurrent 包部分解读</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-12-28-all-years-note/">2015 年度总结</a></li>
 </ul>
 
@@ -598,7 +619,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-12-24-heap-sort/` was built on 2025-08-05T06:08:55.037Z -->
+		<!-- This page `/blog/2015-12-24-heap-sort/` was built on 2025-08-05T06:54:41.441Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

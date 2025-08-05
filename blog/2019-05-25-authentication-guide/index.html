@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/auth/" class="post-tag">auth</a></li>
 </ul>
 
-<p>身份认证一直是一个复杂的主题，如果你认为不复杂那么有一点Too young too simple，因为最终你会发现它其实会令人头秃。
+<div class="page-post">
+  <p>身份认证一直是一个复杂的主题，如果你认为不复杂那么有一点Too young too simple，因为最终你会发现它其实会令人头秃。
 这个主题有大量的技术实现方案，各种协议和概念，还有该做什么/不该做什么。最重要的是，我们很难去追踪所有不断被发现的最佳实践，亦或是已经过时的概念和术语。</p>
 <p>如果你恰好是一位想要了解身份认证领域相关知识的人，这篇文章会帮你了解一些相关协议，形式，概念或者常用术语；
 对于那些正处于实现工作的开发人员，这篇文章可以帮助你了解怎样重新设计身份认证系统，亦或者是解决一些疑惑。</p>
@@ -671,6 +691,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 在实际工作中，我们通常会利用各个平台提供的身份认证服务来解决个人应用的身份认证需求，在我看来，使用第三方登录可以帮助你减化开发登录系统这整个模块的工作量，继而专注在核心的业务实现。</p>
 <p>接下来，我会和大家分享当下主流的网站开放出来的接口和他们提供的服务。</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2019-04-21-i-want-to-talk-about-flutter/">关于 Flutter 的一些小事</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2019-06-01-authentication-platform/">7大平台的第三方登录参考手册</a></li>
 </ul>
 
@@ -693,7 +714,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2019-05-25-authentication-guide/` was built on 2025-08-05T06:08:55.047Z -->
+		<!-- This page `/blog/2019-05-25-authentication-guide/` was built on 2025-08-05T06:54:41.452Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

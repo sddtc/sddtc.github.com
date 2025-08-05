@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/big-data/" class="post-tag">big data</a></li>
 </ul>
 
-<h3 id="">背景:</h3>
+<div class="page-post">
+  <h3 id="">背景:</h3>
 <p>因为资源争用的问题,跑数据和业务的query迟迟很难执行完毕，都相对比较紧急，吃饭的运维的同学看到我的屏幕，说了一句。。mysql配置查询缓存了吗。。真是一语惊醒。。</p>
 <h3 id="-2">解决方式：</h3>
 <p>上网查询了配置mysql缓存的方法，希望能1.检测服务器是否正确配置了缓存机制2.如果没有赶紧配上3.代码层面是解决的下一步方案，因为我在编写代码的时候每个sql都检查过索引和执行效果</p>
@@ -629,6 +649,7 @@ mysql<span class="token operator">></span>select @@max_allowed_packet<span class
 <span class="token operator">/</span><span class="token operator">/</span>设置为20M
 mysql<span class="token operator">></span><span class="token keyword">set</span> @@global<span class="token operator">.</span>max_allowed_packet<span class="token operator">=</span><span class="token number">20971520</span><span class="token punctuation">;</span></code></pre>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-07-29-life-recently/">最近生活的简单总结</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-08-01-mac-profile-path/">Mac终端的配置文件定义与修改</a></li>
 </ul>
 
@@ -651,7 +672,7 @@ mysql<span class="token operator">></span><span class="token keyword">set</span>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-07-31-mysql-simple-cache-config/` was built on 2025-08-05T06:08:55.032Z -->
+		<!-- This page `/blog/2015-07-31-mysql-simple-cache-config/` was built on 2025-08-05T06:54:41.438Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

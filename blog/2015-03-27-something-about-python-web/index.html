@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/python/" class="post-tag">python</a></li>
 </ul>
 
-<h3 id="">以下引用的是对于洪强宁关于豆瓣架构的回答：</h3>
+<div class="page-post">
+  <h3 id="">以下引用的是对于洪强宁关于豆瓣架构的回答：</h3>
 <p>本刊记者：还有一个问题,，有一种说法，认为Python比较慢，在性能方面会不会有问题？
 洪强宁：
 这个问题可以分两个方面说，
@@ -563,6 +583,7 @@ Web网站一般会有很多对IO的操作，比如对数据库的访问，对硬
 因为网站需要响应大量的并发的请求，如果你的设计的不好，即使你用C写的，也可能无法应付。
 所以更多的考虑是在架构设计上，要使架构体系不会产生速度瓶颈。</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-03-25-feel-sad/">感冒是一种让人不理智的坏东西呢</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-04-07-mr/">非常重要的 MapReduce 本质理解</a></li>
 </ul>
 
@@ -585,7 +606,7 @@ Web网站一般会有很多对IO的操作，比如对数据库的访问，对硬
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-03-27-something-about-python-web/` was built on 2025-08-05T06:08:55.027Z -->
+		<!-- This page `/blog/2015-03-27-something-about-python-web/` was built on 2025-08-05T06:54:41.436Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

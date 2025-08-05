@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,13 +570,15 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/devops/" class="post-tag">devops</a></li>
 </ul>
 
-<h3 id="">背景</h3>
+<div class="page-post">
+  <h3 id="">背景</h3>
 <p>看到基础设施即代码这个词的时候,老实说眼前一亮,有机会接触到了Terraform这个框架,了解了为什么要用,这个是做什么的,和我们该怎么去利用这个工具.
 在微服务非常流行的时代,所有一切过去需要基于物理机才能部署的服务开始虚拟云化,这样,拥有不同粒度的服务可以使用定制化的环境,可分配,可修改,可扩展和高利用.
 Terraform是Go语言编写的一个工具,集成了AWS等云服务接口和实现,使用简单的配置文件可对云环境进行各种逻辑处理.是一种Devops的理念的表现.</p>
 <h3 id="-2">其它</h3>
 <p>在.tf文件目录下plan,设置代理HTTP_PROXY可以从fiddle软件里看到请求体</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2017-01-05-something-about-mockito/">Mockito 之初步使用静态测试方法</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2017-01-24-something-about-shell/">Shell正常和异常退出的控制命令</a></li>
 </ul>
 
@@ -580,7 +601,7 @@ Terraform是Go语言编写的一个工具,集成了AWS等云服务接口和实�
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2017-01-12-introduction-terraform/` was built on 2025-08-05T06:08:55.040Z -->
+		<!-- This page `/blog/2017-01-12-introduction-terraform/` was built on 2025-08-05T06:54:41.444Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

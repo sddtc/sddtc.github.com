@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/shell/" class="post-tag">shell</a></li>
 </ul>
 
-<p>好久没有更新博客了，以后积攒的好东西还会记录下来的. 这次记录下让公司的Gitlab和在家的Github的代码可以在住的地方和公司无缝提交代码. github的id_rsa和id_rsa.pub已经存在，也是git的global账户</p>
+<div class="page-post">
+  <p>好久没有更新博客了，以后积攒的好东西还会记录下来的. 这次记录下让公司的Gitlab和在家的Github的代码可以在住的地方和公司无缝提交代码. github的id_rsa和id_rsa.pub已经存在，也是git的global账户</p>
 <pre class="language-vim" tabindex="0"><code class="language-vim"># 全局配置，Github仓库中默认使用此配置，是自己的github项目
 git config <span class="token operator">-</span><span class="token operator">-</span>global user<span class="token operator">.</span>name <span class="token string">'sddtc'</span> <span class="token operator">&amp;&amp;</span> git config <span class="token operator">-</span><span class="token operator">-</span>global user<span class="token operator">.</span>email <span class="token string">'sddtc@gmail.com'</span>
 
@@ -578,6 +598,7 @@ IdentityFile <span class="token operator">/</span>Users<span class="token operat
 ssh协议和http协议的代码远程地址切换</p>
 <pre class="language-vim" tabindex="0"><code class="language-vim">git remote <span class="token keyword">set</span><span class="token operator">-</span>url origin <span class="token punctuation">[</span>url<span class="token punctuation">]</span></code></pre>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2016-01-28-wechat-picture-catch/">wechat 通过抓包获取图片方法实践</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2016-03-22-begin-2016-little-rest/">2016 一个新的开始</a></li>
 </ul>
 
@@ -600,7 +621,7 @@ ssh协议和http协议的代码远程地址切换</p>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2016-03-01-combine-github-and-gitlab/` was built on 2025-08-05T06:08:55.038Z -->
+		<!-- This page `/blog/2016-03-01-combine-github-and-gitlab/` was built on 2025-08-05T06:54:41.442Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

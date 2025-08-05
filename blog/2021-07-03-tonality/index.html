@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/self-talking/" class="post-tag">self-talking</a></li>
 </ul>
 
-<blockquote>
+<div class="page-post">
+  <blockquote>
 <p>维基百科:
 调性（Tonality）是调的主音和调式类别的总称，例如，以C为主音的大调式，其调性即是“C大调”，以a为主音的小调式，其调性就是“a小调”等。以此类推，一般音乐中主要有24个调性。</p>
 </blockquote>
@@ -591,6 +611,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 <h3 id="reference">Reference</h3>
 <p><a href="https://huhao.dev/posts/56bcf73b/">胡皓 - 软件技术顾问的培养（一）</a></p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2021-04-10-with-cgc/">Coding Girls Club 和我</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2021-10-01-building-team-capabilities-1/">Team work</a></li>
 </ul>
 
@@ -613,7 +634,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2021-07-03-tonality/` was built on 2025-08-05T06:08:55.049Z -->
+		<!-- This page `/blog/2021-07-03-tonality/` was built on 2025-08-05T06:54:41.456Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

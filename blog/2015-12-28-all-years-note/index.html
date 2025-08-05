@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -551,7 +570,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/life/" class="post-tag">life</a></li>
 </ul>
 
-<h3 id="2015-2">2015年终总结</h3>
+<div class="page-post">
+  <h3 id="2015-2">2015年终总结</h3>
 <p>2015年就要过去了，如果说用简单的几个字来总结，想想看，应该是苦辣酸甜
 其实学生时代的我应该是一个相当感性的人，也许那时候，家人惯着，奶奶爷爷宠着，我根本不需要争取什么，害怕什么
 今年当然也发生了相当大的事，奶奶的身体越来越不好，大概是10月更早开始的事情
@@ -602,6 +622,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 接下来的日子里，珍惜时光，乐观向上
 爱着爱我的人，更勇敢些：）</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-12-24-heap-sort/">堆排序特点解读和最佳实践</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-12-29-twitter-log-bookkeeper/">Twitter 高性能分布式日志系统架构解析</a></li>
 </ul>
 
@@ -624,7 +645,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-12-28-all-years-note/` was built on 2025-08-05T06:08:55.037Z -->
+		<!-- This page `/blog/2015-12-28-all-years-note/` was built on 2025-08-05T06:54:41.442Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>

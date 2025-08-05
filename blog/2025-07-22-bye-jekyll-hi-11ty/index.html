@@ -334,23 +334,42 @@ a {
 	font-style: normal;
 }
 
-/* 引用 */
+/* 其他页面样式, 例如: 关于我 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
 }
 
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
 /* 单行代码 */
-code {
+.page-post code {
 	font-size: 13px;
-	background-color: #8AA624;
+	background-color: #F2EFE7;
 	word-break: break-all;
 	padding: 3px 5px;
 	margin: 0 4px;
 	border-radius: 5px;
-	color: #eee;
+	color: #333333;
 	transition: all 500ms ease;
+	font-style: italic;
 }
 /**
  * prism.js Twilight theme
@@ -552,7 +571,8 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	<li><a href="/sddtc.github.com/tags/ruby/" class="post-tag">ruby</a></li>
 </ul>
 
-<p>从我知道github自带<code>gh-pages</code>特性那会儿, 便把个人博客从自建服务器迁移到了这里,也快11年了(第一篇文章发布于2014年), 后来知道了一些便宜的域名服务, 换过2个域名. 从GoDaddy平台换成了<a href="https://porkbun.com/">porkbun</a>. 然而静态页面生成器一直使用github官方推荐的jekyll, 也用爱发电换了好几个主题, 最近的<a href="https://github.com/TMaize/tmaize-blog">tmaize</a>主题确实是我一直很喜欢的.. 但是!! 这两天还是谨慎思考(花了一个下午的时间), 彻底放弃jekyll, 也是要从一个一直困惑我的报错开始...<br>
+<div class="page-post">
+  <p>从我知道github自带<code>gh-pages</code>特性那会儿, 便把个人博客从自建服务器迁移到了这里,也快11年了(第一篇文章发布于2014年), 后来知道了一些便宜的域名服务, 换过2个域名. 从GoDaddy平台换成了<a href="https://porkbun.com/">porkbun</a>. 然而静态页面生成器一直使用github官方推荐的jekyll, 也用爱发电换了好几个主题, 最近的<a href="https://github.com/TMaize/tmaize-blog">tmaize</a>主题确实是我一直很喜欢的.. 但是!! 这两天还是谨慎思考(花了一个下午的时间), 彻底放弃jekyll, 也是要从一个一直困惑我的报错开始...<br>
 容器化启动项目是一个习惯, 它可以不依赖电脑本地的环境, 用一个docker image文件, 包含着项目需要的依赖, 运行环境, 很方便的让你快速启动. 一直以来我用了jekyll的image在本地启动博客:</p>
 <pre class="language-yml" tabindex="0"><code class="language-yml"><span class="token key atrule">services</span><span class="token punctuation">:</span>
   <span class="token key atrule">jekyll</span><span class="token punctuation">:</span>
@@ -659,6 +679,7 @@ tags: self-talking
 再研究研究11ty, 看看有什么好玩的插件</p>
 <p>谢谢大家的观看! 鞠躬!</p>
 
+</div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2025-07-03-blocked-in-some-regions-for-example-China/">该网站在某些区域被阻止, 例如 中国</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2025-07-24-websocket-chat-room/">搭建基于websocket的在线多人聊天室</a></li>
 </ul>
 
@@ -681,7 +702,7 @@ tags: self-talking
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2025-07-22-bye-jekyll-hi-11ty/` was built on 2025-08-05T06:08:55.052Z -->
+		<!-- This page `/blog/2025-07-22-bye-jekyll-hi-11ty/` was built on 2025-08-05T06:54:41.459Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>
