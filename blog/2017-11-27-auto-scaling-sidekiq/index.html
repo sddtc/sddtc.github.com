@@ -334,10 +334,23 @@ a {
 	font-style: normal;
 }
 
+/* 引用 */
 blockquote {
 	border-left: 3px solid #333333;
 	background-color: #F2EFE7;
 	padding: 9px 9px 9px 15px;
+}
+
+/* 单行代码 */
+code {
+	font-size: 13px;
+	background-color: #8AA624;
+	word-break: break-all;
+	padding: 3px 5px;
+	margin: 0 4px;
+	border-radius: 5px;
+	color: #eee;
+	transition: all 500ms ease;
 }
 /**
  * prism.js Twilight theme
@@ -557,14 +570,13 @@ We used the same method to detect the autoscale instance is terminating and we h
 </ol>
 <p>When you add a lifecycle hook, you have the option to be notified when the instance enters a wait state so that you can perform the corresponding custom action.
 So we put the autoscaling: EC2_INSTANCE_TERMINATE hook.</p>
-<pre><code>@client.put_lifecycle_hook(
+<pre class="language-shell" tabindex="0"><code class="language-shell">@client.put_lifecycle_hook<span class="token punctuation">(</span>
    auto_scaling_group_name: AUTO_SCALING_GROUP_NAME,
-   lifecycle_hook_name: 'Auto-Scale-Ec2-Termination',
-   lifecycle_transition: &quot;autoscaling:EC2_INSTANCE_TERMINATING&quot;,
-   notification_target_arn: 'arn:aws:sns:us-west-2:496361111699:Auto-Scale-EC2-Termination',
-   role_arn: 'arn:aws:iam::492361111699:role/sns-publish'
-)
-</code></pre>
+   lifecycle_hook_name: <span class="token string">'Auto-Scale-Ec2-Termination'</span>,
+   lifecycle_transition: <span class="token string">"autoscaling:EC2_INSTANCE_TERMINATING"</span>,
+   notification_target_arn: <span class="token string">'arn:aws:sns:us-west-2:496361111699:Auto-Scale-EC2-Termination'</span>,
+   role_arn: <span class="token string">'arn:aws:iam::492361111699:role/sns-publish'</span>
+<span class="token punctuation">)</span></code></pre>
 <ol start="3">
 <li>When a Autoscale instance is terminating, it will send an SNS notification to our API server.
 The notification sends JSON response which contains Instance Id, LifecycleActionToken etc.</li>
@@ -604,7 +616,7 @@ When the busy jobs sum becomes 0 then we will call complete lifecycle action hoo
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2017-11-27-auto-scaling-sidekiq/` was built on 2025-08-05T04:12:20.480Z -->
+		<!-- This page `/blog/2017-11-27-auto-scaling-sidekiq/` was built on 2025-08-05T06:08:55.043Z -->
 		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
 	</body>
 </html>
