@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>SS+Trojan-Qt5+colima 配置docker proxy从而正常下载docker images</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+
+blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+/**
+ * prism.js Twilight theme
+ * Based (more or less) on the Twilight theme originally of Textmate fame.
+ * @author Remy Bach
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+	color: white;
+	background: none;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	text-shadow: 0 -.1em .2em black;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+pre[class*="language-"],
+:not(pre) > code[class*="language-"] {
+	background: hsl(0, 0%, 8%); /* #141414 */
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	border-radius: .5em;
+	border: .3em solid hsl(0, 0%, 33%); /* #282A2B */
+	box-shadow: 1px 1px .5em black inset;
+	margin: .5em 0;
+	overflow: auto;
+	padding: 1em;
+}
+
+pre[class*="language-"]::-moz-selection {
+	/* Firefox */
+	background: hsl(200, 4%, 16%); /* #282A2B */
+}
+
+pre[class*="language-"]::selection {
+	/* Safari */
+	background: hsl(200, 4%, 16%); /* #282A2B */
+}
+
+/* Text Selection colour */
+pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+	text-shadow: none;
+	background: hsla(0, 0%, 93%, 0.15); /* #EDEDED */
+}
+
+pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+code[class*="language-"]::selection, code[class*="language-"] ::selection {
+	text-shadow: none;
+	background: hsla(0, 0%, 93%, 0.15); /* #EDEDED */
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	border-radius: .3em;
+	border: .13em solid hsl(0, 0%, 33%); /* #545454 */
+	box-shadow: 1px 1px .3em -.1em black inset;
+	padding: .15em .2em .05em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: hsl(0, 0%, 47%); /* #777777 */
+}
+
+.token.punctuation {
+	opacity: .7;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.tag,
+.token.boolean,
+.token.number,
+.token.deleted {
+	color: hsl(14, 58%, 55%); /* #CF6A4C */
+}
+
+.token.keyword,
+.token.property,
+.token.selector,
+.token.constant,
+.token.symbol,
+.token.builtin {
+	color: hsl(53, 89%, 79%); /* #F9EE98 */
+}
+
+.token.attr-name,
+.token.attr-value,
+.token.string,
+.token.char,
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable,
+.token.inserted {
+	color: hsl(76, 21%, 52%); /* #8F9D6A */
+}
+
+.token.atrule {
+	color: hsl(218, 22%, 55%); /* #7587A6 */
+}
+
+.token.regex,
+.token.important {
+	color: hsl(42, 75%, 65%); /* #E9C062 */
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+
+/* Markup */
+.language-markup .token.tag,
+.language-markup .token.attr-name,
+.language-markup .token.punctuation {
+	color: hsl(33, 33%, 52%); /* #AC885B */
+}
+
+/* Make the tokens sit above the line highlight so the colours don't look faded. */
+.token {
+	position: relative;
+	z-index: 1;
+}
+
+.line-highlight.line-highlight {
+	background: hsla(0, 0%, 33%, 0.25); /* #545454 */
+	background: linear-gradient(to right, hsla(0, 0%, 33%, .1) 70%, hsla(0, 0%, 33%, 0)); /* #545454 */
+	border-bottom: 1px dashed hsl(0, 0%, 33%); /* #545454 */
+	border-top: 1px dashed hsl(0, 0%, 33%); /* #545454 */
+	margin-top: 0.75em; /* Same as .prism’s padding-top */
+	z-index: 0;
+}
+
+.line-highlight.line-highlight:before,
+.line-highlight.line-highlight[data-end]:after {
+	background-color: hsl(215, 15%, 59%); /* #8794A6 */
+	color: hsl(24, 20%, 95%); /* #F5F2F0 */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+<h1 id="ss-trojan-qt5-colima-docker-proxy-docker-images">SS+Trojan-Qt5+colima 配置docker proxy从而正常下载docker images</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2025-08-05">05 August 2025</time></li>
+	标签:
+	<li><a href="/sddtc.github.com/tags/devops/" class="post-tag">devops</a></li>
+</ul>
+
+<p>虽然docker desktop app个人免费有友好的UI界面, 下载images也很快, 但是当重新配置CPU和memory的时候, 一旦运行一些container造成卡顿电脑很容易变慢且无响应.
+再加上个人更喜欢命令行模式, 于是还是解决了之前colima+docker无法下载docker images的问题.</p>
+<p>已经具备的前提条件:</p>
+<ul>
+<li>VPN(SS) + Trojan-Qt5(client)</li>
+<li><a href="https://github.com/abiosoft/colima">colima</a> 一款开源的 docker desktop app 平替
+<ul>
+<li>需要额外安装qemu(和colima template的默认配置相关 <code>vmType: qemu</code>): <a href="https://formulae.brew.sh/formula/qemu">brew install qemu</a></li>
+<li>需要额外安装docker <a href="https://formulae.brew.sh/formula/docker">brew install docker</a></li>
+</ul>
+</li>
+</ul>
+<p>本机的VPN采用的是动态寻址(proxy.pac), 有个白名单定义了哪些网址走VPN, 所以docker images下载访问失败是因为需要走这个代理但是没有配置过(说到底是因为docker.io
+和docker.com咱们访问不了🙂):
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/UqpKAGBEM1-1320.avif 1320w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/UqpKAGBEM1-1320.webp 1320w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/UqpKAGBEM1-1320.png" alt="proxies" width="1320" height="826"></picture></p>
+<p>安装之后的colima版本:
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/esYa0WXJ8I-1616.avif 1616w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/esYa0WXJ8I-1616.webp 1616w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/esYa0WXJ8I-1616.png" alt="colima-verison" width="1616" height="482"></picture></p>
+<p>安装好了之后就该配置docker proxy了.我采用了动态修改docker container配置的形式.除此之外还有其他方法,因为没有使用就不在此介绍了.
+关于colima启动docker虚拟机的时候, 这次我也利用了 <code>colima template</code> 进行了自定义模版, 当你创建成功一个default virtual的时候, 模版文件地址就在
+<code>/Users/sddtc/.colima/default/colima.yaml</code>(将sddtc替换为你的用户名)</p>
+<p><picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/Z-Ox9bBZVo-2332.avif 2332w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/Z-Ox9bBZVo-2332.webp 2332w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/Z-Ox9bBZVo-2332.png" alt="colima-default" width="2332" height="188"></picture>
+如图所示, default的虚拟机架构是 x86_64, 配置了4个CPU,内存给了4G, 硬盘分配了30G, 使用的是docker.而我本机配置是Mac(Intel Core i7+16G内存+500G),所以docker
+的配置突出一个够用就行.
+配置docker proxy其实是为了配置<code>/etc/docker/daemon.json</code>中的proxies节点:</p>
+<pre class="language-json" tabindex="0"><code class="language-json"><span class="token property">"proxies"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"http-proxy"</span><span class="token operator">:</span> <span class="token string">"http://&lt;url>:&lt;port>"</span><span class="token punctuation">,</span>
+    <span class="token property">"https-proxy"</span><span class="token operator">:</span> <span class="token string">"http://&lt;url>:&lt;port>"</span><span class="token punctuation">,</span>
+    <span class="token property">"no-proxy"</span><span class="token operator">:</span> <span class="token string">"localhost,127.0.0.1"</span>
+  <span class="token punctuation">}</span></code></pre>
+<p>url, port就是你VPN所配置的地址和端口号. 基本上本机代理的url就是127.0.0.1. 这里有个坑就是协议(这里使用的是http而不能是socks5). 不过这个坑应该只有使用 VPN(SS) + Trojan-Qt5(client)
+才会遇到: <a href="https://stackoverflow.com/questions/73798733/why-socks5-protocol-in-http-proxy-lead-curl-52-empty-reply-from-server">stackoverflow: why socks5 protocol in <code>http_proxy</code> lead &quot;curl: (52) Empty reply from server&quot;?</a></p>
+<p>为了到达以上目的,我在<code>/Users/sddtc/.colima/default/colima.yaml</code>的env节点下配置proxy (应该也可以配置在docker节点下, 我也是用了其中一种方法):</p>
+<pre class="language-json" tabindex="0"><code class="language-json">env<span class="token operator">:</span>
+  http_proxy<span class="token operator">:</span> http<span class="token operator">:</span><span class="token comment">//&lt;url>:&lt;port>,</span>
+  https_proxy<span class="token operator">:</span> http<span class="token operator">:</span><span class="token comment">//&lt;url>:&lt;port>,</span>
+  no_proxy<span class="token operator">:</span> <span class="token string">"localhost,127.0.0.1"</span></code></pre>
+<p>template写好之后,启动/重新启动colima: <code>colima start</code>/<code>colima restart</code>
+使用 <code>colima ssh</code></p>
+<p><picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/H_eQZNopKj-1884.avif 1884w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/H_eQZNopKj-1884.webp 1884w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/H_eQZNopKj-1884.png" alt="colima-ssh" width="1884" height="888"></picture></p>
+<p>这里你会发现url会被重写为 <code>192.168.5.2</code>, 这是colima的一个issue(最新版0.8.2也没有修复), 见<a href="https://github.com/abiosoft/colima/issues/1144">Colima does not auto-replace gateway address for proxy variables in docker daemon.json</a> 和 <a href="https://github.com/abiosoft/colima/issues/956">colima x86_64 daemon.json file has incorrect proxy</a>
+评论提到可以使用provision脚本更新, 但是我发现我的template并没有在重启后自动执行脚本, 于是我手动执行修复:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">colima <span class="token function">ssh</span>
+<span class="token function">cat</span> /etc/docker/daemon.json <span class="token comment"># 检查一下proxies的值</span>
+<span class="token function">sudo</span> <span class="token function">sed</span> <span class="token parameter variable">-i</span> <span class="token string">"s/192.168.5.2/127.0.0.1/"</span> /etc/docker/daemon. <span class="token comment">#我是本机代理所以是127.0.0.1</span>
+<span class="token function">sudo</span> systemctl daemon-reload
+<span class="token function">sudo</span> systemctl reload <span class="token function">docker</span>
+<span class="token builtin class-name">exit</span></code></pre>
+<p>这样一配就好了. 如果你用了类似iTerm2的命令行工具, 会需要 <code>docker login</code> 等命令, 同样需要命令行工具在访问某些网站时使用代理,在<code>~/.zshrc</code>配置一下子:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token comment"># iTerms can also use proxy to visit google</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">http_proxy</span><span class="token operator">=</span><span class="token string">"http://&lt;url>:&lt;port>"</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">https_proxy</span><span class="token operator">=</span><span class="token string">"http://&lt;url>:&lt;port>"</span>
+
+<span class="token builtin class-name">source</span> ~/.zshrc</code></pre>
+<p>一切都配置好了, 正常pull images, 搞定.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/">Agent AI: Surveying the Horizons of Multimodal Interaction 读后感</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © 2025</p>
+		</footer>
+
+        
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2025-08-05-docker-proxy-setup/` was built on 2025-08-05T04:08:14.305Z -->
+		<script type="module" src="/sddtc.github.com/dist/gP3CpZ6MIL.js"></script>
+	</body>
+</html>
