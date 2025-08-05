@@ -14,11 +14,11 @@ const eleventyNavigation = {
 
 [Github](https://github.com/sddtc) | [Instagram](https://www.instagram.com/sddtc_ch)
 
-关于大蜕:  `复杂的人`
+关于大蜕:  **复杂的人**
 
-属性(2025版): `PVP农药版`, `兴趣至上`, `学习生活`, `BE美学人`
+属性(2025版): **PVP农药版**, **兴趣至上**, **学习生活**, **BE美学人**
 
-~~属性:  `优雅的彩笔`, `动画党`, `剑三穷苦 PVP`, `用爱发电`, `BE 美学人`~~
+~~属性:  **优雅的彩笔**, **动画党**, **剑三穷苦 PVP**, **用爱发电**, **BE 美学人**~~
 
 ### 个人独家推荐 (排名不分先后)
 - 《商业就是这样》([小宇宙链接](https://www.xiaoyuzhoufm.com/podcast/6022a180ef5fdaddc30bb101))
