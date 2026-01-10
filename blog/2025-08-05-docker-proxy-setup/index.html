@@ -346,6 +346,10 @@ blockquote {
 	margin: 10px 0;
 }
 
+.page-post {
+	font-size: 18px;
+}
+
 .page-post a {
 	text-decoration: none;
 	color: #8AA624;
@@ -571,68 +575,80 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 </ul>
 
 <div class="page-post">
-  <p>虽然 docker desktop app 个人免费有友好的 UI 界面, 下载 images 也很快, 但是当重新配置 CPU 和 memory 的时候, 一旦运行一些 container 造成卡顿电脑很容易变慢且无响应.
-再加上个人更喜欢命令行模式, 于是还是解决了之前 colima+docker 无法下载 docker images 的问题.</p>
-<p>已经具备的前提条件:</p>
+  <h3 id="">碎碎念:</h3>
+<p>虽然 docker desktop app 个人免费, 有友好的 UI 界面且下载 images 也很快, 但是当重新配置 CPU 和 memory 的时候, 一旦运行一些 container 会经常造成卡顿, 导致我的电脑很容易无响应. 再加上个人觉得命令行模式简单易用, 于是克服了之前 colima+docker 无法下载 docker images 的问题. 本文详细介绍了解决方案.</p>
+<h2 id="-2">确保你已经具备的前提条件:</h2>
 <ul>
 <li>VPN(SS) + Trojan-Qt5(client)</li>
 <li><a href="https://github.com/abiosoft/colima">colima</a>: 一款开源的 docker desktop app 平替
 <ul>
-<li>需要额外安装qemu(和colima template的默认配置相关 <strong>vmType: qemu</strong>)
-<ul>
-<li><a href="https://formulae.brew.sh/formula/qemu">brew install qemu</a></li>
-</ul>
-</li>
-<li>需要额外安装docker
-<ul>
-<li><a href="https://formulae.brew.sh/formula/docker">brew install docker</a></li>
+<li>需要额外安装qemu(和colima template的默认配置相关 <strong>vmType: qemu</strong>): <a href="https://formulae.brew.sh/formula/qemu">brew install qemu</a></li>
+<li>需要额外安装docker: <a href="https://formulae.brew.sh/formula/docker">brew install docker</a></li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-<p>本机的 VPN 采用的是动态寻址(proxy.pac), 有个白名单定义了哪些网址走 VPN, 所以 docker images 下载访问失败是因为需要走这个代理但是没有配置过(说到底是因为docker.io和docker.com咱们访问不了🙂):
-<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/UqpKAGBEM1-1320.avif 1320w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/UqpKAGBEM1-1320.webp 1320w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/UqpKAGBEM1-1320.png" alt="proxies" width="1320" height="826"></picture>
-安装之后的colima版本:
-<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/esYa0WXJ8I-1616.avif 1616w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/esYa0WXJ8I-1616.webp 1616w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/esYa0WXJ8I-1616.png" alt="colima-verison" width="1616" height="482"></picture>
-安装好了之后就该配置 docker proxy 了.我采用了动态修改 docker container 配置的形式.除此之外还有其他方法,因为没有使用就不在此介绍了.
-关于 colima 启动 docker 虚拟机的时候, 这次我也利用了 <code>colima template</code> 进行了自定义模版, 当你创建成功一个 default virtual 的时候, 模版文件地址就在
+<h2 id="wifi-vpn-proxy-pac">配置WIFI 的 VPN proxy.pac</h2>
+<p>如果你的 VPN 采用的是动态寻址(proxy.pac) - 有个白名单定义了哪些网址走 VPN, 哪些不走.<br>
+那么如果没有为WIFI配置代理, 下载 docker images 会访问失败(说到底是因为docker.io和docker.com在某些区域被限制访问🙂), 如图所示, 确保打开 Automatic proxy configuration, 在 URL 配置 proxy.pac:<br>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/UqpKAGBEM1-1320.avif 1320w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/UqpKAGBEM1-1320.webp 1320w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/UqpKAGBEM1-1320.png" alt="proxies" width="1320" height="826"></picture></p>
+<h2 id="colima-docker">定义 Colima 默认 Docker</h2>
+<p>笔者采用动态修改 docker container 配置的策略.<br>
+colima 启动 docker 虚拟机的时候, 利用 <code>colima template</code> 进行了自定义模版, 模版文件地址:<br>
 <code>/Users/sddtc/.colima/default/colima.yaml</code>(将sddtc替换为你的用户名)
 <picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/Z-Ox9bBZVo-2332.avif 2332w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/Z-Ox9bBZVo-2332.webp 2332w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/Z-Ox9bBZVo-2332.png" alt="colima-default" width="2332" height="188"></picture>
-如图所示, default 的虚拟机架构是 x86_64, 配置了 4 个 CPU,内存给了 4G, 硬盘分配了 30G, 运行时是 docker.而我本机配置是 Mac(Intel Core i7+16G内存+500G),所以 docker 的配置突出一个够用就行.
-配置 docker proxy 其实是为了配置<code>/etc/docker/daemon.json</code>中的 <strong>proxies</strong> 节点:</p>
+配置文件的内容如上图所示:</p>
+<ul>
+<li>虚拟机架构是 x86_64</li>
+<li>配置 4 个 CPU</li>
+<li>内存 4G</li>
+<li>硬盘 30G</li>
+<li>运行时是 docker</li>
+</ul>
+<p>而我本机配置是 Mac(Intel Core i7+16G内存+500G), 所以 docker 的配置突出一个够用就行.</p>
+<h2 id="docker-proxies">配置 Docker proxies</h2>
+<p>proxies 的位置在 Docker 虚拟机的<code>/etc/docker/daemon.json</code>的<strong>proxies</strong>节点:</p>
 <pre class="language-json" tabindex="0"><code class="language-json"><span class="token property">"proxies"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"http-proxy"</span><span class="token operator">:</span> <span class="token string">"http://&lt;url>:&lt;port>"</span><span class="token punctuation">,</span>
     <span class="token property">"https-proxy"</span><span class="token operator">:</span> <span class="token string">"http://&lt;url>:&lt;port>"</span><span class="token punctuation">,</span>
     <span class="token property">"no-proxy"</span><span class="token operator">:</span> <span class="token string">"localhost,127.0.0.1"</span>
   <span class="token punctuation">}</span></code></pre>
-<p>url, port 就是你 VPN 所配置的地址和端口号. 基本上本机代理的 url 就是 127.0.0.1. 这里有个坑就是协议(这里使用的是http而不能是socks5). 不过这个坑应该只有使用 VPN(SS) + Trojan-Qt5(client)
-会遇到:</p>
+<p>其中:</p>
 <ul>
-<li><a href="https://stackoverflow.com/questions/73798733/why-socks5-protocol-in-http-proxy-lead-curl-52-empty-reply-from-server">stackoverflow: why socks5 protocol in http_proxy lead &quot;curl: (52) Empty reply from server&quot;?</a></li>
+<li><code>&lt;url&gt;</code>: VPN 所配置的地址. 基本上本机代理的 url 就是<code>127.0.0.1</code>. 这里有个坑就是协议(这里使用的是http而不能是socks5). 不过这个坑应该只有使用 VPN(SS) + Trojan-Qt5(client)
+会遇到: <a href="https://stackoverflow.com/questions/73798733/why-socks5-protocol-in-http-proxy-lead-curl-52-empty-reply-from-server">stackoverflow: why socks5 protocol in http_proxy lead &quot;curl: (52) Empty reply from server&quot;?</a></li>
+<li><code>&lt;port&gt;</code>: VPN 所配置的端口号.</li>
 </ul>
-<p>为了到达配置 docker proxy 的目的,我在 <code>/Users/sddtc/.colima/default/colima.yaml</code> 的 <strong>env</strong> 节点下配置 proxy (应该也可以配置在 docker 节点下, 我也是用了其中一种方法):</p>
+<p>该配置在你把colima的Docker删除再新创建的时候会被清除, 因此要在<code>/Users/sddtc/.colima/default/colima.yaml</code> 的 <strong>env</strong> 节点下也配置 proxy 好:</p>
 <pre class="language-json" tabindex="0"><code class="language-json">env<span class="token operator">:</span>
   http_proxy<span class="token operator">:</span> http<span class="token operator">:</span><span class="token comment">//&lt;url>:&lt;port>,</span>
   https_proxy<span class="token operator">:</span> http<span class="token operator">:</span><span class="token comment">//&lt;url>:&lt;port>,</span>
   no_proxy<span class="token operator">:</span> <span class="token string">"localhost,127.0.0.1"</span></code></pre>
-<p>template 写好之后,启动/重新启动 colima: <code>colima start</code>/<code>colima restart</code>
-接着使用 <code>colima ssh</code> 进入到虚拟机内部:<br>
-<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/H_eQZNopKj-1884.avif 1884w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/H_eQZNopKj-1884.webp 1884w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/H_eQZNopKj-1884.png" alt="colima-ssh" width="1884" height="888"></picture>
-这里你会发现url会被重写为 <code>192.168.5.2</code>, 这是 colima 的一个 issue(最新版0.8.2也没有修复), 见</p>
+<p>template 写好之后:</p>
+<ol>
+<li>启动/重新启动 colima: <code>colima start</code>/<code>colima restart</code></li>
+<li>使用 <code>colima ssh</code> 进入到虚拟机内部:<br>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/H_eQZNopKj-1884.avif 1884w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/H_eQZNopKj-1884.webp 1884w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/H_eQZNopKj-1884.png" alt="colima-ssh" width="1884" height="888"></picture></li>
+</ol>
+<p>这里你会发现url会被重写为!!!<code>192.168.5.2</code>!!!, 这是 colima 的一个 issue(最新版0.8.2也没有修复), 见</p>
 <ul>
 <li><a href="https://github.com/abiosoft/colima/issues/1144">Colima does not auto-replace gateway address for proxy variables in docker daemon.json</a></li>
 <li><a href="https://github.com/abiosoft/colima/issues/956">colima x86_64 daemon.json file has incorrect proxy</a></li>
 </ul>
-<p>评论提到可以使用provision脚本更新, 但是我发现我的 template 并没有在重启后自动执行脚本, 于是可以手动执行修复:</p>
+<p>查看colima版本:
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/esYa0WXJ8I-1616.avif 1616w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/esYa0WXJ8I-1616.webp 1616w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/esYa0WXJ8I-1616.png" alt="colima-verison" width="1616" height="482"></picture></p>
+<h2 id="docker-proxy-url">修复 Docker proxy url</h2>
+<p>手动执行修复(评论提到可以使用provision脚本更新, 但我发现 template 并没有在重启后自动执行脚本):</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell">colima <span class="token function">ssh</span>
-<span class="token function">cat</span> /etc/docker/daemon.json <span class="token comment"># 检查一下proxies的值</span>
-<span class="token function">sudo</span> <span class="token function">sed</span> <span class="token parameter variable">-i</span> <span class="token string">"s/192.168.5.2/127.0.0.1/"</span> /etc/docker/daemon. <span class="token comment">#我是本机代理所以是127.0.0.1</span>
+<span class="token comment"># 检查一下proxies的值</span>
+<span class="token function">cat</span> /etc/docker/daemon.json 
+<span class="token comment">#我是本机代理所以是127.0.0.1</span>
+<span class="token function">sudo</span> <span class="token function">sed</span> <span class="token parameter variable">-i</span> <span class="token string">"s/192.168.5.2/127.0.0.1/"</span> /etc/docker/daemon.json
 <span class="token function">sudo</span> systemctl daemon-reload
 <span class="token function">sudo</span> systemctl reload <span class="token function">docker</span>
 <span class="token builtin class-name">exit</span></code></pre>
-<p>这样一配就好了.<br>
-如果你用了类似 iTerm2 的命令行工具, 会需要 run <code>docker login</code> 等命令, 同样需要命令行工具在访问某些网站时使用代理,可以在 <code>~/.zshrc</code> 配置一下子:</p>
+<p>这样一配就好了.</p>
+<h2 id="iterm2-proxy">iTerm2 配置 proxy 开关</h2>
+<p>如果你用了类似 iTerm2 的命令行工具, 会需要 run <code>docker login</code> 等命令, 同样需要命令行工具在访问某些网站时使用代理,可以在 <code>~/.zshrc</code> 配置一下子:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token comment"># setup proxy can turn on/off then iTerms can also use proxy to visit google</span>
 <span class="token builtin class-name">alias</span> <span class="token assign-left variable">proxy</span><span class="token operator">=</span><span class="token string">"export all_proxy=http://&lt;url>:&lt;port>"</span>
 <span class="token builtin class-name">alias</span> <span class="token assign-left variable">unproxy</span><span class="token operator">=</span><span class="token string">"unset all_proxy"</span>
@@ -666,7 +682,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2025-08-05-docker-proxy-setup/` was built on 2026-01-07T03:39:40.679Z -->
+		<!-- This page `/blog/2025-08-05-docker-proxy-setup/` was built on 2026-01-10T15:50:28.936Z -->
 		<script type="module" src="/sddtc.github.com/dist/ZGrEtuVNTt.js"></script>
 	</body>
 </html>
