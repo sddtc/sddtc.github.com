@@ -38,6 +38,10 @@ blockquote {
 	margin: 10px 0;
 }
 
+.page-post {
+	font-size: 18px;
+}
+
 .page-post a {
 	text-decoration: none;
 	color: #8AA624;

@@ -45,10 +45,17 @@
 		</main>
 
 		<footer>
-			<p>Copyright © 2025</p>
+			<p>Copyright © <span id="copyright-year"></span></p>
 		</footer>
 
-        <script type="module">{% include "js/customized-bundle.js" %}</script>
+		<script>
+		; (function () {
+			var el = document.getElementById('copyright-year');
+			if (el) el.textContent = new Date().getFullYear();
+		})();
+		</script>
+
+    <script type="module">{% include "js/customized-bundle.js" %}</script>
 		<script>
 		; (function () {
 			var textArr = ['富强', '民主', '文明', '和谐', '自由', '平等', '公正', '法治', '爱国', '敬业', '诚信', '友善']
