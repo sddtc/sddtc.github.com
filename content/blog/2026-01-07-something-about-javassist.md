@@ -4,38 +4,64 @@ date: 2026-01-07
 tags: [java]
 ---
 
-Javassist（Java编程助手）简化了Java字节码的操作。它是一个用于编辑Java字节码的类库；它允许Java程序在运行时定义新类，并在JVM加载类文件时对其进行修改。
-与其他类似的字节码编辑器不同，Javassist提供了两个级别的API：源代码级别和字节码级别。如果用户使用源代码级别API，他们无需了解Java字节码的规范即可编辑类文件。
-整个API仅使用Java语言的词汇表设计。您甚至可以以源代码文本的形式指定要插入的字节码；Javassist会实时编译它。另一方面，字节码级别API允许用户像其他编辑器一样直接编辑类文件。
+## 什么是 Javassist？
+
+Javassist（Java 编程助手）是一个用于编辑 Java 字节码的类库。它允许 Java 程序在运行时定义新类，并在 JVM 加载类文件时对其进行修改。
+
+### 两种 API 级别
+
+Javassist 提供两种 API 级别：
+
+- **源代码级别 API**：使用 Java 语言词汇表，无需了解字节码规范即可编辑类文件。可以以源代码文本形式指定要插入的字节码，Javassist 会实时编译。
+- **字节码级别 API**：直接编辑类文件，与其他字节码编辑器类似。
 
 ## 读取和写入字节码
-### 获取 CtClass 对象:
+
+### 获取 CtClass 对象
+
+使用 `ClassPool` 获取 `CtClass` 对象：
+
 ```java
-// 从类池中获取
+// 创建类池
 final ClassPool classPool = new ClassPool(true);
-//通过系统classloader加载类
+// 通过系统类加载器加载类
 classPool.appendClassPath(new LoaderClassPath(ClassLoader.getSystemClassLoader()));
-//通过自定义classloader加载类
+// 通过自定义类加载器加载类
 classPool.appendClassPath(new LoaderClassPath(loader));
 ```
-### 修改类定义:
+
+### 修改类定义
+
+向类中添加新字段：
+
 ```java
 CtClass cc = xxx;
 CtField f = new CtField(CtClass.intType, "newField", cc);
 cc.addField(f);
 ```
-### ClassPool 的层次结构:
-ClassPool 可以组织成层次结构。如果子 ClassPool 在本地找不到类文件，它可以委托父 ClassPool 查找。这种层次结构对于共享类定义很有用。
-例如，你可以为每个类加载器创建一个子 ClassPool，并让它们共享一个公共的父 ClassPool。这样，不同类加载器加载的类可以共享相同的 CtClass 对象。
+
+### ClassPool 的层次结构
+
+`ClassPool` 支持层次结构。如果子 `ClassPool` 在本地找不到类文件，它会委托父 `ClassPool` 查找。
+
+**使用场景**：为每个类加载器创建一个子 `ClassPool`，并让它们共享一个公共的父 `ClassPool`。这样，不同类加载器加载的类可以共享相同的 `CtClass` 对象。
+
 ## 类加载器
-### CtClass.toClass() 方法
-CtClass 的 toClass() 方法将 CtClass 对象转换为 java.lang.Class 对象。转换后的 Class 对象可以由 Java 应用程序使用。
-但是，toClass() 要求调用者的类加载器必须能够加载 CtClass 对象所表示的类。如果调用者的类加载器无法加载该类，则会抛出 ClassNotFoundException。
+
+### 使用 toClass() 方法
+
+`CtClass.toClass()` 方法将 `CtClass` 对象转换为 `java.lang.Class` 对象，供 Java 应用程序使用。
+
+**注意**：调用者的类加载器必须能够加载 `CtClass` 对象所表示的类，否则会抛出 `ClassNotFoundException`。
+
 ```kotlin
 val instance = ctClass.toClass().getDeclaredConstructor().newInstance();
 ```
-### 自定义类加载器:
-如果需要更复杂的类加载行为，可以定义自己的类加载器, 例如:
+
+### 自定义类加载器
+
+如果需要更复杂的类加载行为，可以定义自己的类加载器：
+
 ```java
 public class MyLoader extends ClassLoader {
     private ClassPool pool;
@@ -52,16 +78,30 @@ public class MyLoader extends ClassLoader {
     }
 }
 ```
-## 定制
-### 在方法体开头/结尾插入代码:
-CtMethod 和 CtConstructor 提供了 insertBefore()、insertAfter() 和 addCatch() 方法，用于在方法体中插入代码。这些方法接受一个表示 Java 代码块的字符串参数。
+
+## 修改现有类
+
+### 在方法体中插入代码
+
+`CtMethod` 和 `CtConstructor` 提供以下方法用于在方法体中插入代码：
+
+- `insertBefore()`：在方法体开头插入代码
+- `insertAfter()`：在方法体结尾插入代码
+- `addCatch()`：添加异常处理代码
+
+这些方法接受一个表示 Java 代码块的字符串参数：
+
 ```java
 CtMethod m = xxx;
 m.insertBefore("{ System.out.println(\"start\"); }");
 ```
-插入的代码块可以访问方法的局部变量和参数。  
+
+**重要**：插入的代码块可以访问方法的局部变量和参数。
+
 ### 添加新方法
-CtClass 的 addMethod() 方法向类中添加一个新方法。例如：
+
+使用 `addMethod()` 方法向类中添加新方法：
+
 ```java
 CtClass cc = xxx;
 CtMethod newMethod = CtNewMethod.make(
@@ -69,29 +109,58 @@ CtMethod newMethod = CtNewMethod.make(
     cc);
 cc.addMethod(newMethod);
 ```
-### 递归方法  
-Javassist 支持递归方法调用。但是，如果递归方法调用自身，则插入的代码也会被递归调用，这可能导致无限循环。为了避免这种情况，你可以使用 `$0、$1、$2` 等来引用方法的参数，而不是使用方法名。例如:
+
+### 引用方法参数
+
+在插入的代码中，使用以下符号引用方法参数：
+
+- `$0`：`this` 对象（实例方法）或 `null`（静态方法）
+- `$1`：第一个参数
+- `$2`：第二个参数
+- 以此类推
+
+示例：
+
 ```java
 m.insertBefore("{ System.out.println($1); }");
 ```
-`$1` 表示方法的第一个参数。
-注: Javassist 可以用于在方法调用前后插入代码，这在 J2EE 中用于实现拦截器。
+
+**注意**：对于递归方法，使用参数引用（如 `$1`）而不是方法名，可以避免插入的代码被递归调用导致无限循环。
+
+**应用场景**：Javassist 可用于在方法调用前后插入代码，在 J2EE 中用于实现拦截器。
+
 ## 生成新类和方法
-ClassPool.makeClass() 方法创建一个新的类。例如：
+
+### 创建新类
+
+使用 `ClassPool.makeClass()` 方法创建新类：
+
 ```java
 ClassPool pool = ClassPool.getDefault();
 CtClass cc = pool.makeClass("Apple");
 ```
-然后你可以使用 CtClass 的方法向类中添加字段和方法:
+
+### 添加字段和方法
+
+创建类后，使用 `CtClass` 的方法添加字段和方法：
+
 ```java
 CtMethod m = CtNewMethod.make(
     "public String getColor() { return color; }",
     cc);
 cc.addMethod(m);
 ```
-## 调试 Javassist
-如果插入的代码无法编译，Javassist 会抛出 CannotCompileException。你可以通过调用 CannotCompileException.getReason() 来获取编译错误的原因。
-此外，可以通过调用 CtMethod 的 instrument() 方法来检查插入的代码的字节码。
 
-## Reference:
-[https://www.javassist.org/](https://www.javassist.org/)
+## 调试
+
+### 处理编译错误
+
+如果插入的代码无法编译，Javassist 会抛出 `CannotCompileException`。调用 `CannotCompileException.getReason()` 获取编译错误的原因。
+
+### 检查字节码
+
+调用 `CtMethod` 的 `instrument()` 方法检查插入代码的字节码。
+
+## 参考资源
+
+- [Javassist 官方网站](https://www.javassist.org/)
