@@ -575,31 +575,38 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 </ul>
 
 <div class="page-post">
-  <p>Javassist（Java编程助手）简化了Java字节码的操作。它是一个用于编辑Java字节码的类库；它允许Java程序在运行时定义新类，并在JVM加载类文件时对其进行修改。
-与其他类似的字节码编辑器不同，Javassist提供了两个级别的API：源代码级别和字节码级别。如果用户使用源代码级别API，他们无需了解Java字节码的规范即可编辑类文件。
-整个API仅使用Java语言的词汇表设计。您甚至可以以源代码文本的形式指定要插入的字节码；Javassist会实时编译它。另一方面，字节码级别API允许用户像其他编辑器一样直接编辑类文件。</p>
+  <h2 id="javassist">什么是 Javassist？</h2>
+<p>Javassist（Java 编程助手）是一个用于编辑 Java 字节码的类库。它允许 Java 程序在运行时定义新类，并在 JVM 加载类文件时对其进行修改。</p>
+<h3 id="api">两种 API 级别</h3>
+<p>Javassist 提供两种 API 级别：</p>
+<ul>
+<li><strong>源代码级别 API</strong>：使用 Java 语言词汇表，无需了解字节码规范即可编辑类文件。可以以源代码文本形式指定要插入的字节码，Javassist 会实时编译。</li>
+<li><strong>字节码级别 API</strong>：直接编辑类文件，与其他字节码编辑器类似。</li>
+</ul>
 <h2 id="">读取和写入字节码</h2>
-<h3 id="ctclass">获取 CtClass 对象:</h3>
-<pre class="language-java" tabindex="0"><code class="language-java"><span class="token comment">// 从类池中获取</span>
+<h3 id="ctclass">获取 CtClass 对象</h3>
+<p>使用 <code>ClassPool</code> 获取 <code>CtClass</code> 对象：</p>
+<pre class="language-java" tabindex="0"><code class="language-java"><span class="token comment">// 创建类池</span>
 <span class="token keyword">final</span> <span class="token class-name">ClassPool</span> classPool <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ClassPool</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">//通过系统classloader加载类</span>
+<span class="token comment">// 通过系统类加载器加载类</span>
 classPool<span class="token punctuation">.</span><span class="token function">appendClassPath</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">LoaderClassPath</span><span class="token punctuation">(</span><span class="token class-name">ClassLoader</span><span class="token punctuation">.</span><span class="token function">getSystemClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">//通过自定义classloader加载类</span>
+<span class="token comment">// 通过自定义类加载器加载类</span>
 classPool<span class="token punctuation">.</span><span class="token function">appendClassPath</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">LoaderClassPath</span><span class="token punctuation">(</span>loader<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<h3 id="-2">修改类定义:</h3>
+<h3 id="-2">修改类定义</h3>
+<p>向类中添加新字段：</p>
 <pre class="language-java" tabindex="0"><code class="language-java"><span class="token class-name">CtClass</span> cc <span class="token operator">=</span> xxx<span class="token punctuation">;</span>
 <span class="token class-name">CtField</span> f <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">CtField</span><span class="token punctuation">(</span><span class="token class-name">CtClass</span><span class="token punctuation">.</span>intType<span class="token punctuation">,</span> <span class="token string">"newField"</span><span class="token punctuation">,</span> cc<span class="token punctuation">)</span><span class="token punctuation">;</span>
 cc<span class="token punctuation">.</span><span class="token function">addField</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<h3 id="classpool">ClassPool 的层次结构:</h3>
-<p>ClassPool 可以组织成层次结构。如果子 ClassPool 在本地找不到类文件，它可以委托父 ClassPool 查找。这种层次结构对于共享类定义很有用。
-例如，你可以为每个类加载器创建一个子 ClassPool，并让它们共享一个公共的父 ClassPool。这样，不同类加载器加载的类可以共享相同的 CtClass 对象。</p>
+<h3 id="classpool">ClassPool 的层次结构</h3>
+<p><code>ClassPool</code> 支持层次结构。如果子 <code>ClassPool</code> 在本地找不到类文件，它会委托父 <code>ClassPool</code> 查找。</p>
+<p><strong>使用场景</strong>：为每个类加载器创建一个子 <code>ClassPool</code>，并让它们共享一个公共的父 <code>ClassPool</code>。这样，不同类加载器加载的类可以共享相同的 <code>CtClass</code> 对象。</p>
 <h2 id="-3">类加载器</h2>
-<h3 id="ctclass-toclass">CtClass.toClass() 方法</h3>
-<p>CtClass 的 toClass() 方法将 CtClass 对象转换为 java.lang.Class 对象。转换后的 Class 对象可以由 Java 应用程序使用。
-但是，toClass() 要求调用者的类加载器必须能够加载 CtClass 对象所表示的类。如果调用者的类加载器无法加载该类，则会抛出 ClassNotFoundException。</p>
+<h3 id="toclass">使用 toClass() 方法</h3>
+<p><code>CtClass.toClass()</code> 方法将 <code>CtClass</code> 对象转换为 <code>java.lang.Class</code> 对象，供 Java 应用程序使用。</p>
+<p><strong>注意</strong>：调用者的类加载器必须能够加载 <code>CtClass</code> 对象所表示的类，否则会抛出 <code>ClassNotFoundException</code>。</p>
 <pre class="language-kotlin" tabindex="0"><code class="language-kotlin"><span class="token keyword">val</span> instance <span class="token operator">=</span> ctClass<span class="token punctuation">.</span><span class="token function">toClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getDeclaredConstructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">newInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<h3 id="-4">自定义类加载器:</h3>
-<p>如果需要更复杂的类加载行为，可以定义自己的类加载器, 例如:</p>
+<h3 id="-4">自定义类加载器</h3>
+<p>如果需要更复杂的类加载行为，可以定义自己的类加载器：</p>
 <pre class="language-java" tabindex="0"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyLoader</span> <span class="token keyword">extends</span> <span class="token class-name">ClassLoader</span> <span class="token punctuation">{</span>
     <span class="token keyword">private</span> <span class="token class-name">ClassPool</span> pool<span class="token punctuation">;</span>
 
@@ -614,38 +621,57 @@ cc<span class="token punctuation">.</span><span class="token function">addField<
         <span class="token keyword">return</span> <span class="token function">defineClass</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> b<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> b<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<h2 id="-5">定制</h2>
-<h3 id="-6">在方法体开头/结尾插入代码:</h3>
-<p>CtMethod 和 CtConstructor 提供了 insertBefore()、insertAfter() 和 addCatch() 方法，用于在方法体中插入代码。这些方法接受一个表示 Java 代码块的字符串参数。</p>
+<h2 id="-5">修改现有类</h2>
+<h3 id="-6">在方法体中插入代码</h3>
+<p><code>CtMethod</code> 和 <code>CtConstructor</code> 提供以下方法用于在方法体中插入代码：</p>
+<ul>
+<li><code>insertBefore()</code>：在方法体开头插入代码</li>
+<li><code>insertAfter()</code>：在方法体结尾插入代码</li>
+<li><code>addCatch()</code>：添加异常处理代码</li>
+</ul>
+<p>这些方法接受一个表示 Java 代码块的字符串参数：</p>
 <pre class="language-java" tabindex="0"><code class="language-java"><span class="token class-name">CtMethod</span> m <span class="token operator">=</span> xxx<span class="token punctuation">;</span>
 m<span class="token punctuation">.</span><span class="token function">insertBefore</span><span class="token punctuation">(</span><span class="token string">"{ System.out.println(\"start\"); }"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>插入的代码块可以访问方法的局部变量和参数。</p>
+<p><strong>重要</strong>：插入的代码块可以访问方法的局部变量和参数。</p>
 <h3 id="-7">添加新方法</h3>
-<p>CtClass 的 addMethod() 方法向类中添加一个新方法。例如：</p>
+<p>使用 <code>addMethod()</code> 方法向类中添加新方法：</p>
 <pre class="language-java" tabindex="0"><code class="language-java"><span class="token class-name">CtClass</span> cc <span class="token operator">=</span> xxx<span class="token punctuation">;</span>
 <span class="token class-name">CtMethod</span> newMethod <span class="token operator">=</span> <span class="token class-name">CtNewMethod</span><span class="token punctuation">.</span><span class="token function">make</span><span class="token punctuation">(</span>
     <span class="token string">"public int newMethod(int x) { return x * 2; }"</span><span class="token punctuation">,</span>
     cc<span class="token punctuation">)</span><span class="token punctuation">;</span>
 cc<span class="token punctuation">.</span><span class="token function">addMethod</span><span class="token punctuation">(</span>newMethod<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<h3 id="-8">递归方法</h3>
-<p>Javassist 支持递归方法调用。但是，如果递归方法调用自身，则插入的代码也会被递归调用，这可能导致无限循环。为了避免这种情况，你可以使用 <code>$0、$1、$2</code> 等来引用方法的参数，而不是使用方法名。例如:</p>
+<h3 id="-8">引用方法参数</h3>
+<p>在插入的代码中，使用以下符号引用方法参数：</p>
+<ul>
+<li><code>$0</code>：<code>this</code> 对象（实例方法）或 <code>null</code>（静态方法）</li>
+<li><code>$1</code>：第一个参数</li>
+<li><code>$2</code>：第二个参数</li>
+<li>以此类推</li>
+</ul>
+<p>示例：</p>
 <pre class="language-java" tabindex="0"><code class="language-java">m<span class="token punctuation">.</span><span class="token function">insertBefore</span><span class="token punctuation">(</span><span class="token string">"{ System.out.println($1); }"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p><code>$1</code> 表示方法的第一个参数。
-注: Javassist 可以用于在方法调用前后插入代码，这在 J2EE 中用于实现拦截器。</p>
+<p><strong>注意</strong>：对于递归方法，使用参数引用（如 <code>$1</code>）而不是方法名，可以避免插入的代码被递归调用导致无限循环。</p>
+<p><strong>应用场景</strong>：Javassist 可用于在方法调用前后插入代码，在 J2EE 中用于实现拦截器。</p>
 <h2 id="-9">生成新类和方法</h2>
-<p>ClassPool.makeClass() 方法创建一个新的类。例如：</p>
+<h3 id="-10">创建新类</h3>
+<p>使用 <code>ClassPool.makeClass()</code> 方法创建新类：</p>
 <pre class="language-java" tabindex="0"><code class="language-java"><span class="token class-name">ClassPool</span> pool <span class="token operator">=</span> <span class="token class-name">ClassPool</span><span class="token punctuation">.</span><span class="token function">getDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">CtClass</span> cc <span class="token operator">=</span> pool<span class="token punctuation">.</span><span class="token function">makeClass</span><span class="token punctuation">(</span><span class="token string">"Apple"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>然后你可以使用 CtClass 的方法向类中添加字段和方法:</p>
+<h3 id="-11">添加字段和方法</h3>
+<p>创建类后，使用 <code>CtClass</code> 的方法添加字段和方法：</p>
 <pre class="language-java" tabindex="0"><code class="language-java"><span class="token class-name">CtMethod</span> m <span class="token operator">=</span> <span class="token class-name">CtNewMethod</span><span class="token punctuation">.</span><span class="token function">make</span><span class="token punctuation">(</span>
     <span class="token string">"public String getColor() { return color; }"</span><span class="token punctuation">,</span>
     cc<span class="token punctuation">)</span><span class="token punctuation">;</span>
 cc<span class="token punctuation">.</span><span class="token function">addMethod</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<h2 id="javassist">调试 Javassist</h2>
-<p>如果插入的代码无法编译，Javassist 会抛出 CannotCompileException。你可以通过调用 CannotCompileException.getReason() 来获取编译错误的原因。
-此外，可以通过调用 CtMethod 的 instrument() 方法来检查插入的代码的字节码。</p>
-<h2 id="reference">Reference:</h2>
-<p><a href="https://www.javassist.org/">https://www.javassist.org/</a></p>
+<h2 id="-12">调试</h2>
+<h3 id="-13">处理编译错误</h3>
+<p>如果插入的代码无法编译，Javassist 会抛出 <code>CannotCompileException</code>。调用 <code>CannotCompileException.getReason()</code> 获取编译错误的原因。</p>
+<h3 id="-14">检查字节码</h3>
+<p>调用 <code>CtMethod</code> 的 <code>instrument()</code> 方法检查插入代码的字节码。</p>
+<h2 id="-15">参考资源</h2>
+<ul>
+<li><a href="https://www.javassist.org/">Javassist 官方网站</a></li>
+</ul>
 
 </div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/">SS+Trojan-Qt5+colima 配置docker proxy从而正常下载docker images</a></li>
@@ -672,7 +698,7 @@ cc<span class="token punctuation">.</span><span class="token function">addMethod
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2026-01-07-something-about-javassist/` was built on 2026-01-16T06:36:53.671Z -->
+		<!-- This page `/blog/2026-01-07-something-about-javassist/` was built on 2026-01-30T03:06:11.197Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>
