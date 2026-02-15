@@ -1,9 +1,23 @@
-import { IdAttributePlugin, InputPathToUrlTransformPlugin, HtmlBasePlugin } from "@11ty/eleventy";
+import { InputPathToUrlTransformPlugin, HtmlBasePlugin } from "@11ty/eleventy";
 import pluginSyntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import pluginNavigation from "@11ty/eleventy-navigation";
+import pluginTOC from "eleventy-plugin-toc";
+import markdownItPlugin from "markdown-it";
+import markdownItAnchorPlugin from "markdown-it-anchor";
+import markdownItHighlightJSPlugin from "markdown-it-highlightjs";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 
 import pluginFilters from "./_config/filters.js";
+
+const mdOptions = {
+	html: true,
+	breaks: true,
+	linkify: true,
+	typographer: true
+}
+const mdAnchorOpts = {
+	level: [1, 2, 3, 4]
+}
 
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
 export default async function (eleventyConfig) {
@@ -78,11 +92,15 @@ export default async function (eleventyConfig) {
 	// Filters
 	eleventyConfig.addPlugin(pluginFilters);
 
-	eleventyConfig.addPlugin(IdAttributePlugin, {
-		// by default we use Eleventy’s built-in `slugify` filter:
-		// slugify: eleventyConfig.getFilter("slugify"),
-		// selector: "h1,h2,h3,h4,h5,h6", // default
-	});
+	eleventyConfig.setLibrary(
+		'md',
+		markdownItPlugin(mdOptions)
+			.use(markdownItAnchorPlugin, mdAnchorOpts)
+			.use(markdownItHighlightJSPlugin)
+	)
+
+	//content of section
+	eleventyConfig.addPlugin(pluginTOC);
 
 	eleventyConfig.addShortcode("currentBuildDate", () => {
 		return (new Date()).toISOString();

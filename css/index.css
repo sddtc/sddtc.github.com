@@ -337,3 +337,7 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}

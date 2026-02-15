@@ -15,6 +15,9 @@ layout: layouts/base.njk
 </ul>
 
 <div class="page-post">
+<aside>
+  {{ content | toc(ul=true, wrapper='div', wrapperClass='content-tableau') | safe}}
+</aside>
   {{ content | safe }}
 </div>
 
