@@ -17,13 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.pull_request.draft == false && github.actor == 'dependabot[bot]' }}
     steps:
-      - name: Dependabot metadata
-        if: ${{ github.actor == 'dependabot[bot]' }}
-        id: metadata
-        uses: dependabot/fetch-metadata@0fb21704c18a42ce5aa8d720ea4b912f5e6babef
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-
       - name: Approve a PR
         run: gh pr review --approve "$PR_URL"
         env:
