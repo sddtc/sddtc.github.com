@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="continuous-compliance">技术雷达 Continuous Compliance - 持续合规性：确保整个软件生命周期的安全性</h1>
+<h1>技术雷达 Continuous Compliance - 持续合规性：确保整个软件生命周期的安全性</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2024-04-04">04 April 2024</time></li>
@@ -570,19 +574,24 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <p>Continuous Compliance对于我来说是个既熟悉又陌生的短语, 在我看来是继 CI(Continuous Integration)-持续集成, CD(Continuous Deployment/Delivery)
--持续部署/交付之后的一个新概念
-但是我并不知道应该如何汉译Compliance. 持续合规? 不管怎么说, 我坚信合规性在企业中越来越重要, 不论是政府企业, 民营企业.
-法律法规在软件交付行业里一定会越来越合理且严格.
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%8C%81%E7%BB%AD%E5%90%88%E8%A7%84%E6%80%A7%3F">什么是持续合规性?</a></li><li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%8C%81%E7%BB%AD%E5%90%88%E8%A7%84%E5%BE%88%E9%87%8D%E8%A6%81%3F">为什么持续合规很重要?</a></li><li><a href="#%E5%AE%9E%E8%B7%B5%E5%AE%83%E7%9A%84%E7%9B%8A%E5%A4%84">实践它的益处</a></li><li><a href="#%E5%AE%9E%E8%B7%B5%E5%AE%83%E7%9A%84%E6%8C%91%E6%88%98">实践它的挑战</a></li><li><a href="#%E6%9C%89%E5%8A%A9%E4%BA%8E%E5%AE%9E%E7%8E%B0%E6%8C%81%E7%BB%AD%E5%90%88%E8%A7%84%E7%9A%84%E6%B4%BB%E5%8A%A8">有助于实现持续合规的活动</a><ul><li><a href="#%E5%AE%89%E5%85%A8%E6%89%AB%E6%8F%8F%EF%BC%9A(security-scanning)">安全扫描：(Security scanning)</a></li><li><a href="#%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%EF%BC%9A(penetration-testing)">渗透测试：(Penetration testing)</a></li><li><a href="#%E6%BC%8F%E6%B4%9E%E7%AE%A1%E7%90%86%EF%BC%9A(vulnerability-management)">漏洞管理：(Vulnerability management)</a></li><li><a href="#%E9%A3%8E%E9%99%A9%E8%AF%84%E4%BC%B0%EF%BC%9A(risk-assessment)">风险评估：(Risk assessment)</a></li></ul></li><li><a href="#%E4%B8%80%E4%BA%9B%E5%B7%A5%E5%85%B7">一些工具</a><ul><li><a href="#%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95-(ast)-%E5%B7%A5%E5%85%B7">应用程序安全测试 (AST) 工具</a></li><li><a href="#%E8%BD%AF%E4%BB%B6%E7%BB%84%E6%88%90%E5%88%86%E6%9E%90-(sca)-%E5%B7%A5%E5%85%B7">软件组成分析 (SCA) 工具</a></li><li><a href="#%E4%BA%91%E5%AE%89%E5%85%A8%E5%B7%A5%E5%85%B7">云安全工具</a></li><li><a href="#%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%E5%AE%89%E5%85%A8%E5%B7%A5%E5%85%B7">基础设施安全工具</a></li></ul></li><li><a href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E7%B3%BB%E5%88%97">最佳实践系列</a><ul><li><a href="#%E6%9E%84%E5%BB%BA%E5%AE%89%E5%85%A8%E6%96%87%E5%8C%96">构建安全文化</a></li><li><a href="#%E5%B0%86%E5%AE%89%E5%85%A8%E6%80%A7%E9%9B%86%E6%88%90%E5%88%B0-sdlc(software-development-lifecycle)-%E4%B8%AD">将安全性集成到 SDLC(software development lifecycle) 中</a></li><li><a href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95%E5%92%8C%E6%BC%8F%E6%B4%9E%E7%AE%A1%E7%90%86">自动化安全测试和漏洞管理</a></li><li><a href="#%E7%9B%91%E6%8E%A7%E5%92%8C%E8%A1%A1%E9%87%8F%E5%90%88%E8%A7%84%E6%80%A7">监控和衡量合规性</a></li></ul></li><li><a href="#%E6%80%BB%E7%BB%93">总结</a></li><li><a href="#reference%3A">Reference:</a></li></ul>
+      </div>
+</aside>
+  <p>Continuous Compliance对于我来说是个既熟悉又陌生的短语, 在我看来是继 CI(Continuous Integration)-持续集成, CD(Continuous Deployment/Delivery)<br>
+-持续部署/交付之后的一个新概念<br>
+但是我并不知道应该如何汉译Compliance. 持续合规? 不管怎么说, 我坚信合规性在企业中越来越重要, 不论是政府企业, 民营企业.<br>
+法律法规在软件交付行业里一定会越来越合理且严格.<br>
 本文是通过阅读一些文章(都在文章底部链接🔗)硬核翻译过来的, 仅供学习交流使用</p>
-<h3 id="">什么是持续合规性?</h3>
-<p>持续合规性是一种确保组织的运营和实践持续符合监管要求、行业标准和内部政策的方法。它涉及对组织的<strong>流程</strong>、<strong>数据</strong>和<strong>系统</strong>
+<h3 id="%E4%BB%80%E4%B9%88%E6%98%AF%E6%8C%81%E7%BB%AD%E5%90%88%E8%A7%84%E6%80%A7%3F" tabindex="-1">什么是持续合规性?</h3>
+<p>持续合规性是一种确保组织的运营和实践持续符合监管要求、行业标准和内部政策的方法。它涉及对组织的<strong>流程</strong>、<strong>数据</strong>和<strong>系统</strong><br>
 进行持续监控和评估，以实时或近实时地识别和解决合规违规行为。</p>
-<h3 id="-2">为什么持续合规很重要?</h3>
-<p>持续合规是一项重要实践，尤其是在医疗保健、金融和数据隐私等高度监管的行业，严格遵守法律法规对于避免法律、财务和声誉风险至关重要。
-它可以帮助组织及时了解不断变化的监管环境，并降低合规违规行为长期未被发现的可能性。
+<h3 id="%E4%B8%BA%E4%BB%80%E4%B9%88%E6%8C%81%E7%BB%AD%E5%90%88%E8%A7%84%E5%BE%88%E9%87%8D%E8%A6%81%3F" tabindex="-1">为什么持续合规很重要?</h3>
+<p>持续合规是一项重要实践，尤其是在医疗保健、金融和数据隐私等高度监管的行业，严格遵守法律法规对于避免法律、财务和声誉风险至关重要。<br>
+它可以帮助组织及时了解不断变化的监管环境，并降低合规违规行为长期未被发现的可能性。<br>
 可以公平地说，持续合规性是有效 DevSecOps 流程的最终目标。</p>
-<h3 id="-3">实践它的益处</h3>
+<h3 id="%E5%AE%9E%E8%B7%B5%E5%AE%83%E7%9A%84%E7%9B%8A%E5%A4%84" tabindex="-1">实践它的益处</h3>
 <ul>
 <li>对组织运营的实时监控可减少不合规事件与其检测之间的延迟。</li>
 <li>持续合规可以减少违规行为被忽视的可能性，从而减少罚款、法律问题和声誉损害。</li>
@@ -592,7 +601,7 @@ pre[class*="language-"] {
 <li>由于持续合规性会生成可直接提交给监管机构的报告，因此整个流程得到简化，透明度也有所提高。</li>
 <li>可以通过保持强有力的合规态势来提高您的竞争优势，特别是为了吸引优先考虑合规性的客户/顾客。</li>
 </ul>
-<h3 id="-4">实践它的挑战</h3>
+<h3 id="%E5%AE%9E%E8%B7%B5%E5%AE%83%E7%9A%84%E6%8C%91%E6%88%98" tabindex="-1">实践它的挑战</h3>
 <ul>
 <li>持续合规系统的设计和实施可能很复杂，特别是在具有不同运营和合规要求的大型组织中。</li>
 <li>对于较小的组织来说，整合持续合规技术、流程和基础设施的初始投资可能是巨大的。</li>
@@ -603,45 +612,45 @@ pre[class*="language-"] {
 <li>实施持续合规通常需要组织内部的文化转变，需要员工接受并理解其重要性。</li>
 </ul>
 <p>通过整合特定活动、遵循最佳实践并利用正确的工具和技术，可以确保整个软件生命周期的持续合规性。</p>
-<h3 id="-5">有助于实现持续合规的活动</h3>
-<h4 id="security-scanning">安全扫描：(Security scanning)</h4>
+<h3 id="%E6%9C%89%E5%8A%A9%E4%BA%8E%E5%AE%9E%E7%8E%B0%E6%8C%81%E7%BB%AD%E5%90%88%E8%A7%84%E7%9A%84%E6%B4%BB%E5%8A%A8" tabindex="-1">有助于实现持续合规的活动</h3>
+<h4 id="%E5%AE%89%E5%85%A8%E6%89%AB%E6%8F%8F%EF%BC%9A(security-scanning)" tabindex="-1">安全扫描：(Security scanning)</h4>
 <p>通过根据预定义的安全策略、行业标准和监管要求持续监控组织的系统、应用程序和网络基础设施，可以实现持续的合规性。这种持续合规的过程可以帮助实时或定期识别和解决安全漏洞、错误配置和潜在威胁。</p>
-<h4 id="penetration-testing">渗透测试：(Penetration testing)</h4>
+<h4 id="%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%EF%BC%9A(penetration-testing)" tabindex="-1">渗透测试：(Penetration testing)</h4>
 <p>通过定期进行渗透测试，可以实现持续的合规性。 定期执行此操作可以帮助测试公司的安全防御，主动识别其应用程序和网络基础设施中的漏洞和弱点。</p>
-<h4 id="vulnerability-management">漏洞管理：(Vulnerability management)</h4>
+<h4 id="%E6%BC%8F%E6%B4%9E%E7%AE%A1%E7%90%86%EF%BC%9A(vulnerability-management)" tabindex="-1">漏洞管理：(Vulnerability management)</h4>
 <p>通过设计和维护强大的漏洞管理流程，公司可以实现持续的合规性。 明确的漏洞管理流程（包括但不限于漏洞修复计划）可以降低安全风险、确保遵守法规并保持强大的安全态势。</p>
-<h4 id="risk-assessment">风险评估：(Risk assessment)</h4>
+<h4 id="%E9%A3%8E%E9%99%A9%E8%AF%84%E4%BC%B0%EF%BC%9A(risk-assessment)" tabindex="-1">风险评估：(Risk assessment)</h4>
 <p>通过不断评估风险，可以确保遵守监管要求和行业标准，同时有效减轻潜在威胁。 这是另一项可以帮助展示持续合规性的活动。</p>
-<h3 id="-6">一些工具</h3>
-<h4 id="ast">应用程序安全测试 (AST) 工具</h4>
-<p>AST 工具的使用展示了一种主动且正式的应用程序安全方法。 AST 工具可以帮助评估漏洞、确保遵守法规并响应新出现的威胁，从而降低组织发生不合规和安全事件的风险。
+<h3 id="%E4%B8%80%E4%BA%9B%E5%B7%A5%E5%85%B7" tabindex="-1">一些工具</h3>
+<h4 id="%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95-(ast)-%E5%B7%A5%E5%85%B7" tabindex="-1">应用程序安全测试 (AST) 工具</h4>
+<p>AST 工具的使用展示了一种主动且正式的应用程序安全方法。 AST 工具可以帮助评估漏洞、确保遵守法规并响应新出现的威胁，从而降低组织发生不合规和安全事件的风险。<br>
 可用于实现持续合规性的不同 AST 工具包括：</p>
 <ul>
 <li>静态应用程序安全测试 (SAST) 工具</li>
 <li>动态应用程序安全测试 (DAST) 工具</li>
 <li>交互式应用程序安全测试 (IAST) 工具</li>
 </ul>
-<h4 id="sca">软件组成分析 (SCA) 工具</h4>
+<h4 id="%E8%BD%AF%E4%BB%B6%E7%BB%84%E6%88%90%E5%88%86%E6%9E%90-(sca)-%E5%B7%A5%E5%85%B7" tabindex="-1">软件组成分析 (SCA) 工具</h4>
 <p>软件组合分析 (SCA) 工具可确保按照许可协议、安全标准和内部策略管理第三方组件，从而帮助组织保持合规性、最大限度地降低法律风险并提高应用程序安全性。 因此，通过积极解决第三方组件问题，组织可以实现持续合规性并降低安全事件的风险。</p>
-<h4 id="-7">云安全工具</h4>
+<h4 id="%E4%BA%91%E5%AE%89%E5%85%A8%E5%B7%A5%E5%85%B7" tabindex="-1">云安全工具</h4>
 <p>云安全工具可帮助组织在动态云环境中保持持续合规性。这些工具可帮助组织确保其基于云的资产和数据的安全、满足监管要求并遵守 FedRAMP 合规计划等行业标准。</p>
-<h4 id="-8">基础设施安全工具</h4>
+<h4 id="%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%E5%AE%89%E5%85%A8%E5%B7%A5%E5%85%B7" tabindex="-1">基础设施安全工具</h4>
 <p>基础设施安全工具可帮助组织保持持续合规性并保护关键基础设施组件。 这些工具在确保组织 IT 环境的安全性和合规性方面发挥着关键作用。</p>
-<h3 id="-9">最佳实践系列</h3>
+<h3 id="%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E7%B3%BB%E5%88%97" tabindex="-1">最佳实践系列</h3>
 <p>持续合规是一个持续的过程，需要警惕、整合和适应性。 以下是保持持续合规性的最佳实践：</p>
-<h4 id="-10">构建安全文化</h4>
+<h4 id="%E6%9E%84%E5%BB%BA%E5%AE%89%E5%85%A8%E6%96%87%E5%8C%96" tabindex="-1">构建安全文化</h4>
 <p>教育员工安全的重要性并实现文化转变并不是一件容易的事。 但一旦实现，整个组织都会有一种非常有益的感觉。</p>
-<h4 id="sdlc-software-development-lifecycle">将安全性集成到 SDLC(software development lifecycle) 中</h4>
+<h4 id="%E5%B0%86%E5%AE%89%E5%85%A8%E6%80%A7%E9%9B%86%E6%88%90%E5%88%B0-sdlc(software-development-lifecycle)-%E4%B8%AD" tabindex="-1">将安全性集成到 SDLC(software development lifecycle) 中</h4>
 <p>在很长一段时间内，安全始终是事后才想到的。 但现在，随着网络威胁的日益复杂，对安全的需求显而易见。将安全实践向左转移是几乎每个组织都会受益的最佳实践。</p>
-<h4 id="-11">自动化安全测试和漏洞管理</h4>
+<h4 id="%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95%E5%92%8C%E6%BC%8F%E6%B4%9E%E7%AE%A1%E7%90%86" tabindex="-1">自动化安全测试和漏洞管理</h4>
 <p>自动化的作用对于实现持续合规性至关重要。 特别是由于大多数合规实践都是手动的，因此速度缓慢且效率低下。 通过引入自动化，合规性不仅变得快速高效，而且还成为改善安全状况的主要因素。</p>
-<h4 id="-12">监控和衡量合规性</h4>
+<h4 id="%E7%9B%91%E6%8E%A7%E5%92%8C%E8%A1%A1%E9%87%8F%E5%90%88%E8%A7%84%E6%80%A7" tabindex="-1">监控和衡量合规性</h4>
 <p>如果不持续/定期监控安全态势，则无法了解系统中存在的漏洞和弱点。它也是验证法规和标准遵守情况、降低风险和维护数据安全的基本手段。</p>
-<h3 id="-13">总结</h3>
-<p>在当今快速发展的威胁形势下，持续合规不仅是最佳实践，而且是必要的。持续合规性需要对组织的流程和控制进行一致的监控、测量和调整，以确保遵守法律要求、行业标准和内部政策。
-好处是显而易见的：降低风险、数据安全、法律保护和声誉提升。 通过集成技术、自动化和主动方法，组织可以自信、高效地完成安全与合规之旅。
+<h3 id="%E6%80%BB%E7%BB%93" tabindex="-1">总结</h3>
+<p>在当今快速发展的威胁形势下，持续合规不仅是最佳实践，而且是必要的。持续合规性需要对组织的流程和控制进行一致的监控、测量和调整，以确保遵守法律要求、行业标准和内部政策。<br>
+好处是显而易见的：降低风险、数据安全、法律保护和声誉提升。 通过集成技术、自动化和主动方法，组织可以自信、高效地完成安全与合规之旅。<br>
 在监管审查和数据保护从未如此重要的世界中，持续合规不仅仅是一种选择，更是对卓越和值得信赖的承诺。</p>
-<h3 id="reference">Reference:</h3>
+<h3 id="reference%3A" tabindex="-1">Reference:</h3>
 <ul>
 <li><a href="https://www.linkedin.com/pulse/continuous-compliance-ensuring-security-throughout-your-software-5yqef/">Continuous Compliance: Ensuring Security Throughout Your Software Lifecycle</a></li>
 <li><a href="https://secureframe.com/hub/grc/continuous-compliance">What Is Continuous Compliance + How To Achieve It</a></li>
@@ -672,7 +681,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2024-04-04-learning-continuous-compliance/` was built on 2026-02-15T02:38:54.795Z -->
+		<!-- This page `/blog/2024-04-04-learning-continuous-compliance/` was built on 2026-02-15T13:56:14.189Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

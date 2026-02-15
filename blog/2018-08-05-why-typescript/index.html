@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="why-typescript">Why typescript ?</h1>
+<h1>Why typescript ?</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2018-08-05">05 August 2018</time></li>
@@ -570,19 +574,24 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="">背景</h3>
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E8%83%8C%E6%99%AF">背景</a></li><li><a href="#%E9%82%A3%E4%B9%88%2C-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8-typescript-%EF%BC%9F">那么, 为什么要用 TypeScript ？</a></li><li><a href="#the-typescript-type-system">The TypeScript type system</a><ul><li><a href="#javascript-%E5%8D%B3-typescript">JavaScript 即 TypeScript</a></li><li><a href="#%E7%B1%BB%E5%9E%8B%E5%8F%AF%E4%BB%A5%E6%98%AF%E9%9A%90%E5%BC%8F%E7%9A%84">类型可以是隐式的</a></li><li><a href="#%E7%B1%BB%E5%9E%8B%E5%8F%AF%E4%BB%A5%E6%98%AF%E6%98%BE%E5%BC%8F%E7%9A%84">类型可以是显式的</a></li><li><a href="#%E7%B1%BB%E5%9E%8B%E6%98%AF%E7%BB%93%E6%9E%84%E5%9E%8B%E7%9A%84">类型是结构型的</a></li><li><a href="#%E7%B1%BB%E5%9E%8B%E9%94%99%E8%AF%AF%E4%B8%8D%E4%BC%9A%E9%98%BB%E5%A1%9E-javascript">类型错误不会阻塞 JavaScript</a></li><li><a href="#%E7%B1%BB%E5%9E%8B%E5%8F%AF%E4%BB%A5%E6%98%AF-ambient-%E7%9A%84">类型可以是 ambient 的</a></li><li><a href="#future-javascript-%3D%3E-now">Future JavaScript =&gt; Now</a></li></ul></li></ul>
+      </div>
+</aside>
+  <h3 id="%E8%83%8C%E6%99%AF" tabindex="-1">背景</h3>
 <p>使用 JS 有一定时间了, 最近开始学习并使用 Typescript, 而我们可爱的 Tomasz 分享了一个很棒的书, 正所谓万事皆有因果, 今日先分享一切的<strong>因</strong> 🎧</p>
 <blockquote>
 <p>Typescript 最终会编译为 Javascript, 于是程序执行时的语言是 Javascript (不论是在浏览器端亦或是服务器端).</p>
 </blockquote>
-<h3 id="typescript">那么, 为什么要用 TypeScript ？</h3>
+<h3 id="%E9%82%A3%E4%B9%88%2C-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8-typescript-%EF%BC%9F" tabindex="-1">那么, 为什么要用 TypeScript ？</h3>
 <p>TypeScript 语言有两个主要的目标:</p>
 <ul>
 <li>为 JavaScript 提供 <strong>Optional</strong> 的类型体系</li>
 <li>提供从未来 JavaScript 发行版本到当前 JavaScript engines 的计划功能</li>
 </ul>
 <p>对以上两个目标的渴望, 是建立在以下特点之上:</p>
-<h3 id="the-typescript-type-system">The TypeScript type system</h3>
+<h3 id="the-typescript-type-system" tabindex="-1">The TypeScript type system</h3>
 <p>也许你会问, 为什么要给 Javascript 添加&quot;类型&quot; ?</p>
 <p>类型已经被广泛证明能够提高代码质量, 增强可阅读性. 大型团队(谷歌, 微软, Facebook)不断得出这个结论. 特别:</p>
 <ul>
@@ -591,28 +600,28 @@ pre[class*="language-"] {
 </ul>
 <p>然而, 类型有一种低调的方式实现. TypeScript 非常讲究保持入门门槛尽可能低.</p>
 <p>那么怎么实现这一目标呢?</p>
-<h4 id="javascript-typescript">JavaScript 即 TypeScript</h4>
+<h4 id="javascript-%E5%8D%B3-typescript" tabindex="-1">JavaScript 即 TypeScript</h4>
 <p>TypeScript 为 JavaScript 代码提供编译时类型安全性. 鉴于它的名字, 这并不奇怪. 最棒的是这些类型是完全可选的. 您的 JavaScript 代码 <code>.js</code> 文件可以重命名为 <code>.ts</code> 文件, TypeScript 仍然会返回与原始 JavaScript 文件等效的有效 <code>.js</code> 文件. TypeScript 是有意且严格地是 JavaScript 的超集, 具有可选的类型检查.</p>
-<h4 id="-2">类型可以是隐式的</h4>
+<h4 id="%E7%B1%BB%E5%9E%8B%E5%8F%AF%E4%BB%A5%E6%98%AF%E9%9A%90%E5%BC%8F%E7%9A%84" tabindex="-1">类型可以是隐式的</h4>
 <p>TypeScript 将尝试尽可能多地推断出类型信息, 以便在代码开发过程中以最小的生产成本为您提供类型安全性. 例如, 在下面的示例中, TypeScript 推断出 <code>foo</code> 的类型是 <code>number</code>, 并将在第二行显示错误, 如下所示:</p>
-<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token keyword">var</span> foo <span class="token operator">=</span> <span class="token number">123</span><span class="token punctuation">;</span>
+<pre class="language-javascript" tabindex="0"><code class="hljs language-javascript"><span class="token keyword">var</span> foo <span class="token operator">=</span> <span class="token number">123</span><span class="token punctuation">;</span>
 foo <span class="token operator">=</span> <span class="token string">'456'</span><span class="token punctuation">;</span> <span class="token comment">// Error: cannot assign `string` to `number`</span>
 
 <span class="token comment">// Is foo a number or a string?</span></code></pre>
 <p>这种类型推断很有用. 如果您运行以上代码, 则在代码其他部分, 您无法确定 <code>foo</code> 到底是数字类型还是字符串类型. 这些问题经常出现在大型代码库里. 我们稍后将深入探讨类型推断规则.</p>
-<h4 id="-3">类型可以是显式的</h4>
+<h4 id="%E7%B1%BB%E5%9E%8B%E5%8F%AF%E4%BB%A5%E6%98%AF%E6%98%BE%E5%BC%8F%E7%9A%84" tabindex="-1">类型可以是显式的</h4>
 <p>正如我们之前提到的, TypeScript 会尽可能安全地推断, 但是您可以显式的指定类型:</p>
 <ol>
 <li>帮助编译器识别类型, 更重要的是为下一个必须阅读代码的开发人员提供更多的信息(可能是未来的你！）</li>
 <li>强制执行编译器看到的内容, 就是您认为应该看到的内容.  这就是您对代码的理解与代码的算法分析(由编译器完成)相匹配.</li>
 </ol>
 <p>TypeScript 使用后缀类型注释.</p>
-<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token keyword">var</span> <span class="token literal-property property">foo</span><span class="token operator">:</span> number <span class="token operator">=</span> <span class="token number">123</span><span class="token punctuation">;</span>
+<pre class="language-javascript" tabindex="0"><code class="hljs language-javascript"><span class="token keyword">var</span> <span class="token literal-property property">foo</span><span class="token operator">:</span> number <span class="token operator">=</span> <span class="token number">123</span><span class="token punctuation">;</span>
 
 <span class="token keyword">var</span> <span class="token literal-property property">foo</span><span class="token operator">:</span> number <span class="token operator">=</span> <span class="token string">'123'</span><span class="token punctuation">;</span> <span class="token comment">// Error: cannot assign a `string` to a `number`</span></code></pre>
-<h4 id="-4">类型是结构型的</h4>
+<h4 id="%E7%B1%BB%E5%9E%8B%E6%98%AF%E7%BB%93%E6%9E%84%E5%9E%8B%E7%9A%84" tabindex="-1">类型是结构型的</h4>
 <p>在某些语言中, 静态类型会强迫你做没有必要的定义, 即使您知道代码可以正常工作, 语言语义也会迫使您复制内容. 在 TypeScript 中, 因为我们希望它对于具有最小认知过载的 JavaScript 开发人员来说很容易, 所以类型是结构性的. 例如:</p>
-<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token keyword">interface</span> <span class="token class-name">Point2D</span> <span class="token punctuation">{</span>
+<pre class="language-javascript" tabindex="0"><code class="hljs language-javascript"><span class="token keyword">interface</span> <span class="token class-name">Point2D</span> <span class="token punctuation">{</span>
     <span class="token literal-property property">x</span><span class="token operator">:</span> number<span class="token punctuation">;</span>
     <span class="token literal-property property">y</span><span class="token operator">:</span> number<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
@@ -628,34 +637,34 @@ foo <span class="token operator">=</span> <span class="token string">'456'</span
 <span class="token function">iTakePoint2D</span><span class="token punctuation">(</span>point2D<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// exact match okay</span>
 <span class="token function">iTakePoint2D</span><span class="token punctuation">(</span>point3D<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// extra information okay</span>
 <span class="token function">iTakePoint2D</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">x</span><span class="token operator">:</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Error: missing information `y`</span></code></pre>
-<h4 id="javascript">类型错误不会阻塞 JavaScript</h4>
+<h4 id="%E7%B1%BB%E5%9E%8B%E9%94%99%E8%AF%AF%E4%B8%8D%E4%BC%9A%E9%98%BB%E5%A1%9E-javascript" tabindex="-1">类型错误不会阻塞 JavaScript</h4>
 <p>为了便于您将 JavaScript 代码迁移到 TypeScript, 即使存在编译错误, 默认情况下 TypeScript 也会尽可能地编译为有效的 JavaScript. 例如:</p>
-<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token keyword">var</span> foo <span class="token operator">=</span> <span class="token number">123</span><span class="token punctuation">;</span>
+<pre class="language-javascript" tabindex="0"><code class="hljs language-javascript"><span class="token keyword">var</span> foo <span class="token operator">=</span> <span class="token number">123</span><span class="token punctuation">;</span>
 foo <span class="token operator">=</span> <span class="token string">'456'</span><span class="token punctuation">;</span> <span class="token comment">// Error: cannot assign a `string` to a `number`</span></code></pre>
 <p>也会被编译为:</p>
-<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token keyword">var</span> foo <span class="token operator">=</span> <span class="token number">123</span><span class="token punctuation">;</span>
+<pre class="language-javascript" tabindex="0"><code class="hljs language-javascript"><span class="token keyword">var</span> foo <span class="token operator">=</span> <span class="token number">123</span><span class="token punctuation">;</span>
 foo <span class="token operator">=</span> <span class="token string">'456'</span><span class="token punctuation">;</span></code></pre>
 <p>因此, 您可以将 JavaScript 代码逐步升级为 TypeScript. 这与其他语言编译器的工作方式有很大不同, 也是转向 TypeScript 的另一个原因.</p>
-<h4 id="ambient">类型可以是 ambient 的</h4>
+<h4 id="%E7%B1%BB%E5%9E%8B%E5%8F%AF%E4%BB%A5%E6%98%AF-ambient-%E7%9A%84" tabindex="-1">类型可以是 ambient 的</h4>
 <p>TypeScript 的主要设计目标是使您能够安全、 轻松地使用 TypeScript 中的现有 JavaScript 库. TypeScript 通过 <code>declaration</code> 来做到这一点. TypeScript 为您提供了一个 <code>sliding scale</code>, 表明您希望在 <code>declaration</code> 中投入多少, 您付出的努力越多, 您获得的类型安全 + 代码就越多. 请注意, 大多数流行的 JavaScript 库的定义已经由 DefinitelyTyped 社区为您编写, 因此对于大多数用途:</p>
 <ol>
 <li>定义文件已存在.</li>
 <li>或者至少, 您已经拥有大量经过深思熟虑的 TypeScript 声明模板列表.</li>
 </ol>
 <p>作为如何编写自己的声明文件的快速示例, 请考虑 <code>jquery</code> 的一个简单示例. 默认情况下(正如预期的良好 JS 代码). TypeScript 要求您在使用变量之前声明(即在某处使用 <code>var</code>):</p>
-<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'.awesome'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Error: cannot find name `$`</span></code></pre>
+<pre class="language-javascript" tabindex="0"><code class="hljs language-javascript"><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'.awesome'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Error: cannot find name `$`</span></code></pre>
 <p>若要快速修复, 你可以告诉 TypeScript 确实存在一个名为 <code>$</code> 的东西:</p>
-<pre class="language-javascript" tabindex="0"><code class="language-javascript">declare <span class="token keyword">var</span> <span class="token literal-property property">$</span><span class="token operator">:</span> any<span class="token punctuation">;</span>
+<pre class="language-javascript" tabindex="0"><code class="hljs language-javascript">declare <span class="token keyword">var</span> <span class="token literal-property property">$</span><span class="token operator">:</span> any<span class="token punctuation">;</span>
 <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'.awesome'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Okay!</span></code></pre>
 <p>如果您愿意, 可以基于此基本定义构建并提供更多信息以帮助保护您免受错误的影响:</p>
-<pre class="language-javascript" tabindex="0"><code class="language-javascript">declare <span class="token keyword">var</span> <span class="token literal-property property">$</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+<pre class="language-javascript" tabindex="0"><code class="hljs language-javascript">declare <span class="token keyword">var</span> <span class="token literal-property property">$</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token punctuation">(</span>selector<span class="token operator">:</span>string<span class="token punctuation">)</span><span class="token operator">:</span> any<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'.awesome'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Okay!</span>
 <span class="token function">$</span><span class="token punctuation">(</span><span class="token number">123</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Error: selector needs to be a string</span></code></pre>
-<h4 id="future-javascript-now">Future JavaScript =&gt; Now</h4>
+<h4 id="future-javascript-%3D%3E-now" tabindex="-1">Future JavaScript =&gt; Now</h4>
 <p>TypeScript 提供了许多针对当前 JavaScript 引擎(仅支持 <code>ES5</code> 等)在 <code>ES6</code> 中规划的功能. <code>The typescript team</code> 正在积极地添加这些功能, 这个列表只会随着时间的推移而变大, 我们将在其自己的部分中介绍. 一个关于 <code>class</code> 的示例:</p>
-<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token keyword">class</span> <span class="token class-name">Point</span> <span class="token punctuation">{</span>
+<pre class="language-javascript" tabindex="0"><code class="hljs language-javascript"><span class="token keyword">class</span> <span class="token class-name">Point</span> <span class="token punctuation">{</span>
     <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter"><span class="token keyword">public</span> <span class="token literal-property property">x</span><span class="token operator">:</span> number<span class="token punctuation">,</span> <span class="token keyword">public</span> <span class="token literal-property property">y</span><span class="token operator">:</span> number</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token punctuation">}</span>
     <span class="token function">add</span><span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">point</span><span class="token operator">:</span> Point</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -667,8 +676,8 @@ foo <span class="token operator">=</span> <span class="token string">'456'</span
 <span class="token keyword">var</span> p2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Point</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">var</span> p3 <span class="token operator">=</span> p1<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>p2<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// { x: 10, y: 30 }</span></code></pre>
 <p>可爱的橘猫般的 <code>=&gt; </code> 功能：</p>
-<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token keyword">var</span> <span class="token function-variable function">inc</span> <span class="token operator">=</span> <span class="token parameter">x</span> <span class="token operator">=></span> x<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span></code></pre>
-<p>译自:
+<pre class="language-javascript" tabindex="0"><code class="hljs language-javascript"><span class="token keyword">var</span> <span class="token function-variable function">inc</span> <span class="token operator">=</span> <span class="token parameter">x</span> <span class="token operator">=></span> x<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span></code></pre>
+<p>译自:<br>
 <a href="https://basarat.gitbooks.io/typescript/content/docs/why-typescript.html">basarat.gitbooks.io/typescript</a></p>
 
 </div>
@@ -696,7 +705,7 @@ foo <span class="token operator">=</span> <span class="token string">'456'</span
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-08-05-why-typescript/` was built on 2026-02-15T02:38:54.789Z -->
+		<!-- This page `/blog/2018-08-05-why-typescript/` was built on 2026-02-15T13:56:14.185Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="js-the-core">JS The Core</h1>
+<h1>JS The Core</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2018-06-24">24 June 2018</time></li>
@@ -570,33 +574,38 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#def.-1%3A-object%3A-an-object-is-a-collection-of-properties%2C-and-has-a-single-prototype-object.-the-prototype-may-be-either-an-object-or-the-null-value.">Def. 1: Object: An object is a collection of properties, and has a single prototype object. The prototype may be either an object or the null value.</a></li><li><a href="#def.-2%3A-prototype%3A-a-prototype-is-a-delegation-object-used-to-implement-prototype-based-inheritance.(%E5%8E%9F%E5%9E%8B%E6%98%AF%E7%94%A8%E4%BA%8E%E5%AE%9E%E7%8E%B0%E5%9F%BA%E4%BA%8E%E5%8E%9F%E5%9E%8B%E7%9A%84%E7%BB%A7%E6%89%BF%E7%9A%84%E5%A7%94%E6%89%98%E5%AF%B9%E8%B1%A1)">Def. 2: Prototype: A prototype is a delegation object used to implement prototype-based inheritance.(原型是用于实现基于原型的继承的委托对象)</a></li><li><a href="#def.-3%3A-prototype-chain%3A-a-prototype-chain-is-a-finite-chain-of-objects-used-to-implement-inheritance-and-shared-properties.">Def. 3: Prototype chain: A prototype chain is a finite chain of objects used to implement inheritance and shared properties.</a></li><li><a href="#def.-4%3A-delegation%3A-a-mechanism-used-to-resolve-a-property-in-the-inheritance-chain.-the-process-happens-at-runtime%2C-hence-is-also-called-dynamic-dispatch.">Def. 4: Delegation: a mechanism used to resolve a property in the inheritance chain. The process happens at runtime, hence is also called dynamic dispatch.</a></li><li><a href="#def.-5%3A-class%3A-a-class-is-a-formal-abstract-set-which-specifies-initial-state-and-behavior-of-its-objects.">Def. 5: Class: A class is a formal abstract set which specifies initial state and behavior of its objects.</a></li><li><a href="#def.-6%3A-constructor%3A-a-constructor-is-a-function-which-is-used-to-create-instances%2C-and-automatically-set-their-prototype.">Def. 6: Constructor: A constructor is a function which is used to create instances, and automatically set their prototype.</a></li><li><a href="#def.-7%3A-execution-context%3A-an-execution-context-is-a-specification-device-that-is-used-to-track-the-runtime-evaluation-of-the-code.">Def. 7: Execution context: An execution context is a specification device that is used to track the runtime evaluation of the code.</a></li><li><a href="#def.-8%3A-execution-context-stack%3A-an-execution-context-stack-is-a-lifo-structure-used-to-maintain-control-flow-and-order-of-execution.">Def. 8: Execution context stack: An execution context stack is a LIFO structure used to maintain control flow and order of execution.</a></li></ul>
+      </div>
+</aside>
   <p><strong>This article covers ES2017+ runtime system.</strong></p>
-<p><a href="#Object">丨- Object</a>
-<a href="#Prototype">丨- Prototype</a>
-<a href="#Class">丨- Class</a>
+<p><a href="#Object">丨- Object</a><br>
+<a href="#Prototype">丨- Prototype</a><br>
+<a href="#Class">丨- Class</a><br>
 <a href="#ExecutionContext">丨- Execution context</a></p>
-<h1 id="object">Object</h1>
+<h1 id="object" tabindex="-1">Object</h1>
 <p>ECMAScript 是一种面向对象的语言, 以 <code>prototype</code> 为基本组织形式, 核心表现形式为 <em>object</em>.</p>
 <blockquote>
-<h3 id="def-1-object-an-object-is-a-collection-of-properties-and-has-a-single-prototype-object-the-prototype-may-be-either-an-object-or-the-null-value">Def. 1: Object: An object is a collection of properties, and has a single prototype object. The prototype may be either an object or the null value.</h3>
+<h3 id="def.-1%3A-object%3A-an-object-is-a-collection-of-properties%2C-and-has-a-single-prototype-object.-the-prototype-may-be-either-an-object-or-the-null-value." tabindex="-1">Def. 1: Object: An object is a collection of properties, and has a single prototype object. The prototype may be either an object or the null value.</h3>
 </blockquote>
-<p>对象是一组 <code>properties</code> 的集合, 有唯一的 <code>prototype</code> 对象, 该对象要么是 <code>null</code>, 要么是另外一个对象.
+<p>对象是一组 <code>properties</code> 的集合, 有唯一的 <code>prototype</code> 对象, 该对象要么是 <code>null</code>, 要么是另外一个对象.<br>
 例如:</p>
-<pre><code>let point = {
+<pre><code class="hljs">let point = {
   x: 10,
   y: 20
 };
 </code></pre>
-<p>这样, 我们创建了一个对象, 它包含两个显式的属性(x, y)与一个隐式的属性<code>__proto__</code>, 这个隐式属性的引用与<code>point</code>关联
+<p>这样, 我们创建了一个对象, 它包含两个显式的属性(x, y)与一个隐式的属性<code>__proto__</code>, 这个隐式属性的引用与<code>point</code>关联<br>
 <em>prototype objects</em> 常常在<code>ECMAScript</code>的<code>dynamic dispatch</code>机制方面用来实现继承的特性</p>
-<h1 id="prototype">Prototype</h1>
+<h1 id="prototype" tabindex="-1">Prototype</h1>
 <p>每个对象在<strong>创建</strong>后便拥有<code>prototype</code>属性, 如果没有显式的赋值, 对象会拥有一个<code>default prototype</code>.</p>
 <blockquote>
-<h3 id="def-2-prototype-a-prototype-is-a-delegation-object-used-to-implement-prototype-based-inheritance">Def. 2: Prototype: A prototype is a delegation object used to implement prototype-based inheritance.(原型是用于实现基于原型的继承的委托对象)</h3>
+<h3 id="def.-2%3A-prototype%3A-a-prototype-is-a-delegation-object-used-to-implement-prototype-based-inheritance.(%E5%8E%9F%E5%9E%8B%E6%98%AF%E7%94%A8%E4%BA%8E%E5%AE%9E%E7%8E%B0%E5%9F%BA%E4%BA%8E%E5%8E%9F%E5%9E%8B%E7%9A%84%E7%BB%A7%E6%89%BF%E7%9A%84%E5%A7%94%E6%89%98%E5%AF%B9%E8%B1%A1)" tabindex="-1">Def. 2: Prototype: A prototype is a delegation object used to implement prototype-based inheritance.(原型是用于实现基于原型的继承的委托对象)</h3>
 </blockquote>
-<p><em>prototype</em> 可以被<code>__proto__</code>显式的赋值, 或者通过<code>Object.create</code>方法.
+<p><em>prototype</em> 可以被<code>__proto__</code>显式的赋值, 或者通过<code>Object.create</code>方法.<br>
 例如:</p>
-<pre><code>// Base object.
+<pre><code class="hljs">// Base object.
 let point = {
   x: 10,
   y: 20,
@@ -616,16 +625,16 @@ console.log(
 </code></pre>
 <p>任何对象都可以作为其它对象的<code>prototype</code>, 每个对象亦可以拥有自己的<code>prototype</code>. 如果对象有<code>prototype</code>并且非空, 以此类推可称之为<code>prototype chain</code>.</p>
 <blockquote>
-<h3 id="def-3-prototype-chain-a-prototype-chain-is-a-finite-chain-of-objects-used-to-implement-inheritance-and-shared-properties">Def. 3: Prototype chain: A prototype chain is a finite chain of objects used to implement inheritance and shared properties.</h3>
+<h3 id="def.-3%3A-prototype-chain%3A-a-prototype-chain-is-a-finite-chain-of-objects-used-to-implement-inheritance-and-shared-properties." tabindex="-1">Def. 3: Prototype chain: A prototype chain is a finite chain of objects used to implement inheritance and shared properties.</h3>
 </blockquote>
-<p><code>a prototype chain</code>的规则很简单, 如果<code>object A</code>没有属性<code>x</code>, 那么会查找<code>object A</code>的<code>prototype</code>有没有属性<code>x</code>、 查找<code>object A</code>的<code>prototype</code>的<code>prototype</code>、 以此类推. 直到遍历完整个<code>chain</code>.
+<p><code>a prototype chain</code>的规则很简单, 如果<code>object A</code>没有属性<code>x</code>, 那么会查找<code>object A</code>的<code>prototype</code>有没有属性<code>x</code>、 查找<code>object A</code>的<code>prototype</code>的<code>prototype</code>、 以此类推. 直到遍历完整个<code>chain</code>.<br>
 <strong>从技术上讲，这种机制被称为<code>dynamic dispatch</code>或<code>dynamic delegation</code></strong></p>
 <blockquote>
-<h3 id="def-4-delegation-a-mechanism-used-to-resolve-a-property-in-the-inheritance-chain-the-process-happens-at-runtime-hence-is-also-called-dynamic-dispatch">Def. 4: Delegation: a mechanism used to resolve a property in the inheritance chain. The process happens at runtime, hence is also called dynamic dispatch.</h3>
+<h3 id="def.-4%3A-delegation%3A-a-mechanism-used-to-resolve-a-property-in-the-inheritance-chain.-the-process-happens-at-runtime%2C-hence-is-also-called-dynamic-dispatch." tabindex="-1">Def. 4: Delegation: a mechanism used to resolve a property in the inheritance chain. The process happens at runtime, hence is also called dynamic dispatch.</h3>
 </blockquote>
-<p>若遍历完整个<code>prototype chain</code>依然没有找到属性<code>x</code>, 那么程序会返回<code>undefined</code>.
+<p>若遍历完整个<code>prototype chain</code>依然没有找到属性<code>x</code>, 那么程序会返回<code>undefined</code>.<br>
 例如:</p>
-<pre><code>// An &quot;empty&quot; object.
+<pre><code class="hljs">// An &quot;empty&quot; object.
 let empty = {};
 
 console.log(
@@ -638,16 +647,16 @@ console.log(
 
 );
 </code></pre>
-<p>我们会看到, 当创建一个对象时, 就算是空对象它也永远不是真正的<strong>empty</strong>, 因为它总会从<code>Object.prototype</code>上继承些什么. 除非我们显式的将它的<code>prototype</code>置为<code>null</code>:
+<p>我们会看到, 当创建一个对象时, 就算是空对象它也永远不是真正的<strong>empty</strong>, 因为它总会从<code>Object.prototype</code>上继承些什么. 除非我们显式的将它的<code>prototype</code>置为<code>null</code>:<br>
 例如:</p>
-<pre><code>// Doesn't inherit from anything.
+<pre><code class="hljs">// Doesn't inherit from anything.
 let dict = Object.create(null);
 
 console.log(dict.toString); // undefined
 </code></pre>
-<p><code>The dynamic dispatch</code>机制允许继承链的完全可变性，提供更改委托对象的能力:
+<p><code>The dynamic dispatch</code>机制允许继承链的完全可变性，提供更改委托对象的能力:<br>
 例如:</p>
-<pre><code>let protoA = {x: 10};
+<pre><code class="hljs">let protoA = {x: 10};
 let protoB = {x: 20};
 
 // Same as `let objectC = {__proto__: protoA};`:
@@ -658,15 +667,15 @@ console.log(objectC.x); // 10
 Object.setPrototypeOf(objectC, protoB);
 console.log(objectC.x); // 20
 </code></pre>
-<p>尽管<code>__proto__</code>时至今日已经标准化, 使用方便容易理解, 但我们仍然倾向于使用API来操作对象的<code>prototype</code>, 例如方法<code>Object.create</code>, <code>Object.getPrototypeOf</code>, <code>Object.setPrototypeOf</code>.
+<p>尽管<code>__proto__</code>时至今日已经标准化, 使用方便容易理解, 但我们仍然倾向于使用API来操作对象的<code>prototype</code>, 例如方法<code>Object.create</code>, <code>Object.getPrototypeOf</code>, <code>Object.setPrototypeOf</code>.<br>
 我们学习了<code>Object.prototype</code>, 知道它的优势是可以在多个对象间共享, 基于这个原则, 让我们来看看JS里面的<code>&quot;class&quot;</code>.</p>
-<h1 id="class">Class</h1>
+<h1 id="class" tabindex="-1">Class</h1>
 <p>当多个对象拥有统一的行为和相同的初始状态时, 他们便可以当成一类对象.</p>
 <blockquote>
-<h3 id="def-5-class-a-class-is-a-formal-abstract-set-which-specifies-initial-state-and-behavior-of-its-objects">Def. 5: Class: A class is a formal abstract set which specifies initial state and behavior of its objects.</h3>
+<h3 id="def.-5%3A-class%3A-a-class-is-a-formal-abstract-set-which-specifies-initial-state-and-behavior-of-its-objects." tabindex="-1">Def. 5: Class: A class is a formal abstract set which specifies initial state and behavior of its objects.</h3>
 </blockquote>
 <p>例如:</p>
-<pre><code>let letter = {
+<pre><code class="hljs">let letter = {
   getNumber() {
     return this.number;
   }
@@ -683,9 +692,9 @@ console.log(
   z.getNumber(), // 26
 );
 </code></pre>
-<p>这种方式虽然可以实现需求, 但是显得很麻烦, 而类正是为了解决这个问题(语法糖), 构造方法也有同样的效果, 只是在这里类看起来更加的适合.
+<p>这种方式虽然可以实现需求, 但是显得很麻烦, 而类正是为了解决这个问题(语法糖), 构造方法也有同样的效果, 只是在这里类看起来更加的适合.<br>
 例如:</p>
-<pre><code>class Letter {
+<pre><code class="hljs">class Letter {
   constructor(number) {
       this.number = number;
   }
@@ -708,11 +717,11 @@ console.log(
 </code></pre>
 <p>从技术上来讲, <code>&quot;class&quot;</code> = 构造方法 + <code>prototype</code>的组合实现. 使用构造方法来创建对象, 该对象会自动被赋予<code>prototype</code>的属性, 该属性存储在<code>&lt;ConstructorFunction&gt;.prototype</code>.</p>
 <blockquote>
-<h3 id="def-6-constructor-a-constructor-is-a-function-which-is-used-to-create-instances-and-automatically-set-their-prototype">Def. 6: Constructor: A constructor is a function which is used to create instances, and automatically set their prototype.</h3>
+<h3 id="def.-6%3A-constructor%3A-a-constructor-is-a-function-which-is-used-to-create-instances%2C-and-automatically-set-their-prototype." tabindex="-1">Def. 6: Constructor: A constructor is a function which is used to create instances, and automatically set their prototype.</h3>
 </blockquote>
-<p>在以前, 开发人员用以下方式来实现类似于<code>构造方法</code>的功能:
+<p>在以前, 开发人员用以下方式来实现类似于<code>构造方法</code>的功能:<br>
 例如:</p>
-<pre><code>function LegacyLetter(number) {
+<pre><code class="hljs">function LegacyLetter(number) {
   this.number = number;
 }
 
@@ -730,17 +739,17 @@ console.log(
   legacyZ.getNumber(),
 )
 </code></pre>
-<p>虽然创建单层构造函数非常简单, 但父类的继承模式需要更多的模板. 目前, 这个模板作为一个实现细节隐藏起来: 这正是我们在JavaScript中创建一个类时发生的情况.
-<em>Note</em> 任何对象的实际原型总是__proto__引用. 而构造函数的显式原型属性只是对其实例原型的引用; 从实例中它仍然被__proto__引用. <a href="http://dmitrysoshnikov.com/ecmascript/chapter-7-2-oop-ecmascript-implementation/#explicit-codeprototypecode-and-implicit-codeprototypecode-properties">具体细节在此</a>
+<p>虽然创建单层构造函数非常简单, 但父类的继承模式需要更多的模板. 目前, 这个模板作为一个实现细节隐藏起来: 这正是我们在JavaScript中创建一个类时发生的情况.<br>
+<em>Note</em> 任何对象的实际原型总是__proto__引用. 而构造函数的显式原型属性只是对其实例原型的引用; 从实例中它仍然被__proto__引用. <a href="http://dmitrysoshnikov.com/ecmascript/chapter-7-2-oop-ecmascript-implementation/#explicit-codeprototypecode-and-implicit-codeprototypecode-properties">具体细节在此</a><br>
 到目前为止, 我们已经理解了ECMAScript的对象相关的知识, 接下来让我们学习更深一层的知识: <em>JS runtime system</em></p>
-<h1 id="execution-context">Execution context</h1>
+<h1 id="execution-context" tabindex="-1">Execution context</h1>
 <p>ECMAScript定义了<em>execution context</em>来执行和追踪JS code.  <em>execution context</em>在逻辑上用一个栈来表示.</p>
 <blockquote>
-<h3 id="def-7-execution-context-an-execution-context-is-a-specification-device-that-is-used-to-track-the-runtime-evaluation-of-the-code">Def. 7: Execution context: An execution context is a specification device that is used to track the runtime evaluation of the code.</h3>
+<h3 id="def.-7%3A-execution-context%3A-an-execution-context-is-a-specification-device-that-is-used-to-track-the-runtime-evaluation-of-the-code." tabindex="-1">Def. 7: Execution context: An execution context is a specification device that is used to track the runtime evaluation of the code.</h3>
 </blockquote>
-<p>ECMAScript代码有几种类型：the global code, function code, eval code, and module code; 每种都在其<em>execution context</em>中进行评估. 不同的代码类型及其适当的对象可能会影响<em>execution context</em>的结构: 例如, <em>generator functions</em>将其生成器对象保存在<em>execution context</em>中.
+<p>ECMAScript代码有几种类型：the global code, function code, eval code, and module code; 每种都在其<em>execution context</em>中进行评估. 不同的代码类型及其适当的对象可能会影响<em>execution context</em>的结构: 例如, <em>generator functions</em>将其生成器对象保存在<em>execution context</em>中.<br>
 例如一个递归函数如下所示:</p>
-<pre><code>function recursive(flag) {
+<pre><code class="hljs">function recursive(flag) {
   if(flag === 2) {
       return;
   }
@@ -749,15 +758,15 @@ console.log(
 
 recursive(0);
 </code></pre>
-<p>当函数被调用时, 一个新的<em>execution context</em>被初始化出来, 并被放入栈中, 此时它是一个<em>active</em>的<em>execution context</em>. 当函数执行完返回时, 它的<em>context</em>从栈中退出.
+<p>当函数被调用时, 一个新的<em>execution context</em>被初始化出来, 并被放入栈中, 此时它是一个<em>active</em>的<em>execution context</em>. 当函数执行完返回时, 它的<em>context</em>从栈中退出.<br>
 <em>context</em>如果还调用了其它<em>context</em>, 我们称之为<em>caller</em>, 被调用的那一方我们称之为<em>callee</em>. 在上面的例子里, 递归函数<code>recursive</code>既是<em>caller</em>也是<em>callee</em>.</p>
 <blockquote>
-<h3 id="def-8-execution-context-stack-an-execution-context-stack-is-a-lifo-structure-used-to-maintain-control-flow-and-order-of-execution">Def. 8: Execution context stack: An execution context stack is a LIFO structure used to maintain control flow and order of execution.</h3>
+<h3 id="def.-8%3A-execution-context-stack%3A-an-execution-context-stack-is-a-lifo-structure-used-to-maintain-control-flow-and-order-of-execution." tabindex="-1">Def. 8: Execution context stack: An execution context stack is a LIFO structure used to maintain control flow and order of execution.</h3>
 </blockquote>
-<p><em>the global context</em>永远在栈的最底层, 它是在执行任何其他<em>context</em>之前创建的.
-一般情况下, <em>context</em>的代码可运行至完成, 但正如我们上面提到的那样, 某些对象(如<em>generators</em>)可能会违反堆栈的LIFO顺序. <em>generators</em>可以暂停其<em>running context</em>, 并在完成之前将其从堆栈中移除. 一旦<em>generator</em>再次激活, 其<em>context</em>恢复并再次被压入堆栈:
+<p><em>the global context</em>永远在栈的最底层, 它是在执行任何其他<em>context</em>之前创建的.<br>
+一般情况下, <em>context</em>的代码可运行至完成, 但正如我们上面提到的那样, 某些对象(如<em>generators</em>)可能会违反堆栈的LIFO顺序. <em>generators</em>可以暂停其<em>running context</em>, 并在完成之前将其从堆栈中移除. 一旦<em>generator</em>再次激活, 其<em>context</em>恢复并再次被压入堆栈:<br>
 例如:</p>
-<pre><code>function *gen() {
+<pre><code class="hljs">function *gen() {
   yield 1;
   return 2;
 }
@@ -769,7 +778,7 @@ console.log(
   g.next().value, // 2
 );
 </code></pre>
-<p>接下来, 我们将讨论<code>execution context</code>的重要组成部分; 特别是我们应该看到ECMAScript运行时如何管理<code>variables storage, and scopes created by nested blocks of a code</code>.
+<p>接下来, 我们将讨论<code>execution context</code>的重要组成部分; 特别是我们应该看到ECMAScript运行时如何管理<code>variables storage, and scopes created by nested blocks of a code</code>.<br>
 这是一个通用概念, 用于JS存储数据, 并通过闭包机制解决Funarg问题.</p>
 
 </div>
@@ -797,7 +806,7 @@ console.log(
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-06-24-JS-core-workshop/` was built on 2026-02-15T02:38:54.789Z -->
+		<!-- This page `/blog/2018-06-24-JS-core-workshop/` was built on 2026-02-15T13:56:14.185Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="">《函数式编程思维》 读书笔记</h1>
+<h1>《函数式编程思维》 读书笔记</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2019-02-07">07 February 2019</time></li>
@@ -570,20 +574,25 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E8%BD%AC%E5%8F%98%E6%80%9D%E7%BB%B4">转变思维</a></li><li><a href="#%E8%B4%A3%E6%9D%83%E8%AE%A9%E6%B8%A1">责权让渡</a></li><li><a href="#%E6%BC%94%E5%8C%96%E7%9A%84%E8%AF%AD%E8%A8%80">演化的语言</a></li><li><a href="#%E6%A8%A1%E5%BC%8F%E4%B8%8E%E9%87%8D%E7%94%A8">模式与重用</a></li></ul>
+      </div>
+</aside>
   <blockquote>
-<p>函数式程序员喜欢用少数几个核心数据结构，围绕他们去建立一套充分优化的运转机构
+<p>函数式程序员喜欢用少数几个核心数据结构，围绕他们去建立一套充分优化的运转机构<br>
 而面向对象程序员喜欢不断创建新的数据结构和附属的操作，因为面向对象编程范式就是建立新的类和类间的消息</p>
 </blockquote>
 <blockquote>
 <p>函数式编程的程序构造更方便我们在比较细小的层面重用代码</p>
 </blockquote>
-<h4 id="-2">转变思维</h4>
+<h4 id="%E8%BD%AC%E5%8F%98%E6%80%9D%E7%BB%B4" tabindex="-1">转变思维</h4>
 <ul>
 <li>学习一种新的范式 - 我们必须学会为熟悉的问题找到新的解答方法，换用函数式编程语言并不是写出函数是代码的必要条件，转变我们看问题的角度才是必不可少的</li>
 <li>学会用更高层次的抽象来思考有什么好处？ 首先，会促使我们换一种角度去归类问题，看到问题的共性；其次，让运行时有更大的余地去做智能的优化；第三，让埋头于实现细节的开发者看到原本视野之外的一些解决方案。</li>
 <li>掌握新的构造单元之后，还要善于从问题里<strong>发现</strong>他们的身影，从而抓住解题的脉络。函数式编程不会用很多抽象，但每个抽象的泛化程度都很高（特化的方面通过高阶函数注入）。函数式编程以参数传递和函数的复合作为主要的表现手段。</li>
 </ul>
-<h4 id="-3">责权让渡</h4>
+<h4 id="%E8%B4%A3%E6%9D%83%E8%AE%A9%E6%B8%A1" tabindex="-1">责权让渡</h4>
 <ul>
 <li>迭代让位于高阶函数</li>
 </ul>
@@ -594,8 +603,8 @@ pre[class*="language-"] {
 <li>闭包 - 实际上是一种特殊函数，他在暗地里绑定了函数内部引用的所有变量，换句话说，这种函数把他引用的所有东西都放在一个上下文里<strong>包</strong>了起来</li>
 </ul>
 <blockquote>
-<p>闭包还是推迟执行原则的绝佳样板。我们把代码绑定到闭包之后，可以推迟到适当的时机再执行闭包
-命令式语言围绕状态来建立编程模型，参数传递是其典型特征。
+<p>闭包还是推迟执行原则的绝佳样板。我们把代码绑定到闭包之后，可以推迟到适当的时机再执行闭包<br>
+命令式语言围绕状态来建立编程模型，参数传递是其典型特征。<br>
 闭包作为一种对行为的建模手段，让我们把代码和上下文同时封装在单一结构也就是闭包本身里面，像传统数据结构一样可以传递到其它位置，然后再恰当的时间和地点完成执行</p>
 </blockquote>
 <ul>
@@ -606,19 +615,19 @@ pre[class*="language-"] {
 <p>语言设计者实现出来的机制总比开发者自己做的效率更高，因为他们可以不受语言本身的限制</p>
 </blockquote>
 <ul>
-<li>缓求值是函数式编程语言常见的一种特性，指尽可能地推迟求解表达式:
-好处一： 昂贵的运算只有到了绝对必要的时候才执行
-好处二： 我们可建力无限大的集合，接到请求就直接送出元素
+<li>缓求值是函数式编程语言常见的一种特性，指尽可能地推迟求解表达式:<br>
+好处一： 昂贵的运算只有到了绝对必要的时候才执行<br>
+好处二： 我们可建力无限大的集合，接到请求就直接送出元素<br>
 好初三： 按缓求值的方式来使用映射、筛选等函数式概念，可以产生更高效的代码。</li>
 </ul>
-<h4 id="-4">演化的语言</h4>
+<h4 id="%E6%BC%94%E5%8C%96%E7%9A%84%E8%AF%AD%E8%A8%80" tabindex="-1">演化的语言</h4>
 <blockquote>
 <p>100个函数操作一种数据结构的组合，要好过10个函数操作10个数据结构的组合</p>
 </blockquote>
-<h4 id="-5">模式与重用</h4>
+<h4 id="%E6%A8%A1%E5%BC%8F%E4%B8%8E%E9%87%8D%E7%94%A8" tabindex="-1">模式与重用</h4>
 <blockquote>
-<p>如果我们的语言支持的编程范式以对象为本，我们就很容易不自觉地按照对象的术语来思考所有问题的答案。
-不过，大多数现代语言都是多范式的，支持对象、元对象、函数式以及其它多样化的范式。
+<p>如果我们的语言支持的编程范式以对象为本，我们就很容易不自觉地按照对象的术语来思考所有问题的答案。<br>
+不过，大多数现代语言都是多范式的，支持对象、元对象、函数式以及其它多样化的范式。<br>
 学会使用不同的范式来处理不同的问题，是开发者进步路上需要约过的一道坎。</p>
 </blockquote>
 <p>《函数式编程思维》<a href="https://book.douban.com/subject/26587213">豆瓣链接</a></p>
@@ -648,7 +657,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2019-02-07-function-program-intro/` was built on 2026-02-15T02:38:54.792Z -->
+		<!-- This page `/blog/2019-02-07-function-program-intro/` was built on 2026-02-15T13:56:14.186Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

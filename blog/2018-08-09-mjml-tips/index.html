@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="mjml">使用 mjml 指南</h1>
+<h1>使用 mjml 指南</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2018-08-09">09 August 2018</time></li>
@@ -570,36 +574,41 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="">背景</h3>
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E8%83%8C%E6%99%AF">背景</a></li><li><a href="#outlook%2C-gmail%2C-yahoo!-mail-%E4%B8%8D%E6%94%AF%E6%8C%81%E7%9A%84%E5%B1%9E%E6%80%A7">Outlook, Gmail, Yahoo! Mail 不支持的属性</a></li><li><a href="#margin">margin</a></li><li><a href="#position">position</a></li><li><a href="#mjml">mjml</a></li><li><a href="#%E6%80%BB%E7%BB%93">总结</a><ul><li><a href="#%E9%A3%8E%E5%90%91%E6%A0%87">风向标</a></li></ul></li></ul>
+      </div>
+</aside>
+  <h3 id="%E8%83%8C%E6%99%AF" tabindex="-1">背景</h3>
 <p>最近在用 <code>mjml</code> 来制作邮件模板, 在 Desktop &amp; mobile 端都期待有不错的效果.</p>
 <blockquote>
 <p>The only framework that makes responsive email easy</p>
 </blockquote>
-<p>但是！BUT！发现了一些 CSS 的属性邮件客户端根本压根完全<strong>不</strong>支持 🌝
+<p>但是！BUT！发现了一些 CSS 的属性邮件客户端根本压根完全<strong>不</strong>支持 🌝<br>
 在此记录.</p>
-<h3 id="outlook-gmail-yahoo-mail">Outlook, Gmail, Yahoo! Mail 不支持的属性</h3>
-<h3 id="margin">margin</h3>
+<h3 id="outlook%2C-gmail%2C-yahoo!-mail-%E4%B8%8D%E6%94%AF%E6%8C%81%E7%9A%84%E5%B1%9E%E6%80%A7" tabindex="-1">Outlook, Gmail, Yahoo! Mail 不支持的属性</h3>
+<h3 id="margin" tabindex="-1">margin</h3>
 <blockquote>
-<p>Most webmail clients such as Outlook.com and Yahoo! Mail do not allow negative margin values and Gmail is no exception.</p>
+<p>Most webmail clients such as <a href="http://Outlook.com">Outlook.com</a> and Yahoo! Mail do not allow negative margin values and Gmail is no exception.</p>
 </blockquote>
-<h3 id="position">position</h3>
+<h3 id="position" tabindex="-1">position</h3>
 <blockquote>
-<p>Unfortunately, you can't use position: absolute.</p>
+<p>Unfortunately, you can’t use position: absolute.</p>
 </blockquote>
 <p>Because Outlook is using the Word HTML renderer, you will also run into problems using absolute positioning.</p>
 <blockquote>
 <p>Yahoo mail is a funny one, it supports position:absolute; but not top bottom left or right therefore rendering it useless.</p>
 </blockquote>
-<p>为什么我会踩到了这两个大坑? 在你编写邮件模板时其实不一定会遇到这个问题的.
-就是因为我们的邮件背景是上下结构的两种颜色！ 背景之上再浮动一层邮件的内容！
-看似简单, 调试顺利, 发送的邮件怎么都不是预想的效果还把 QQ 邮件客户端的样式给搞乱了 🌚..
+<p>为什么我会踩到了这两个大坑? 在你编写邮件模板时其实不一定会遇到这个问题的.<br>
+就是因为我们的邮件背景是上下结构的两种颜色！ 背景之上再浮动一层邮件的内容！<br>
+看似简单, 调试顺利, 发送的邮件怎么都不是预想的效果还把 QQ 邮件客户端的样式给搞乱了 🌚…<br>
 再此还是感谢 QQ 邮件客户端的发送 HTML 格式内容的功能!</p>
-<h3 id="mjml-2">mjml</h3>
+<h3 id="mjml" tabindex="-1">mjml</h3>
 <p>使用 mjml 编写邮件模板总体来说简单好看容易编写, 需要注意的一点是 <code>mj-section</code>, <code>mj-column</code> 不要过度使用, 保持 mjml 文件的简洁, 如此一来生成的 html 文件大小也会很合适, 不会过大.</p>
 <p>使用 <code>@media screen and (min-width: 320px) { .content { width: 302px; } }</code> 来布局, 保持桌面,平板和手机端的展示效果.</p>
-<h3 id="-2">总结</h3>
+<h3 id="%E6%80%BB%E7%BB%93" tabindex="-1">总结</h3>
 <p>HTML 写的再酷炫, 邮件客户端展示出来的邮件内容依然是基于 <code>table</code> 的, 那么知道我们不能做什么, 是很重要的事. 降低期望, 逐步完成. 期间也去网易云找过各种设计师听的歌单 😑, 结果怎么样, 都是现阶段能够做到的事了.</p>
-<h4 id="-3">风向标</h4>
+<h4 id="%E9%A3%8E%E5%90%91%E6%A0%87" tabindex="-1">风向标</h4>
 <ul>
 <li><a href="https://www.campaignmonitor.com/css/">A complete breakdown of the CSS support for the most popular mobile, web and desktop email clients on the planet.</a></li>
 <li><a href="https://developers.google.com/gmail/design/reference/supported_css">Gmail Supported CSS Properties &amp; Media Queries</a></li>
@@ -630,7 +639,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-08-09-mjml-tips/` was built on 2026-02-15T02:38:54.790Z -->
+		<!-- This page `/blog/2018-08-09-mjml-tips/` was built on 2026-02-15T13:56:14.186Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

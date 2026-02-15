@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="word2vec">解读 word2vec 项目</h1>
+<h1>解读 word2vec 项目</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2015-11-26">26 November 2015</time></li>
@@ -570,17 +574,22 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="word2vec-2">什么是<a href="https://code.google.com/p/word2vec/">word2vec</a></h3>
-<p>在2013年8月20日，google将该工具发布在https://code.google.com/p/word2vec/上
-它用来在使用深度学习算法之前预处理文本,把文本变成深度学习能够理解的向量形式
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFword2vec">什么是word2vec</a></li><li><a href="#performance">Performance</a></li></ul>
+      </div>
+</aside>
+  <h3 id="%E4%BB%80%E4%B9%88%E6%98%AFword2vec" tabindex="-1">什么是<a href="https://code.google.com/p/word2vec/">word2vec</a></h3>
+<p>在2013年8月20日，google将该工具发布在<a href="https://code.google.com/p/word2vec/%E4%B8%8A">https://code.google.com/p/word2vec/上</a><br>
+它用来在使用深度学习算法之前预处理文本,把文本变成深度学习能够理解的向量形式<br>
 结果采用余弦值的形式，越接近1表示词语相似度越高</p>
 <p>Word2vec的赞誉极高，被称为2013年最重要的自然语言处理工具，相信搞NLP的没有不知道word2vec的。在我看来，Word2vec最重要的贡献是提供了一个基础，也就是把词转换为实数值向量，在这个基础上可以玩很多花样。当然，可以站在一个更高的角度来看，这里的词其实并不一定真的就是单词，完全可以是具有一定意义的单元块，比如<a href="http://erikbern.com/?p=340">国外音乐网站</a>就用word2vec来训练用户的听歌记录，这里的单元块就是歌曲编号，如果用户对音乐类型的喜好是一致的，那么训练后就能找到与某个歌曲相似的歌曲，这样就能给用户进行推荐了，相信类似这样的例子还有很多。</p>
-<p>word2vec有两种结构:continuous bag-of-words and continuous skip-gram
+<p>word2vec有两种结构:continuous bag-of-words and continuous skip-gram<br>
 命令参数-cbow可以从2中算法中做一个选择</p>
 <p>训练的原料越大，结果会越准确</p>
 <p>demo-phrases.sh对于短语的结果会更准，例如输入san_francisco</p>
-<h3 id="performance">Performance</h3>
-<p>'-threads N'参数可以并行多个线程进行训练
+<h3 id="performance" tabindex="-1">Performance</h3>
+<p>'-threads N’参数可以并行多个线程进行训练<br>
 参数配置和选择</p>
 <ul>
 <li>architecture: skip-gram (slower, better for infrequent words) vs CBOW (fast)</li>
@@ -589,7 +598,7 @@ pre[class*="language-"] {
 <li>dimensionality of the word vectors: usually more is better, but not always</li>
 <li>context (window) size: for skip-gram usually around 10, for CBOW around 5</li>
 </ul>
-<p>参考资料:
+<p>参考资料:<br>
 1.<a href="http://blog.csdn.net/zhaoxinfan/article/details/27352659">再谈word2vec</a></p>
 
 </div>
@@ -617,7 +626,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-11-26-google-word2vec/` was built on 2026-02-15T02:38:54.780Z -->
+		<!-- This page `/blog/2015-11-26-google-word2vec/` was built on 2026-02-15T13:56:14.182Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

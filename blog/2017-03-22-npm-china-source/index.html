@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="npm">npm国内镜像配置方法</h1>
+<h1>npm国内镜像配置方法</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2017-03-22">22 March 2017</time></li>
@@ -570,23 +574,26 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
+<aside>
+  
+</aside>
   <p>通过npm下载vue-cli脚手架,由于源的问题一直报错:</p>
-<pre><code>...shasum check failed for...
+<pre><code class="hljs">...shasum check failed for...
 </code></pre>
 <p>设置国内镜像:</p>
 <ol>
 <li>config:</li>
 </ol>
-<pre><code>npm config set registry http://registry.cnpmjs.org
+<pre><code class="hljs">npm config set registry http://registry.cnpmjs.org
 npm info underscore （如果上面配置正确这个命令会有字符串response）
 </code></pre>
 <ol start="2">
 <li>编辑 ~/.npmrc 加入下面内容:</li>
 </ol>
-<pre><code>registry = http://registry.cnpmjs.org
+<pre><code class="hljs">registry = http://registry.cnpmjs.org
 </code></pre>
-<p>本文转自:
-<a href="http://blog.csdn.net/enson16855/article/details/23299787">解决npm的'shasum check failed for..'错误(npm注册国内镜像介绍)</a></p>
+<p>本文转自:<br>
+<a href="http://blog.csdn.net/enson16855/article/details/23299787">解决npm的’shasum check failed for…'错误(npm注册国内镜像介绍)</a></p>
 
 </div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2017-03-15-something-about-spring-cloud/">Spring-Cloud概念理解和部署</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2017-04-01-2017-part-one/">2017 第一季度总结</a></li>
@@ -613,7 +620,7 @@ npm info underscore （如果上面配置正确这个命令会有字符串respon
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2017-03-22-npm-china-source/` was built on 2026-02-15T02:38:54.785Z -->
+		<!-- This page `/blog/2017-03-22-npm-china-source/` was built on 2026-02-15T13:56:14.184Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="storm-kafka">Storm介绍和kafka相关命令脚本</h1>
+<h1>Storm介绍和kafka相关命令脚本</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2015-06-30">30 June 2015</time></li>
@@ -570,6 +574,9 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
+<aside>
+  
+</aside>
   <ul>
 <li>
 <p>spout 龙卷，读取原始数据为bolt提供数据</p>
@@ -587,7 +594,7 @@ pre[class*="language-"] {
 <p>define field(s) 定义域，由spout或bolt提供，被bolt接收</p>
 </li>
 </ul>
-<p>本地运行storm,kafka,zookeeper
+<p>本地运行storm,kafka,zookeeper<br>
 storm的lib包下面需要放zookeeper.jar</p>
 <ul>
 <li>transient</li>
@@ -604,19 +611,19 @@ storm的lib包下面需要放zookeeper.jar</p>
 <hr>
 <p>hdfs可以写入hdfs文件系统，也可以将流直接写入本地文件</p>
 <p>You can get the FileSystem by the following way:</p>
-<pre class="language-java" tabindex="0"><code class="language-java"><span class="token class-name">Configuration</span> conf <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Configuration</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class="language-java" tabindex="0"><code class="hljs language-java"><span class="token class-name">Configuration</span> conf <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Configuration</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">Path</span> path <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Path</span><span class="token punctuation">(</span>stringPath<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">FileSystem</span> fs <span class="token operator">=</span> <span class="token class-name">FileSystem</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>path<span class="token punctuation">.</span><span class="token function">toUri</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> conf<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 <p>You do not need to judge if the path starts with hdfs:// or file://. This API will do the work.</p>
 <p><strong>Kafka常用查看topic的命令</strong></p>
 <p>查看某个topic的信息</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim"><span class="token builtin">bin</span><span class="token operator">/</span>kafka<span class="token operator">-</span>topics<span class="token operator">.</span><span class="token keyword">sh</span> <span class="token operator">-</span><span class="token operator">-</span>describe <span class="token operator">-</span><span class="token operator">-</span>zookeeper IP1<span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">,</span>IP2<span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">,</span>IP3<span class="token punctuation">:</span><span class="token number">2181</span> <span class="token operator">-</span><span class="token operator">-</span>topic TOPICNAME</code></pre>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim"><span class="token builtin">bin</span><span class="token operator">/</span>kafka<span class="token operator">-</span>topics<span class="token operator">.</span><span class="token keyword">sh</span> <span class="token operator">-</span><span class="token operator">-</span>describe <span class="token operator">-</span><span class="token operator">-</span>zookeeper IP1<span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">,</span>IP2<span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">,</span>IP3<span class="token punctuation">:</span><span class="token number">2181</span> <span class="token operator">-</span><span class="token operator">-</span>topic TOPICNAME</code></pre>
 <p>作为consumer从beginning处消费</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim"><span class="token builtin">bin</span><span class="token operator">/</span>kafka<span class="token operator">-</span>console<span class="token operator">-</span>consumer<span class="token operator">.</span><span class="token keyword">sh</span> <span class="token operator">-</span><span class="token operator">-</span>from<span class="token operator">-</span>beginning <span class="token operator">-</span><span class="token operator">-</span>topic TOPICNAME <span class="token operator">-</span><span class="token operator">-</span>zookeeper IP1<span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">,</span>IP2<span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">,</span>IP3<span class="token punctuation">:</span><span class="token number">2181</span></code></pre>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim"><span class="token builtin">bin</span><span class="token operator">/</span>kafka<span class="token operator">-</span>console<span class="token operator">-</span>consumer<span class="token operator">.</span><span class="token keyword">sh</span> <span class="token operator">-</span><span class="token operator">-</span>from<span class="token operator">-</span>beginning <span class="token operator">-</span><span class="token operator">-</span>topic TOPICNAME <span class="token operator">-</span><span class="token operator">-</span>zookeeper IP1<span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">,</span>IP2<span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">,</span>IP3<span class="token punctuation">:</span><span class="token number">2181</span></code></pre>
 <p>list当前的topics</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim"><span class="token builtin">bin</span><span class="token operator">/</span>kafka<span class="token operator">-</span>topics<span class="token operator">.</span><span class="token keyword">sh</span> <span class="token operator">-</span><span class="token operator">-</span><span class="token keyword">list</span> <span class="token operator">-</span><span class="token operator">-</span>zookeeper IP1<span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">,</span>IP2<span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">,</span>IP3<span class="token punctuation">:</span><span class="token number">2181</span></code></pre>
-<p><em>storm-hdfs</em> 可以写入本地，只要fsurl指定前缀为file://
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim"><span class="token builtin">bin</span><span class="token operator">/</span>kafka<span class="token operator">-</span>topics<span class="token operator">.</span><span class="token keyword">sh</span> <span class="token operator">-</span><span class="token operator">-</span><span class="token keyword">list</span> <span class="token operator">-</span><span class="token operator">-</span>zookeeper IP1<span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">,</span>IP2<span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">,</span>IP3<span class="token punctuation">:</span><span class="token number">2181</span></code></pre>
+<p><em>storm-hdfs</em> 可以写入本地，只要fsurl指定前缀为file://<br>
 另外它的流是org.apache.hadoop.fs.FSDataOutputStream</p>
 
 </div>
@@ -644,7 +651,7 @@ storm的lib包下面需要放zookeeper.jar</p>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-06-30-recently-little-knowledge/` was built on 2026-02-15T02:38:54.775Z -->
+		<!-- This page `/blog/2015-06-30-recently-little-knowledge/` was built on 2026-02-15T13:56:14.180Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

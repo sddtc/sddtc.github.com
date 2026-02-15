@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="api">API 设计实践</h1>
+<h1>API 设计实践</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2022-02-02">02 February 2022</time></li>
@@ -570,8 +574,13 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E8%AE%BE%E8%AE%A1-api-%E7%9A%84%E7%AE%80%E5%8D%95%E5%8E%9F%E5%88%99">设计 API 的简单原则</a><ul><li><a href="#%E4%B8%80%E8%87%B4%E6%80%A7">一致性</a></li><li><a href="#%E6%98%BE%E8%80%8C%E6%98%93%E8%A7%81%E6%80%A7">显而易见性</a></li><li><a href="#%E5%8F%AF%E7%BB%84%E5%90%88%E6%80%A7">可组合性</a></li><li><a href="#%E8%87%AA%E8%A7%A3%E9%87%8A">自解释</a></li><li><a href="#%E5%8F%AF%E8%BF%9B%E5%8C%96%E6%80%A7">可进化性</a></li></ul></li><li><a href="#%E8%B5%84%E6%BA%90%E7%9A%84%E5%91%BD%E5%90%8D">资源的命名</a><ul><li><a href="#%E9%9B%86%E5%90%88%EF%BC%9A%E4%BD%BF%E7%94%A8%E5%A4%8D%E6%95%B0%E5%90%8D%E8%AF%8D%EF%BC%8C-%E4%B8%8D%E5%8C%85%E5%90%AB%E5%94%AF%E4%B8%80%E6%A0%87%E8%AF%86%E7%AC%A6">集合：使用复数名词， 不包含唯一标识符</a></li><li><a href="#%E5%8D%95%E4%B8%80%E8%B5%84%E6%BA%90%EF%BC%9A%E4%BD%BF%E7%94%A8%E6%A0%87%E8%AF%86%E7%AC%A6%EF%BC%88*-%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8%E4%B8%BB%E9%94%AE%2F%E9%80%92%E5%A2%9E%E6%95%B0%E5%80%BC%EF%BC%89">单一资源：使用标识符（* 不要使用主键/递增数值）</a></li><li><a href="#%E5%B5%8C%E5%A5%97%E8%B5%84%E6%BA%90">嵌套资源</a></li><li><a href="#%E5%85%B7%E5%8C%96%E7%9A%84%E8%B5%84%E6%BA%90">具化的资源</a></li><li><a href="#%E9%9D%9E%E8%B5%84%E6%BA%90%E7%9A%84-endpoints">非资源的 endpoints</a></li></ul></li><li><a href="#%E5%85%B6%E5%AE%83">其它</a></li><li><a href="#api-%E7%89%88%E6%9C%AC%E5%8C%96">API 版本化</a></li><li><a href="#api-%E8%AE%A4%E8%AF%81">API 认证</a></li><li><a href="#api-%E7%BD%91%E5%85%B3">API 网关</a></li><li><a href="#api-%E7%AE%A1%E7%90%86">API 管理</a></li><li><a href="#api-%E6%96%87%E6%A1%A3">API 文档</a></li><li><a href="#%E5%B7%A5%E5%85%B7">工具</a></li><li><a href="#api-mocks">API Mocks</a></li><li><a href="#%E5%85%B6%E5%AE%83-1">其它</a></li></ul>
+      </div>
+</aside>
   <p>给系统设计一套 API 不是一件简单的事情。 原则是否能被所有人真正理解， 是否能准确通过 API 来表达对资源的正确处理都是学习的目的。</p>
-<h3 id="api-2">设计 API 的简单原则</h3>
+<h3 id="%E8%AE%BE%E8%AE%A1-api-%E7%9A%84%E7%AE%80%E5%8D%95%E5%8E%9F%E5%88%99" tabindex="-1">设计 API 的简单原则</h3>
 <ul>
 <li>一致性</li>
 <li>显而易见性</li>
@@ -579,61 +588,61 @@ pre[class*="language-"] {
 <li>自解释</li>
 <li>可进化性</li>
 </ul>
-<h4 id="">一致性</h4>
+<h4 id="%E4%B8%80%E8%87%B4%E6%80%A7" tabindex="-1">一致性</h4>
 <p>在 API 中使用一致的术语。 例如， 统一使用驼峰， 或者统一使用蛇形命名</p>
-<h4 id="-2">显而易见性</h4>
+<h4 id="%E6%98%BE%E8%80%8C%E6%98%93%E8%A7%81%E6%80%A7" tabindex="-1">显而易见性</h4>
 <ul>
 <li>为空值仍然返回 JSON 的 key，而不是从 payload 中直接移除 key</li>
 <li>对于创建(create)和删除(delete)操作， 在请求结果仍然显示相关的资源信息，以便开发人员可以在创建和删除后仍能看到完整的资源</li>
 <li>在分页的情况下，发送 <code>totalCount</code>、<code>nextPage</code>、<code>previousPage</code></li>
 </ul>
-<h4 id="-3">可组合性</h4>
+<h4 id="%E5%8F%AF%E7%BB%84%E5%90%88%E6%80%A7" tabindex="-1">可组合性</h4>
 <ul>
 <li>API 不应绑定到任何特定的 workflow</li>
 <li>故事是由 API 驱动， 而非由 workflow 驱动</li>
 <li>将 workflow 保留在用户旅程中而不是 API 中</li>
 <li>API 不应该是数据库表结构的特定映射</li>
 </ul>
-<h4 id="-4">自解释</h4>
+<h4 id="%E8%87%AA%E8%A7%A3%E9%87%8A" tabindex="-1">自解释</h4>
 <ul>
 <li>API 应该可以在没有编写 API 的团队干预的情况下使用</li>
 <li>规范和文档是 first-class 的实体，任何想要使用 API 的人都应该可以访问。 它们应该在发布之前进行测试（或至少手动验证）</li>
 </ul>
-<h4 id="-5">可进化性</h4>
+<h4 id="%E5%8F%AF%E8%BF%9B%E5%8C%96%E6%80%A7" tabindex="-1">可进化性</h4>
 <ul>
 <li>规格变更应受监管</li>
 <li>应该能够添加新字段（关闭严格反序列化）</li>
 <li>尽可能设计通用的 URI 和响应格式（例如，代替 <code>homePhoneNumber</code>，使用 <code>phoneNumber: { type=”home” }</code>）</li>
 </ul>
-<h3 id="-6">资源的命名</h3>
-<h4 id="-7">集合：使用复数名词， 不包含唯一标识符</h4>
+<h3 id="%E8%B5%84%E6%BA%90%E7%9A%84%E5%91%BD%E5%90%8D" tabindex="-1">资源的命名</h3>
+<h4 id="%E9%9B%86%E5%90%88%EF%BC%9A%E4%BD%BF%E7%94%A8%E5%A4%8D%E6%95%B0%E5%90%8D%E8%AF%8D%EF%BC%8C-%E4%B8%8D%E5%8C%85%E5%90%AB%E5%94%AF%E4%B8%80%E6%A0%87%E8%AF%86%E7%AC%A6" tabindex="-1">集合：使用复数名词， 不包含唯一标识符</h4>
 <ul>
-<li>GET: 用于过滤、搜索、排序和分页。 对多个结果使用查询参数
+<li>GET: 用于过滤、搜索、排序和分页。 对多个结果使用查询参数<br>
 例如： 查询字符串 - 用于非资源属性 - <code>?sort=name?page=1?format=json</code></li>
 <li>POST: 用于创建集合的新成员</li>
 <li>PUT 和 DELETE: 很少用于处理集合。 通常用于更新集合而非更新集合中的个体</li>
 </ul>
-<h4 id="-8">单一资源：使用标识符（* 不要使用主键/递增数值）</h4>
+<h4 id="%E5%8D%95%E4%B8%80%E8%B5%84%E6%BA%90%EF%BC%9A%E4%BD%BF%E7%94%A8%E6%A0%87%E8%AF%86%E7%AC%A6%EF%BC%88*-%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8%E4%B8%BB%E9%94%AE%2F%E9%80%92%E5%A2%9E%E6%95%B0%E5%80%BC%EF%BC%89" tabindex="-1">单一资源：使用标识符（* 不要使用主键/递增数值）</h4>
 <ul>
 <li>GET:返回指定的资源</li>
 <li>PUT: 更新指定的资源。 并发控制以避免同时更新</li>
 <li>PATCH: 使用更改更新资源</li>
 <li>DELETE: 删除指定的资源</li>
 </ul>
-<p><em>Notes:</em>
+<p><em>Notes:</em><br>
 使用唯一标识符 - 不必是主键。 保证它们独特且可读即可</p>
-<h4 id="-9">嵌套资源</h4>
+<h4 id="%E5%B5%8C%E5%A5%97%E8%B5%84%E6%BA%90" tabindex="-1">嵌套资源</h4>
 <ul>
 <li>在父单一资源下可单独寻址的资源。 例如：用户的订单 - <code>users/1/orders</code></li>
 <li>尽量避免嵌套超过 2 层（可组合性）</li>
 <li>嵌套资源既作为嵌套集合存在，也作为嵌套单一资源存在</li>
 </ul>
-<h4 id="-10">具化的资源</h4>
-<p>具体化是将抽象概念具体化的行为（关注意图，而不是实体）， 这有时在 <code>RESTful</code> 建模中很有用。
+<h4 id="%E5%85%B7%E5%8C%96%E7%9A%84%E8%B5%84%E6%BA%90" tabindex="-1">具化的资源</h4>
+<p>具体化是将抽象概念具体化的行为（关注意图，而不是实体）， 这有时在 <code>RESTful</code> 建模中很有用。<br>
 与简单的 CRUD 操作相反，具体化的资源通常代表更改的意图。 因此，他们倾向于避免使用 PUT 来支持对某些用户操作进行建模的不可变资源。</p>
-<h4 id="endpoints">非资源的 endpoints</h4>
-<p>可能有一些考虑迫使我们设计一个非资源性的 endpoint。 例如，您可能决定支持将信用卡搜索作为 POST 而不是 GET， 因为我们希望将信用卡号从 URL 中移除。
-在这种情况下，我们显然是有意打破了 REST 的统一接口架构约束。
+<h4 id="%E9%9D%9E%E8%B5%84%E6%BA%90%E7%9A%84-endpoints" tabindex="-1">非资源的 endpoints</h4>
+<p>可能有一些考虑迫使我们设计一个非资源性的 endpoint。 例如，您可能决定支持将信用卡搜索作为 POST 而不是 GET， 因为我们希望将信用卡号从 URL 中移除。<br>
+在这种情况下，我们显然是有意打破了 REST 的统一接口架构约束。<br>
 为了清楚地表明这是有意的，我们应该在路径上放置一个动词，将其标记为 RPC 而不是 RESTful</p>
 <table>
 <thead>
@@ -665,7 +674,7 @@ pre[class*="language-"] {
 </tr>
 </tbody>
 </table>
-<h3 id="-11">其它</h3>
+<h3 id="%E5%85%B6%E5%AE%83" tabindex="-1">其它</h3>
 <ul>
 <li>避免使用动词。 REST 已经为您提供了动词。</li>
 <li>GET、 PUT 和 DELETE 应该是幂等的。 任何与输入请求有关的具有不确定结果的操作都应建模为 POST。 例如; PUT 应该总是返回，好像有什么改变了。 不应返回“未检测到更改”</li>
@@ -673,41 +682,41 @@ pre[class*="language-"] {
 <li>如果不保证幂等性的 POST 操作需要幂等性，客户端可以传递带有客户端生成的 guid 的 Idempotency-Key 标头。 服务器可以确保只处理一条消息。</li>
 <li>不要让你的 API 变得啰嗦（细粒度与粗粒度）。 例如：单独的 POST 以添加喜欢、评论、标签等</li>
 </ul>
-<h3 id="api-3">API 版本化</h3>
+<h3 id="api-%E7%89%88%E6%9C%AC%E5%8C%96" tabindex="-1">API 版本化</h3>
 <ul>
 <li>
-<p><code>/api/v1/</code>
-<em>pros:</em>
-在 api URL 中清晰地进行版本控制
-<em>cons:</em>
+<p><code>/api/v1/</code><br>
+<em>pros:</em><br>
+在 api URL 中清晰地进行版本控制<br>
+<em>cons:</em><br>
 每次版本更改时，client 都需要更改 URL</p>
 </li>
 <li>
-<p><code>?v=1.0</code>
-<em>pros:</em>
-可选择是否使用包含版本控制的 API（可以使用默认版本）
-<em>cons:</em>
+<p><code>?v=1.0</code><br>
+<em>pros:</em><br>
+可选择是否使用包含版本控制的 API（可以使用默认版本）<br>
+<em>cons:</em><br>
 client 太容易错过需要该版本</p>
 </li>
 <li>
-<p>In headers: <code>X-Version: 1.0</code>
-<em>pros:</em>
-将版本控制与 API 的其余部分分开
-<em>cons:</em>
+<p>In headers: <code>X-Version: 1.0</code><br>
+<em>pros:</em><br>
+将版本控制与 API 的其余部分分开<br>
+<em>cons:</em><br>
 维护 headers</p>
 </li>
 <li>
-<p>Accept Header: <code>Accept: version=1.0</code>
-<em>pros:</em>
-无需创建自己的自定义标题
-<em>cons:</em>
+<p>Accept Header: <code>Accept: version=1.0</code><br>
+<em>pros:</em><br>
+无需创建自己的自定义标题<br>
+<em>cons:</em><br>
 比 <code>query</code> 更不容易被发现</p>
 </li>
 <li>
-<p>使用 <code>Content Type</code> 进行版本控制: <code>content-type: application/&lt;custom content type&gt;</code>
-<em>pros:</em>
-version payload 和 API 本身一样具有意义
-<em>cons:</em>
+<p>使用 <code>Content Type</code> 进行版本控制: <code>content-type: application/&lt;custom content type&gt;</code><br>
+<em>pros:</em><br>
+version payload 和 API 本身一样具有意义<br>
+<em>cons:</em><br>
 需要更多的开发人员成熟度</p>
 </li>
 </ul>
@@ -718,7 +727,7 @@ version payload 和 API 本身一样具有意义
 <li>使用数字类型的版本号：不是像日期这样对消费者来说不重要的其他信息</li>
 <li>版本是必选项：否则为了向后兼容还必须支持未版本化的 URL。</li>
 </ul>
-<h3 id="api-4">API 认证</h3>
+<h3 id="api-%E8%AE%A4%E8%AF%81" tabindex="-1">API 认证</h3>
 <ul>
 <li>
 <p>Cookies</p>
@@ -750,7 +759,7 @@ version payload 和 API 本身一样具有意义
 </ul>
 </li>
 </ul>
-<h3 id="api-5">API 网关</h3>
+<h3 id="api-%E7%BD%91%E5%85%B3" tabindex="-1">API 网关</h3>
 <ul>
 <li>尽量减少内置的冗余功能， 例如 API 生命周期管理</li>
 <li>当有跨越团队边界时， 通过网关进行 service-to-service call</li>
@@ -813,7 +822,7 @@ version payload 和 API 本身一样具有意义
 </tr>
 </tbody>
 </table>
-<h3 id="api-6">API 管理</h3>
+<h3 id="api-%E7%AE%A1%E7%90%86" tabindex="-1">API 管理</h3>
 <ul>
 <li>
 <p>最佳实践</p>
@@ -838,7 +847,7 @@ version payload 和 API 本身一样具有意义
 </ul>
 </li>
 </ul>
-<h3 id="api-7">API 文档</h3>
+<h3 id="api-%E6%96%87%E6%A1%A3" tabindex="-1">API 文档</h3>
 <ul>
 <li>根据规范自动生成文档</li>
 <li>包括示例请求/响应</li>
@@ -849,10 +858,10 @@ version payload 和 API 本身一样具有意义
 <li>使文档保持最新（将文档作为部署管道的一部分发布 - Dredd 工具）</li>
 <li>在文档旁边包含 SLO（服务水平目标）</li>
 </ul>
-<h3 id="-12">工具</h3>
+<h3 id="%E5%B7%A5%E5%85%B7" tabindex="-1">工具</h3>
 <ul>
 <li>Gelato (closely tied to Kong)</li>
-<li>Readme.io -Generates API documentation by parsing a hosted Swagger file</li>
+<li><a href="http://Readme.io">Readme.io</a> -Generates API documentation by parsing a hosted Swagger file</li>
 <li>Stoplight - handles integration with Auth0</li>
 <li>Swagger Hub</li>
 <li>Swagger-UI</li>
@@ -862,7 +871,7 @@ version payload 和 API 本身一样具有意义
 <li>Swagger Editor</li>
 <li>API Studio</li>
 </ul>
-<h3 id="api-mocks">API Mocks</h3>
+<h3 id="api-mocks" tabindex="-1">API Mocks</h3>
 <ul>
 <li>规范驱动开发</li>
 <li>先暴露 mock endpoints</li>
@@ -875,7 +884,7 @@ version payload 和 API 本身一样具有意义
 </ul>
 </li>
 </ul>
-<h3 id="-13">其它</h3>
+<h3 id="%E5%85%B6%E5%AE%83-1" tabindex="-1">其它</h3>
 <ul>
 <li>分页
 <ul>
@@ -899,7 +908,7 @@ version payload 和 API 本身一样具有意义
 </li>
 <li>异步 API
 <ul>
-<li>非 REST 解决方案很有用 - Comet、gRPC、SignalR、Firebase、Socket.IO 等。</li>
+<li>非 REST 解决方案很有用 - Comet、gRPC、SignalR、Firebase、<a href="http://Socket.IO">Socket.IO</a> 等。</li>
 </ul>
 </li>
 </ul>
@@ -929,7 +938,7 @@ version payload 和 API 本身一样具有意义
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2022-02-02-api-desgin/` was built on 2026-02-15T02:38:54.794Z -->
+		<!-- This page `/blog/2022-02-02-api-desgin/` was built on 2026-02-15T13:56:14.188Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

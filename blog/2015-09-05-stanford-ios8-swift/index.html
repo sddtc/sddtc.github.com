@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="ios8-swift">斯坦福大学冬季课程 iOS8 Swift 学习笔记</h1>
+<h1>斯坦福大学冬季课程 iOS8 Swift 学习笔记</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2015-08-27">27 August 2015</time></li>
@@ -570,13 +574,16 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <p>昨天偶然看到了一个斯坦福大学的公开课，具体是怎么个偶然法，我已经忘记了...但是iOS是一个很酷的东西,还是很值得学习的. 作为一个工程师，涉猎和理解，是相互的
+<aside>
+  
+</aside>
+  <p>昨天偶然看到了一个斯坦福大学的公开课，具体是怎么个偶然法，我已经忘记了…但是iOS是一个很酷的东西,还是很值得学习的. 作为一个工程师，涉猎和理解，是相互的<br>
 第1课-第4课：</p>
 <ol>
 <li>MVC: iOS的设计模式也同样遵循MVC，并且是不提倡M和V通信</li>
 <li>方法里面可以嵌套方法，前提是方法是私有的</li>
 </ol>
-<pre class="language-swift" tabindex="0"><code class="language-swift"><span class="token keyword">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<pre class="language-swift" tabindex="0"><code class="hljs language-swift"><span class="token keyword">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">func</span> <span class="token function-definition function">learnOp</span><span class="token punctuation">(</span>op <span class="token punctuation">:</span><span class="token class-name">Op</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
         knownOps<span class="token punctuation">[</span>op<span class="token punctuation">.</span>description<span class="token punctuation">]</span> <span class="token operator">=</span> op
     <span class="token punctuation">}</span>
@@ -590,7 +597,7 @@ pre[class*="language-"] {
 <ol start="3">
 <li>协议（Printable）</li>
 </ol>
-<pre class="language-swift" tabindex="0"><code class="language-swift"><span class="token keyword">private</span> <span class="token keyword">enum</span> <span class="token class-name">Op</span><span class="token punctuation">:</span> <span class="token class-name">Printable</span> <span class="token punctuation">{</span>
+<pre class="language-swift" tabindex="0"><code class="hljs language-swift"><span class="token keyword">private</span> <span class="token keyword">enum</span> <span class="token class-name">Op</span><span class="token punctuation">:</span> <span class="token class-name">Printable</span> <span class="token punctuation">{</span>
     <span class="token keyword">case</span> <span class="token class-name">Operand</span><span class="token punctuation">(</span><span class="token class-name">Double</span><span class="token punctuation">)</span>
     <span class="token keyword">case</span> <span class="token class-name">UnaryOperation</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Double</span> <span class="token operator">-></span> <span class="token class-name">Double</span><span class="token punctuation">)</span>
     <span class="token keyword">case</span> <span class="token class-name">BinaryOperation</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token class-name">Double</span><span class="token punctuation">,</span> <span class="token class-name">Double</span><span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token class-name">Double</span><span class="token punctuation">)</span>
@@ -611,25 +618,25 @@ pre[class*="language-"] {
 <ol start="4">
 <li>字典和数组</li>
 </ol>
-<pre class="language-swift" tabindex="0"><code class="language-swift"><span class="token keyword">private</span> <span class="token keyword">var</span> opStack <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token class-name">Op</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">//栈</span>
+<pre class="language-swift" tabindex="0"><code class="hljs language-swift"><span class="token keyword">private</span> <span class="token keyword">var</span> opStack <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token class-name">Op</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">//栈</span>
 <span class="token keyword">private</span> <span class="token keyword">var</span> knownOps <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token class-name">String</span><span class="token punctuation">:</span><span class="token class-name">Op</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">//字典</span></code></pre>
 <ol start="5">
 <li>
-<p>optional
+<p>optional<br>
 有一种类型叫做optional,应该是在没有强制转化之前，任何一个类型都是optional的. 这一点，在需要强类型的时候转化</p>
 </li>
 <li>
-<p>auto-layout
+<p>auto-layout<br>
 一个长远的课题，布局总在最后整体使用，auto-layout应该是xcode4之后的新特性. 主要是相对位置的约束: 规定了至少应该有2个约束来固定一个位置</p>
 </li>
 <li>
-<p>继承和重载
+<p>继承和重载<br>
 swift是支持重载的，并且是单继承，但是Objective-C不支持，因此当类继承UIViewController（NSObject），swift就不能很好地拥有重载的特性，公开课使用的xcode版本和我本机不一致，因此我暂时写了2个方法，还蛮多人遇到该问题</p>
 </li>
 </ol>
-<p>第8课：
-1.多MVC的一个思想，是用了栈
-即多个层是放在栈中，例如点击入栈，返回出栈
+<p>第8课：<br>
+1.多MVC的一个思想，是用了栈<br>
+即多个层是放在栈中，例如点击入栈，返回出栈<br>
 2.初始化之前就需要使用的实例，需要判nil情况，实例后面添加问号</p>
 <p><a href="http://www.swiftv.cn/course/i7ahl5gn">斯坦福大学公开课-iOS8</a></p>
 
@@ -658,7 +665,7 @@ swift是支持重载的，并且是单继承，但是Objective-C不支持，因�
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-09-05-stanford-ios8-swift/` was built on 2026-02-15T02:38:54.777Z -->
+		<!-- This page `/blog/2015-09-05-stanford-ios8-swift/` was built on 2026-02-15T13:56:14.181Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

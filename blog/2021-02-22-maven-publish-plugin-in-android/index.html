@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="gradle-android-library-maven">使用 Gradle 插件发布 Android library 到 maven 远程仓库</h1>
+<h1>使用 Gradle 插件发布 Android library 到 maven 远程仓库</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2021-02-22">22 February 2021</time></li>
@@ -570,13 +574,18 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E4%B8%BA%E4%BA%86%E8%A7%A3%E5%86%B3%E8%BF%99%E4%B8%AA%E9%97%AE%E9%A2%98%E5%85%B6%E5%AE%9E%E6%9C%89%E4%B8%A4%E4%B8%AA%E6%96%B9%E6%A1%88%EF%BC%9A">为了解决这个问题其实有两个方案：</a></li><li><a href="#%E6%8E%A5%E4%B8%8B%E6%9D%A5%E6%88%91%E4%BB%AC%E7%AE%80%E5%8D%95%E8%AF%B4%E4%B8%8B%E7%BB%86%E8%8A%82">接下来我们简单说下细节</a><ul><li><a href="#%E5%8F%91%E5%B8%83%E4%BB%80%E4%B9%88">发布什么</a></li><li><a href="#%E5%8F%91%E5%B8%83%E5%88%B0%E5%93%AA%E9%87%8C">发布到哪里</a></li><li><a href="#%E5%8F%91%E8%A1%8C%E6%96%B9%E5%BC%8F%E4%BD%A0%E4%BC%9A%E9%80%89%E6%8B%A9%E5%93%AA%E7%A7%8D">发行方式你会选择哪种</a></li></ul></li><li><a href="#%E6%9C%89%E5%87%A0%E7%82%B9%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%3A">有几点需要注意:</a></li></ul>
+      </div>
+</aside>
   <p>最近在项目里更新了 <code>gradle</code> 插件到 <code>6.1.1</code> 之后发现它支持使用 <code>maven-publish</code> 这个插件来打包发布并部署到 <code>maven</code> 的内部远程仓库去。简单记录下，希望能帮助到需要的人。</p>
 <p>之前项目使用 <code>maven</code> 的 <code>uploadArchives</code>:</p>
 <script src="https://gist.github.com/sddtc/5150832cf51d4dd439d8ec7d1c2d6403.js"></script>
-<p>这种方式没什么问题，一直都可以运行的很好。 如果不是遇见了一些问题，在繁忙的日常你很难跑去更新工作得好好滴东西 😑
-我们的 Android 项目是基于 <code>Kotlin</code> 的 <code>Koin</code> + <code>apollo-android</code> 的 <code>MFE</code> 架构。 项目使用的一些第三方依赖很新，他们更新版本的速度真的惊人 😳
+<p>这种方式没什么问题，一直都可以运行的很好。 如果不是遇见了一些问题，在繁忙的日常你很难跑去更新工作得好好滴东西 😑<br>
+我们的 Android 项目是基于 <code>Kotlin</code> 的 <code>Koin</code> + <code>apollo-android</code> 的 <code>MFE</code> 架构。 项目使用的一些第三方依赖很新，他们更新版本的速度真的惊人 😳<br>
 直到有一天在我试图将 <code>apollo-android</code> 从 <code>2.3.1</code> 升级到 <code>2.4.2</code> 时发现打包发布失败了。 堆栈错误信息:</p>
-<pre class="language-bash" tabindex="0"><code class="language-bash"><span class="token operator">></span> Task uploadArchives FAILED
+<pre class="language-bash" tabindex="0"><code class="hljs language-bash"><span class="token operator">></span> Task uploadArchives FAILED
 
 FAILURE: Build failed with an exception.
 
@@ -598,27 +607,27 @@ org.gradle.api.tasks.TaskExecutionException: Execution failed <span class="token
         at org.gradle.api.internal.tasks.execution.FinalizePropertiesTaskExecuter.execute<span class="token punctuation">(</span>FinalizePropertiesTaskExecuter.java:46<span class="token punctuation">)</span>
         at org.gradle.api.internal.tasks.execution.ResolveTaskExecutionModeExecuter.execute<span class="token punctuation">(</span>ResolveTaskExecutionModeExecuter.java:62<span class="token punctuation">)</span>
 <span class="token punctuation">..</span>.</code></pre>
-<p>于是去查看了相关的 <code>issues</code>, 果然也有人遇见了同样的问题。
-说到这个我真的忍不住吐槽最近更新了我的手机 <code>Google Camera</code> app，直接导致前置摄像头打不开害闪退 🙃， 去 <code>Goggle Play</code> 商店查看评论发现大家都遇到了同样的问题。。
-也是万万妹想到大公司也会出现这么致命的问题 = =。。 因为这个 <code>Crush</code> 最近真的开机支付连脸部识别都失效，哎。如果不是真爱，<s>谁会用 Android 机啊</s>咳咳。
-扯远了，回到正题来说，出现异常的原因是 <code>apollo-android</code> 试图在 <a href="https://github.com/apollographql/apollo-android/blob/main/apollo-gradle-plugin/src/main/kotlin/com/apollographql/apollo/gradle/internal/ApolloPlugin.kt#L91">这一行</a> 为
+<p>于是去查看了相关的 <code>issues</code>, 果然也有人遇见了同样的问题。<br>
+说到这个我真的忍不住吐槽最近更新了我的手机 <code>Google Camera</code> app，直接导致前置摄像头打不开害闪退 🙃， 去 <code>Goggle Play</code> 商店查看评论发现大家都遇到了同样的问题。。<br>
+也是万万妹想到大公司也会出现这么致命的问题 = =。。 因为这个 <code>Crush</code> 最近真的开机支付连脸部识别都失效，哎。如果不是真爱，<s>谁会用 Android 机啊</s>咳咳。<br>
+扯远了，回到正题来说，出现异常的原因是 <code>apollo-android</code> 试图在 <a href="https://github.com/apollographql/apollo-android/blob/main/apollo-gradle-plugin/src/main/kotlin/com/apollographql/apollo/gradle/internal/ApolloPlugin.kt#L91">这一行</a> 为<br>
 <code>UnitTests/AndroidTests</code> 添加 <code>metadata.json</code>。 但是很有可能项目的 <code>UnitTests/AndroidTests</code> 中 <code>metadata.json</code> 是不会被生成的。因为通常这些目录不会有 <code>graphql</code> 相关的文件。</p>
-<h4 id="">为了解决这个问题其实有两个方案：</h4>
+<h4 id="%E4%B8%BA%E4%BA%86%E8%A7%A3%E5%86%B3%E8%BF%99%E4%B8%AA%E9%97%AE%E9%A2%98%E5%85%B6%E5%AE%9E%E6%9C%89%E4%B8%A4%E4%B8%AA%E6%96%B9%E6%A1%88%EF%BC%9A" tabindex="-1">为了解决这个问题其实有两个方案：</h4>
 <ul>
 <li>用 <code>maven-publish</code> 插件来替代 <code>maven</code> 插件打包发布吧，用过的人都说好！不仅能解决问题，它还是 Google 官网推崇滴打包方式嗷！</li>
 <li>如果你就是要用 <code>maven</code> 的 <code>uploadArchives</code> 打包，那就只能等这个问题被修复, 或者你一直使用没有问题的 <code>2.3.1</code> 版本就好</li>
 </ul>
-<p>然而回到一开始，他们更新版本的速度之快一方面修复了一些 bug, 修复了一些 issue, 更有可能修复一些安全隐患，所以升级是必要的。 <s>更新了之后前置摄像头更新坏了也是有概率发生的</s>
+<p>然而回到一开始，他们更新版本的速度之快一方面修复了一些 bug, 修复了一些 issue, 更有可能修复一些安全隐患，所以升级是必要的。 <s>更新了之后前置摄像头更新坏了也是有概率发生的</s><br>
 更新的脚本非常简单，因为 <code>maven-publish</code>  插件非常强大:</p>
 <script src="https://gist.github.com/sddtc/4a6bfb152ac332cad1931555bda7bc17.js"></script>
-<h4 id="-2">有几点需要注意:</h4>
+<h4 id="%E6%9C%89%E5%87%A0%E7%82%B9%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%3A" tabindex="-1">有几点需要注意:</h4>
 <ul>
 <li>将 <code>publishing</code> 放在 <code>afterEvaluate</code> 生命周期函数里</li>
 <li><code>release(MavenPublication)</code> 的 <code>release</code> 可以是任何有意义的名字，它和生成的 Task 名字有关</li>
 </ul>
-<h3 id="-3">接下来我们简单说下细节</h3>
+<h3 id="%E6%8E%A5%E4%B8%8B%E6%9D%A5%E6%88%91%E4%BB%AC%E7%AE%80%E5%8D%95%E8%AF%B4%E4%B8%8B%E7%BB%86%E8%8A%82" tabindex="-1">接下来我们简单说下细节</h3>
 <p><picture><source type="image/avif" srcset="/sddtc.github.com/blog/2021-02-22-maven-publish-plugin-in-android/5A7dX5yul0-1540.avif 1540w"><source type="image/webp" srcset="/sddtc.github.com/blog/2021-02-22-maven-publish-plugin-in-android/5A7dX5yul0-1540.webp 1540w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2021-02-22-maven-publish-plugin-in-android/5A7dX5yul0-1540.png" alt="2021-02-23-4YWFw1-BZNhGU" width="1540" height="574"></picture></p>
-<h4 id="-4">发布什么</h4>
+<h4 id="%E5%8F%91%E5%B8%83%E4%BB%80%E4%B9%88" tabindex="-1">发布什么</h4>
 <p><code>Gradle</code> 需要知道要我们在发布时需要哪些文件和信息。 通常是 <code>artifacts</code> 和 <code>metadata</code> 的集合， <code>Gradle</code> 将其定义为 <code>publication</code> 。</p>
 <p>举例来说, 你打包发布到远端 <code>maven</code> 仓库的内容可以包括:</p>
 <ul>
@@ -628,7 +637,7 @@ org.gradle.api.tasks.TaskExecutionException: Execution failed <span class="token
 </ul>
 <p>另外，<code>Gradle</code> 还会发布上述所有内容的校验和，并在配置时发布签名。从 <code>Gradle 6.0</code> 开始，多了 <code>SHA256</code> 和 <code>SHA512</code>  的校验和文件。</p>
 <p>代码示例:</p>
-<pre class="language-bash" tabindex="0"><code class="language-bash"><span class="token punctuation">..</span>.
+<pre class="language-bash" tabindex="0"><code class="hljs language-bash"><span class="token punctuation">..</span>.
 task androidSourcesJar<span class="token punctuation">(</span>type: Jar<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     archiveClassifier.set<span class="token punctuation">(</span><span class="token string">'sources'</span><span class="token punctuation">)</span>
     from android.sourceSets.main.java.source
@@ -648,10 +657,10 @@ publishing <span class="token punctuation">{</span>
         <span class="token punctuation">}</span>
 <span class="token punctuation">..</span>.
 <span class="token punctuation">}</span></code></pre>
-<h4 id="-5">发布到哪里</h4>
+<h4 id="%E5%8F%91%E5%B8%83%E5%88%B0%E5%93%AA%E9%87%8C" tabindex="-1">发布到哪里</h4>
 <p><code>Gradle</code> 需要知道在发布的存储库地址。 该存储库提供了各种组件。 <code>Gradle</code> 需要与远程仓库进行交互，因此我们必须提供存储库的类型及其位置。</p>
 <p>代码示例:</p>
-<pre class="language-bash" tabindex="0"><code class="language-bash">repositories <span class="token punctuation">{</span>
+<pre class="language-bash" tabindex="0"><code class="hljs language-bash">repositories <span class="token punctuation">{</span>
     maven <span class="token punctuation">{</span>
         credentials <span class="token punctuation">{</span>
             username getRepositoryUsername<span class="token punctuation">(</span><span class="token punctuation">)</span>
@@ -661,11 +670,11 @@ publishing <span class="token punctuation">{</span>
         println<span class="token punctuation">(</span><span class="token string">"> Configure maven repo: <span class="token variable">${url}</span>"</span><span class="token punctuation">)</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<h4 id="-6">发行方式你会选择哪种</h4>
-<p><code>Gradle</code> 会自动为发布和存储库的所有可能组合生成发布任务(除了贴心还能说啥)，从而使我们可以将任何组件发布到任何存储库。
+<h4 id="%E5%8F%91%E8%A1%8C%E6%96%B9%E5%BC%8F%E4%BD%A0%E4%BC%9A%E9%80%89%E6%8B%A9%E5%93%AA%E7%A7%8D" tabindex="-1">发行方式你会选择哪种</h4>
+<p><code>Gradle</code> 会自动为发布和存储库的所有可能组合生成发布任务(除了贴心还能说啥)，从而使我们可以将任何组件发布到任何存储库。<br>
 如果要发布到 <code>maven</code> 存储库，则 <code>Task</code> 的类型为 <code>PublishToMavenRepository</code>，而对于 <code>Ivy</code> 存储库，任务的类型为 <code>PublishToIvyRepository</code>。</p>
 <p>代码示例:</p>
-<pre class="language-bash" tabindex="0"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<pre class="language-bash" tabindex="0"><code class="hljs language-bash"><span class="token shebang important">#!/bin/bash</span>
 <span class="token builtin class-name">set</span> <span class="token parameter variable">-xeuo</span> pipefail
 
 <span class="token builtin class-name">echo</span> <span class="token string">"+++ :buildkite: Publishing library to maven"</span>
@@ -696,7 +705,7 @@ publishing <span class="token punctuation">{</span>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2021-02-22-maven-publish-plugin-in-android/` was built on 2026-02-15T02:38:54.794Z -->
+		<!-- This page `/blog/2021-02-22-maven-publish-plugin-in-android/` was built on 2026-02-15T13:56:14.188Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

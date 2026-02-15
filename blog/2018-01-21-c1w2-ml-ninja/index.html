@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="coursera">Coursera 第一阶段第二课总结</h1>
+<h1>Coursera 第一阶段第二课总结</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2018-01-21">21 January 2018</time></li>
@@ -570,7 +574,12 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="binary-classification">binary-classification 二元分类</h3>
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#binary-classification-%E4%BA%8C%E5%85%83%E5%88%86%E7%B1%BB">binary-classification 二元分类</a></li><li><a href="#logistic-regression-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92">logistic-regression 逻辑回归</a></li><li><a href="#logistic-regression-cost-function-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0">logistic-regression-cost-function 逻辑回归损失函数</a></li><li><a href="#gradient-descent-%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95">gradient-descent 梯度下降法</a></li><li><a href="#derivatives-%E5%AF%BC%E6%95%B0">derivatives 导数</a></li><li><a href="#computation-graph-%E6%B5%81%E7%A8%8B%E6%8E%A8%E5%AF%BC%E5%9B%BE">computation-graph 流程推导图</a></li><li><a href="#derivatives-with-a-computation-graph-%E6%B5%81%E7%A8%8B%E6%8E%A8%E5%AF%BC%E5%9B%BE%E7%9A%84%E5%AF%BC%E6%95%B0%E8%AE%A1%E7%AE%97">derivatives-with-a-computation-graph 流程推导图的导数计算</a></li><li><a href="#logistic-regression-gradient-descent-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95">logistic-regression-gradient-descent 逻辑回归的梯度下降法</a></li><li><a href="#gradient-descent-on-m-examples-m%E4%B8%AA%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%A2%AF%E5%BA%A6%E8%AE%A1%E7%AE%97">gradient-descent-on-m-examples m个样本的梯度计算</a></li></ul>
+      </div>
+</aside>
+  <h3 id="binary-classification-%E4%BA%8C%E5%85%83%E5%88%86%E7%B1%BB" tabindex="-1">binary-classification 二元分类</h3>
 <ul>
 <li>深度学习在进行<code>m</code>个训练集计算的时候，其实并不需要使用<code>for</code>循环</li>
 <li>神经网络的计算过程分为:<strong>正向传播</strong>和<strong>反向传播</strong>两个分开的过程</li>
@@ -588,14 +597,14 @@ pre[class*="language-"] {
 </ul>
 </li>
 </ul>
-<h3 id="logistic-regression">logistic-regression 逻辑回归</h3>
+<h3 id="logistic-regression-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92" tabindex="-1">logistic-regression 逻辑回归</h3>
 <ul>
 <li>是一个学习算法: 用在监督学习问题中, 用于二元分类问题</li>
 <li>输出<code>Y’</code>值更像是一个概率, 趋近于1的<code>[0, 1)</code></li>
 <li>参数是<code>w</code>, <code>n_x</code>维向量, <code>b</code>是一个实数 这个公式??不太合理, 因为我们希望<code>Y’</code>在<code>[0, 1)</code>区间之内</li>
 <li><code>sigmoid</code>函数出场了</li>
 </ul>
-<h3 id="logistic-regression-cost-function">logistic-regression-cost-function 逻辑回归损失函数</h3>
+<h3 id="logistic-regression-cost-function-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0" tabindex="-1">logistic-regression-cost-function 逻辑回归损失函数</h3>
 <ul>
 <li>为了训练<code>w</code>和<code>b</code>, 你需要定义一个成本函数</li>
 <li>训练样本<code>m</code>个</li>
@@ -604,7 +613,7 @@ pre[class*="language-"] {
 <li><strong>损失函数</strong>是针对<strong>单个</strong>训练样本</li>
 <li><strong>成本函数</strong>是在<strong>全体</strong>训练样本上的表现</li>
 </ul>
-<h3 id="gradient-descent">gradient-descent 梯度下降法</h3>
+<h3 id="gradient-descent-%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95" tabindex="-1">gradient-descent 梯度下降法</h3>
 <ul>
 <li>用梯度下降法来训练或者学习训练集的<code>w</code>, <code>b</code></li>
 <li><code>w</code>其实是可以为高维</li>
@@ -613,12 +622,12 @@ pre[class*="language-"] {
 <li>导数(斜率)就是针对<code>w</code>的导数, 即对参数<code>w</code>更新或者变化量</li>
 <li><code>α</code>是学习率, 以后会学习, 它控制每一次迭代, 也可称作步长</li>
 </ul>
-<h3 id="derivatives">derivatives 导数</h3>
+<h3 id="derivatives-%E5%AF%BC%E6%95%B0" tabindex="-1">derivatives 导数</h3>
 <ul>
 <li>微积分 导数</li>
 <li>对于一条直线 斜率永远都一样</li>
 </ul>
-<h3 id="computation-graph">computation-graph 流程推导图</h3>
+<h3 id="computation-graph-%E6%B5%81%E7%A8%8B%E6%8E%A8%E5%AF%BC%E5%9B%BE" tabindex="-1">computation-graph 流程推导图</h3>
 <ul>
 <li>一个神经网络的计算都是按照<strong>正向</strong>或者<strong>反向</strong>过程传输操作</li>
 <li><strong>反向</strong>一般用来计算对应的梯度或者导数</li>
@@ -626,21 +635,21 @@ pre[class*="language-"] {
 <li><strong>从左向右</strong>可以计算出函数<code>J</code>的结果</li>
 <li><strong>从右往左</strong>是计算导数的最自然的方式, 下个视频介绍</li>
 </ul>
-<h3 id="derivatives-with-a-computation-graph">derivatives-with-a-computation-graph 流程推导图的导数计算</h3>
+<h3 id="derivatives-with-a-computation-graph-%E6%B5%81%E7%A8%8B%E6%8E%A8%E5%AF%BC%E5%9B%BE%E7%9A%84%E5%AF%BC%E6%95%B0%E8%AE%A1%E7%AE%97" tabindex="-1">derivatives-with-a-computation-graph 流程推导图的导数计算</h3>
 <ul>
 <li>计算出函数<code>J</code>的导数</li>
 <li>首先 计算<code>J</code>对<code>v</code>的导数, 也就做完了一个反向步</li>
 <li>计算函数<code>J</code>对变量<code>a</code>的导数, 即<code>a</code>的改变量</li>
 <li>计算函数<code>J</code>对变量<code>u</code>的导数</li>
 </ul>
-<h3 id="logistic-regression-gradient-descent">logistic-regression-gradient-descent 逻辑回归的梯度下降法</h3>
+<h3 id="logistic-regression-gradient-descent-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95" tabindex="-1">logistic-regression-gradient-descent 逻辑回归的梯度下降法</h3>
 <ul>
 <li>怎样通过计算偏导数来实现逻辑回归的梯度下降算法</li>
 <li>核心关键: 记住相关的几个重要公式来实现上面的算法</li>
 <li>用流程图计算逻辑回归的梯度下降, 虽然大材小用但能更清晰的理解神经网络</li>
 <li>链式法则 微积分</li>
 </ul>
-<h3 id="gradient-descent-on-m-examples-m">gradient-descent-on-m-examples <code>m</code>个样本的梯度计算</h3>
+<h3 id="gradient-descent-on-m-examples-m%E4%B8%AA%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%A2%AF%E5%BA%A6%E8%AE%A1%E7%AE%97" tabindex="-1">gradient-descent-on-m-examples <code>m</code>个样本的梯度计算</h3>
 <ul>
 <li><code>m</code>个训练样本</li>
 <li>记住逻辑回归的重要公式</li>
@@ -650,8 +659,8 @@ pre[class*="language-"] {
 <li>深度学习里的向量化技术相当重要, 因为数据集越来越大, 需要高效的解决方案</li>
 <li>甚至一个<code>for</code>都不需要</li>
 </ul>
-<p>相关链接:
-<a href="https://mooc.study.163.com/course/2001281002#/info">网易云课堂-神经网络和深度学习</a>
+<p>相关链接:<br>
+<a href="https://mooc.study.163.com/course/2001281002#/info">网易云课堂-神经网络和深度学习</a><br>
 <a href="https://www.coursera.org/specializations/deep-learning">Coursera</a></p>
 
 </div>
@@ -679,7 +688,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-01-21-c1w2-ml-ninja/` was built on 2026-02-15T02:38:54.788Z -->
+		<!-- This page `/blog/2018-01-21-c1w2-ml-ninja/` was built on 2026-02-15T13:56:14.185Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

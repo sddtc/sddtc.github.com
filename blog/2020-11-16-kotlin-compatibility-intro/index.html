@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="java-lang-nosuchmethoderror">由 java.lang.NoSuchMethodError 引发的思考之二进制兼容性</h1>
+<h1>由 java.lang.NoSuchMethodError 引发的思考之二进制兼容性</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2020-11-16">16 November 2020</time></li>
@@ -570,20 +574,25 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h4 id="">故事背景</h4>
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E6%95%85%E4%BA%8B%E8%83%8C%E6%99%AF">故事背景</a></li><li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF-binary-compatibility%3F">什么是 Binary Compatibility?</a></li><li><a href="#kotlin-%E7%9A%84%E5%85%BC%E5%AE%B9%E6%80%A7%E8%AF%B4%E6%98%8E">Kotlin 的兼容性说明</a></li><li><a href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E7%9A%84%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7%E8%AF%A6%E8%A7%A3">第三方库的版本升级详解</a></li><li><a href="#%E9%82%A3%E4%B9%88%E8%BF%99%E7%A7%8D%E6%83%85%E5%86%B5%E8%AF%A5%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3%EF%BC%9F">那么这种情况该怎么解决？</a></li></ul>
+      </div>
+</aside>
+  <h4 id="%E6%95%85%E4%BA%8B%E8%83%8C%E6%99%AF" tabindex="-1">故事背景</h4>
 <p>当我写后端的时候，时不时的让程序抛出几个 5XX 的错误不在话下。当我写前端的时候，时不时的在浏览器的 dev tool 看到几个 js 错误堆栈也是基操基操。直到最近开始自己的 mobile 生涯，用 kotlin 写 Android。你或许想象不到，带给我最震撼的不是一个个精致好看体验极佳的手机应用，而是因为简单的错误直接造成的 crash 异常。crash 给人的感觉就是大脑嗡嗡的体验。最近遇见过几起小事件，抽个时间一一记录一下 ：）</p>
-<p>由于我们尝试使用 MFE(Micro-Front-End) 的思想来改进应用程序的扩展性和灵活性，所以在开发工程中我们有一个母应用 A，有一个子应用 B。集成方式是 B 作为 <code>library</code> 集成在 A 内。
+<p>由于我们尝试使用 MFE(Micro-Front-End) 的思想来改进应用程序的扩展性和灵活性，所以在开发工程中我们有一个母应用 A，有一个子应用 B。集成方式是 B 作为 <code>library</code> 集成在 A 内。<br>
 A 和 B 分别依赖了一个第三方库，使用库中的相同方法。 在第三库进行了升级之后，B 应用没有升级对应的新版本而 A 应用对该第三方库进行了版本的升级。 造成的结果是用户在试图进入 B 应用页面的时候造成了 crash。</p>
-<p>已知的前提： 这个第三方库不是所谓的 <code>break changes</code> 式升级。
+<p>已知的前提： 这个第三方库不是所谓的 <code>break changes</code> 式升级。<br>
 之后在回顾的时候我学到了一个词： <code>Binary Compatibility</code></p>
-<h4 id="binary-compatibility">什么是 Binary Compatibility?</h4>
-<p>用维基百科的话来说，有个词是 <code>Binary-code compatibility</code>. 二进制代码的兼容性是计算机系统的属性，意味着他们可以运行相同的可执行代码，通常是指机器代码。另外还有一个概念叫做源代码兼容性(<code>Source-code compatibility</code>)，这次我不会做过多了解。
+<h4 id="%E4%BB%80%E4%B9%88%E6%98%AF-binary-compatibility%3F" tabindex="-1">什么是 Binary Compatibility?</h4>
+<p>用维基百科的话来说，有个词是 <code>Binary-code compatibility</code>. 二进制代码的兼容性是计算机系统的属性，意味着他们可以运行相同的可执行代码，通常是指机器代码。另外还有一个概念叫做源代码兼容性(<code>Source-code compatibility</code>)，这次我不会做过多了解。<br>
 对于一般操作系统上的已编译程序，二进制兼容性通常意味着不仅两台计算机的 CPU 指令集是二进制兼容的，还意味着操作系统和 API 的接口和行为以及与之相对应的 ABI 足够相等，即&quot;兼容&quot;。</p>
 <p>在看到维基这部分的解释，我对产生 crash 的原因产生了疑惑，我不知道这种抽象的概念是如何和语言层次产生出某种关联性的，于是我看到了一些文章，更贴近于 kotlin 的特点。</p>
-<h4 id="kotlin">Kotlin 的兼容性说明</h4>
-<p><a href="https://mirrors.segmentfault.com/kotlin/compatibility.html">英文文档链接</a>
-兼容性意味着回答这个问题：
-对于给定的两个版本的 Kotlin(例如，1.2 和 1.1.5)，为一个版本编写的代码可以与另一个版本一起使用吗？
+<h4 id="kotlin-%E7%9A%84%E5%85%BC%E5%AE%B9%E6%80%A7%E8%AF%B4%E6%98%8E" tabindex="-1">Kotlin 的兼容性说明</h4>
+<p><a href="https://mirrors.segmentfault.com/kotlin/compatibility.html">英文文档链接</a><br>
+兼容性意味着回答这个问题：<br>
+对于给定的两个版本的 Kotlin(例如，1.2 和 1.1.5)，为一个版本编写的代码可以与另一个版本一起使用吗？<br>
 <code>OV</code> means <code>Old version</code>. <code>NV</code> means <code>Newer version</code></p>
 <ul>
 <li>
@@ -661,49 +670,49 @@ A 和 B 分别依赖了一个第三方库，使用库中的相同方法。 在�
 </ul>
 </li>
 </ul>
-<p>不得不说第一次发现语言的更新的兼容性这么讲究。 也许一门快速成长的语言都有类似的特性，而我以前一直使用 java 却没有注意过。 使用 Typescript 也一直在看它又又又又拥有了哪些新的语法糖。
+<p>不得不说第一次发现语言的更新的兼容性这么讲究。 也许一门快速成长的语言都有类似的特性，而我以前一直使用 java 却没有注意过。 使用 Typescript 也一直在看它又又又又拥有了哪些新的语法糖。<br>
 直到开始写 Android, 而且是作为 MFE 的组件的位置，使用了一些依赖， 依赖总和母应用/其它 MFEs 产生冲突。 冲突使程序 crash, 这种感觉才愈发的强烈。</p>
 <p>那么很明显我们的问题是第三方应用的兼容性出现了问题，和 Kotlin 这门语言的兼容性没有强依赖关系，只是关于二进制兼容性这个词有了更清晰的理解而已。</p>
-<h4 id="-2">第三方库的版本升级详解</h4>
+<h4 id="%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E7%9A%84%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7%E8%AF%A6%E8%A7%A3" tabindex="-1">第三方库的版本升级详解</h4>
 <p>第三方库 sddtcLibraryV1.0 有如下功能:</p>
-<pre class="language-kotlin" tabindex="0"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">SddtcData</span><span class="token punctuation">(</span><span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">,</span> <span class="token keyword">val</span> id<span class="token operator">:</span> String <span class="token operator">=</span> <span class="token string-literal singleline"><span class="token string">"1111-2222-3333-4444"</span></span><span class="token punctuation">)</span></code></pre>
+<pre class="language-kotlin" tabindex="0"><code class="hljs language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">SddtcData</span><span class="token punctuation">(</span><span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">,</span> <span class="token keyword">val</span> id<span class="token operator">:</span> String <span class="token operator">=</span> <span class="token string-literal singleline"><span class="token string">"1111-2222-3333-4444"</span></span><span class="token punctuation">)</span></code></pre>
 <p>编译后的二进制代码:</p>
-<pre class="language-kotlin" tabindex="0"><code class="language-kotlin"><span class="token comment">// $FF: synthetic method</span>
+<pre class="language-kotlin" tabindex="0"><code class="hljs language-kotlin"><span class="token comment">// $FF: synthetic method</span>
 <span class="token keyword">public</span> <span class="token function">SddtcClass</span><span class="token punctuation">(</span>String var1<span class="token punctuation">,</span> String var2<span class="token punctuation">,</span> int var3<span class="token punctuation">,</span> DefaultConstructorMarker var4<span class="token punctuation">)</span>
 
 <span class="token comment">//where var1 and var2 represent the paremeters name and Id,</span>
 <span class="token comment">//var3 is the mask for default values and we can ignore var4</span></code></pre>
 <p>第三方库 sddtcLibraryV1.1 更新了功能:</p>
-<pre class="language-kotlin" tabindex="0"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">SddtcData</span><span class="token punctuation">(</span><span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">,</span> <span class="token keyword">val</span> id<span class="token operator">:</span> String <span class="token operator">=</span> <span class="token string-literal singleline"><span class="token string">"1111-2222-3333-4444"</span></span><span class="token punctuation">,</span> <span class="token keyword">val</span> email<span class="token operator">:</span> String <span class="token operator">=</span> <span class="token string-literal singleline"><span class="token string">"changhbaga@gmail.com"</span></span><span class="token punctuation">)</span></code></pre>
+<pre class="language-kotlin" tabindex="0"><code class="hljs language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">SddtcData</span><span class="token punctuation">(</span><span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">,</span> <span class="token keyword">val</span> id<span class="token operator">:</span> String <span class="token operator">=</span> <span class="token string-literal singleline"><span class="token string">"1111-2222-3333-4444"</span></span><span class="token punctuation">,</span> <span class="token keyword">val</span> email<span class="token operator">:</span> String <span class="token operator">=</span> <span class="token string-literal singleline"><span class="token string">"changhbaga@gmail.com"</span></span><span class="token punctuation">)</span></code></pre>
 <p>编译后的二进制代码:</p>
-<pre class="language-kotlin" tabindex="0"><code class="language-kotlin"><span class="token comment">// $FF: synthetic method</span>
+<pre class="language-kotlin" tabindex="0"><code class="hljs language-kotlin"><span class="token comment">// $FF: synthetic method</span>
 <span class="token keyword">public</span> <span class="token function">SddtcClass</span><span class="token punctuation">(</span>String var1<span class="token punctuation">,</span> String var2<span class="token punctuation">,</span> String var3<span class="token punctuation">,</span> int var4<span class="token punctuation">,</span> DefaultConstructorMarker var5<span class="token punctuation">)</span>
 
 <span class="token comment">//where var1 ,var2, var3 represent the paremeters name,Id and state,</span>
 <span class="token comment">//var4 is the mask for default values and we can ignore var5</span></code></pre>
 <p>那么当我们使用时:</p>
-<pre class="language-kotlin" tabindex="0"><code class="language-kotlin"><span class="token keyword">val</span> result <span class="token operator">=</span> <span class="token function">SddtcClass</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string-literal singleline"><span class="token string">"sddtc"</span></span><span class="token punctuation">)</span></code></pre>
+<pre class="language-kotlin" tabindex="0"><code class="hljs language-kotlin"><span class="token keyword">val</span> result <span class="token operator">=</span> <span class="token function">SddtcClass</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string-literal singleline"><span class="token string">"sddtc"</span></span><span class="token punctuation">)</span></code></pre>
 <p>For v1.0:</p>
-<pre class="language-kotlin" tabindex="0"><code class="language-kotlin">new <span class="token function">SddtcClass</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"sddtc"</span></span><span class="token punctuation">,</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span><span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>DefaultConstructorMarker<span class="token punctuation">)</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-kotlin" tabindex="0"><code class="hljs language-kotlin">new <span class="token function">SddtcClass</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"sddtc"</span></span><span class="token punctuation">,</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span><span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>DefaultConstructorMarker<span class="token punctuation">)</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <p>For v1.1:</p>
-<pre class="language-kotlin" tabindex="0"><code class="language-kotlin">new <span class="token function">SddtcClass</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"sddtc"</span></span><span class="token punctuation">,</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span><span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span><span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>DefaultConstructorMarker<span class="token punctuation">)</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-kotlin" tabindex="0"><code class="hljs language-kotlin">new <span class="token function">SddtcClass</span><span class="token punctuation">(</span><span class="token string-literal singleline"><span class="token string">"sddtc"</span></span><span class="token punctuation">,</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span><span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span><span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>DefaultConstructorMarker<span class="token punctuation">)</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <p>需要注意这两个版本都来自于解析这段 Kotlin 代码: <code>val result = SddtcClass(name=&quot;sddtc&quot;)</code></p>
 <p><strong>情景一:</strong></p>
 <p>母应用A/子应用B都依赖 <code>sddtcLibraryV1.0</code> 时， 当依赖更新为 <code>sddtcLibraryV1.1</code> A和B在重新编译后均不会出现任何问题。</p>
 <p><strong>情景二:</strong></p>
-<p>母应用 A 依赖 <code>sddtcLibraryV1.1</code>
+<p>母应用 A 依赖 <code>sddtcLibraryV1.1</code><br>
 子应用 B 依赖 <code>sddtcLibraryV1.0</code></p>
-<p>在编译时, 编译为不同版本的机器码
-在依赖冲突解决时，由于我们使用 gradle 并且在遇到两个不同版本的依赖时最终会将高版本的依赖打进 apk 中，其它依赖会被删除因此最终的包只有 <code>sddtcLibraryV1.1</code>
+<p>在编译时, 编译为不同版本的机器码<br>
+在依赖冲突解决时，由于我们使用 gradle 并且在遇到两个不同版本的依赖时最终会将高版本的依赖打进 apk 中，其它依赖会被删除因此最终的包只有 <code>sddtcLibraryV1.1</code><br>
 在运行时，子应用会寻找要解析的 <code>sddtcLibraryV1.0</code> 签名而签名并不存在，因此抛出 <code>NoSuchMethodError: init&lt;&gt;</code> 错误。</p>
-<h4 id="-3">那么这种情况该怎么解决？</h4>
-<p>不得不说这是一个开放性问题，还没有绝对答案。 也有人遇到了类似的问题还没有答案 <a href="https://discuss.kotlinlang.org/t/binary-compatibility-for-constructors-with-default-values/11385">Binary compatibility for constructors with default values
+<h4 id="%E9%82%A3%E4%B9%88%E8%BF%99%E7%A7%8D%E6%83%85%E5%86%B5%E8%AF%A5%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3%EF%BC%9F" tabindex="-1">那么这种情况该怎么解决？</h4>
+<p>不得不说这是一个开放性问题，还没有绝对答案。 也有人遇到了类似的问题还没有答案 <a href="https://discuss.kotlinlang.org/t/binary-compatibility-for-constructors-with-default-values/11385">Binary compatibility for constructors with default values<br>
 </a></p>
-<p>想法一：
+<p>想法一：<br>
 既然运行时只有一个依赖版本存在，那么我们应该在编译时也强制只能有一个版本的依赖存在，提前暴露问题。</p>
-<p>想法二：
+<p>想法二：<br>
 舍弃默认构造参数的语法糖， 显示的实现满足所有参数排列的构造方法。</p>
-<p>未完待续...</p>
+<p>未完待续…</p>
 
 </div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2019-12-28-my-annual-rank-2019/">我的 2019 年度总结</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2020-11-23-jx3-jjc-thoughts/">当我沉迷每个赛季的竞技场的时候我在沉迷什么</a></li>
@@ -730,7 +739,7 @@ A 和 B 分别依赖了一个第三方库，使用库中的相同方法。 在�
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2020-11-16-kotlin-compatibility-intro/` was built on 2026-02-15T02:38:54.793Z -->
+		<!-- This page `/blog/2020-11-16-kotlin-compatibility-intro/` was built on 2026-02-15T13:56:14.187Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

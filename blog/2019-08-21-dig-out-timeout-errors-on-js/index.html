@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="etimedout-and-esockettimedout-and-socket-hang-up">浅淡 ETIMEDOUT &amp; ESOCKETTIMEDOUT &amp; Socket hang up</h1>
+<h1>浅淡 ETIMEDOUT &amp; ESOCKETTIMEDOUT &amp; Socket hang up</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2019-08-21">21 August 2019</time></li>
@@ -570,11 +574,16 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="">背景</h3>
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E8%83%8C%E6%99%AF">背景</a></li><li><a href="#%E9%94%99%E8%AF%AF%E4%BA%8B%E4%BE%8B">错误事例</a></li><li><a href="#%E6%A6%82%E5%BF%B5">概念</a></li><li><a href="#tips">Tips</a></li><li><a href="#%E9%94%99%E8%AF%AF%E7%B1%BB%E5%9E%8B">错误类型</a></li></ul>
+      </div>
+</aside>
+  <h3 id="%E8%83%8C%E6%99%AF" tabindex="-1">背景</h3>
 <p>当线上服务正常运行了一段时间, 应用的请求量的呈线性增长姿势的时候, 我们发现日志里多了三种错误日志. 类型分别为 <code>ETIMEDOUT</code>, <code>ESOCKETTIMEDOUT</code> 和 <code>Socket hang up</code>, 由于我个人对于这三种错误的认知极其有限，于是想要借此机会整理思绪.</p>
-<h3 id="-2">错误事例</h3>
+<h3 id="%E9%94%99%E8%AF%AF%E4%BA%8B%E4%BE%8B" tabindex="-1">错误事例</h3>
 <p><strong>ETIMEDOUT</strong></p>
-<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token literal-property property">RequestError</span><span class="token operator">:</span> Error<span class="token operator">:</span> <span class="token constant">ETIMEDOUT</span>
+<pre class="language-javascript" tabindex="0"><code class="hljs language-javascript"><span class="token literal-property property">RequestError</span><span class="token operator">:</span> Error<span class="token operator">:</span> <span class="token constant">ETIMEDOUT</span>
     at <span class="token keyword">new</span> <span class="token class-name">RequestError</span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">-</span>promise<span class="token operator">-</span>core<span class="token operator">/</span>lib<span class="token operator">/</span>errors<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">14</span><span class="token operator">:</span><span class="token number">15</span><span class="token punctuation">)</span>
     at Request<span class="token punctuation">.</span>plumbing<span class="token punctuation">.</span><span class="token function">callback</span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">-</span>promise<span class="token operator">-</span>core<span class="token operator">/</span>lib<span class="token operator">/</span>plumbing<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">87</span><span class="token operator">:</span><span class="token number">29</span><span class="token punctuation">)</span>
     at Request<span class="token punctuation">.</span><span class="token constant">RP</span>$callback <span class="token punctuation">[</span><span class="token keyword">as</span> _callback<span class="token punctuation">]</span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">-</span>promise<span class="token operator">-</span>core<span class="token operator">/</span>lib<span class="token operator">/</span>plumbing<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">46</span><span class="token operator">:</span><span class="token number">31</span><span class="token punctuation">)</span>
@@ -588,7 +597,7 @@ pre[class*="language-"] {
     at <span class="token function">listOnTimeout</span> <span class="token punctuation">(</span>timers<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">263</span><span class="token operator">:</span><span class="token number">5</span><span class="token punctuation">)</span>
     at Timer<span class="token punctuation">.</span><span class="token function">processTimers</span> <span class="token punctuation">(</span>timers<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">223</span><span class="token operator">:</span><span class="token number">10</span><span class="token punctuation">)</span></code></pre>
 <p><strong>ESOCKETTIMEDOUT</strong></p>
-<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token literal-property property">RequestError</span><span class="token operator">:</span> Error<span class="token operator">:</span> <span class="token constant">ESOCKETTIMEDOUT</span>
+<pre class="language-javascript" tabindex="0"><code class="hljs language-javascript"><span class="token literal-property property">RequestError</span><span class="token operator">:</span> Error<span class="token operator">:</span> <span class="token constant">ESOCKETTIMEDOUT</span>
     at <span class="token keyword">new</span> <span class="token class-name">RequestError</span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">-</span>promise<span class="token operator">-</span>core<span class="token operator">/</span>lib<span class="token operator">/</span>errors<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">14</span><span class="token operator">:</span><span class="token number">15</span><span class="token punctuation">)</span>
     at Request<span class="token punctuation">.</span>plumbing<span class="token punctuation">.</span><span class="token function">callback</span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">-</span>promise<span class="token operator">-</span>core<span class="token operator">/</span>lib<span class="token operator">/</span>plumbing<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">87</span><span class="token operator">:</span><span class="token number">29</span><span class="token punctuation">)</span>
     at Request<span class="token punctuation">.</span><span class="token constant">RP</span>$callback <span class="token punctuation">[</span><span class="token keyword">as</span> _callback<span class="token punctuation">]</span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">-</span>promise<span class="token operator">-</span>core<span class="token operator">/</span>lib<span class="token operator">/</span>plumbing<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">46</span><span class="token operator">:</span><span class="token number">31</span><span class="token punctuation">)</span>
@@ -609,7 +618,7 @@ pre[class*="language-"] {
     at <span class="token function">listOnTimeout</span> <span class="token punctuation">(</span>timers<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">263</span><span class="token operator">:</span><span class="token number">5</span><span class="token punctuation">)</span>
     at Timer<span class="token punctuation">.</span><span class="token function">processTimers</span> <span class="token punctuation">(</span>timers<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">223</span><span class="token operator">:</span><span class="token number">10</span><span class="token punctuation">)</span></code></pre>
 <p><strong>Socket hang up</strong></p>
-<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token literal-property property">RequestError</span><span class="token operator">:</span> Error<span class="token operator">:</span> socket hang up
+<pre class="language-javascript" tabindex="0"><code class="hljs language-javascript"><span class="token literal-property property">RequestError</span><span class="token operator">:</span> Error<span class="token operator">:</span> socket hang up
     at <span class="token keyword">new</span> <span class="token class-name">RequestError</span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">-</span>promise<span class="token operator">-</span>core<span class="token operator">/</span>lib<span class="token operator">/</span>errors<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">14</span><span class="token operator">:</span><span class="token number">15</span><span class="token punctuation">)</span>
     at Request<span class="token punctuation">.</span>plumbing<span class="token punctuation">.</span><span class="token function">callback</span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">-</span>promise<span class="token operator">-</span>core<span class="token operator">/</span>lib<span class="token operator">/</span>plumbing<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">87</span><span class="token operator">:</span><span class="token number">29</span><span class="token punctuation">)</span>
     at Request<span class="token punctuation">.</span><span class="token constant">RP</span>$callback <span class="token punctuation">[</span><span class="token keyword">as</span> _callback<span class="token punctuation">]</span> <span class="token punctuation">(</span><span class="token operator">/</span><span class="token keyword">var</span><span class="token operator">/</span>task<span class="token operator">/</span>node_modules<span class="token operator">/</span>request<span class="token operator">-</span>promise<span class="token operator">-</span>core<span class="token operator">/</span>lib<span class="token operator">/</span>plumbing<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">46</span><span class="token operator">:</span><span class="token number">31</span><span class="token punctuation">)</span>
@@ -624,17 +633,17 @@ pre[class*="language-"] {
     at TLSSocket<span class="token punctuation">.</span>EventEmitter<span class="token punctuation">.</span><span class="token function">emit</span> <span class="token punctuation">(</span>domain<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">448</span><span class="token operator">:</span><span class="token number">20</span><span class="token punctuation">)</span>
     at _handle<span class="token punctuation">.</span><span class="token function">close</span> <span class="token punctuation">(</span>net<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">606</span><span class="token operator">:</span><span class="token number">12</span><span class="token punctuation">)</span>
     at <span class="token constant">TCP</span><span class="token punctuation">.</span><span class="token function">done</span> <span class="token punctuation">(</span>_tls_wrap<span class="token punctuation">.</span>js<span class="token operator">:</span><span class="token number">388</span><span class="token operator">:</span><span class="token number">7</span><span class="token punctuation">)</span></code></pre>
-<h3 id="-3">概念</h3>
+<h3 id="%E6%A6%82%E5%BF%B5" tabindex="-1">概念</h3>
 <p>其实这三种错误信息均来源于 Node.js, Node.js 底层使用了 <a href="http://www.gnu.org/software/libc/">glibc库</a>, ETIMEDOUT 错误是 glibc 库在 socket 连接时使用的 connect 函数中定义的错误类型. V8 引擎在 glibc 库时还会加入自定义的错误类型， 许多错误情况还是和 glibc 中的定义保持了一致.</p>
-<p>connect 函数的定义为：int connect(int socket, struct sockaddr addr, socklen_t length)
-connect 函数会使用文件描述符 (file descripto). socket 表示 socket 发起连接，sockaddr 通过 addr 和 length 这两个参数来指定. (这个 socket 一般是其他机器的 socket，而且必须已经配置成了服务器)
+<p>connect 函数的定义为：int connect(int socket, struct sockaddr addr, socklen_t length)<br>
+connect 函数会使用文件描述符 (file descripto). socket 表示 socket 发起连接，sockaddr 通过 addr 和 length 这两个参数来指定. (这个 socket 一般是其他机器的 socket，而且必须已经配置成了服务器)<br>
 一般情况下, connect 函数会等待服务器响应请求才返回. 当然也可以将 socket 设置为非阻塞模式来不等待响应就快速返回 (可参考 nginx 是怎么使用 socket).</p>
 <p>connect 最初是作为多线程程序的取消点定义的, 因此开发者需要确保线程取消后释放了占用的资源 (例如内存、文件描述符、semaphore) 等.</p>
-<p>关于 ETIMEDOUT 是连接尝试超时.
-关于 ESOCKETTIMEDOUT 我的理解为, 如果服务器段的 socket 都处在忙碌状态, 无法分配出新的 socket, 请求新 socket 会一直处在 pending 状态, 于是会造成 timeout.
+<p>关于 ETIMEDOUT 是连接尝试超时.<br>
+关于 ESOCKETTIMEDOUT 我的理解为, 如果服务器段的 socket 都处在忙碌状态, 无法分配出新的 socket, 请求新 socket 会一直处在 pending 状态, 于是会造成 timeout.<br>
 关于 Socket hang up 错误, 当客户端等待请求的 response, 然而连接断开了. 于是会抛出该错误.</p>
-<h3 id="tips">Tips</h3>
-<h3 id="-4">错误类型</h3>
+<h3 id="tips" tabindex="-1">Tips</h3>
+<h3 id="%E9%94%99%E8%AF%AF%E7%B1%BB%E5%9E%8B" tabindex="-1">错误类型</h3>
 <p>connect 函数正常的返回值为 0, 在有错误时会返回 -1. 函数中定义了如下错误条件:</p>
 <ol>
 <li>EBADF: sockt 不是有效的文件描述符 (file descriptor)</li>
@@ -675,7 +684,7 @@ connect 函数会使用文件描述符 (file descripto). socket 表示 socket �
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2019-08-21-dig-out-timeout-errors-on-js/` was built on 2026-02-15T02:38:54.792Z -->
+		<!-- This page `/blog/2019-08-21-dig-out-timeout-errors-on-js/` was built on 2026-02-15T13:56:14.187Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

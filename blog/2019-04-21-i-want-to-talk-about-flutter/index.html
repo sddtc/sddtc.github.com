@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="flutter">关于 Flutter 的一些小事</h1>
+<h1>关于 Flutter 的一些小事</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2019-04-21">21 April 2019</time></li>
@@ -570,45 +574,50 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E6%89%8B%E6%9C%BA%E5%8E%9F%E7%94%9Fapp">手机原生APP</a></li><li><a href="#%E8%B7%A8%E5%B9%B3%E5%8F%B0ui%E6%A1%86%E6%9E%B6%E6%96%B9%E6%A1%88">跨平台UI框架方案</a></li><li><a href="#%E5%93%8D%E5%BA%94%E5%BC%8F%E8%A7%86%E5%9B%BE%E6%A1%86%E6%9E%B6">响应式视图框架</a></li><li><a href="#flutter-%E9%9D%A9%E5%91%BD">Flutter 革命</a><ul><li><a href="#%E6%B8%B2%E6%9F%93%E5%BA%93">渲染库</a></li><li><a href="#%E6%8E%A7%E4%BB%B6%E5%BA%93">控件库</a></li></ul></li><li><a href="#flutter-2019-%E5%8F%91%E5%B1%95%E8%B7%AF%E7%BA%BF">Flutter 2019 发展路线</a></li></ul>
+      </div>
+</aside>
   <blockquote>
 <p>Flutter是一个新的用于构建跨平台手机App的SDK。</p>
 </blockquote>
-<h3 id="app">手机原生APP</h3>
+<h3 id="%E6%89%8B%E6%9C%BA%E5%8E%9F%E7%94%9Fapp" tabindex="-1">手机原生APP</h3>
 <ul>
 <li>苹果的 iOS app - Objective-C</li>
 <li>谷歌的Android app - Java</li>
 </ul>
-<p><strong>优势</strong>
-最佳原生用户体验
-<strong>我们需要做的事</strong>
-选择一个阵营 (iOS or Andriod)
+<p><strong>优势</strong><br>
+最佳原生用户体验<br>
+<strong>我们需要做的事</strong><br>
+选择一个阵营 (iOS or Andriod)<br>
 学习掌握一门语言</p>
-<p>然而，来自 &quot;两个阵营&quot; 的开发者渐渐发现:</p>
+<p>然而，来自 “两个阵营” 的开发者渐渐发现:</p>
 <ul>
 <li>客户不想付所有钱，在最终得到一个不太感兴趣的应用程序</li>
 <li>我们希望快速构建应用，但我们不能在UI质量或性能上妥协</li>
-<li>同时为 &quot;两个阵营&quot; 设计统一的UI会得到最高一致性</li>
+<li>同时为 “两个阵营” 设计统一的UI会得到最高一致性</li>
 </ul>
 <blockquote>
 <p>我们开始意识到采用良好的移动跨平台解决方案的好处</p>
 </blockquote>
-<h3 id="ui">跨平台UI框架方案</h3>
+<h3 id="%E8%B7%A8%E5%B9%B3%E5%8F%B0ui%E6%A1%86%E6%9E%B6%E6%96%B9%E6%A1%88" tabindex="-1">跨平台UI框架方案</h3>
 <p>代表: 基于WebView的Cordova框架</p>
-<p><strong>优势</strong>
-跨平台
-现代web开发成果: 控件库，自动化测试工具..
-web开发技术栈
-<strong>不足</strong>
-UI渲染效率 &amp; 执行效率
-厂商定制与兼容性问题导致难以达到一致体验
-原生功能（手势，蓝牙，摄像头..） 需要用原生代码实现</p>
-<h3 id="">响应式视图框架</h3>
+<p><strong>优势</strong><br>
+跨平台<br>
+现代web开发成果: 控件库，自动化测试工具…<br>
+web开发技术栈<br>
+<strong>不足</strong><br>
+UI渲染效率 &amp; 执行效率<br>
+厂商定制与兼容性问题导致难以达到一致体验<br>
+原生功能（手势，蓝牙，摄像头…） 需要用原生代码实现</p>
+<h3 id="%E5%93%8D%E5%BA%94%E5%BC%8F%E8%A7%86%E5%9B%BE%E6%A1%86%E6%9E%B6" tabindex="-1">响应式视图框架</h3>
 <p>代表: React Native</p>
-<p><strong>优势</strong>
-将UI渲染交还给系统, 加快响应速度
-web技术 HTML+JS
-<strong>不足</strong>
-和系统的控件集强耦合
+<p><strong>优势</strong><br>
+将UI渲染交还给系统, 加快响应速度<br>
+web技术 HTML+JS<br>
+<strong>不足</strong><br>
+和系统的控件集强耦合<br>
 可能需要处理不同系统的差异导致跨平台特性打折扣</p>
 <p>我们渐渐发现，一款APP之所以能够成功，需要包含以下特点:</p>
 <ul>
@@ -617,21 +626,21 @@ web技术 HTML+JS
 <li><strong>品牌化的自定义UI是王道</strong></li>
 </ul>
 <blockquote>
-<p>Flutter 出现了
+<p>Flutter 出现了<br>
 使用 Dart 作为开发语言, 它唯一提供响应式视图而不需要 JavaScript 桥接器的移动 SDK</p>
 </blockquote>
-<h3 id="flutter-2">Flutter 革命</h3>
+<h3 id="flutter-%E9%9D%A9%E5%91%BD" tabindex="-1">Flutter 革命</h3>
 <ul>
 <li>重写UI控件</li>
 <li>UI渲染逻辑使用Dart语言实现，执行效率比JS高得多</li>
 <li>渲染引擎依靠跨平台Skia图形库实现</li>
 <li>依赖图形绘制接口，最大程度上保证不同平台、不同设备的体验一致性</li>
 </ul>
-<h4 id="-2">渲染库</h4>
+<h4 id="%E6%B8%B2%E6%9F%93%E5%BA%93" tabindex="-1">渲染库</h4>
 <p>在Flutter界面渲染过程分为三个阶段：布局、绘制、合成, 布局和绘制在Flutter框架中完成,合成则交由引擎负责</p>
-<h4 id="-3">控件库</h4>
+<h4 id="%E6%8E%A7%E4%BB%B6%E5%BA%93" tabindex="-1">控件库</h4>
 <p>Flutter的控件库提供了非常丰富的控件，包括最基本的文本、图片、容器、输入框和动画等等.  在Flutter中&quot;一切皆是控件&quot;，通过组合、嵌套不同类型的控件，就可以构建出任意功能、任意复杂度的界面</p>
-<h3 id="flutter-2019">Flutter 2019 发展路线</h3>
+<h3 id="flutter-2019-%E5%8F%91%E5%B1%95%E8%B7%AF%E7%BA%BF" tabindex="-1">Flutter 2019 发展路线</h3>
 <ul>
 <li>稳定迭代，更加易用</li>
 <li>生态系统： 提升插件质量</li>
@@ -664,7 +673,7 @@ web技术 HTML+JS
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2019-04-21-i-want-to-talk-about-flutter/` was built on 2026-02-15T02:38:54.792Z -->
+		<!-- This page `/blog/2019-04-21-i-want-to-talk-about-flutter/` was built on 2026-02-15T13:56:14.186Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

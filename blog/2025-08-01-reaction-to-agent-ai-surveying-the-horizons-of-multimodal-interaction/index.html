@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="agent-ai-surveying-the-horizons-of-multimodal-interaction">Agent AI: Surveying the Horizons of Multimodal Interaction 读后感</h1>
+<h1>Agent AI: Surveying the Horizons of Multimodal Interaction 读后感</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2025-08-01">01 August 2025</time></li>
@@ -571,14 +575,17 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
+<aside>
+  
+</aside>
   <p>前几天小某书刷到了李飞飞参与的这篇论文 这周花了两天时间看完了(<a href="https://arxiv.org/abs/2401.03568">Agent AI: Surveying the Horizons of Multimodal Interaction</a>). 看的时候播客也听不了了, 眼睛和脑子一边看内容一边二次翻译, 也意识到自己的专注力好像提高了.<br>
 提到人工智能, 那么我心目中的NO.1非<a href="https://movie.douban.com/subject/5980670/">《疑犯追踪》</a>莫属: 人类创造出程序代码, 交互接口是显示器、耳机. 程序的输入是国际象棋的一盘盘棋局, 人类干预与之下棋, 在下棋的过程中通过每一步博弈, 最终得出胜利或者失败, 并传达隐晦的人类情感表达和更抽象的哲思:</p>
 <blockquote>
-<p>&quot;象棋的可能棋局数比宇宙中的原子的数量还多，没人能预料到一切，即便是你。
-这也就是说，第一步会很令人害怕，因为它是距离结局最远的一步，在这一步与终点之间充满了无穷无尽的可能性。
-但这也意味着，即使你走错一步，接下来也会有无数种补救的方法。
-所以放松，出招就好。&quot;
---《疑犯追踪》</p>
+<p>“象棋的可能棋局数比宇宙中的原子的数量还多，没人能预料到一切，即便是你。<br>
+这也就是说，第一步会很令人害怕，因为它是距离结局最远的一步，在这一步与终点之间充满了无穷无尽的可能性。<br>
+但这也意味着，即使你走错一步，接下来也会有无数种补救的方法。<br>
+所以放松，出招就好。”<br>
+–《疑犯追踪》</p>
 </blockquote>
 <p>程序还有一段神奇的代码, 它能迭代自己, 从屏幕中你能看到它在编写自己, 只要有电, 它就能没日没夜的编写自己, 这也是我觉得最智能的地方, 不依赖人类的编写, 自己编写自己.<br>
 再之后呢, 程序的输入更加丰富: 通过真实世界的摄像头收集大量的视频、音频数据. 用来分析剧中几位主角是否处在安全的环境, 一旦有危险产生, 通过预测制定出计划来帮助主角们逃离危险.<br>
@@ -601,14 +608,14 @@ pre[class*="language-"] {
 <p>论文提到, Agents通常使用强化学习 (RL) 或模仿学习 (IL) 中的连续反馈循环进行训练, 从随机初始化的策略开始. 然而这种方法在陌生环境中获取初始奖励时面临挑战， 尤其是在奖励稀少或仅在long-step交互结束时才可用的情况下. 因此，一个更好的解决方案是使用通过模仿学习(IL)训练的拥有长期记忆的agent，它可以从专家数据中学习策略，并通过图中 所示的智能涌现(Emergent Intelligence)改进对未知环境空间的探索和利用. 专家特征可以帮助agent更好地探索和利用未知环境空间.<br>
 Agent AI 可以直接从专家数据中学习策略和新范式. 传统的模仿学习(IL) 中， agent会模仿专家演示者的行为来学习策略. 然而，直接学习专家策略并非总是最佳方法， 因为agent可能无法很好地泛化到未知情况. 为了解决这个问题， 我们建议学习一个具有情境提示或隐式奖励函数的agent， 该函数可以捕捉专家行为的关键方面， 如图中所示。这为拥有长期记忆的agent提供了从专家演示中学习到的物理世界行为数据， 用于执行任务. 这有助于克服现有的模仿学习的缺点， 例如需要大量的专家数据以及在复杂任务中可能出现的错误.</p>
 <picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/nJQP6SDL9f-2602.avif 2602w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/nJQP6SDL9f-2602.webp 2602w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/nJQP6SDL9f-2602.png" alt="" width="2602" height="1736"></picture>
-<p>When employing LLM/VLMs for a human-machine collaboration system, it is essential to note that these operate as
-black boxes, generating unpredictable output. This uncertainty can become crucial in a physical setup, such as operating
-actual robotics. An approach to address this challenge is constraining the focus of the LLM/VLM through prompt
-engineering. For instance, in robotic task planning from instructions, providing environmental information within the
-prompt has been reported to yield more stable outputs than relying solely on text (Gramopadhye and Szafir, 2022). This report is supported by the Minsky’s frame theory of AI (Minsky, 1975), suggesting that the problem space to be solved
-by LLM/VLMs is defined by the given prompts. Another approach is designing prompts to make LLM/VLMs include
-explanatory text to allow users understand what the model has focused on or recognized. Additionally, implementing
-a higher layer that allows for pre-execution verification and modification under human guidance can facilitate the
+<p>When employing LLM/VLMs for a human-machine collaboration system, it is essential to note that these operate as<br>
+black boxes, generating unpredictable output. This uncertainty can become crucial in a physical setup, such as operating<br>
+actual robotics. An approach to address this challenge is constraining the focus of the LLM/VLM through prompt<br>
+engineering. For instance, in robotic task planning from instructions, providing environmental information within the<br>
+prompt has been reported to yield more stable outputs than relying solely on text (Gramopadhye and Szafir, 2022). This report is supported by the Minsky’s frame theory of AI (Minsky, 1975), suggesting that the problem space to be solved<br>
+by LLM/VLMs is defined by the given prompts. Another approach is designing prompts to make LLM/VLMs include<br>
+explanatory text to allow users understand what the model has focused on or recognized. Additionally, implementing<br>
+a higher layer that allows for pre-execution verification and modification under human guidance can facilitate the<br>
 operation of systems working under such guidance</p>
 <p>论文说, 在将 LLM/VLM 用于人机协作系统时， 必须注意到它们的操作是个黑盒，会产生不可预测的输出. 这种不确定性在物理设置（例如操作实际机器人）中至关重要. 应对这一挑战的一种方法是通过提示工程(prompt)来限制 LLM/VLM 的关注点. 例如， 在根据指令进行机器人任务规划时，在提示中提供环境信息比单纯依赖文本能产生更稳定的输出. 另一种方法是设计提示，使 LLM/VLM 包含解释性文本，以便用户了解模型关注或识别的内容. 此外，实现允许在人工指导下进行执行前验证和修改的更高层代码，可以促进在此类指导下的系统运行, 如上图所示.</p>
 <picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/8zn4Q_19s2-2408.avif 2408w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/8zn4Q_19s2-2408.webp 2408w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/8zn4Q_19s2-2408.png" alt="" width="2408" height="904"></picture>
@@ -645,7 +652,7 @@ operation of systems working under such guidance</p>
 <picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/XXSukQYfK2-2102.avif 2102w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/XXSukQYfK2-2102.webp 2102w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/XXSukQYfK2-2102.png" alt="" width="2102" height="1482"></picture> 
 <p>在上图，论文展示了 GPT-4V 等现代多模态agent在医疗保健领域中的当前能力和局限性.可以看到尽管 GPT-4V 对医院护理所涉及的设备和程序拥有丰富的内部知识，但它并不总是能够响应用户更具规范性或诊断性的查询.</p>
 <picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/dROclpbvI4-2182.avif 2182w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/dROclpbvI4-2182.webp 2182w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/dROclpbvI4-2182.png" alt="" width="2182" height="1576"></picture>
-<p>论文从两个方面研究了 VLM 代理在医学视频理解方面的表现.首先, 研究 VLM 代理在临床空间中识别重要患者护理活动的能力.
+<p>论文从两个方面研究了 VLM 代理在医学视频理解方面的表现.首先, 研究 VLM 代理在临床空间中识别重要患者护理活动的能力.<br>
 其次，探索了 VLM 在超声波等技术含量更高的视频中的应用. 上图展示了 GPT-4V 目前在医院护理和医学视频分析方面的一些功能和局限.</p>
 <picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/RCdZ5cqU-b-2156.avif 2156w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/RCdZ5cqU-b-2156.webp 2156w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/RCdZ5cqU-b-2156.png" alt="" width="2156" height="1052"></picture>
 <p>并未过多说明.</p>
@@ -695,7 +702,7 @@ operation of systems working under such guidance</p>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/` was built on 2026-02-15T02:38:54.796Z -->
+		<!-- This page `/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/` was built on 2026-02-15T13:56:14.190Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

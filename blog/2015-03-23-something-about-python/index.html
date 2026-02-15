@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="python-thread">关于Python的Thread介绍</h1>
+<h1>关于Python的Thread介绍</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2015-03-23">23 March 2015</time></li>
@@ -570,19 +574,24 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="thread">Thread</h3>
-<p>&quot;Unhandled exception in thread started by
-Error in sys.excepthook:
-Original exception was:&quot;
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#thread">Thread</a></li><li><a href="#shell-%26-python">Shell &amp; Python</a></li></ul>
+      </div>
+</aside>
+  <h3 id="thread" tabindex="-1">Thread</h3>
+<p>“Unhandled exception in thread started by<br>
+Error in sys.excepthook:<br>
+Original exception was:”<br>
 问题在于主线程结束时子线程还未结束，解决办法就是让主线程阻塞足够的时间让子线程运行完再结束自己</p>
-<p>Python中对多线程有两种启动方法：
-一种是thread模块的start_new_thread方法，在线程中运行一个函数，但获得函数返回值极为困难，Python官方不推荐
+<p>Python中对多线程有两种启动方法：<br>
+一种是thread模块的start_new_thread方法，在线程中运行一个函数，但获得函数返回值极为困难，Python官方不推荐<br>
 另一种是集成threading模块的Thread类，然后重写run方法，类似于Java的Runnable接口定义，灵活性较高</p>
-<p>import thread
-Python的线程sleep方法并不是在thread模块中，反而是在time模块下
+<p>import thread<br>
+Python的线程sleep方法并不是在thread模块中，反而是在time模块下<br>
 解决：启动线程之后，必须调用time.sleep休眠足够长的时间，使主线程等待所有子线程返回结果，如果主线程比子线程早结束，就会抛出这个异常</p>
-<h3 id="shell-and-python">Shell &amp; Python</h3>
-<pre class="language-python" tabindex="0"><code class="language-python">
+<h3 id="shell-%26-python" tabindex="-1">Shell &amp; Python</h3>
+<pre class="language-python" tabindex="0"><code class="hljs language-python">
 <span class="token keyword">import</span> commands
 a <span class="token operator">=</span> commands<span class="token punctuation">.</span>getoutput<span class="token punctuation">(</span>‘echo $a'<span class="token punctuation">)</span>
 b <span class="token operator">=</span> commands<span class="token punctuation">.</span>getoutput<span class="token punctuation">(</span>‘echo $b'<span class="token punctuation">)</span>
@@ -616,7 +625,7 @@ b <span class="token operator">=</span> commands<span class="token punctuation">
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-03-23-something-about-python/` was built on 2026-02-15T02:38:54.770Z -->
+		<!-- This page `/blog/2015-03-23-something-about-python/` was built on 2026-02-15T13:56:14.178Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

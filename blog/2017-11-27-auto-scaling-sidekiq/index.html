@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="sidekiq-how-to-autoscale-instances-depending-upon-sidekiq-queue-size">Sidekiq的How to autoscale instances depending upon Sidekiq queue size</h1>
+<h1>Sidekiq的How to autoscale instances depending upon Sidekiq queue size</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2017-11-27">27 November 2017</time></li>
@@ -570,13 +574,18 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="">背景</h3>
-<p>事情的起因是Jerry给过我一个Comment, 当我们的程序实现了AWS的Scaling-Policy时, Sidekiq能否在收缩时优雅的停止保证数据不丢失呢?
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E8%83%8C%E6%99%AF">背景</a></li><li><a href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95">解决方法</a></li><li><a href="#conclusion%3A">Conclusion:</a></li></ul>
+      </div>
+</aside>
+  <h3 id="%E8%83%8C%E6%99%AF" tabindex="-1">背景</h3>
+<p>事情的起因是Jerry给过我一个Comment, 当我们的程序实现了AWS的Scaling-Policy时, Sidekiq能否在收缩时优雅的停止保证数据不丢失呢?<br>
 于是查阅了一些资料, 看到了一些有趣的东西</p>
-<h3 id="-2">解决方法</h3>
-<p>Auto Scaling supports sending Amazon SNS notifications when instance launch or terminate events occurs.
+<h3 id="%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95" tabindex="-1">解决方法</h3>
+<p>Auto Scaling supports sending Amazon SNS notifications when instance launch or terminate events occurs.<br>
 We used the same method to detect the autoscale instance is terminating and we have to stop Sidekiq gracefully.</p>
-<p><code>Auto Scaling</code> 可以支持我们当运行程序的实例 <code>launch</code> 或者 <code>terminate</code> 时发送消息做一些事情.
+<p><code>Auto Scaling</code> 可以支持我们当运行程序的实例 <code>launch</code> 或者 <code>terminate</code> 时发送消息做一些事情.<br>
 那么我们可以使用类似的方法去观察我们运行着 <code>Sidekiq</code> 的实例来做些事情让它能够优雅的停止.</p>
 <p>We have followed the following method:</p>
 <ol>
@@ -587,9 +596,9 @@ We used the same method to detect the autoscale instance is terminating and we h
 <p>We have put the lifecycle hook. A lifecycle hook tells Auto Scaling that you want to perform an action on an instance that is not actively in service; for example, either when the instance launches or before the instance terminates.</p>
 </li>
 </ol>
-<p>When you add a lifecycle hook, you have the option to be notified when the instance enters a wait state so that you can perform the corresponding custom action.
+<p>When you add a lifecycle hook, you have the option to be notified when the instance enters a wait state so that you can perform the corresponding custom action.<br>
 So we put the autoscaling: EC2_INSTANCE_TERMINATE hook.</p>
-<pre class="language-shell" tabindex="0"><code class="language-shell">@client.put_lifecycle_hook<span class="token punctuation">(</span>
+<pre class="language-shell" tabindex="0"><code class="hljs language-shell">@client.put_lifecycle_hook<span class="token punctuation">(</span>
    auto_scaling_group_name: AUTO_SCALING_GROUP_NAME,
    lifecycle_hook_name: <span class="token string">'Auto-Scale-Ec2-Termination'</span>,
    lifecycle_transition: <span class="token string">"autoscaling:EC2_INSTANCE_TERMINATING"</span>,
@@ -597,19 +606,19 @@ So we put the autoscaling: EC2_INSTANCE_TERMINATE hook.</p>
    role_arn: <span class="token string">'arn:aws:iam::492361111699:role/sns-publish'</span>
 <span class="token punctuation">)</span></code></pre>
 <ol start="3">
-<li>When a Autoscale instance is terminating, it will send an SNS notification to our API server.
+<li>When a Autoscale instance is terminating, it will send an SNS notification to our API server.<br>
 The notification sends JSON response which contains Instance Id, LifecycleActionToken etc.</li>
 </ol>
-<p>When the server got the notification we do the following the steps from code:
-a. We find the IP address from instance id.
-b. We login to server using ssh.c.
-Then we send USR1 signal to sidekiq.
-The USR1 command tells to sidekiq don’t accept new jobs, so sidekiq will not accept any new jobs from the enqueued jobs.
-For example:ps -ef | grep sidekiq | grep -v grep | awk ‘{print $2}’ | xargs kill -USR1
-Then we will calculate the sum of busy jobs.d.
-If the the sum is greater than 0 then we are again following step c and d until the sum becomes 0.
+<p>When the server got the notification we do the following the steps from code:<br>
+a. We find the IP address from instance id.<br>
+b. We login to server using ssh.c.<br>
+Then we send USR1 signal to sidekiq.<br>
+The USR1 command tells to sidekiq don’t accept new jobs, so sidekiq will not accept any new jobs from the enqueued jobs.<br>
+For example:ps -ef | grep sidekiq | grep -v grep | awk ‘{print $2}’ | xargs kill -USR1<br>
+Then we will calculate the sum of busy jobs.d.<br>
+If the the sum is greater than 0 then we are again following step c and d until the sum becomes 0.<br>
 When the busy jobs sum becomes 0 then we will call complete lifecycle action hook of autoscale group, it means that Auto Scaling can continue terminating the instance. Now the instance will terminate.</p>
-<h3 id="conclusion">Conclusion:</h3>
+<h3 id="conclusion%3A" tabindex="-1">Conclusion:</h3>
 <p>We have achieved more concurrency in less time by auto scaling Sidekiq instances as per our queue size.</p>
 <p>转自: <a href="http://www.cuelogic.com/blog/how-to-autoscale-instances-depending-upon-sidekiq-queue-size/">How to autoscale instances depending upon Sidekiq queue size</a></p>
 
@@ -638,7 +647,7 @@ When the busy jobs sum becomes 0 then we will call complete lifecycle action hoo
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2017-11-27-auto-scaling-sidekiq/` was built on 2026-02-15T02:38:54.787Z -->
+		<!-- This page `/blog/2017-11-27-auto-scaling-sidekiq/` was built on 2026-02-15T13:56:14.185Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

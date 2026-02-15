@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="ra-tips">关于 RA 的一些必须掌握的 tips</h1>
+<h1>关于 RA 的一些必须掌握的 tips</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2017-08-01">01 August 2017</time></li>
@@ -570,13 +574,18 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="">一、开启白名单</h3>
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E4%B8%80%E3%80%81%E5%BC%80%E5%90%AF%E7%99%BD%E5%90%8D%E5%8D%95">一、开启白名单</a></li><li><a href="#%E4%BA%8C%E3%80%81%E4%BF%AE%E6%94%B9model%E7%9A%84%E6%98%BE%E7%A4%BAtitle">二、修改model的显示title</a></li><li><a href="#%E4%B8%89%E3%80%81%E5%BD%93%E4%BD%A0%E6%96%B0%E5%A2%9E%E6%88%96%E6%9B%B4%E6%96%B0%2C-%E6%8E%A7%E5%88%B6model%E6%98%BE%E7%A4%BA%E4%B8%8D%E5%90%8C%E7%9A%84title">三、当你新增或更新, 控制model显示不同的title</a></li><li><a href="#%E5%9B%9B%E3%80%81%E4%B8%8D%E6%98%BE%E7%A4%BAmodel%E7%9A%84%E4%B8%AA%E5%88%ABaction">四、不显示model的个别action</a></li><li><a href="#%E4%BA%94%E3%80%81%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%95%E5%85%A5javascript%E8%84%9A%E6%9C%AC">五、自定义引入javascript脚本</a></li><li><a href="#%E5%85%AD%E3%80%81show%E9%A1%B5%E9%9D%A2%E6%98%BE%E7%A4%BAimg%E5%9B%BE%E7%89%87%E5%86%85%E5%AE%B9">六、show页面显示img图片内容</a></li><li><a href="#%E4%B8%83%E3%80%81show%E9%A1%B5%E9%9D%A2field%E5%AD%97%E6%AE%B5%E7%9A%84%E5%80%BC%E8%87%AA%E5%AE%9A%E4%B9%89">七、show页面field字段的值自定义</a></li><li><a href="#%E5%85%AB%E3%80%81model%E8%AE%BE%E7%BD%AE%E6%9E%9A%E4%B8%BE">八、model设置枚举</a></li><li><a href="#%E4%B9%9D%E3%80%81model%E7%BC%96%E8%BE%91%E6%97%B6%E6%8F%90%E7%A4%BA%E4%BF%A1%E6%81%AF%E8%87%AA%E5%AE%9A%E4%B9%89">九、model编辑时提示信息自定义</a></li><li><a href="#%E5%8D%81%E3%80%81%E8%A1%A8%E5%8D%95%E6%B8%B2%E6%9F%93%E5%90%8E%E8%AE%BE%E7%BD%AE%E9%BB%98%E8%AE%A4%E5%80%BC">十、表单渲染后设置默认值</a></li><li><a href="#%E5%8D%81%E4%B8%80%E3%80%81%E8%A1%A8%E5%8D%95%E6%8E%A7%E5%88%B6%E7%9A%84%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E6%88%96%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95">十一、表单控制的唯一索引或联合索引</a></li><li><a href="#%E5%8D%81%E4%BA%8C%E3%80%81%E8%AE%BE%E7%BD%AEhttp%E8%AF%B7%E6%B1%82%E8%B6%85%E6%97%B6%E6%97%B6%E9%97%B4">十二、设置HTTP请求超时时间</a></li></ul>
+      </div>
+</aside>
+  <h3 id="%E4%B8%80%E3%80%81%E5%BC%80%E5%90%AF%E7%99%BD%E5%90%8D%E5%8D%95" tabindex="-1">一、开启白名单</h3>
 <p>只显示需要的model列表</p>
-<pre><code>config.included_models = [Brand, Product, Admin, Store]
+<pre><code class="hljs">config.included_models = [Brand, Product, Admin, Store]
 </code></pre>
-<h3 id="model-title">二、修改model的显示title</h3>
-<p>修改model的title, 修改model下拉框的默认'model #id'名称展示</p>
-<pre><code>config.model Brand do
+<h3 id="%E4%BA%8C%E3%80%81%E4%BF%AE%E6%94%B9model%E7%9A%84%E6%98%BE%E7%A4%BAtitle" tabindex="-1">二、修改model的显示title</h3>
+<p>修改model的title, 修改model下拉框的默认’model #id’名称展示</p>
+<pre><code class="hljs">config.model Brand do
   object_label_method do
     :custom_label_method
   end
@@ -588,9 +597,9 @@ Brand.class_eval do
   end
 end
 </code></pre>
-<h3 id="model-title-2">三、当你新增或更新, 控制model显示不同的title</h3>
+<h3 id="%E4%B8%89%E3%80%81%E5%BD%93%E4%BD%A0%E6%96%B0%E5%A2%9E%E6%88%96%E6%9B%B4%E6%96%B0%2C-%E6%8E%A7%E5%88%B6model%E6%98%BE%E7%A4%BA%E4%B8%8D%E5%90%8C%E7%9A%84title" tabindex="-1">三、当你新增或更新, 控制model显示不同的title</h3>
 <p>关键字: new_record? 代表新增</p>
-<pre><code>config.model Floor do
+<pre><code class="hljs">config.model Floor do
   object_label_method do
     :custom_label_method
   end
@@ -606,9 +615,9 @@ Floor.class_eval do
   end
 end
 </code></pre>
-<h3 id="model-action">四、不显示model的个别action</h3>
+<h3 id="%E5%9B%9B%E3%80%81%E4%B8%8D%E6%98%BE%E7%A4%BAmodel%E7%9A%84%E4%B8%AA%E5%88%ABaction" tabindex="-1">四、不显示model的个别action</h3>
 <p>有些model不需要默认的编辑、删除等action. 关键字:except</p>
-<pre><code>config.actions do
+<pre><code class="hljs">config.actions do
   dashboard                     # mandatory
   index                         # mandatory
   new do
@@ -627,14 +636,14 @@ end
   end
 end
 </code></pre>
-<h3 id="javascript">五、自定义引入javascript脚本</h3>
-<p>若需要动态引入js脚本
-1.在项目路径app/assets/javascripts目录下,新建rails_admin/custom目录，即 <code>app/assets/javascripts/rails_admin/custom</code>
+<h3 id="%E4%BA%94%E3%80%81%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%95%E5%85%A5javascript%E8%84%9A%E6%9C%AC" tabindex="-1">五、自定义引入javascript脚本</h3>
+<p>若需要动态引入js脚本<br>
+1.在项目路径app/assets/javascripts目录下,新建rails_admin/custom目录，即 <code>app/assets/javascripts/rails_admin/custom</code><br>
 2.在1路径里面新建ui.js文件, ui.js内容:</p>
-<pre><code>//=require_tree .
+<pre><code class="hljs">//=require_tree .
 </code></pre>
 <p>3.可新建业务js文件,例如brand.js,和ui.js同级,内容示例:</p>
-<pre><code>$(document).on('keyup', '#bundle_set_sale_price', function () {
+<pre><code class="hljs">$(document).on('keyup', '#bundle_set_sale_price', function () {
     var sale_price = numberInputCheck($(&quot;#bundle_set_sale_price&quot;).val());
     $(&quot;#bundle_set_sale_price&quot;).val(sale_price);
 
@@ -643,9 +652,9 @@ end
     $(&quot;#bundle_set_sale_total_price&quot;).val(sale_total_price);
 });
 </code></pre>
-<h3 id="show-img">六、show页面显示img图片内容</h3>
+<h3 id="%E5%85%AD%E3%80%81show%E9%A1%B5%E9%9D%A2%E6%98%BE%E7%A4%BAimg%E5%9B%BE%E7%89%87%E5%86%85%E5%AE%B9" tabindex="-1">六、show页面显示img图片内容</h3>
 <p>在model详情页面显示图片</p>
-<pre><code>show do
+<pre><code class="hljs">show do
   field :background_img do
     formatted_value do
       bindings[:view].tag(:img, {:src =&gt; bindings[:object].background_img, :style =&gt; &quot;width:400px;height:300px&quot;})
@@ -653,9 +662,9 @@ end
   end
 end
 </code></pre>
-<h3 id="show-field">七、show页面field字段的值自定义</h3>
+<h3 id="%E4%B8%83%E3%80%81show%E9%A1%B5%E9%9D%A2field%E5%AD%97%E6%AE%B5%E7%9A%84%E5%80%BC%E8%87%AA%E5%AE%9A%E4%B9%89" tabindex="-1">七、show页面field字段的值自定义</h3>
 <p>在model详情页面,让某个字段展示其它内容,例如从数据库读取</p>
-<pre><code>show do
+<pre><code class="hljs">show do
   field :id
   field :store_id do
     formatted_value do
@@ -665,39 +674,39 @@ end
   end
 end
 </code></pre>
-<h3 id="model">八、model设置枚举</h3>
+<h3 id="%E5%85%AB%E3%80%81model%E8%AE%BE%E7%BD%AE%E6%9E%9A%E4%B8%BE" tabindex="-1">八、model设置枚举</h3>
 <p>model的count属性希望展示下拉列表,采用枚举</p>
-<pre><code>def count_enum
+<pre><code class="hljs">def count_enum
   [5, 10, 15]
 end
 </code></pre>
-<h3 id="model-2">九、model编辑时提示信息自定义</h3>
+<h3 id="%E4%B9%9D%E3%80%81model%E7%BC%96%E8%BE%91%E6%97%B6%E6%8F%90%E7%A4%BA%E4%BF%A1%E6%81%AF%E8%87%AA%E5%AE%9A%E4%B9%89" tabindex="-1">九、model编辑时提示信息自定义</h3>
 <p>默认是Required, 希望多加一些信息</p>
-<pre><code>edit do
+<pre><code class="hljs">edit do
   include_all_fields
   fields :images do
     help &quot;Required - Please use 'Enter' for split multiple images&quot;
   end
 end
 </code></pre>
-<h3 id="-2">十、表单渲染后设置默认值</h3>
+<h3 id="%E5%8D%81%E3%80%81%E8%A1%A8%E5%8D%95%E6%B8%B2%E6%9F%93%E5%90%8E%E8%AE%BE%E7%BD%AE%E9%BB%98%E8%AE%A4%E5%80%BC" tabindex="-1">十、表单渲染后设置默认值</h3>
 <p>表单渲染之后, 有些下拉框或者输入框需要一些默认值, 关键字: after_initialize</p>
-<pre><code>after_initialize do
+<pre><code class="hljs">after_initialize do
   if new_record?
     self.name ||= 'POI'
     self.lover ||= 'Root'
   end
 end
 </code></pre>
-<h3 id="-3">十一、表单控制的唯一索引或联合索引</h3>
+<h3 id="%E5%8D%81%E4%B8%80%E3%80%81%E8%A1%A8%E5%8D%95%E6%8E%A7%E5%88%B6%E7%9A%84%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E6%88%96%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95" tabindex="-1">十一、表单控制的唯一索引或联合索引</h3>
 <p>有些记录的个别字段需要保持唯一性, 除了db层面的控制, 表单层面也可以做一层控制, 关键字: validates_uniqueness_of. 单个索引:保证每条记录名称不重复</p>
-<pre><code>validates_uniqueness_of :name
+<pre><code class="hljs">validates_uniqueness_of :name
 </code></pre>
 <p>联合索引:关键字scope内相当于是组合唯一索引, 保证记录不重复</p>
-<pre><code>validates_uniqueness_of :offer_id, scope: [:offer_id, :count]
+<pre><code class="hljs">validates_uniqueness_of :offer_id, scope: [:offer_id, :count]
 </code></pre>
-<h3 id="http">十二、设置HTTP请求超时时间</h3>
-<pre><code>timeout_seconds = 10
+<h3 id="%E5%8D%81%E4%BA%8C%E3%80%81%E8%AE%BE%E7%BD%AEhttp%E8%AF%B7%E6%B1%82%E8%B6%85%E6%97%B6%E6%97%B6%E9%97%B4" tabindex="-1">十二、设置HTTP请求超时时间</h3>
+<pre><code class="hljs">timeout_seconds = 10
 
 RestClient::Request.execute(:method =&gt; :post,
 			    :url =&gt; url,
@@ -705,8 +714,8 @@ RestClient::Request.execute(:method =&gt; :post,
 			    :timeout =&gt; timeout_seconds,
 			    :open_timeout =&gt; timeout_seconds)
 </code></pre>
-<p>相关参考:
-<a href="http://guides.ruby.tw/ruby-rails-style-guides/zhCN/#intro">Ruby&amp;Rails 风格指导</a>
+<p>相关参考:<br>
+<a href="http://guides.ruby.tw/ruby-rails-style-guides/zhCN/#intro">Ruby&amp;Rails 风格指导</a><br>
 <a href="https://doc.bccnsoft.com/docs/rails-guides-4.1-cn/testing.html">Rails 程序测试指南</a></p>
 
 </div>
@@ -734,7 +743,7 @@ RestClient::Request.execute(:method =&gt; :post,
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2017-08-01-tips-about-railsadmin/` was built on 2026-02-15T02:38:54.786Z -->
+		<!-- This page `/blog/2017-08-01-tips-about-railsadmin/` was built on 2026-02-15T13:56:14.184Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

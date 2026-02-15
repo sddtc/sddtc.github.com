@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="">论&#39;永远不要相信用户的输入&#39;</h1>
+<h1>论&#39;永远不要相信用户的输入&#39;</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2018-03-28">28 March 2018</time></li>
@@ -570,47 +574,52 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="-2">背景</h3>
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E8%83%8C%E6%99%AF">背景</a></li><li><a href="#%E5%8F%91%E6%95%A3">发散</a></li><li><a href="#%E6%80%BB%E7%BB%93">总结</a></li><li><a href="#emmmm">Emmmm</a></li></ul>
+      </div>
+</aside>
+  <h3 id="%E8%83%8C%E6%99%AF" tabindex="-1">背景</h3>
 <p>前不久生产了一个新鲜的bug, 也是因为这个bug的影响让人不悦, 所以我想记录下来, 也算是给自己一个提醒, 并且关于这个bug, 也可以说是一个老生常谈的话题但是却似乎让人回味的很</p>
-<p>简单的一句话来说: 把用户输入的东西放在了URL里, 并且可以让服务端读取并处理, 恰巧encode方法没有按照'想象'把&amp;符号转义一下, 于是&amp;对于URL的query有多么特殊又不是不知道</p>
-<p>如果一开始就能敏锐的察觉到用户的输入有多么可怕就好了：）
+<p>简单的一句话来说: 把用户输入的东西放在了URL里, 并且可以让服务端读取并处理, 恰巧encode方法没有按照’想象’把&amp;符号转义一下, 于是&amp;对于URL的query有多么特殊又不是不知道</p>
+<p>如果一开始就能敏锐的察觉到用户的输入有多么可怕就好了：）<br>
 又不是没有听过那句话：永远不要相信用户的输入</p>
-<h3 id="-3">发散</h3>
+<h3 id="%E5%8F%91%E6%95%A3" tabindex="-1">发散</h3>
 <p>于是还是去查找了一些相关的案例来了解下:</p>
-<p><strong>ShellShock漏洞</strong>
-此次曝出的ShellShock漏洞存在于Unix用户、Linux用户和系统管理员常常使用的GNU Bourne Again Shell（Bash）中，是一个允许远程执行代码的严重安全漏洞，其范围涵盖了绝大部分的Unix类操作系统，如Linux、BSD、MAC OS X等等。
-Bash是一款被用于控制众多Linux电脑上的命令提示符的软件，黑客可以利用Bash中的漏洞完全控制目标系统。据悉，该漏洞与Bash处理来自操作系统或调用Bash脚本的应用程序的环境变量有关。如果Bash是默认的系统shell，网络攻击者可以通过发送Web请求、secure shell、telnet会话或其它使用Bash执行脚本的程序攻击服务器和其它Unix和Linux设备。
-Bash除了可以将shell变量导出为环境变量，还可以将shell函数导出为环境变量。当前版本的Bash通过以函数名作为环境变量名，以“（）{”开头的字串作为环境变量的值来将函数定义导出为环境变量。此次曝出的漏洞在于Bash处理“函数环境变量”的时候，并没有以函数结尾“}”为结束，而是一直执行其后的shell命令。
+<p><strong>ShellShock漏洞</strong><br>
+此次曝出的ShellShock漏洞存在于Unix用户、Linux用户和系统管理员常常使用的GNU Bourne Again Shell（Bash）中，是一个允许远程执行代码的严重安全漏洞，其范围涵盖了绝大部分的Unix类操作系统，如Linux、BSD、MAC OS X等等。<br>
+Bash是一款被用于控制众多Linux电脑上的命令提示符的软件，黑客可以利用Bash中的漏洞完全控制目标系统。据悉，该漏洞与Bash处理来自操作系统或调用Bash脚本的应用程序的环境变量有关。如果Bash是默认的系统shell，网络攻击者可以通过发送Web请求、secure shell、telnet会话或其它使用Bash执行脚本的程序攻击服务器和其它Unix和Linux设备。<br>
+Bash除了可以将shell变量导出为环境变量，还可以将shell函数导出为环境变量。当前版本的Bash通过以函数名作为环境变量名，以“（）{”开头的字串作为环境变量的值来将函数定义导出为环境变量。此次曝出的漏洞在于Bash处理“函数环境变量”的时候，并没有以函数结尾“}”为结束，而是一直执行其后的shell命令。<br>
 ShellShock漏洞可以直接在Bash支持的Web CGI环境下远程执行任意命令，攻击面广，影响范围大，一些路由器、堡垒机、VPN等网络设备将会是影响重灾区。而此前的&quot;Heartbleed bug&quot;漏洞则仅能够允许黑客监控用户电脑，但不会取得控制权。</p>
-<p><strong>路人甲的Case</strong>
-游戏购买平台, 用户可以购买道具, 但是没有对数值进行判断, 于是用户可以输入负数
-然而使用道具时没有判断正负, 于是用户拥有负数个道具并且不断做-1操作也不会有问题
+<p><strong>路人甲的Case</strong><br>
+游戏购买平台, 用户可以购买道具, 但是没有对数值进行判断, 于是用户可以输入负数<br>
+然而使用道具时没有判断正负, 于是用户拥有负数个道具并且不断做-1操作也不会有问题<br>
 结果就是攻击者获得了大量的道具，并对数据库的完整性产生破坏。</p>
-<p><strong>路人乙的Case</strong>
-微信公众号开发: 用户管理文档中找到了获取用户基本信息
-在构造sql语句的时候，要特别注意单引号的使用，你看你这里在每个变量的两边显式地加入了单引号，那要是变量的字符串里本身就包含单引号怎么办呢？
-啊，变量的值怎么可能会有单引号啊，这一点我没想到诶。
-怎么不可能？你这里的值是微信用户的信息对吧，万一哪个家伙无聊在昵称里加了个单引号呢，这完全是可能的，这种时候你的sql语句就会被这个单引号提前封闭，就会产生语法错误，也就无法正常地执行了。更要命的是，这个时候用户单引号后面的部分就成为了sql命令的一部分被执行了，万一来个drop database之类的，再加个单引号把原来的部分还原，那这就成了典型的注入攻击了。到时候你哭都来不及。
-哇靠，原来还有这种操作啊，我如梦初醒，不觉后背发凉。之前听老大提起过在php时代著名的注入攻击的案例，没想到今天自己竟差点犯了这个错误，真是罪过。
-老大紧接着又指出另一个问题：你在接收到微信服务器返回的用户信息列表时，有检查它的类型吗？
-我有点疑惑，这个类型不是在微信的文档里写好的嘛，只能是JSON啊，难道这也需要检查吗？
-老大貌似看出了我的疑虑，问到：万一用户的信息里确实有一些特殊的字符，没办法用JSON的方式传输呢？是不是需要先将JSON做个序列化再传输呢？而你没有判断返回值的类型，完全按照JSON的格式来处理，这样后面有可能会出错的。
-我还是有点疑惑，不就是个昵称嘛，能有什么特别的字符呢？
-老大看了看我，建议我现在去试下微信修改昵称的功能。这不看还真不知道，在改昵称的时候原来可以插入表情的啊，还不止是微信官方提供的表情，而是能添加自己私藏的任意表情，表情是海量的，而JSON能识别的字符集是有限的，这么一来也就自然会出现一些JSON无法识别的字符。
+<p><strong>路人乙的Case</strong><br>
+微信公众号开发: 用户管理文档中找到了获取用户基本信息<br>
+在构造sql语句的时候，要特别注意单引号的使用，你看你这里在每个变量的两边显式地加入了单引号，那要是变量的字符串里本身就包含单引号怎么办呢？<br>
+啊，变量的值怎么可能会有单引号啊，这一点我没想到诶。<br>
+怎么不可能？你这里的值是微信用户的信息对吧，万一哪个家伙无聊在昵称里加了个单引号呢，这完全是可能的，这种时候你的sql语句就会被这个单引号提前封闭，就会产生语法错误，也就无法正常地执行了。更要命的是，这个时候用户单引号后面的部分就成为了sql命令的一部分被执行了，万一来个drop database之类的，再加个单引号把原来的部分还原，那这就成了典型的注入攻击了。到时候你哭都来不及。<br>
+哇靠，原来还有这种操作啊，我如梦初醒，不觉后背发凉。之前听老大提起过在php时代著名的注入攻击的案例，没想到今天自己竟差点犯了这个错误，真是罪过。<br>
+老大紧接着又指出另一个问题：你在接收到微信服务器返回的用户信息列表时，有检查它的类型吗？<br>
+我有点疑惑，这个类型不是在微信的文档里写好的嘛，只能是JSON啊，难道这也需要检查吗？<br>
+老大貌似看出了我的疑虑，问到：万一用户的信息里确实有一些特殊的字符，没办法用JSON的方式传输呢？是不是需要先将JSON做个序列化再传输呢？而你没有判断返回值的类型，完全按照JSON的格式来处理，这样后面有可能会出错的。<br>
+我还是有点疑惑，不就是个昵称嘛，能有什么特别的字符呢？<br>
+老大看了看我，建议我现在去试下微信修改昵称的功能。这不看还真不知道，在改昵称的时候原来可以插入表情的啊，还不止是微信官方提供的表情，而是能添加自己私藏的任意表情，表情是海量的，而JSON能识别的字符集是有限的，这么一来也就自然会出现一些JSON无法识别的字符。<br>
 看到这，我算是相信了，于是又把类型检查给加上了，并且当接收到的类型是字符串时，对其进行了处理，消除了里面可能存在的非JSON字符。老大看了看我，这次算是露出了比较满意的表情。</p>
 <p>最后，又检查了一遍，为了验证刚才老大的两个想法，我还特意加了一个记录日志的操作，看看接收到的信息到底都是些啥。确认无误后，老大把程序更新到了线上。两三分钟后，更新完成，我迫不及待地尝试了下这个新功能。说来您还真别不信，线上用户的公众号总共有两万多关注者，这些人里面居然真的有人在昵称里使用了单引号，而且这类人还不少，大概三四百人里就有一个。而且返回的用户信息列表居然真的不全是JSON格式的，而是有部分string格式的，将这些string解析后得到的JSON里面，确实包含了一些无法识别的字符。</p>
-<h3 id="-4">总结</h3>
-<p>对于WEB程序开发人员来说，“永远不要相信用户的输入”这条准则可以引申为“永远不要相信客户端信息”，客户端信息包括请求的URL、cookie、提交的表单等，总之WebRequest的所有属性都不要相信。
+<h3 id="%E6%80%BB%E7%BB%93" tabindex="-1">总结</h3>
+<p>对于WEB程序开发人员来说，“永远不要相信用户的输入”这条准则可以引申为“永远不要相信客户端信息”，客户端信息包括请求的URL、cookie、提交的表单等，总之WebRequest的所有属性都不要相信。<br>
 例如，有的设计者期望通使用客户端的JavaScript脚本进行输入数据检查，在服务端就省略了检查，这种做法是错误的。因为JavaScript可能被浏览器禁用，或者被客户端防火墙禁用，或者某种特殊的浏览器忽略了你的JavaScript，这些都会使客户端JavaScript失效或部分失效。</p>
 <p>正确的做法是在客户端和服务端都作相同的检查，客户端的检查的目的是为了界面的友好、节省用户的时间，服务端的检查才是为了数据的完整和安全。</p>
-<h3 id="emmmm">Emmmm</h3>
-<p>生动的一堂课
-有时候听过那些话, 但是没有经历的话, 还是有点差别
+<h3 id="emmmm" tabindex="-1">Emmmm</h3>
+<p>生动的一堂课<br>
+有时候听过那些话, 但是没有经历的话, 还是有点差别<br>
 经历了之后, 你就会发现, 你宁愿自己不让它发生🙃</p>
-<p>收藏一个有趣的链接：
-<a href="https://softwareengineering.stackexchange.com/questions/46716/what-technical-details-should-a-programmer-of-a-web-application-consider-before">What should every programmer know about web development?</a>
-其它：
-<a href="http://www.cnblogs.com/kucongzhi/archive/2010/07/12/1775796.html">可爱的路人甲Case</a>
+<p>收藏一个有趣的链接：<br>
+<a href="https://softwareengineering.stackexchange.com/questions/46716/what-technical-details-should-a-programmer-of-a-web-application-consider-before">What should every programmer know about web development?</a><br>
+其它：<br>
+<a href="http://www.cnblogs.com/kucongzhi/archive/2010/07/12/1775796.html">可爱的路人甲Case</a><br>
 <a href="https://coolboygym.github.io/2017/11/03/do-not-trust-user-input/">可爱的路人乙Case</a></p>
 
 </div>
@@ -638,7 +647,7 @@ ShellShock漏洞可以直接在Bash支持的Web CGI环境下远程执行任意�
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-03-28-dont-believe-consumer-input/` was built on 2026-02-15T02:38:54.788Z -->
+		<!-- This page `/blog/2018-03-28-dont-believe-consumer-input/` was built on 2026-02-15T13:56:14.185Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

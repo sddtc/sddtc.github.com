@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="mac">Mac终端的配置文件定义与修改</h1>
+<h1>Mac终端的配置文件定义与修改</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2015-08-01">01 August 2015</time></li>
@@ -570,26 +574,31 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="mac-2">Mac启动加载文件位置:可设置环境变量</h3>
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#mac%E5%90%AF%E5%8A%A8%E5%8A%A0%E8%BD%BD%E6%96%87%E4%BB%B6%E4%BD%8D%E7%BD%AE%3A%E5%8F%AF%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F">Mac启动加载文件位置:可设置环境变量</a></li></ul>
+      </div>
+</aside>
+  <h3 id="mac%E5%90%AF%E5%8A%A8%E5%8A%A0%E8%BD%BD%E6%96%87%E4%BB%B6%E4%BD%8D%E7%BD%AE%3A%E5%8F%AF%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F" tabindex="-1">Mac启动加载文件位置:可设置环境变量</h3>
 <ol>
-<li>首先要知道你使用的 <code>Mac OS X</code> 是什么样的 <code>Shell</code>
+<li>首先要知道你使用的 <code>Mac OS X</code> 是什么样的 <code>Shell</code><br>
 使用命令:</li>
 </ol>
-<pre class="language-vim" tabindex="0"><code class="language-vim">echo $SHELL</code></pre>
-<p>如果输出的是: <code>csh</code> 或者是 <code>tcsh</code>，那么你用的就是 <code>C Shell</code>;
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">echo $SHELL</code></pre>
+<p>如果输出的是: <code>csh</code> 或者是 <code>tcsh</code>，那么你用的就是 <code>C Shell</code>;<br>
 如果输出的是: <code>bash, sh, zs</code>, 那么你的用的可能就是 <code>Bourne Shell</code> 的一个变种.</p>
 <p><code>Mac OS X 10.2</code> 之前默认的是 <code>C Shell</code>. <code>Mac OS X 10.3</code> 之后默认的是 <code>Bourne Shell</code>.</p>
 <ol start="2">
-<li>如果是 <code>Bourne Shell</code>, 那么你可以把你要添加的环境变量添加到你主目录下面的 <code>.profile</code> 或者 <code>.bash_profile</code>,
+<li>如果是 <code>Bourne Shell</code>, 那么你可以把你要添加的环境变量添加到你主目录下面的 <code>.profile</code> 或者 <code>.bash_profile</code>,<br>
 如果存在没有关系添加进去即可, 如果没有生成一个.</li>
 </ol>
-<p>2.1. <code>/etc/profile</code> (建议不修改这个文件): 全局（公有）配置，不管是哪个用户，登录时都会读取该文件.
-2.2. <code>/etc/bashrc</code> (一般在这个文件中添加系统级环境变量): 全局（公有）配置， <code>bash shell</code> 执行时，不管是何种方式，都会读取此文件.
+<p>2.1. <code>/etc/profile</code> (建议不修改这个文件): 全局（公有）配置，不管是哪个用户，登录时都会读取该文件.<br>
+2.2. <code>/etc/bashrc</code> (一般在这个文件中添加系统级环境变量): 全局（公有）配置， <code>bash shell</code> 执行时，不管是何种方式，都会读取此文件.<br>
 2.3. <code>~/.bash\_profile</code> (一般在这个文件中添加用户级环境变量):（注：<code>Linux</code> 里面是 <code>.bashrc</code> 而 <code>Mac</code> 是 <code>.bash\_profile</code>）</p>
 <p>若 <code>bash shell</code> 是以 <code>login</code> 方式执行时，才会读取此文件.该文件仅仅执行一次!</p>
-<p>默认情况下,他设置一些环境变量: 设置终端配色, 设置命令别名 <code>alias ll='ls -la'</code>,
+<p>默认情况下,他设置一些环境变量: 设置终端配色, 设置命令别名 <code>alias ll='ls -la'</code>,<br>
 设置环境变量： <code>export PATH=/opt/local/bin:/opt/local/sbin:$PATH</code></p>
-<pre class="language-vim" tabindex="0"><code class="language-vim">#<span class="token keyword">source</span> <span class="token operator">/</span>etc<span class="token operator">/</span><span class="token keyword">profile</span>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">#<span class="token keyword">source</span> <span class="token operator">/</span>etc<span class="token operator">/</span><span class="token keyword">profile</span>
 $<span class="token keyword">source</span> <span class="token operator">.</span>bash_profile（这是文件名）</code></pre>
 
 </div>
@@ -617,7 +626,7 @@ $<span class="token keyword">source</span> <span class="token operator">.</span>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-08-01-mac-profile-path/` was built on 2026-02-15T02:38:54.776Z -->
+		<!-- This page `/blog/2015-08-01-mac-profile-path/` was built on 2026-02-15T13:56:14.181Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

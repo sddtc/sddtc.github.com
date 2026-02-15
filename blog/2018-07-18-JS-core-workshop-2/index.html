@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="js-the-core-2">JS The Core (2)</h1>
+<h1>JS The Core (2)</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2018-07-18">18 July 2018</time></li>
@@ -570,18 +574,23 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#def.-9%3A-lexical-environment%3A-a-lexical-environment-is-a-structure-used-to-define-association-between-identifiers-appearing-in-the-context-with-their-values.-each-environment-can-have-a-reference-to-an-optional-parent-environment">Def. 9: Lexical environment: A lexical environment is a structure used to define association between identifiers appearing in the context with their values. Each environment can have a reference to an optional parent environment</a></li><li><a href="#def.-10%3A-identifier-resolution%3A-the-process-of-resolving-a-variable-(binding)-in-an-environment-chain.-an-unresolved-binding-results-to-referenceerror">Def. 10: Identifier resolution: the process of resolving a variable (binding) in an environment chain. An unresolved binding results to ReferenceError</a></li><li><a href="#def.-11%3A-first-class-function%3A-a-function-which-can-participate-as-a-normal-data%3A-be-stored-in-a-variable%2C-passed-as-an-argument%2C-or-returned-as-a-value-from-another-function.">Def. 11: First-class function: a function which can participate as a normal data: be stored in a variable,  passed as an argument,  or returned as a value from another function.</a></li><li><a href="#def.-12%3A-free-variable%3A-a-variable-which-is-neither-a-parameter%2C-nor-a-local-variable-of-this-function.">Def. 12: Free variable: a variable which is neither a parameter,  nor a local variable of this function.</a></li><li><a href="#def.-13%3A-static-scope%3A-a-language-implements-static-scope%2C-if-only-by-looking-at-the-source-code-one-can-determine-in-which-environment-a-binding-is-resolved.">Def. 13: Static scope: a language implements static scope,  if only by looking at the source code one can determine in which environment a binding is resolved.</a></li><li><a href="#def.-14%3A-closure%3A-a-closure-is-a-function-which-captures-the-environment-where-it%E2%80%99s-defined.-further-this-environment-is-used-for-identifier-resolution.">Def. 14: Closure: A closure is a function which captures the environment where it’s defined. Further this environment is used for identifier resolution.</a></li></ul>
+      </div>
+</aside>
   <p><strong>This article covers ES2017+ runtime system.</strong></p>
-<p><a href="#Environment">丨- Environment</a>
-<a href="#Closure">丨- Closure</a>
+<p><a href="#Environment">丨- Environment</a><br>
+<a href="#Closure">丨- Closure</a><br>
 <a href="#This">丨— This</a></p>
-<h1 id="environment">Environment</h1>
+<h1 id="environment" tabindex="-1">Environment</h1>
 <p>每个<em>execution context</em>都有一个关联的<em>lexical environment</em>.</p>
 <blockquote>
-<h3 id="def-9-lexical-environment-a-lexical-environment-is-a-structure-used-to-define-association-between-identifiers-appearing-in-the-context-with-their-values-each-environment-can-have-a-reference-to-an-optional-parent-environment">Def. 9: Lexical environment: A lexical environment is a structure used to define association between identifiers appearing in the context with their values. Each environment can have a reference to an optional parent environment</h3>
+<h3 id="def.-9%3A-lexical-environment%3A-a-lexical-environment-is-a-structure-used-to-define-association-between-identifiers-appearing-in-the-context-with-their-values.-each-environment-can-have-a-reference-to-an-optional-parent-environment" tabindex="-1">Def. 9: Lexical environment: A lexical environment is a structure used to define association between identifiers appearing in the context with their values. Each environment can have a reference to an optional parent environment</h3>
 </blockquote>
-<p>所以在一个<em>scope</em>里,  <em>environment</em>是变量,  方法,  类的存储空间. 从技术上讲,  environment是一组由<em>environment record</em>(将<em>identifiers</em>映射到值的实际存储表)和对父项的引用(可以为空)组成.
+<p>所以在一个<em>scope</em>里,  <em>environment</em>是变量,  方法,  类的存储空间. 从技术上讲,  environment是一组由<em>environment record</em>(将<em>identifiers</em>映射到值的实际存储表)和对父项的引用(可以为空)组成.<br>
 例如:</p>
-<pre><code>let x = 10;
+<pre><code class="hljs">let x = 10;
 let y = 20;
 function foo(z) {
   let x = 100;
@@ -592,13 +601,13 @@ console.log(foo(30)); //150;
 </code></pre>
 <p>从逻辑上讲,  这提醒我们上面讨论过的<em>prototype chain</em>. <em>identifiers resolution</em>的规则非常相似: 如果在自己的<em>environment</em>中找不到变量, 则会尝试在<em>parent environment</em>中, 父级的父级中查找它,  等等 - 直到<em>the whole environment</em>为止.</p>
 <blockquote>
-<h3 id="def-10-identifier-resolution-the-process-of-resolving-a-variable-binding-in-an-environment-chain-an-unresolved-binding-results-to-referenceerror">Def. 10: Identifier resolution: the process of resolving a variable (binding) in an environment chain. An unresolved binding results to ReferenceError</h3>
+<h3 id="def.-10%3A-identifier-resolution%3A-the-process-of-resolving-a-variable-(binding)-in-an-environment-chain.-an-unresolved-binding-results-to-referenceerror" tabindex="-1">Def. 10: Identifier resolution: the process of resolving a variable (binding) in an environment chain. An unresolved binding results to ReferenceError</h3>
 </blockquote>
 <p>这解释了为什么变量x被解析为100,  但不是10 - 它直接在foo的自己的<em>environment</em>中找到; 为什么我们可以访问参数z - 它也只存储在<em>activation environment</em>中; 以及为什么我们可以访问变量y - 它在<em>parent environment</em>中找到. 与<em>prototypes</em>类似, 几个<em>child environments</em>可以共享相同的<em>parent environment</em>:</p>
 <p>例如,  两个<em>global functions</em>共享相同的<em>global environment</em>. <em>environment</em>记录因<em>type</em>而异. 有<em>object environment</em>记录和<em>declarative environment</em>记录. 在<em>declarative</em>记录之上还有<em>function environment</em>记录和<em>module environment</em>记录. 记录的每种类型都只针对它的<em>properties</em>.</p>
-<p>但是, <em>identifier resolution</em>的通用机制在所有<em>environments</em>中都很常见, 并且不依赖于记录的类型. <em>object environment</em>记录可以是<em>global environment</em>的记录. 这样的记录也有关联的绑定对象,  它可以存储记录中的一些<em>properties</em>,  但不是其他属性, 反之亦然. 绑定对象也可以作为<code>this</code>提供.
+<p>但是, <em>identifier resolution</em>的通用机制在所有<em>environments</em>中都很常见, 并且不依赖于记录的类型. <em>object environment</em>记录可以是<em>global environment</em>的记录. 这样的记录也有关联的绑定对象,  它可以存储记录中的一些<em>properties</em>,  但不是其他属性, 反之亦然. 绑定对象也可以作为<code>this</code>提供.<br>
 例如:</p>
-<pre><code>var xEnvironment = 10;
+<pre><code class="hljs">var xEnvironment = 10;
 let yEnvironment = 20;
 
 console.log(
@@ -619,18 +628,18 @@ console.log(
 </code></pre>
 <p>请注意, 绑定对象的存在是为了覆盖<em>legacy constructs</em>,  如<code>var</code>-declarations和<code>with</code>-statements,  它们也将它们的对象作为绑定对象提供. 当<em>environment</em>被表示为简单对象时,  这些都是历史原因.</p>
 <p>目前, <em>environment model</em>更加优化, 但结果我们无法再访问绑定像访问<em>properties</em>. 我们已经看到<em>environment</em>是如何通过父链接相关的. 现在我们将看到一个<em>environment</em>如何<em>outlive</em>创造它的<em>context</em>. 这是我们即将讨论的闭包机制的基础.</p>
-<h1 id="closure">Closure</h1>
+<h1 id="closure" tabindex="-1">Closure</h1>
 <p>ECMAScript中的函数是一流的. Functions是函数式编程的基础, 它们在JavaScript中被很好地支持.</p>
 <blockquote>
-<h3 id="def-11-first-class-function-a-function-which-can-participate-as-a-normal-data-be-stored-in-a-variable-passed-as-an-argument-or-returned-as-a-value-from-another-function">Def. 11: First-class function: a function which can participate as a normal data: be stored in a variable,  passed as an argument,  or returned as a value from another function.</h3>
+<h3 id="def.-11%3A-first-class-function%3A-a-function-which-can-participate-as-a-normal-data%3A-be-stored-in-a-variable%2C-passed-as-an-argument%2C-or-returned-as-a-value-from-another-function." tabindex="-1">Def. 11: First-class function: a function which can participate as a normal data: be stored in a variable,  passed as an argument,  or returned as a value from another function.</h3>
 </blockquote>
-<p>与一流的functions的概念相关的是所谓的&quot;Funarg问题&quot;(&quot;A problem of a functional argument&quot;),  它出现在functions不得不处理<em>free variables</em>时.</p>
+<p>与一流的functions的概念相关的是所谓的&quot;Funarg问题&quot;(“A problem of a functional argument”),  它出现在functions不得不处理<em>free variables</em>时.</p>
 <blockquote>
-<h3 id="def-12-free-variable-a-variable-which-is-neither-a-parameter-nor-a-local-variable-of-this-function">Def. 12: Free variable: a variable which is neither a parameter,  nor a local variable of this function.</h3>
+<h3 id="def.-12%3A-free-variable%3A-a-variable-which-is-neither-a-parameter%2C-nor-a-local-variable-of-this-function." tabindex="-1">Def. 12: Free variable: a variable which is neither a parameter,  nor a local variable of this function.</h3>
 </blockquote>
-<p>让我们来分析下Funarg问题:
+<p>让我们来分析下Funarg问题:<br>
 例如:</p>
-<pre><code>let x = 10;
+<pre><code class="hljs">let x = 10;
 
 function foo() {
   console.log(x);
@@ -644,18 +653,18 @@ function bar(funArg) {
 // Pass `foo` as an argument to `bar`.
 bar(foo);
 </code></pre>
-<p>对于函数foo, 变量x是<em>free variables</em>. 当foo函数被激活时(通过funArg参数) - 它应该在哪里解析x的绑定？从创建函数的外部作用域或调用者作用域当函数被调用时？正如我们所看到的, 调用者即bar函数也为x提供了绑定 - 值为20.
+<p>对于函数foo, 变量x是<em>free variables</em>. 当foo函数被激活时(通过funArg参数) - 它应该在哪里解析x的绑定？从创建函数的外部作用域或调用者作用域当函数被调用时？正如我们所看到的, 调用者即bar函数也为x提供了绑定 - 值为20.<br>
 上述用例被称为<strong>downwards funarg problem</strong>(向下漏斗问题), 即在确定绑定的正确环境时的模糊性：它应该是创建时的环境还是被调用时的环境？ 这是通过使用<em>static scope</em>的协议解决的, 也就是创建时的<em>scope</em></p>
 <blockquote>
-<h3 id="def-13-static-scope-a-language-implements-static-scope-if-only-by-looking-at-the-source-code-one-can-determine-in-which-environment-a-binding-is-resolved">Def. 13: Static scope: a language implements static scope,  if only by looking at the source code one can determine in which environment a binding is resolved.</h3>
+<h3 id="def.-13%3A-static-scope%3A-a-language-implements-static-scope%2C-if-only-by-looking-at-the-source-code-one-can-determine-in-which-environment-a-binding-is-resolved." tabindex="-1">Def. 13: Static scope: a language implements static scope,  if only by looking at the source code one can determine in which environment a binding is resolved.</h3>
 </blockquote>
 <p><em>static scope</em>(静态作用域)有时也被称为<em>lexical scope</em>(词法作用域), 而后被称为<em>lexical environments</em>. 从技术上讲, <em>static scope</em>是通过捕获<em>function is created</em>的环境来实现的.</p>
 <blockquote>
-<h3 id="def-14-closure-a-closure-is-a-function-which-captures-the-environment-where-it-s-defined-further-this-environment-is-used-for-identifier-resolution">Def. 14: Closure: A closure is a function which captures the environment where it’s defined. Further this environment is used for identifier resolution.</h3>
+<h3 id="def.-14%3A-closure%3A-a-closure-is-a-function-which-captures-the-environment-where-it%E2%80%99s-defined.-further-this-environment-is-used-for-identifier-resolution." tabindex="-1">Def. 14: Closure: A closure is a function which captures the environment where it’s defined. Further this environment is used for identifier resolution.</h3>
 </blockquote>
-<p>在<em>a new fresh activation</em>环境中调用函数,  该环境存储局部变量和参数. <em>the activation environment</em>的<em>parent</em>环境设置为函数的闭包环境, 从而产生<em>the lexical scope</em>语义.
+<p>在<em>a new fresh activation</em>环境中调用函数,  该环境存储局部变量和参数. <em>the activation environment</em>的<em>parent</em>环境设置为函数的闭包环境, 从而产生<em>the lexical scope</em>语义.<br>
 例如:</p>
-<pre><code>function fooFoo() {
+<pre><code class="hljs">function fooFoo() {
   let x = 10;
 
   function bar() {
@@ -673,9 +682,9 @@ barFoo();// 10,  not 20!
 <p>同样, 从技术上讲, 它与捕获<em>the definition environment</em>的机制没有区别. 就在这种情况下, 如果我们没有关闭, fooFoo的<em>the activation environment</em>将被<em>destroyed</em>.</p>
 <p>但是我们捕获了它, 所以它不能被<em>deallocated</em>, 并且被保留 - 以支持<em>static scope</em>语义.</p>
 <p>通常对闭包有一个不完全的理解 - 通常开发人员只依照<em>upward</em>的funarg问题来考虑闭包(实际上它确实更有意义).但是, 正如我们所看到的, <em>upward</em>和<em>downwards</em>的funarg问题的技术机制完全相同 - 并且是<em>the static scope</em>的机制.</p>
-<p>如上所述, 与<em>prototypes</em>类似, 可以跨多个闭包共享相同的父环境. 这允许访问和改变共享数据,
+<p>如上所述, 与<em>prototypes</em>类似, 可以跨多个闭包共享相同的父环境. 这允许访问和改变共享数据,<br>
 例如：</p>
-<pre><code>function createCounter() {
+<pre><code class="hljs">function createCounter() {
   let count = 0;
 
   return {
@@ -691,11 +700,11 @@ console.log(
   counter.increment(),  //1
 );
 </code></pre>
-<p>由于在包含count变量的作用域内创建了闭包 <em>increment</em>和<em>decrement</em>, 因此它们<em>share this parent scope</em>. 也就是说, 捕获总是&quot;by-reference&quot;发生 - 意味着存储了对整个父环境的引用.
+<p>由于在包含count变量的作用域内创建了闭包 <em>increment</em>和<em>decrement</em>, 因此它们<em>share this parent scope</em>. 也就是说, 捕获总是&quot;by-reference&quot;发生 - 意味着存储了对整个父环境的引用.<br>
 某些语言可以捕获&quot;by-value&quot;, <em>making copy of</em> 被捕获的<em>variable</em>, 并且不允许在父作用域中更改它.</p>
 <p>但是在Javascript中, 要记得, 它始终是对父作用域的引用. <em>implementations</em>可以优化该步骤, 不捕获整个<em>environment</em>. 捕获<em>used free-variables</em>, 但它们仍然保持<em>parent scopes</em>中可变数据的不变性.</p>
 <p>所有<em>identifiers</em>都是<em>statically scoped</em>.但是有一个值在ECMAScript中是<em>dynamically scoped</em>.它就是<em>this</em></p>
-<h1 id="this">This</h1>
+<h1 id="this" tabindex="-1">This</h1>
 <p>TBC</p>
 
 </div>
@@ -723,7 +732,7 @@ console.log(
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-07-18-JS-core-workshop-2/` was built on 2026-02-15T02:38:54.789Z -->
+		<!-- This page `/blog/2018-07-18-JS-core-workshop-2/` was built on 2026-02-15T13:56:14.185Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

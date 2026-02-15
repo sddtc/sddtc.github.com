@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="fastify">Fastify 模块化项目实战(一)</h1>
+<h1>Fastify 模块化项目实战(一)</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2026-02-12">12 February 2026</time></li>
@@ -572,9 +576,14 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h2 id="fastify-nestjs-expressjs-koa">为什么选择 Fastify 而非 NestJS, ExpressJS, Koa?</h2>
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-fastify-%E8%80%8C%E9%9D%9E-nestjs%2C-expressjs%2C-koa%3F">为什么选择 Fastify 而非 NestJS, ExpressJS, Koa?</a></li><li><a href="#%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BA-fastify-%E9%A1%B9%E7%9B%AE%E4%B9%8B%E5%89%8D%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E7%9A%84%E4%B8%89%E4%BB%B6%E4%BA%8B">开始搭建 Fastify 项目之前需要考虑的三件事</a><ul><li><a href="#%E9%80%89%E6%8B%A9js%E8%BF%98%E6%98%AFts%3F">选择JS还是TS?</a></li><li><a href="#%E9%80%89%E6%8B%A9common-js-%E8%BF%98%E6%98%AF-es-module%3F">选择Common JS 还是 ES Module?</a></li><li><a href="#%E9%80%89%E6%8B%A9node%E5%8E%9F%E7%94%9F%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E8%BF%98%E6%98%AF%E5%85%B6%E5%AE%83%3F">选择Node原生测试框架还是其它?</a></li></ul></li><li><a href="#%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BAfastify%E9%A1%B9%E7%9B%AE">开始搭建Fastify项目</a></li></ul>
+      </div>
+</aside>
+  <h2 id="%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-fastify-%E8%80%8C%E9%9D%9E-nestjs%2C-expressjs%2C-koa%3F" tabindex="-1">为什么选择 Fastify 而非 NestJS, ExpressJS, Koa?</h2>
 <p>按照我的个人经验, 之前使用 ExpressJS 来搭建项目, 项目结构基本如下所示:</p>
-<pre class="language-txt" tabindex="0"><code class="language-txt">src/
+<pre class="language-txt" tabindex="0"><code class="hljs language-txt">src/
 └───── infrastructures/
     │   ├── db.js
     │   └── server.js
@@ -674,8 +683,8 @@ pre[class*="language-"] {
 <li>中间件采用新版洋葱模型</li>
 </ul>
 <p>然而 Fastify 的高性能以及插件机制吸引了我, 于是我打算基于 Fastify 开始搭建项目</p>
-<h2 id="fastify-2">开始搭建 Fastify 项目之前需要考虑的三件事</h2>
-<h3 id="js-ts">选择JS还是TS?</h3>
+<h2 id="%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BA-fastify-%E9%A1%B9%E7%9B%AE%E4%B9%8B%E5%89%8D%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E7%9A%84%E4%B8%89%E4%BB%B6%E4%BA%8B" tabindex="-1">开始搭建 Fastify 项目之前需要考虑的三件事</h2>
+<h3 id="%E9%80%89%E6%8B%A9js%E8%BF%98%E6%98%AFts%3F" tabindex="-1">选择JS还是TS?</h3>
 <table>
 <thead>
 <tr>
@@ -738,26 +747,26 @@ pre[class*="language-"] {
 </tbody>
 </table>
 <p>对于复用价值来说, 选择TS是必须的</p>
-<h3 id="common-js-es-module">选择Common JS 还是 ES Module?</h3>
+<h3 id="%E9%80%89%E6%8B%A9common-js-%E8%BF%98%E6%98%AF-es-module%3F" tabindex="-1">选择Common JS 还是 ES Module?</h3>
 <p>我们都知道JS有两种模块系统</p>
 <blockquote>
 <p>ES Modules (ESM) 是 ECMAScript 标准化的现代 JavaScript 模块系统，使用 import/export，支持静态分析、异步加载和单例模式，适用于浏览器和新版 Node.js。CommonJS (CJS) 是 Node.js 传统的默认系统，使用 require/module.exports，同步加载模块，主要用于服务器端。</p>
 </blockquote>
-<p>所以它们之间的本质区别是底层机制的差异:
+<p>所以它们之间的本质区别是底层机制的差异:<br>
 CSJ是运行时加载</p>
-<pre class="language-txt" tabindex="0"><code class="language-txt">require() 是函数
+<pre class="language-txt" tabindex="0"><code class="hljs language-txt">require() 是函数
 → 运行到这行才加载
 → 动态加载
 → 无法静态分析依赖关系</code></pre>
 <p>而ESJ（编译期静态分析）</p>
-<pre class="language-txt" tabindex="0"><code class="language-txt">import 是语法
+<pre class="language-txt" tabindex="0"><code class="hljs language-txt">import 是语法
 → 编译期分析依赖
 → 构建依赖图
 → 支持 Tree-shaking
 → 支持模块优化</code></pre>
 <p>在语法层面:<br>
 CommonJS:</p>
-<pre class="language-js" tabindex="0"><code class="language-js"><span class="token comment">// 导入</span>
+<pre class="language-js" tabindex="0"><code class="hljs language-js"><span class="token comment">// 导入</span>
 <span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span>
 
 <span class="token comment">// 导出</span>
@@ -765,14 +774,14 @@ module<span class="token punctuation">.</span>exports <span class="token operato
   <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
 <p>ES Module:</p>
-<pre class="language-js" tabindex="0"><code class="language-js"><span class="token comment">// 导入</span>
+<pre class="language-js" tabindex="0"><code class="hljs language-js"><span class="token comment">// 导入</span>
 <span class="token keyword">import</span> fs <span class="token keyword">from</span> <span class="token string">'fs'</span>
 
 <span class="token comment">// 导出</span>
 <span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>
 <p>于是我选择了ESM来搭建项目模块, 这也是当下的工程趋势</p>
-<h3 id="node">选择Node原生测试框架还是其它?</h3>
+<h3 id="%E9%80%89%E6%8B%A9node%E5%8E%9F%E7%94%9F%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E8%BF%98%E6%98%AF%E5%85%B6%E5%AE%83%3F" tabindex="-1">选择Node原生测试框架还是其它?</h3>
 <p>谈到JS测试框架, 立马能想到 Jest, Vitest, Mocha, Chai, 在JS生态里, 一般在前端会测试组件渲染, 在后端是一些简单的断言, 例如测试 Rest API 的请求, 工具库的单元测试等, 接触了 Fastify 我了解到了 Node 原生测试方法.</p>
 <table>
 <thead>
@@ -842,7 +851,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </table>
 <p>举几个简单的例子吧, 在 vitest 里:<br>
 前端的测试:</p>
-<pre class="language-js" tabindex="0"><code class="language-js"><span class="token comment">// 使用 vitest 的方法</span>
+<pre class="language-js" tabindex="0"><code class="hljs language-js"><span class="token comment">// 使用 vitest 的方法</span>
 <span class="token keyword">import</span> <span class="token punctuation">{</span> describe<span class="token punctuation">,</span> expect<span class="token punctuation">,</span> vi <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"vitest"</span>
 <span class="token keyword">import</span> <span class="token punctuation">{</span> fireEvent<span class="token punctuation">,</span> render<span class="token punctuation">,</span> screen<span class="token punctuation">,</span> waitFor <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@testing-library/react"</span>
 <span class="token keyword">import</span> App <span class="token keyword">from</span> <span class="token string">"../../src/components/App"</span>
@@ -881,7 +890,7 @@ vi<span class="token punctuation">.</span><span class="token function">mock</spa
   <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
 <p>后端的测试例子:</p>
-<pre class="language-js" tabindex="0"><code class="language-js"><span class="token comment">// vitest 的方法</span>
+<pre class="language-js" tabindex="0"><code class="hljs language-js"><span class="token comment">// vitest 的方法</span>
 <span class="token keyword">import</span> <span class="token punctuation">{</span> beforeEach<span class="token punctuation">,</span> describe<span class="token punctuation">,</span> it<span class="token punctuation">,</span> vi<span class="token punctuation">,</span> expect <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"vitest"</span>
 <span class="token keyword">import</span> notesService <span class="token keyword">from</span> <span class="token string">"../../src/services/notesService"</span>
 
@@ -952,7 +961,7 @@ vi<span class="token punctuation">.</span><span class="token function">mock</spa
   <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
 <p>而最近使用了 node:test, 例如:</p>
-<pre class="language-ts" tabindex="0"><code class="language-ts"><span class="token keyword">import</span> <span class="token punctuation">{</span> describe<span class="token punctuation">,</span> it <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'node:test'</span>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">import</span> <span class="token punctuation">{</span> describe<span class="token punctuation">,</span> it <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'node:test'</span>
 <span class="token keyword">import</span> assert <span class="token keyword">from</span> <span class="token string">'node:assert'</span>
 <span class="token keyword">import</span> <span class="token punctuation">{</span> build<span class="token punctuation">,</span> expectValidationError <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'../../../../helper.js'</span>
 
@@ -988,7 +997,7 @@ vi<span class="token punctuation">.</span><span class="token function">mock</spa
     <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
 <p>使用之后也很顺手, 一个是没有外部依赖, 另外也能满足需求, 所以目前我也并未使用其它测试框架.</p>
-<h2 id="fastify-3">开始搭建Fastify项目</h2>
+<h2 id="%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BAfastify%E9%A1%B9%E7%9B%AE" tabindex="-1">开始搭建Fastify项目</h2>
 <p>TBC</p>
 
 </div>
@@ -1016,7 +1025,7 @@ vi<span class="token punctuation">.</span><span class="token function">mock</spa
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2026-02-12-fastify-modules-tutorials-1/` was built on 2026-02-15T02:38:54.796Z -->
+		<!-- This page `/blog/2026-02-12-fastify-modules-tutorials-1/` was built on 2026-02-15T13:56:14.190Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

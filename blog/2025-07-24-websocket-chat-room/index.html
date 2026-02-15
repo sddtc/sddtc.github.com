@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="websocket">搭建基于websocket的在线多人聊天室</h1>
+<h1>搭建基于websocket的在线多人聊天室</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2025-07-24">24 July 2025</time></li>
@@ -571,6 +575,9 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
+<aside>
+  
+</aside>
   <p>不论是chatGPT还是DeepSeek, 目前用户的交互界面仍然是以聊天框的形式出现, 其背后都离不开WebSocket技术.</p>
 <blockquote>
 <p>WebSocket 是一种在客户端和服务器之间提供全双工通信的协议，允许实时、双向的数据传输。它通过持久连接而不是传统的请求-响应模式，减少了延迟和网络流量，适用于需要实时交互的应用，如在线游戏和聊天应用.</p>
@@ -578,7 +585,7 @@ pre[class*="language-"] {
 <p>我所喜欢的很多网页游戏也都是用了它, 比如<a href="https://multiplayerpiano.com/">多人在线弹钢琴</a>. 突然发现书签里&quot;useless-but-fun&quot;文件夹的好多链接如今也无法访问了, 我猜测归根到底一些平台改变了收费模式, 作者如今还没有更新它们.<br>
 最近也是完成了一个在线聊天室, 撒花🎉</p>
 <blockquote>
-<p><a href="https://chat.sddtc.florist/">sddtc's chat room</a>.</p>
+<p><a href="https://chat.sddtc.florist/">sddtc’s chat room</a>.</p>
 </blockquote>
 <p>其中前后端分离两个仓库, 前端部署在<a href="https://vercel.com/home">Vercel平台</a>, 后端部署在<a href="https://www.render.com/">Render</a>, 数据存储部分用了 MongoDB Atlas.<br>
 一开始没有拆分项目, 然而Vercel平台的免费版本并不支持长链接, 它提供的后端平台是以 serverless 函数的形式出现. 也就意味着每次请求的处理都需要是无状态的. 所以思索之下拆分了前后端, 也初次尝试了Render这个平台. 目前体验还不错. 另外一个注意的点便是跨域的安全问题. 前后端部署在不同的域名之下, 如果使用cookie等安全规范严格的技术, 是要处理该问题的, 其中一个办法便是将它们放在统一的域名下. 所以有自己的域名还是有很多方便之处的.</p>
@@ -591,7 +598,7 @@ pre[class*="language-"] {
 </ul>
 <p><strong>后端项目使用:</strong></p>
 <ul>
-<li>socket.io</li>
+<li><a href="http://socket.io">socket.io</a></li>
 <li>express  nodeJS的web框架</li>
 <li><a href="https://mongoosejs.com/">mongoose</a>  管理mongoDB的ODM库</li>
 <li>MongoDB Atlas.  聊天记录和简单的用户管理用了下mongoDB的cloud平台存储</li>
@@ -624,7 +631,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2025-07-24-websocket-chat-room/` was built on 2026-02-15T02:38:54.796Z -->
+		<!-- This page `/blog/2025-07-24-websocket-chat-room/` was built on 2026-02-15T13:56:14.190Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

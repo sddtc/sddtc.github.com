@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="log4j">Log4j-业务日志输出规则实践</h1>
+<h1>Log4j-业务日志输出规则实践</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2015-09-08">08 September 2015</time></li>
@@ -570,16 +574,21 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="log4j-2">log4j 业务日志打印配置</h3>
-<p>日志通常分为两种：系统日志和业务数据日志
-Log4j由三个重要的组件构成：日志信息的优先级，日志信息的输出目的地，日志信息的输出格式。
-其中，Log4j提供的appender有以下几种：
-org.apache.log4j.ConsoleAppender（控制台），
-org.apache.log4j.FileAppender（文件），
-org.apache.log4j.DailyRollingFileAppender（每天产生一个日志文件），
-org.apache.log4j.RollingFileAppender（文件大小到达指定尺寸的时候产生一个新的文件），
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#log4j-%E4%B8%9A%E5%8A%A1%E6%97%A5%E5%BF%97%E6%89%93%E5%8D%B0%E9%85%8D%E7%BD%AE">log4j 业务日志打印配置</a></li></ul>
+      </div>
+</aside>
+  <h3 id="log4j-%E4%B8%9A%E5%8A%A1%E6%97%A5%E5%BF%97%E6%89%93%E5%8D%B0%E9%85%8D%E7%BD%AE" tabindex="-1">log4j 业务日志打印配置</h3>
+<p>日志通常分为两种：系统日志和业务数据日志<br>
+Log4j由三个重要的组件构成：日志信息的优先级，日志信息的输出目的地，日志信息的输出格式。<br>
+其中，Log4j提供的appender有以下几种：<br>
+org.apache.log4j.ConsoleAppender（控制台），<br>
+org.apache.log4j.FileAppender（文件），<br>
+org.apache.log4j.DailyRollingFileAppender（每天产生一个日志文件），<br>
+org.apache.log4j.RollingFileAppender（文件大小到达指定尺寸的时候产生一个新的文件），<br>
 org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim"><span class="token operator">/</span><span class="token operator">/</span>## <span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span>rootLogger <span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span>  ##
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim"><span class="token operator">/</span><span class="token operator">/</span>## <span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span>rootLogger <span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span>  ##
 <span class="token operator">/</span><span class="token operator">/</span>日志记录的优先级，分为OFF、FATAL、ERROR、WARN、INFO、DEBUG、ALL或者您定义的级别。
 <span class="token operator">/</span><span class="token operator">/</span>Log4j建议只使用四个级别，优先级从高到低分别是ERROR、WARN、INFO、DEBUG。
 <span class="token operator">/</span><span class="token operator">/</span>E<span class="token punctuation">,</span>D代表了appenderName
@@ -642,7 +651,7 @@ log4j<span class="token operator">.</span>appender<span class="token operator">.
 	<span class="token function">VALUES</span><span class="token punctuation">(</span><span class="token string">'%p'</span><span class="token punctuation">,</span><span class="token string">'%d{yyyy-MM-dd HH:mm:ss}'</span><span class="token punctuation">,</span><span class="token string">'%C'</span><span class="token punctuation">,</span><span class="token string">'%M'</span><span class="token punctuation">,</span><span class="token string">'%m'</span><span class="token punctuation">)</span>
 log4j<span class="token operator">.</span>appender<span class="token operator">.</span>db<span class="token operator">.</span>layout<span class="token operator">=</span>org<span class="token operator">.</span>apache<span class="token operator">.</span>log4j<span class="token operator">.</span>PatternLayout</code></pre>
 <p>在java项目中使用时，需要引入的pom</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim"><span class="token operator">&lt;</span>dependency<span class="token operator">></span>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim"><span class="token operator">&lt;</span>dependency<span class="token operator">></span>
 	<span class="token operator">&lt;</span>groupId<span class="token operator">></span>commons<span class="token operator">-</span>logging<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
 	<span class="token operator">&lt;</span>artifactId<span class="token operator">></span>commons<span class="token operator">-</span>logging<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
 	<span class="token operator">&lt;</span><span class="token keyword">version</span><span class="token operator">></span><span class="token number">1.2</span><span class="token operator">&lt;</span><span class="token operator">/</span><span class="token keyword">version</span><span class="token operator">></span>
@@ -656,12 +665,12 @@ log4j<span class="token operator">.</span>appender<span class="token operator">.
 	<span class="token operator">&lt;</span><span class="token keyword">version</span><span class="token operator">></span><span class="token number">1.7</span><span class="token operator">.</span><span class="token number">12</span><span class="token operator">&lt;</span><span class="token operator">/</span><span class="token keyword">version</span><span class="token operator">></span>
 <span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span></code></pre>
 <p>程序中使用:</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim"><span class="token operator">/</span><span class="token operator">/</span>除了当前log的输出外，还有rootLogger的两个输出器也同时产生了输出<span class="token punctuation">(</span>除非设置该日志的additivity<span class="token operator">=</span>false<span class="token punctuation">)</span>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim"><span class="token operator">/</span><span class="token operator">/</span>除了当前log的输出外，还有rootLogger的两个输出器也同时产生了输出<span class="token punctuation">(</span>除非设置该日志的additivity<span class="token operator">=</span>false<span class="token punctuation">)</span>
 Log dempOneCustomLog <span class="token operator">=</span> LogFactory<span class="token operator">.</span><span class="token function">getLog</span><span class="token punctuation">(</span><span class="token string">"demoOneLog"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 dempOneCustomLog<span class="token operator">.</span><span class="token function">info</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
 dempOneCustomLog<span class="token operator">.</span><span class="token function">debug</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>主要参考：<a href="http://houfeng0923.iteye.com/blog/1264849">日志框架（一）----- log4j使用</a>
+<p>主要参考：<a href="http://houfeng0923.iteye.com/blog/1264849">日志框架（一）----- log4j使用</a><br>
 关于日志框架的源码参考：<a href="http://singleant.iteye.com/blog/934593">java日志，需要知道的几件事(commons-logging,log4j,slf4j,logback)</a></p>
 
 </div>
@@ -689,7 +698,7 @@ dempOneCustomLog<span class="token operator">.</span><span class="token function
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-09-08-log4j-system-logs-printed/` was built on 2026-02-15T02:38:54.777Z -->
+		<!-- This page `/blog/2015-09-08-log4j-system-logs-printed/` was built on 2026-02-15T13:56:14.181Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="tdd-rails-admin">用 TDD 进行 rails_admin 开发</h1>
+<h1>用 TDD 进行 rails_admin 开发</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2017-07-22">22 July 2017</time></li>
@@ -570,14 +574,19 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="">背景</h3>
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E8%83%8C%E6%99%AF">背景</a></li><li><a href="#%E8%AF%B4%E6%98%8E">说明</a></li><li><a href="#model-test">Model Test</a></li><li><a href="#service-test">Service Test</a></li><li><a href="#migration">Migration</a></li><li><a href="#belongs_to-%26-has_many">belongs_to &amp; has_many</a></li><li><a href="#%E5%85%B6%E5%AE%83">其它</a></li></ul>
+      </div>
+</aside>
+  <h3 id="%E8%83%8C%E6%99%AF" tabindex="-1">背景</h3>
 <p>最近在做一个小而有趣的项目, 用到了rails去搭建后台. 在RailsAdmin和ActiveAdmin中选择了前者, 理由除了RA的全自动化之外, 还有它本身作为管理后台的核心思想: 既是提供一套UI, 并使所有模块可直接使用. 在我看来, ActiveAdmin需要二次开发的灵活性更大所以开发工作更多. 那么这次就用TDD的思想来做一次完整的功能开发ヾ(=･ω･=)o</p>
-<h3 id="-2">说明</h3>
+<h3 id="%E8%AF%B4%E6%98%8E" tabindex="-1">说明</h3>
 <p>首先, 我们创建两个model: brand&amp;product; 其次, 引用了mocha这个测试框架:</p>
-<pre><code>require 'mocha/test_unit'
+<pre><code class="hljs">require 'mocha/test_unit'
 </code></pre>
-<h3 id="model-test">Model Test</h3>
-<pre><code>test 'should return nil when brand not exist' do
+<h3 id="model-test" tabindex="-1">Model Test</h3>
+<pre><code class="hljs">test 'should return nil when brand not exist' do
   Brand.expects(:find_by).with(1).returns(nil)
   assert_nil  Brand.find_by(1)
 end
@@ -594,19 +603,19 @@ test 'should not save brand without english_name' do
 end
 </code></pre>
 <p>这里涉及到对Brand的方法测试, 涉及到对Brand必填项的测试</p>
-<h3 id="service-test">Service Test</h3>
-<pre><code>test 'should return nil when brand not exist' do
+<h3 id="service-test" tabindex="-1">Service Test</h3>
+<pre><code class="hljs">test 'should return nil when brand not exist' do
   BrandsService.expects(:find_by_id).with(1).returns(nil)
   assert_nil BrandsService.find_by_id(1)
 end
 </code></pre>
 <p>service部分的测试我没有写很多, 这里只会举一个这样简单的🌰, 关于场景的期望后面会补充些更完整的测试用例. 大部分人包括我, 习惯于功能的实现先于测试的实现, 然而我之所以努力朝着先测试后实现的方向走, 确实是因为可以提前暴露有关于需求的问题. 就好比好的设计总是会优先于好的实现.</p>
-<h3 id="migration">Migration</h3>
-<p>关于rails的migration数据库集成这部分确实很强大, 集成的非常完美. 我遇到了一个小问题: 在对某个model做修改的时候, 因为方便我会使用redo操作, 而这样很容易让测试环境和他人的开发环境不能通过一条 rake db:migrate 就完成各种修改.
+<h3 id="migration" tabindex="-1">Migration</h3>
+<p>关于rails的migration数据库集成这部分确实很强大, 集成的非常完美. 我遇到了一个小问题: 在对某个model做修改的时候, 因为方便我会使用redo操作, 而这样很容易让测试环境和他人的开发环境不能通过一条 rake db:migrate 就完成各种修改.<br>
 我的初衷是为了方便和减少脚本的创建, 然而沟通的代价较大. 所以, 在 rake db:migrate:redo 和 rake db:migrate 中还是要选择后者, 不需要在意脚本的多少. 一切改动有历史轨迹也是一种王道.</p>
-<h3 id="belongs-to-and-has-many">belongs_to &amp; has_many</h3>
+<h3 id="belongs_to-%26-has_many" tabindex="-1">belongs_to &amp; has_many</h3>
 <p>RailsAdmin的多对一配置:</p>
-<pre><code>class Product &lt; ApplicationRecord
+<pre><code class="hljs">class Product &lt; ApplicationRecord
   belongs_to :brand
 end
 
@@ -614,8 +623,8 @@ class Brand &lt; ApplicationRecord
   has_many :products
 end
 </code></pre>
-<p>这样在后台会直接在创建表单的时候, 出现下拉框选择, 美中不足的是下拉框的value是'Brand #id'这种以主键为展示方式的选项, 这时候如果你想展示名称, 只需要在rails_admin.rb文件里做一下修改:</p>
-<pre><code>config.model Brand do
+<p>这样在后台会直接在创建表单的时候, 出现下拉框选择, 美中不足的是下拉框的value是’Brand #id’这种以主键为展示方式的选项, 这时候如果你想展示名称, 只需要在rails_admin.rb文件里做一下修改:</p>
+<pre><code class="hljs">config.model Brand do
   object_label_method do
     :custom_label_method
   end
@@ -628,7 +637,7 @@ Brand.class_eval do
 end
 </code></pre>
 <p>真是完美的解决了问题.</p>
-<h3 id="-3">其它</h3>
+<h3 id="%E5%85%B6%E5%AE%83" tabindex="-1">其它</h3>
 <p>最近西安很热, 希望父上下下周能平安出院.</p>
 <p>以上.</p>
 
@@ -657,7 +666,7 @@ end
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2017-07-22-tdd-with-rails_admin/` was built on 2026-02-15T02:38:54.786Z -->
+		<!-- This page `/blog/2017-07-22-tdd-with-rails_admin/` was built on 2026-02-15T13:56:14.184Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="gradle-jar">关于 Gradle 打 jar 包解决方案</h1>
+<h1>关于 Gradle 打 jar 包解决方案</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2017-01-04">04 January 2017</time></li>
@@ -570,11 +574,14 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
+<aside>
+  
+</aside>
   <p>感谢周围的人让我接触到了gradle,从此我要和maven说再见.</p>
 <ol>
 <li>用gradle打一个包含依赖的可运行Jar包.</li>
 </ol>
-<pre><code>apply plugin: 'application'
+<pre><code class="hljs">apply plugin: 'application'
 mainClassName= 'sddtc.gradle.APP'
 
 task runnbaleJar(type: Jar) {
@@ -585,9 +592,9 @@ task runnbaleJar(type: Jar) {
     }
 }
 </code></pre>
-<p>说明: 这样打包并不包含配置文件,如logback.xml, 接下来我会实践一种优雅的打配置文件包方式.
+<p>说明: 这样打包并不包含配置文件,如logback.xml, 接下来我会实践一种优雅的打配置文件包方式.<br>
 今天我发现用 jar 命令就可以推翻上面的方式:</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim">jar <span class="token punctuation">{</span>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">jar <span class="token punctuation">{</span>
     baseName<span class="token operator">=</span><span class="token string">'sddtc-project'</span>
     <span class="token keyword">version</span><span class="token operator">=</span><span class="token string">'0.0.1'</span>
     from configurations<span class="token operator">.</span>compile<span class="token operator">.</span>collect<span class="token punctuation">{</span>it<span class="token operator">.</span><span class="token function">isDirectory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">?</span>it<span class="token punctuation">:</span><span class="token function">zipTree</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span><span class="token punctuation">}</span>
@@ -623,7 +630,7 @@ task runnbaleJar(type: Jar) {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2017-01-04-something-about-gradle/` was built on 2026-02-15T02:38:54.784Z -->
+		<!-- This page `/blog/2017-01-04-something-about-gradle/` was built on 2026-02-15T13:56:14.184Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

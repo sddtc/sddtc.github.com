@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="best-practices-for-writing-bash-scripts">Best Practices For Writing Bash scripts</h1>
+<h1>Best Practices For Writing Bash scripts</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2018-08-12">12 August 2018</time></li>
@@ -570,27 +574,32 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h4 id="logger-priority-vs-logger-p">将命令参数写全 (<code>logger --priority vs logger -p</code>)</h4>
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E5%B0%86%E5%91%BD%E4%BB%A4%E5%8F%82%E6%95%B0%E5%86%99%E5%85%A8-(logger---priority-vs-logger--p)">将命令参数写全 (logger --priority vs logger -p)</a></li><li><a href="#%E4%BD%BF%E7%94%A8-set--o-errexit-(set--e)">使用 set -o errexit (set -e)</a></li><li><a href="#%E5%A6%82%E6%9E%9C%E4%BD%A0%E4%B8%8D%E6%83%B3%E7%BB%88%E6%AD%A2%E9%94%99%E8%AF%AF%2C-%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8-%7C%7C-true">如果你不想终止错误, 可以使用 || true</a></li><li><a href="#%E4%BD%BF%E7%94%A8-set--o-nounset-(set--u)">使用 set -o nounset (set -u)</a></li><li><a href="#%E4%BD%BF%E7%94%A8-set--o-xtrace-(set--x)">使用 set -o xtrace (set -x)</a></li><li><a href="#%E4%BD%BF%E7%94%A8-set--o-pipefail">使用 set -o pipefail</a></li><li><a href="#%23!%2Fusr%2Fbin%2Fenv-bash-%E6%AF%94-%23!%2Fbin%2Fbash-%E6%9B%B4%E5%8A%A0%E7%9A%84%E8%B7%A8%E5%B9%B3%E5%8F%B0">#!/usr/bin/env bash 比!/bin/bash 更加的跨平台</a></li><li><a href="#%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8-%23!%2Fusr%2Fbin%2Fenv-bash--e">避免使用!/usr/bin/env bash -e</a></li><li><a href="#%E5%B0%86%E5%8F%98%E9%87%8F%E7%94%A8%E5%8F%8C%E5%BC%95%E5%8F%B7%E5%8C%85%E8%A3%B9%E8%B5%B7%E6%9D%A5%2C-%E5%9C%A8-if-%5B-%22%24name%22-%3D-%22sddtc%22-%5D-%E6%97%B6">将变量用双引号包裹起来, 在 if [ &quot;$NAME&quot; = &quot;Sddtc&quot; ] 时</a></li><li><a href="#%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E6%B5%8B%E8%AF%95%E6%B2%A1%E6%9C%89%E8%A2%AB%E5%A3%B0%E6%98%8E%E7%9A%84%E5%8F%98%E9%87%8F%2C-%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8-%3A-">如果你想测试没有被声明的变量, 可以使用 :-</a></li><li><a href="#%E5%B0%86%E5%8F%98%E9%87%8F%2C-%E8%B7%AF%E5%BE%84%E5%A3%B0%E6%98%8E%E5%9C%A8%E8%84%9A%E6%9C%AC%E9%A1%B6%E9%83%A8">将变量, 路径声明在脚本顶部</a></li></ul>
+      </div>
+</aside>
+  <h4 id="%E5%B0%86%E5%91%BD%E4%BB%A4%E5%8F%82%E6%95%B0%E5%86%99%E5%85%A8-(logger---priority-vs-logger--p)" tabindex="-1">将命令参数写全 (<code>logger --priority vs logger -p</code>)</h4>
 <p>当你使用 <code>cli</code> 客户端时, 直接使用简写可以提高效率; 然而当你编写复用性较高的脚本, 补全命令参数可以帮助提高脚本可读性, 便于他人阅读.</p>
-<h4 id="set-o-errexit-set-e">使用 <code>set -o errexit</code> (set -e)</h4>
+<h4 id="%E4%BD%BF%E7%94%A8-set--o-errexit-(set--e)" tabindex="-1">使用 <code>set -o errexit</code> (set -e)</h4>
 <p>使你的脚本在遇到错误时终止</p>
-<h4 id="true">如果你不想终止错误, 可以使用 <code>|| true</code></h4>
-<h4 id="set-o-nounset-set-u">使用 <code>set -o nounset</code> (set -u)</h4>
+<h4 id="%E5%A6%82%E6%9E%9C%E4%BD%A0%E4%B8%8D%E6%83%B3%E7%BB%88%E6%AD%A2%E9%94%99%E8%AF%AF%2C-%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8-%7C%7C-true" tabindex="-1">如果你不想终止错误, 可以使用 <code>|| true</code></h4>
+<h4 id="%E4%BD%BF%E7%94%A8-set--o-nounset-(set--u)" tabindex="-1">使用 <code>set -o nounset</code> (set -u)</h4>
 <p>当你使用了没有声明的参数, 脚本会终止</p>
-<h4 id="set-o-xtrace-set-x">使用 <code>set -o xtrace</code> (set -x)</h4>
+<h4 id="%E4%BD%BF%E7%94%A8-set--o-xtrace-(set--x)" tabindex="-1">使用 <code>set -o xtrace</code> (set -x)</h4>
 <p>可以在 debug 时追踪执行了哪些命令</p>
-<h4 id="set-o-pipefail">使用 <code>set -o pipefail</code></h4>
+<h4 id="%E4%BD%BF%E7%94%A8-set--o-pipefail" tabindex="-1">使用 <code>set -o pipefail</code></h4>
 <p>捕获 <code>mysqldump</code> 错误, 例如 <code>mysqldump |gzip</code>; 在脚本最终执行完毕退出会返回一个非0的结果</p>
-<h4 id="usr-bin-env-bash-bin-bash"><code>#!/usr/bin/env bash</code> 比 <code>#!/bin/bash</code> 更加的跨平台</h4>
-<h4 id="usr-bin-env-bash-e">避免使用 <code>#!/usr/bin/env bash -e</code></h4>
+<h4 id="%23!%2Fusr%2Fbin%2Fenv-bash-%E6%AF%94-%23!%2Fbin%2Fbash-%E6%9B%B4%E5%8A%A0%E7%9A%84%E8%B7%A8%E5%B9%B3%E5%8F%B0" tabindex="-1"><code>#!/usr/bin/env bash</code> 比 <code>#!/bin/bash</code> 更加的跨平台</h4>
+<h4 id="%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8-%23!%2Fusr%2Fbin%2Fenv-bash--e" tabindex="-1">避免使用 <code>#!/usr/bin/env bash -e</code></h4>
 <p>当执行脚本 <code>bash ./script.sh</code> 时, 错误会被忽略, 正确做法是在脚本内部 <code>set -e</code></p>
-<h4 id="if-name-sddtc">将变量用双引号包裹起来, 在 <code>if [ &quot;$NAME&quot; = &quot;Sddtc&quot; ]</code> 时</h4>
+<h4 id="%E5%B0%86%E5%8F%98%E9%87%8F%E7%94%A8%E5%8F%8C%E5%BC%95%E5%8F%B7%E5%8C%85%E8%A3%B9%E8%B5%B7%E6%9D%A5%2C-%E5%9C%A8-if-%5B-%22%24name%22-%3D-%22sddtc%22-%5D-%E6%97%B6" tabindex="-1">将变量用双引号包裹起来, 在 <code>if [ &quot;$NAME&quot; = &quot;Sddtc&quot; ]</code> 时</h4>
 <p>因为如果变量 <code>NAME</code> 并未声明, 脚本会抛出语法异常, 参照(<code>nounset</code>)</p>
-<h4 id="">如果你想测试没有被声明的变量, 可以使用 <code>:-</code></h4>
+<h4 id="%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E6%B5%8B%E8%AF%95%E6%B2%A1%E6%9C%89%E8%A2%AB%E5%A3%B0%E6%98%8E%E7%9A%84%E5%8F%98%E9%87%8F%2C-%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8-%3A-" tabindex="-1">如果你想测试没有被声明的变量, 可以使用 <code>:-</code></h4>
 <p>例如: <code>if [ &quot;$NAME:-&quot; = &quot;Sddtc&quot; ]</code>, 如果没有声明 <code>NAME</code>, $NAME 将为空; 你还可以写作 <code>if [ &quot;$NAME:-noname&quot; = &quot;Sddtc&quot; ]</code></p>
-<h4 id="-2">将变量, 路径声明在脚本顶部</h4>
+<h4 id="%E5%B0%86%E5%8F%98%E9%87%8F%2C-%E8%B7%AF%E5%BE%84%E5%A3%B0%E6%98%8E%E5%9C%A8%E8%84%9A%E6%9C%AC%E9%A1%B6%E9%83%A8" tabindex="-1">将变量, 路径声明在脚本顶部</h4>
 <p>综上所述, 有什么理由不这样定义你的脚本呢~?</p>
-<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token shebang important">#!/usr/bin/env bash</span>
+<pre class="language-shell" tabindex="0"><code class="hljs language-shell"><span class="token shebang important">#!/usr/bin/env bash</span>
 <span class="token comment"># Bash3 Boilerplate. Copyright (c) 2014, kvz.io</span>
 
 <span class="token builtin class-name">set</span> <span class="token parameter variable">-o</span> errexit
@@ -605,7 +614,7 @@ __base="</span><span class="token variable"><span class="token variable">$(</spa
 __root="</span><span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">cd</span> <span class="token string">"<span class="token variable"><span class="token variable">$(</span><span class="token function">dirname</span> <span class="token string">"<span class="token variable">${__dir}</span>"</span><span class="token variable">)</span></span>"</span> <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">pwd</span><span class="token variable">)</span></span><span class="token string">" # &lt;-- change this as it depends on your app
 
 arg1="</span><span class="token variable">${1<span class="token operator">:-</span>}</span>"</code></pre>
-<p>译自:
+<p>译自:<br>
 <a href="https://kvz.io/blog/2013/11/21/bash-best-practices/">Best Practices For Writing Bash scripts</a></p>
 
 </div>
@@ -633,7 +642,7 @@ arg1="</span><span class="token variable">${1<span class="token operator">:-</sp
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-08-12-best-practices-for-writing-bash-scripts/` was built on 2026-02-15T02:38:54.790Z -->
+		<!-- This page `/blog/2018-08-12-best-practices-for-writing-bash-scripts/` was built on 2026-02-15T13:56:14.186Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

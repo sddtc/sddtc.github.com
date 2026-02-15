@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="maven">Maven集成打包配置说明</h1>
+<h1>Maven集成打包配置说明</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2015-05-20">20 May 2015</time></li>
@@ -570,14 +574,19 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <p>场景一：
-替换配置文件的参数信息
-采用maven的build标签，在编译时替换
-配置文件: src/main/resources/config.properties
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E6%A0%B9%E6%8D%AEassembly.xml%E6%89%93%E5%8C%85%E5%87%BA%E6%96%87%E4%BB%B6">根据assembly.xml打包出文件</a></li><li><a href="#assembly.xml%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9">assembly.xml文件内容</a></li><li><a href="#%E6%89%93%E5%8C%85%E6%8C%87%E5%AE%9A%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">打包指定配置文件</a></li></ul>
+      </div>
+</aside>
+  <p>场景一：<br>
+替换配置文件的参数信息<br>
+采用maven的build标签，在编译时替换<br>
+配置文件: src/main/resources/config.properties<br>
 代替换spring-*.xml文件:src/main/resources/spring-context.xml</p>
-<p>在maven的pom.xml里配置:
+<p>在maven的pom.xml里配置:<br>
 通过在build节点中添加filter和resource来实现的,在<build>标签下有一个<filters>标签，用于定义指定filter属性的位置，例如filter元素赋值filters/filter1.properties,那么这个文件里面就可以定义name=value对，这个name=value对的值就可以在工程pom中通过${name}引用，默认的filter目录是${basedir}/src/main/fiters/</filters></build></p>
-<pre class="language-xml" tabindex="0"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>build</span><span class="token punctuation">></span></span>
+<pre class="language-xml" tabindex="0"><code class="hljs language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>build</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>finalName</span><span class="token punctuation">></span></span>wechat-alarm<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>finalName</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>filters</span><span class="token punctuation">></span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>filter</span><span class="token punctuation">></span></span>src/main/resources/config.properties<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>filter</span><span class="token punctuation">></span></span>
@@ -599,8 +608,8 @@ pre[class*="language-"] {
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>resource</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>resources</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>build</span><span class="token punctuation">></span></span></code></pre>
-<h4 id="assembly-xml">根据assembly.xml打包出文件</h4>
-<pre class="language-xml" tabindex="0"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>build</span><span class="token punctuation">></span></span>
+<h4 id="%E6%A0%B9%E6%8D%AEassembly.xml%E6%89%93%E5%8C%85%E5%87%BA%E6%96%87%E4%BB%B6" tabindex="-1">根据assembly.xml打包出文件</h4>
+<pre class="language-xml" tabindex="0"><code class="hljs language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>build</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>sourceDirectory</span><span class="token punctuation">></span></span>src/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>sourceDirectory</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>testSourceDirectory</span><span class="token punctuation">></span></span>src/test/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>testSourceDirectory</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>resources</span><span class="token punctuation">></span></span>
@@ -632,8 +641,8 @@ pre[class*="language-"] {
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugin</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugins</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>build</span><span class="token punctuation">></span></span></code></pre>
-<h4 id="assembly-xml-2">assembly.xml文件内容</h4>
-<pre class="language-xml" tabindex="0"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>assembly</span><span class="token punctuation">></span></span>
+<h4 id="assembly.xml%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9" tabindex="-1">assembly.xml文件内容</h4>
+<pre class="language-xml" tabindex="0"><code class="hljs language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>assembly</span><span class="token punctuation">></span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span><span class="token punctuation">></span></span>bin<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>formats</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>format</span><span class="token punctuation">></span></span>zip<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>format</span><span class="token punctuation">></span></span>
@@ -661,8 +670,8 @@ pre[class*="language-"] {
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>fileSet</span><span class="token punctuation">></span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>fileSets</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>assembly</span><span class="token punctuation">></span></span></code></pre>
-<h4 id="">打包指定配置文件</h4>
-<pre class="language-xml" tabindex="0"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>build</span><span class="token punctuation">></span></span>
+<h4 id="%E6%89%93%E5%8C%85%E6%8C%87%E5%AE%9A%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6" tabindex="-1">打包指定配置文件</h4>
+<pre class="language-xml" tabindex="0"><code class="hljs language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>build</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>sourceDirectory</span><span class="token punctuation">></span></span>src/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>sourceDirectory</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>testSourceDirectory</span><span class="token punctuation">></span></span>src/test/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>testSourceDirectory</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>resources</span><span class="token punctuation">></span></span>
@@ -719,7 +728,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-05-20-study-maven/` was built on 2026-02-15T02:38:54.774Z -->
+		<!-- This page `/blog/2015-05-20-study-maven/` was built on 2026-02-15T13:56:14.180Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

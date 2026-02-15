@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="aws-serverless-1">AWS Serverless 应用实践学习(1)</h1>
+<h1>AWS Serverless 应用实践学习(1)</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2018-08-22">22 August 2018</time></li>
@@ -570,36 +574,41 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h2 id="">背景</h2>
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E8%83%8C%E6%99%AF">背景</a></li><li><a href="#serverless">Serverless</a><ul><li><a href="#pattern-one%3A-3-tier-web-application">Pattern One: 3-Tier Web Application</a></li><li><a href="#security">Security</a></li><li><a href="#another-security-strategy">Another Security Strategy</a></li><li><a href="#serverless-monitor">Serverless Monitor</a></li><li><a href="#serverless-web-app-lifestyle-management">Serverless web app lifestyle management</a></li></ul></li></ul>
+      </div>
+</aside>
+  <h2 id="%E8%83%8C%E6%99%AF" tabindex="-1">背景</h2>
 <p>关于 Serverless 的应用实践学习</p>
-<h2 id="serverless">Serverless</h2>
+<h2 id="serverless" tabindex="-1">Serverless</h2>
 <p>Lambda considerations and best practices</p>
-<h3 id="pattern-one-3-tier-web-application">Pattern One: 3-Tier Web Application</h3>
+<h3 id="pattern-one%3A-3-tier-web-application" tabindex="-1">Pattern One: 3-Tier Web Application</h3>
 <p>关于 3 层 Web 应用的架构如下:</p>
 <p><img src="content/media/img/serverless/3-tier.png" alt="3-Tier Web-Application"></p>
-<h3 id="security">Security</h3>
+<h3 id="security" tabindex="-1">Security</h3>
 <p>包含认证及安全的实践:</p>
 <p><img src="content/media/img/serverless/3-tier-security.png" alt="3-Tier Web-Application Security"></p>
-<h5 id="authz-three-ways-for-identify"><strong>AuthZ</strong> : three ways for identify</h5>
+<h5><strong>AuthZ</strong> : three ways for identify</h5>
 <ul>
 <li>IAM Credentials</li>
 <li>Cognito User pools</li>
 <li>Custom authorizers</li>
 </ul>
-<h3 id="another-security-strategy">Another Security Strategy</h3>
+<h3 id="another-security-strategy" tabindex="-1">Another Security Strategy</h3>
 <p>含有一定安全策略的架构实践:</p>
 <p><img src="content/media/img/serverless/3-tier-security-strategy.png" alt="3-Tier Web-Application Security Strategy"></p>
-<h3 id="serverless-monitor">Serverless Monitor</h3>
+<h3 id="serverless-monitor" tabindex="-1">Serverless Monitor</h3>
 <p>常用监控架构实践:</p>
 <p><img src="content/media/img/serverless/serverless-monitor.png" alt="Serverless Monitor"></p>
 <p>其中:</p>
-<h5 id="custom-cloudwatch-metrics">Custom CloudWatch metrics</h5>
+<h5>Custom CloudWatch metrics</h5>
 <ul>
 <li>40 KB per POST</li>
 <li>Default Acct Limit of 150 TPS</li>
 <li>Consider aggregating with Kinesis</li>
 </ul>
-<h3 id="serverless-web-app-lifestyle-management">Serverless web app lifestyle management</h3>
+<h3 id="serverless-web-app-lifestyle-management" tabindex="-1">Serverless web app lifestyle management</h3>
 <p>应用的生命周期:</p>
 <p><img src="content/media/img/serverless/serverless-application-lifestyle.png" alt="Serverless Application lifestyle"></p>
 
@@ -628,7 +637,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-08-22-what-does-sddtc-say-one/` was built on 2026-02-15T02:38:54.790Z -->
+		<!-- This page `/blog/2018-08-22-what-does-sddtc-say-one/` was built on 2026-02-15T13:56:14.186Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

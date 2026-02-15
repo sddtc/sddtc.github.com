@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="shell">Shell正常和异常退出的控制命令</h1>
+<h1>Shell正常和异常退出的控制命令</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2017-01-24">24 January 2017</time></li>
@@ -570,8 +574,11 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
+<aside>
+  
+</aside>
   <p>需要在 shell 脚本中获取 java 调用的 System.exit() 的值, System.exit(-1), 则 $? 的值为255</p>
-<pre><code>java -jar xxx.jar param param2 param3
+<pre><code class="hljs">java -jar xxx.jar param param2 param3
 
 if [ $? -eq 0 ]; then
     echo &quot;Pass&quot;
@@ -580,7 +587,7 @@ else
     exit -1
 fi
 </code></pre>
-<p>如果脚本中有多次 java -jar 的调用,则需要这样关联判断, 取得最终结果.
+<p>如果脚本中有多次 java -jar 的调用,则需要这样关联判断, 取得最终结果.<br>
 否则只要最后一次调用是成功的,不论前面几次失败,结果都会是成功.</p>
 
 </div>
@@ -608,7 +615,7 @@ fi
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2017-01-24-something-about-shell/` was built on 2026-02-15T02:38:54.784Z -->
+		<!-- This page `/blog/2017-01-24-something-about-shell/` was built on 2026-02-15T13:56:14.184Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="github-gitlab">一台电脑同时支持 github 和 gitlab 的提交</h1>
+<h1>一台电脑同时支持 github 和 gitlab 的提交</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2016-03-01">01 March 2016</time></li>
@@ -570,14 +574,17 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
+<aside>
+  
+</aside>
   <p>好久没有更新博客了，以后积攒的好东西还会记录下来的. 这次记录下让公司的Gitlab和在家的Github的代码可以在住的地方和公司无缝提交代码. github的id_rsa和id_rsa.pub已经存在，也是git的global账户</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim"># 全局配置，Github仓库中默认使用此配置，是自己的github项目
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim"># 全局配置，Github仓库中默认使用此配置，是自己的github项目
 git config <span class="token operator">-</span><span class="token operator">-</span>global user<span class="token operator">.</span>name <span class="token string">'sddtc'</span> <span class="token operator">&amp;&amp;</span> git config <span class="token operator">-</span><span class="token operator">-</span>global user<span class="token operator">.</span>email <span class="token string">'sddtc@gmail.com'</span>
 
 # 团队项目配置，每次新创建一个项目，需要执行下，就是gitlab项目
 git config <span class="token operator">-</span><span class="token operator">-</span>local user<span class="token operator">.</span>name <span class="token string">'sddtc'</span> <span class="token operator">&amp;&amp;</span> git config <span class="token operator">-</span><span class="token operator">-</span>local user<span class="token operator">.</span>email <span class="token string">'changhbaga@gmail.com'</span></code></pre>
 <p>然后是.ssh下面的config文件配置</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim">#github
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">#github
 Host github
 Hostname github<span class="token operator">.</span><span class="token builtin">com</span>
 IdentityFile <span class="token operator">/</span>Users<span class="token operator">/</span>sddtc<span class="token operator">/</span><span class="token operator">.</span>ssh<span class="token operator">/</span>id_rsa
@@ -586,16 +593,16 @@ IdentityFile <span class="token operator">/</span>Users<span class="token operat
 Host gitlab
 Hostname gitlab<span class="token operator">.</span>uuu<span class="token operator">.</span>org
 IdentityFile <span class="token operator">/</span>Users<span class="token operator">/</span>sddtc<span class="token operator">/</span><span class="token operator">.</span>ssh<span class="token operator">/</span>id_rsa_work</code></pre>
-<p>生成文件的命令
--f 是重命名文件
+<p>生成文件的命令<br>
+-f 是重命名文件<br>
 -C 是公钥的备注信息</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim">ssh<span class="token operator">-</span>keygen <span class="token operator">-</span><span class="token keyword">t</span> rsa <span class="token operator">-</span><span class="token keyword">f</span> id_rsa_bitbucket_work <span class="token operator">-</span>C <span class="token string">"tuijiang@gitlab.sddtc.org"</span></code></pre>
-<p>理论上，配置完成之后，ssh -T git@github 或者 ssh -T git@gitlab都可以通过
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">ssh<span class="token operator">-</span>keygen <span class="token operator">-</span><span class="token keyword">t</span> rsa <span class="token operator">-</span><span class="token keyword">f</span> id_rsa_bitbucket_work <span class="token operator">-</span>C <span class="token string">"tuijiang@gitlab.sddtc.org"</span></code></pre>
+<p>理论上，配置完成之后，ssh -T git@github 或者 ssh -T git@gitlab都可以通过<br>
 对于ip:port的gitlab地址,可以通过</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim">ssh <span class="token operator">-</span><span class="token keyword">p</span> <span class="token number">10022</span> git@<span class="token number">12.21</span><span class="token operator">.</span><span class="token number">12.12</span></code></pre>
-<p>注:
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">ssh <span class="token operator">-</span><span class="token keyword">p</span> <span class="token number">10022</span> git@<span class="token number">12.21</span><span class="token operator">.</span><span class="token number">12.12</span></code></pre>
+<p>注:<br>
 ssh协议和http协议的代码远程地址切换</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim">git remote <span class="token keyword">set</span><span class="token operator">-</span>url origin <span class="token punctuation">[</span>url<span class="token punctuation">]</span></code></pre>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">git remote <span class="token keyword">set</span><span class="token operator">-</span>url origin <span class="token punctuation">[</span>url<span class="token punctuation">]</span></code></pre>
 
 </div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2016-01-28-wechat-picture-catch/">wechat 通过抓包获取图片方法实践</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2016-03-22-begin-2016-little-rest/">2016 一个新的开始</a></li>
@@ -622,7 +629,7 @@ ssh协议和http协议的代码远程地址切换</p>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2016-03-01-combine-github-and-gitlab/` was built on 2026-02-15T02:38:54.782Z -->
+		<!-- This page `/blog/2016-03-01-combine-github-and-gitlab/` was built on 2026-02-15T13:56:14.183Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

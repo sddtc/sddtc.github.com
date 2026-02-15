@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="scala">关于 Scala 这门语言的理解和它的测试框架</h1>
+<h1>关于 Scala 这门语言的理解和它的测试框架</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2017-11-08">08 November 2017</time></li>
@@ -570,23 +574,28 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="">背景</h3>
-<p>事情大概要从那个让我花费了足足3天写了一个功能和功能的单元测试开始..
-自我感觉非常良好的写了一个自以为完美的集成测试, 和同事争论到了下班- -
-有一个晚上看了关于 <code>trait</code> 的 <code>test</code> 资料, 却并没有太多可以实际使用的技能
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E8%83%8C%E6%99%AF">背景</a></li><li><a href="#%E5%93%B2%E5%AD%A6">哲学</a></li><li><a href="#scala%E7%9A%84%E5%AE%9A%E4%BD%8D">Scala的定位</a></li><li><a href="#scalatest-vs-scala-specs">ScalaTest vs Scala Specs</a></li></ul>
+      </div>
+</aside>
+  <h3 id="%E8%83%8C%E6%99%AF" tabindex="-1">背景</h3>
+<p>事情大概要从那个让我花费了足足3天写了一个功能和功能的单元测试开始…<br>
+自我感觉非常良好的写了一个自以为完美的集成测试, 和同事争论到了下班- -<br>
+有一个晚上看了关于 <code>trait</code> 的 <code>test</code> 资料, 却并没有太多可以实际使用的技能<br>
 然而感谢我的pairer, 我们一起完成了所有单元测试, 使我进一步体会到了这个语言的一些东西</p>
 <p>于是今天收集了一些关于 <code>Scala</code> 的<a href="https://www.zhihu.com/question/19748408">资料</a>:</p>
-<h3 id="-2">哲学</h3>
-<p>&quot;Scala is going nowhere, it is a gateway drug to Haskell&quot;</p>
-<h3 id="scala-2">Scala的定位</h3>
-<p>1.Scala不把程序员当傻子, Scala相信程序员的聪明才, 让程序员自行选择合适的结构, 以针对变化万千的任务需求
-2.相较于Java而言, 则是相信程序员的优化能力. 马丁·奥德斯基说:&quot;很多程序员会告诉我，他们一般会重构他们的Scala代码两三次，甚至三四次.&quot;
-3.Scala作为一个社区而言, 是非常追求运行速度的. 为了追求速度, Scala社区是绝对不会管所谓的&quot;简单&quot;或者是&quot;好玩&quot;, 怎样有效率就怎样弄.
-4.另一个Scala的很大优势就是所谓的Macro-多样化
+<h3 id="%E5%93%B2%E5%AD%A6" tabindex="-1">哲学</h3>
+<p>“Scala is going nowhere, it is a gateway drug to Haskell”</p>
+<h3 id="scala%E7%9A%84%E5%AE%9A%E4%BD%8D" tabindex="-1">Scala的定位</h3>
+<p>1.Scala不把程序员当傻子, Scala相信程序员的聪明才, 让程序员自行选择合适的结构, 以针对变化万千的任务需求<br>
+2.相较于Java而言, 则是相信程序员的优化能力. 马丁·奥德斯基说:“很多程序员会告诉我，他们一般会重构他们的Scala代码两三次，甚至三四次.”<br>
+3.Scala作为一个社区而言, 是非常追求运行速度的. 为了追求速度, Scala社区是绝对不会管所谓的&quot;简单&quot;或者是&quot;好玩&quot;, 怎样有效率就怎样弄.<br>
+4.另一个Scala的很大优势就是所谓的Macro-多样化<br>
 5.作为编程语言方面的教授, 马丁·奥德斯基不断的将最前沿的学术界成果转移到Scala这个语言中, 还让他的博士学生发展出新的, 让语言运行得更快的方法, 这些都是其他语言, 尤其是Python、Ruby、甚至是Go都没有的优势.</p>
-<h3 id="scalatest-vs-scala-specs">ScalaTest vs Scala Specs</h3>
-<p>&quot;Both are BDD (Behavior Driven Development) capable unit test frameworks for Scala&quot;</p>
-<p>关于这两个框架的比较, stackoverflow有一篇不错的讨论<a href="https://stackoverflow.com/questions/2220815/what-s-the-difference-between-scalatest-and-scala-specs-unit-test-frameworks">What’s the difference between ScalaTest and Scala Specs unit test frameworks?
+<h3 id="scalatest-vs-scala-specs" tabindex="-1">ScalaTest vs Scala Specs</h3>
+<p>“Both are BDD (Behavior Driven Development) capable unit test frameworks for Scala”</p>
+<p>关于这两个框架的比较, stackoverflow有一篇不错的讨论<a href="https://stackoverflow.com/questions/2220815/what-s-the-difference-between-scalatest-and-scala-specs-unit-test-frameworks">What’s the difference between ScalaTest and Scala Specs unit test frameworks?<br>
 </a></p>
 <p>据我了解, 我们项目使用了 <code>specs2</code>, 即便如此, 最近打算学习下<a href="https://github.com/scalatest/scalatest">ScalaTest</a>, 写出漂亮的测试</p>
 
@@ -615,7 +624,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2017-11-08-discuss-about-scala-junit/` was built on 2026-02-15T02:38:54.787Z -->
+		<!-- This page `/blog/2017-11-08-discuss-about-scala-junit/` was built on 2026-02-15T13:56:14.185Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

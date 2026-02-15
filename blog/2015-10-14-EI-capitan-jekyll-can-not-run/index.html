@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="jekyll-ei-capitan-jekyll-can-not-run">Jekyll的EI Capitan jekyll can not run 解决方案</h1>
+<h1>Jekyll的EI Capitan jekyll can not run 解决方案</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2015-10-14">14 October 2015</time></li>
@@ -570,21 +574,24 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <p>EI Capitan是mac目前最新版的系统，作为更新强迫症患者总是第一时间更新, 只是这一次才发现，原来mac也会对用户安装的程序有细微的影响。。
-事情比较简单，更新了系统，jekyll用不了了. 多亏坐在我旁边好奇的lily发现了这个bug。。！
-本来本机安装的ruby的路径(/System/Library/Frameworks/Ruby.framework/Versions/2.0/usr/lib/ruby/gems/2.0.0/gems)下应该是有jekyll组件的. 没了重新安装时，出现了无法写入&quot;/usr/bin/jekyll&quot;的错误: no permission
+<aside>
+  
+</aside>
+  <p>EI Capitan是mac目前最新版的系统，作为更新强迫症患者总是第一时间更新, 只是这一次才发现，原来mac也会对用户安装的程序有细微的影响。。<br>
+事情比较简单，更新了系统，jekyll用不了了. 多亏坐在我旁边好奇的lily发现了这个bug。。！<br>
+本来本机安装的ruby的路径(/System/Library/Frameworks/Ruby.framework/Versions/2.0/usr/lib/ruby/gems/2.0.0/gems)下应该是有jekyll组件的. 没了重新安装时，出现了无法写入&quot;/usr/bin/jekyll&quot;的错误: no permission<br>
 安装方式</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim">sudo gem install jekyll</code></pre>
-<p>而后发现github上有很多人都提出了这个问题，应该是系统更新后，有些方式变了，由于我对ruby了解不多，在此先不做讨论
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">sudo gem install jekyll</code></pre>
+<p>而后发现github上有很多人都提出了这个问题，应该是系统更新后，有些方式变了，由于我对ruby了解不多，在此先不做讨论<br>
 解决方法</p>
 <ol>
 <li>将jekyll组件安装在用户路径之下</li>
 </ol>
-<pre class="language-vim" tabindex="0"><code class="language-vim">sudo gem install <span class="token operator">-</span><span class="token keyword">n</span> <span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span><span class="token builtin">bin</span> jekyll</code></pre>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">sudo gem install <span class="token operator">-</span><span class="token keyword">n</span> <span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span><span class="token builtin">bin</span> jekyll</code></pre>
 <ol start="2">
 <li>运行jekyll报错</li>
 </ol>
-<pre class="language-vim" tabindex="0"><code class="language-vim">➜  demo  jekyll serve <span class="token operator">-</span><span class="token operator">-</span>trace
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">➜  demo  jekyll serve <span class="token operator">-</span><span class="token operator">-</span>trace
 Configuration <span class="token keyword">file</span><span class="token punctuation">:</span> <span class="token operator">/</span>Users<span class="token operator">/</span>sddtc<span class="token operator">/</span>Code<span class="token operator">/</span>Jekyll<span class="token operator">/</span>demo<span class="token operator">/</span>_config<span class="token operator">.</span>yml
             Source<span class="token punctuation">:</span> <span class="token operator">/</span>Users<span class="token operator">/</span>sddtc<span class="token operator">/</span>Code<span class="token operator">/</span>Jekyll<span class="token operator">/</span>demo
        Destination<span class="token punctuation">:</span> <span class="token operator">/</span>Users<span class="token operator">/</span>sddtc<span class="token operator">/</span>Code<span class="token operator">/</span>Jekyll<span class="token operator">/</span>demo<span class="token operator">/</span>_site
@@ -625,7 +632,7 @@ I<span class="token punctuation">,</span> <span class="token punctuation">[</spa
 <ol start="3">
 <li>解决这个错误也是有人提出修改一下Celluloid的安装版本,用0.16.0</li>
 </ol>
-<pre class="language-vim" tabindex="0"><code class="language-vim">➜  demo  sudo gem install celluloid <span class="token operator">-</span><span class="token operator">-</span><span class="token keyword">version</span> <span class="token string">'=0.16.0'</span>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">➜  demo  sudo gem install celluloid <span class="token operator">-</span><span class="token operator">-</span><span class="token keyword">version</span> <span class="token string">'=0.16.0'</span>
 Fetching<span class="token punctuation">:</span> timers<span class="token operator">-</span><span class="token number">4.0</span><span class="token operator">.</span><span class="token number">4</span><span class="token operator">.</span>gem <span class="token punctuation">(</span><span class="token number">100</span><span class="token operator">%</span><span class="token punctuation">)</span>
 Successfully installed timers<span class="token operator">-</span><span class="token number">4.0</span><span class="token operator">.</span><span class="token number">4</span>
 Fetching<span class="token punctuation">:</span> celluloid<span class="token operator">-</span><span class="token number">0.16</span><span class="token operator">.</span><span class="token number">0</span><span class="token operator">.</span>gem <span class="token punctuation">(</span><span class="token number">100</span><span class="token operator">%</span><span class="token punctuation">)</span>
@@ -641,7 +648,7 @@ Successfully uninstalled celluloid<span class="token operator">-</span><span cla
 <ol start="4">
 <li>可以查看一下本地安装的组件，没用的也可以删掉了</li>
 </ol>
-<pre class="language-vim" tabindex="0"><code class="language-vim">gem <span class="token keyword">list</span> <span class="token operator">-</span><span class="token operator">-</span>local</code></pre>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">gem <span class="token keyword">list</span> <span class="token operator">-</span><span class="token operator">-</span>local</code></pre>
 
 </div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-10-08-linux-custom-date/">Shell自定义 date 命令</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-10-14-java-binary-search/">Java 实现二分法回忆片段和解决方案</a></li>
@@ -668,7 +675,7 @@ Successfully uninstalled celluloid<span class="token operator">-</span><span cla
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-10-14-EI-capitan-jekyll-can-not-run/` was built on 2026-02-15T02:38:54.778Z -->
+		<!-- This page `/blog/2015-10-14-EI-capitan-jekyll-can-not-run/` was built on 2026-02-15T13:56:14.182Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

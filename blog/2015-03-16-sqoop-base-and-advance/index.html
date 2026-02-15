@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="sqoop-mysql-tip">Sqoop基本使用要点和mysql相关的一个Tip</h1>
+<h1>Sqoop基本使用要点和mysql相关的一个Tip</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2015-03-16">16 March 2015</time></li>
@@ -570,34 +574,39 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="sqoop">sqoop 相关命令使用:</h3>
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#sqoop-%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%3A">sqoop 相关命令使用:</a></li><li><a href="#mysql%E5%92%8Csqoop%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BA%A4%E4%BA%92%E9%97%AE%E9%A2%98%3A">mysql和sqoop之间的交互问题:</a></li></ul>
+      </div>
+</aside>
+  <h3 id="sqoop-%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%3A" tabindex="-1">sqoop 相关命令使用:</h3>
 <ul>
-<li>sqoop的export命令（hdfs---&gt;mysql)
-导出操作有几点需要注意的地方：
-1.数据库导入表的用户权限问题，sqoop报错可能提示是总有个未关闭的流和error reading database
-2.确保hdfs文件的列数量和mysql表一致
-3.hdfs文件字段之间的分隔符只能是一个字节，例如'\001'，即使指定了多个，也会只取第一个字节</li>
+<li>sqoop的export命令（hdfs—&gt;mysql)<br>
+导出操作有几点需要注意的地方：<br>
+1.数据库导入表的用户权限问题，sqoop报错可能提示是总有个未关闭的流和error reading database<br>
+2.确保hdfs文件的列数量和mysql表一致<br>
+3.hdfs文件字段之间的分隔符只能是一个字节，例如’\001’，即使指定了多个，也会只取第一个字节</li>
 </ul>
 <p>基本命令如下:</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim">sqoop export
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">sqoop export
 <span class="token operator">-</span><span class="token operator">-</span>connect <span class="token operator">%</span>s <span class="token operator">-</span><span class="token operator">-</span>username <span class="token operator">%</span>s <span class="token operator">-</span><span class="token operator">-</span>password <span class="token operator">%</span>s <span class="token operator">-</span><span class="token operator">-</span>table <span class="token operator">%</span>s
 <span class="token operator">-</span><span class="token operator">-</span>export<span class="token operator">-</span><span class="token builtin">dir</span> $<span class="token punctuation">{</span>hdfs_path<span class="token punctuation">}</span> <span class="token operator">-</span><span class="token keyword">m</span> <span class="token number">1</span> <span class="token operator">-</span><span class="token operator">-</span><span class="token keyword">verbose</span> <span class="token operator">-</span><span class="token operator">-</span>input<span class="token operator">-</span>fields<span class="token operator">-</span>terminated<span class="token operator">-</span>by <span class="token string">'\001'</span></code></pre>
 <p>我看到很多报错的解决方法是mysql与sqoop版本问题，但是实际情况还是要从简单的例子开始分析，能够有效的解决问题</p>
 <ul>
-<li>sqoop的import命令(mysql---&gt;hdfs)</li>
+<li>sqoop的import命令(mysql—&gt;hdfs)</li>
 </ul>
-<pre class="language-vim" tabindex="0"><code class="language-vim">sqoop import
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">sqoop import
 <span class="token operator">-</span><span class="token operator">-</span>connect <span class="token operator">%</span>s <span class="token operator">-</span><span class="token operator">-</span>username <span class="token operator">%</span>s <span class="token operator">-</span><span class="token operator">-</span>password <span class="token operator">%</span>s <span class="token operator">-</span><span class="token operator">-</span>query <span class="token operator">%</span>s
 <span class="token operator">-</span><span class="token operator">-</span>target<span class="token operator">-</span><span class="token builtin">dir</span> <span class="token operator">%</span>s <span class="token operator">-</span><span class="token keyword">m</span> <span class="token number">1</span> <span class="token operator">-</span><span class="token operator">-</span><span class="token keyword">as</span><span class="token operator">-</span>textfile <span class="token operator">-</span><span class="token operator">-</span>fields<span class="token operator">-</span>terminated<span class="token operator">-</span>by <span class="token string">'\001'</span>
 <span class="token operator">-</span><span class="token operator">-</span>null<span class="token operator">-</span>string <span class="token string">'\\N'</span> <span class="token operator">-</span><span class="token operator">-</span>null<span class="token operator">-</span>non<span class="token operator">-</span>string <span class="token string">'\\N'</span></code></pre>
 <hr>
-<h3 id="mysql-sqoop">mysql和sqoop之间的交互问题:</h3>
+<h3 id="mysql%E5%92%8Csqoop%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BA%A4%E4%BA%92%E9%97%AE%E9%A2%98%3A" tabindex="-1">mysql和sqoop之间的交互问题:</h3>
 <ul>
-<li>sqoop集群迁移之后,mysql与hdfs之间的import导表操作可能会报没权限错误
-a.需要给mysql添加新hdfs用户
+<li>sqoop集群迁移之后,mysql与hdfs之间的import导表操作可能会报没权限错误<br>
+a.需要给mysql添加新hdfs用户<br>
 b.如有权限问题，最好先查看mysql都有哪些已知用户</li>
 </ul>
-<pre class="language-vim" tabindex="0"><code class="language-vim">mysql<span class="token operator">></span>select <span class="token operator">*</span> from mysql<span class="token operator">.</span>user<span class="token punctuation">;</span>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">mysql<span class="token operator">></span>select <span class="token operator">*</span> from mysql<span class="token operator">.</span>user<span class="token punctuation">;</span>
 mysql<span class="token operator">></span>grant <span class="token keyword">all</span> PRIVILEGES <span class="token keyword">on</span> <span class="token operator">*</span><span class="token operator">.</span><span class="token operator">*</span> <span class="token keyword">to</span> root@<span class="token string">'cdh5-slave'</span>  identified by <span class="token string">'${your.password}'</span> with grant option<span class="token punctuation">;</span></code></pre>
 
 </div>
@@ -625,7 +634,7 @@ mysql<span class="token operator">></span>grant <span class="token keyword">all<
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-03-16-sqoop-base-and-advance/` was built on 2026-02-15T02:38:54.770Z -->
+		<!-- This page `/blog/2015-03-16-sqoop-base-and-advance/` was built on 2026-02-15T13:56:14.178Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

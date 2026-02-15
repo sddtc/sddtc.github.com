@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="">图的广度优先搜索实现</h1>
+<h1>图的广度优先搜索实现</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2015-11-22">22 November 2015</time></li>
@@ -570,8 +574,13 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="-2">图的广度优先搜索实现</h3>
-<pre class="language-java" tabindex="0"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">GraphNode</span> <span class="token punctuation">{</span>
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E5%9B%BE%E7%9A%84%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2%E5%AE%9E%E7%8E%B0">图的广度优先搜索实现</a></li></ul>
+      </div>
+</aside>
+  <h3 id="%E5%9B%BE%E7%9A%84%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2%E5%AE%9E%E7%8E%B0" tabindex="-1">图的广度优先搜索实现</h3>
+<pre class="language-java" tabindex="0"><code class="hljs language-java"><span class="token keyword">class</span> <span class="token class-name">GraphNode</span> <span class="token punctuation">{</span>
     <span class="token keyword">int</span> val<span class="token punctuation">;</span>
     <span class="token class-name">GraphNode</span> next<span class="token punctuation">;</span>
     <span class="token class-name">GraphNode</span><span class="token punctuation">[</span><span class="token punctuation">]</span> neighbors<span class="token punctuation">;</span>
@@ -685,7 +694,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-11-22-graph-breath-first-search/` was built on 2026-02-15T02:38:54.779Z -->
+		<!-- This page `/blog/2015-11-22-graph-breath-first-search/` was built on 2026-02-15T13:56:14.182Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

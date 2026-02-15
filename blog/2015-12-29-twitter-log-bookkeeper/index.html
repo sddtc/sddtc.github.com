@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="twitter">Twitter 高性能分布式日志系统架构解析</h1>
+<h1>Twitter 高性能分布式日志系统架构解析</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2015-12-29">29 December 2015</time></li>
@@ -570,21 +574,26 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="twitter-distributedlog-bookkeeper">本文是关于Twitter 分布式日志系统 DistributedLog/BookKeeper的摘要</h3>
-<p>Manhattan（Twitter的最终一致性分布式Key/Value数据库）
-1.可以使用日志来序列化所有的请求。co-ordinator 将请求写到日志中。所有的 replicas 从日志中按顺序读取请求，并修改本地的状态。这种解决问题的思路叫做 Pub/Sub。而日志就是 Pub/Sub 模式的基础。
-2.当数据被复制到多台机器上的时候，我们就需要保证数据的强一致性。否则，如果我们出现丢数据、数据不一致，那么势必影响到构建在分布式日志上的所有系统。如果日志都不能相信了，你的生活还能相信谁呢。
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E6%9C%AC%E6%96%87%E6%98%AF%E5%85%B3%E4%BA%8Etwitter-%E5%88%86%E5%B8%83%E5%BC%8F%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F-distributedlog%2Fbookkeeper%E7%9A%84%E6%91%98%E8%A6%81">本文是关于Twitter 分布式日志系统 DistributedLog/BookKeeper的摘要</a></li></ul>
+      </div>
+</aside>
+  <h3 id="%E6%9C%AC%E6%96%87%E6%98%AF%E5%85%B3%E4%BA%8Etwitter-%E5%88%86%E5%B8%83%E5%BC%8F%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F-distributedlog%2Fbookkeeper%E7%9A%84%E6%91%98%E8%A6%81" tabindex="-1">本文是关于Twitter 分布式日志系统 DistributedLog/BookKeeper的摘要</h3>
+<p>Manhattan（Twitter的最终一致性分布式Key/Value数据库）<br>
+1.可以使用日志来序列化所有的请求。co-ordinator 将请求写到日志中。所有的 replicas 从日志中按顺序读取请求，并修改本地的状态。这种解决问题的思路叫做 Pub/Sub。而日志就是 Pub/Sub 模式的基础。<br>
+2.当数据被复制到多台机器上的时候，我们就需要保证数据的强一致性。否则，如果我们出现丢数据、数据不一致，那么势必影响到构建在分布式日志上的所有系统。如果日志都不能相信了，你的生活还能相信谁呢。<br>
 3.为什么持久化 (durability)、多副本 (replication) 和强一致性 (consistency)，对我们来说这么重要呢？</p>
-<p>比如 Kestrel（用于在线系统）、Kafka（用于离线分析）这些系统都不支持严格的持久化，或者在支持持久化的情况下性能极差。
+<p>比如 Kestrel（用于在线系统）、Kafka（用于离线分析）这些系统都不支持严格的持久化，或者在支持持久化的情况下性能极差。<br>
 它们采用定期回刷 (periodic flush) 磁盘或者依赖于文件系统 (pdflush) 来持久化数据。</p>
-<p>4.日志系统的核心负载可以归为三类：writes，tailing reads 和 catch-up reads。
-Writes 就是将数据追加到一个日志中，tailing reads 就是从日志的尾部读最新的东西，而 catch-up reads 则是从比较早的位置开始读日志（比如数据库中重建副本）。
-Writes 和 tailing reads 在意的是延时 (latency)，因为它关系到一个消息能多快地从被写入到被读到。
-而 catch-up reads 在意的则是高吞吐量，因为它关系到是否能追赶到日志的尾部。
-在一个“完美”的世界中，系统应该只有两种负载，writes 和 tailing reads。而且大部分现有系统对于这两种负载可以很好地应付。
-但是，在现实世界里，这基本不可能。尤其在一个多租户的环境里，catch-up reads 通常成为影响系统的重要因素。
-举个例子，以流式计算为例，用户可能重启一个 topology。而这个 topology 可能从很早地位置开始大量读数据，从而引入大量的 catch-up reads。而这些 catch-up reads 在文件系统角度通常会表现为大批量的扫描，文件系统会进行大量的预读取到 Page Cache 里，从而挤掉最新的数据而影响写操作和 tailing read操作。
-在设计这个分布式日志系统 DistributedLog 的时候，我们进行了各种调研。也同时基于运维已有系统 (kestrel, Kafka) 的经验，我们最终决定基于 Apache BookKeeper进行构建。
+<p>4.日志系统的核心负载可以归为三类：writes，tailing reads 和 catch-up reads。<br>
+Writes 就是将数据追加到一个日志中，tailing reads 就是从日志的尾部读最新的东西，而 catch-up reads 则是从比较早的位置开始读日志（比如数据库中重建副本）。<br>
+Writes 和 tailing reads 在意的是延时 (latency)，因为它关系到一个消息能多快地从被写入到被读到。<br>
+而 catch-up reads 在意的则是高吞吐量，因为它关系到是否能追赶到日志的尾部。<br>
+在一个“完美”的世界中，系统应该只有两种负载，writes 和 tailing reads。而且大部分现有系统对于这两种负载可以很好地应付。<br>
+但是，在现实世界里，这基本不可能。尤其在一个多租户的环境里，catch-up reads 通常成为影响系统的重要因素。<br>
+举个例子，以流式计算为例，用户可能重启一个 topology。而这个 topology 可能从很早地位置开始大量读数据，从而引入大量的 catch-up reads。而这些 catch-up reads 在文件系统角度通常会表现为大批量的扫描，文件系统会进行大量的预读取到 Page Cache 里，从而挤掉最新的数据而影响写操作和 tailing read操作。<br>
+在设计这个分布式日志系统 DistributedLog 的时候，我们进行了各种调研。也同时基于运维已有系统 (kestrel, Kafka) 的经验，我们最终决定基于 Apache BookKeeper进行构建。<br>
 主要因为 Apache BookKeeper 提供的三个核心特性：I/O 分离、并行复制和容易理解的一致性模型。它们能够很好地满足我们对于持久化、多副本和一致性的要求。</p>
 <p>摘自：<a href="http://mp.weixin.qq.com/s?__biz=MzAwMDU1MTE1OQ==&amp;mid=403051208&amp;idx=1&amp;sn=1694ac05acbcb5ca53c88bfac8a68856&amp;scene=1&amp;srcid=1224xZuQ9QQ4sRmiPVdHTppL#wechat_redirect">【年度案例】Twitter高性能分布式日志系统架构解析</a></p>
 
@@ -613,7 +622,7 @@ Writes 和 tailing reads 在意的是延时 (latency)，因为它关系到一个
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-12-29-twitter-log-bookkeeper/` was built on 2026-02-15T02:38:54.782Z -->
+		<!-- This page `/blog/2015-12-29-twitter-log-bookkeeper/` was built on 2026-02-15T13:56:14.183Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

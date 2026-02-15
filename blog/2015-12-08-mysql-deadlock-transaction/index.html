@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="mysql-deadlock-found-when-trying-to-get-lock-try-restarting-transaction">记一次mysql的Deadlock found when trying to get lock try restarting transaction</h1>
+<h1>记一次mysql的Deadlock found when trying to get lock try restarting transaction</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2015-12-08">08 December 2015</time></li>
@@ -570,11 +574,16 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E5%9C%BA%E6%99%AF%E8%AF%B4%E6%98%8E%EF%BC%9A">场景说明：</a></li><li><a href="#jdbc%E7%9A%84%E6%93%8D%E4%BD%9C%EF%BC%8C%E5%85%B3%E4%BA%8E%E4%BA%8B%E5%8A%A1%E6%9C%89%E4%BB%80%E4%B9%88%E7%89%B9%E5%88%AB%E7%9A%84%E5%9C%B0%E6%96%B9%3F%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%BC%80%E5%90%AF%E4%BA%8B%E5%8A%A1%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E7%BB%93%E6%9D%9F%3F">jdbc的操作，关于事务有什么特别的地方?什么时候开启事务，什么时候结束?</a></li><li><a href="#settransactionisolation">setTransactionIsolation</a></li><li><a href="#%E6%AD%BB%E9%94%81%E5%8F%91%E7%94%9F%E7%9A%84%E9%A2%91%E7%8E%87%E4%B8%8D%E6%98%AF%E5%BE%88%E5%A4%A7%EF%BC%8C%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%EF%BC%9F">死锁发生的频率不是很大，如何避免？</a></li><li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88insert%E8%A1%A8a%E5%92%8Cinsert%E8%A1%A8b%E5%B9%B6%E4%B8%94select%E8%A1%A8a%E4%BC%9A%E4%BA%A7%E7%94%9F%E6%AD%BB%E9%94%81%EF%BC%9F">为什么insert表A和insert表B并且select表A会产生死锁？</a></li><li><a href="#%E6%9C%80%E7%BB%88%EF%BC%8C%E6%88%91%E8%87%AA%E5%B7%B1%E6%89%93%E7%AE%97%E5%B0%9D%E8%AF%95%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95%E6%9C%89%E5%87%A0%E7%A7%8D%EF%BC%9A">最终，我自己打算尝试的解决方法有几种：</a></li><li><a href="#%E7%84%B6%E8%80%8C%E5%91%A8%E4%BA%8C%E5%86%99%E4%B8%8B%E4%B8%8A%E9%9D%A23%E4%B8%AA%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%EF%BC%8C%E5%91%A8%E5%9B%9B%E5%8F%91%E7%8E%B0%E6%88%91%E8%BF%98%E6%98%AF%E8%BF%87%E4%BA%8E%E5%A4%A9%E7%9C%9F%E3%80%82">然而周二写下上面3个解决办法，周四发现我还是过于天真。</a></li><li><a href="#%E5%90%8E%E7%BB%AD%EF%BC%9A">后续：</a></li><li><a href="#insert-%E2%80%A6select-%E2%80%A6%E5%B8%A6%E6%9D%A5%E7%9A%84%E9%97%AE%E9%A2%98">insert …select …带来的问题</a></li></ul>
+      </div>
+</aside>
   <p>本来，窝是一个天天开开心心，无忧无虑的少年. 直到有一天，遇见了名为deadlock的恐惧:). 周二发现的问题，直到周四才告一段落，对此我要写下泪の总结: 珍爱生命，远离事务</p>
-<h3 id="">场景说明：</h3>
-<p>有一个消费者实时消费消息，并且实时将记录插入mysql数据库中，为了高效，采用jdbc的批量插入batch模式，开启了事务，完成时commit，抛出异常时rollback。
+<h3 id="%E5%9C%BA%E6%99%AF%E8%AF%B4%E6%98%8E%EF%BC%9A" tabindex="-1">场景说明：</h3>
+<p>有一个消费者实时消费消息，并且实时将记录插入mysql数据库中，为了高效，采用jdbc的批量插入batch模式，开启了事务，完成时commit，抛出异常时rollback。<br>
 每一步都记录了log日志。最近发生了奇怪的事情，就是error日志中出现了如下异常:</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim"><span class="token number">2015</span><span class="token operator">-</span><span class="token number">12</span><span class="token operator">-</span><span class="token number">08</span> <span class="token number">12</span><span class="token punctuation">:</span><span class="token number">10</span><span class="token punctuation">:</span><span class="token number">18</span>  <span class="token punctuation">[</span> Thread<span class="token operator">-</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">3088986302</span> <span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token punctuation">[</span> ERROR <span class="token punctuation">]</span>  入库失败Deadlock found when trying <span class="token keyword">to</span> get lock<span class="token punctuation">;</span> <span class="token keyword">try</span> restarting transaction
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim"><span class="token number">2015</span><span class="token operator">-</span><span class="token number">12</span><span class="token operator">-</span><span class="token number">08</span> <span class="token number">12</span><span class="token punctuation">:</span><span class="token number">10</span><span class="token punctuation">:</span><span class="token number">18</span>  <span class="token punctuation">[</span> Thread<span class="token operator">-</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">3088986302</span> <span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token punctuation">[</span> ERROR <span class="token punctuation">]</span>  入库失败Deadlock found when trying <span class="token keyword">to</span> get lock<span class="token punctuation">;</span> <span class="token keyword">try</span> restarting transaction
 java<span class="token operator">.</span>sql<span class="token operator">.</span>BatchUpdateException<span class="token punctuation">:</span>
     Deadlock found when trying <span class="token keyword">to</span> get lock<span class="token punctuation">;</span> <span class="token keyword">try</span> restarting transaction
 	at <span class="token builtin">com</span><span class="token operator">.</span>mysql<span class="token operator">.</span>jdbc<span class="token operator">.</span>PreparedStatement<span class="token operator">.</span><span class="token function">executeBatchSerially</span><span class="token punctuation">(</span>PreparedStatement<span class="token operator">.</span>java<span class="token punctuation">:</span><span class="token number">1805</span><span class="token punctuation">)</span>
@@ -600,20 +609,20 @@ Caused by<span class="token punctuation">:</span> <span class="token builtin">co
 	at <span class="token builtin">com</span><span class="token operator">.</span>mysql<span class="token operator">.</span>jdbc<span class="token operator">.</span>PreparedStatement<span class="token operator">.</span><span class="token function">executeUpdate</span><span class="token punctuation">(</span>PreparedStatement<span class="token operator">.</span>java<span class="token punctuation">:</span><span class="token number">2141</span><span class="token punctuation">)</span>
 	at <span class="token builtin">com</span><span class="token operator">.</span>mysql<span class="token operator">.</span>jdbc<span class="token operator">.</span>PreparedStatement<span class="token operator">.</span><span class="token function">executeBatchSerially</span><span class="token punctuation">(</span>PreparedStatement<span class="token operator">.</span>java<span class="token punctuation">:</span><span class="token number">1773</span><span class="token punctuation">)</span>
 	<span class="token operator">.</span><span class="token operator">.</span><span class="token operator">.</span> <span class="token number">3</span> <span class="token builtin">more</span></code></pre>
-<p>没错，死锁。
-为什么，怎么会，出现这种情况??
+<p>没错，死锁。<br>
+为什么，怎么会，出现这种情况??<br>
 登陆mysql，查看最后innodb状态</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim">mysql<span class="token operator">></span> show engine innodb status<span class="token punctuation">;</span></code></pre>
-<p>发现是在表A中进行insert操作时，表B也进行insert操作，只是表B的数据来源是select表A中的记录. 和网上的update、insert同一条记录都不相同。
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">mysql<span class="token operator">></span> show engine innodb status<span class="token punctuation">;</span></code></pre>
+<p>发现是在表A中进行insert操作时，表B也进行insert操作，只是表B的数据来源是select表A中的记录. 和网上的update、insert同一条记录都不相同。<br>
 先说明表A的基本特点：使用innodb引擎，有主键</p>
 <p>消费者特点：200条提交一次，单线程消费</p>
-<p>我产生了以下疑问:
-1.为什么insert表A和insert表B并且select表A会产生死锁？
-2.发生的频率不是很大，如何避免？
+<p>我产生了以下疑问:<br>
+1.为什么insert表A和insert表B并且select表A会产生死锁？<br>
+2.发生的频率不是很大，如何避免？<br>
 3.jdbc的操作，关于事务有什么特别的地方?什么时候开启事务，什么时候结束?</p>
-<p>一步一步来解决
+<p>一步一步来解决<br>
 1.查看mysql当前隔离级别：</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim">mysql<span class="token operator">></span> select @@global<span class="token operator">.</span>tx_isolation<span class="token punctuation">,</span> @@tx_isolation<span class="token punctuation">;</span>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">mysql<span class="token operator">></span> select @@global<span class="token operator">.</span>tx_isolation<span class="token punctuation">,</span> @@tx_isolation<span class="token punctuation">;</span>
 <span class="token operator">+</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">+</span>
 | @@global<span class="token operator">.</span>tx_isolation | @@tx_isolation  |
 <span class="token operator">+</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">+</span>
@@ -621,7 +630,7 @@ Caused by<span class="token punctuation">:</span> <span class="token builtin">co
 <span class="token operator">+</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">+</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">+</span>
 <span class="token number">1</span> row <span class="token keyword">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span></code></pre>
 <p>2.回答问题3</p>
-<h3 id="jdbc">jdbc的操作，关于事务有什么特别的地方?什么时候开启事务，什么时候结束?</h3>
+<h3 id="jdbc%E7%9A%84%E6%93%8D%E4%BD%9C%EF%BC%8C%E5%85%B3%E4%BA%8E%E4%BA%8B%E5%8A%A1%E6%9C%89%E4%BB%80%E4%B9%88%E7%89%B9%E5%88%AB%E7%9A%84%E5%9C%B0%E6%96%B9%3F%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%BC%80%E5%90%AF%E4%BA%8B%E5%8A%A1%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E7%BB%93%E6%9D%9F%3F" tabindex="-1">jdbc的操作，关于事务有什么特别的地方?什么时候开启事务，什么时候结束?</h3>
 <ul>
 <li>如果程序默认(auto-commit)，即自动提交，则每一个sql是有隐含的事务和提交操作</li>
 <li>如果关闭自动提交(auto-commit)操作，则每一个sql操作都需要自己手动提交事务</li>
@@ -629,8 +638,8 @@ Caused by<span class="token punctuation">:</span> <span class="token builtin">co
 <li>如果auto-commit已经启用，可以在任意时刻调用Connection.setTransactionIsolation()</li>
 <li>如果自动提交(auto-commit)为false，Connection.setTransactionIsolation（）只可在事务开始之前或结束之后调用。若在事务中调用会发生为止不可预测的行为</li>
 </ul>
-<h3 id="settransactionisolation">setTransactionIsolation</h3>
-<pre><code>void setTransactionIsolation(int level) throws SQLException
+<h3 id="settransactionisolation" tabindex="-1">setTransactionIsolation</h3>
+<pre><code class="hljs">void setTransactionIsolation(int level) throws SQLException
 Attempts to change the transaction isolation level for
 this Connection object to the one given.
 The constants defined in the interface Connection are the
@@ -652,10 +661,10 @@ See Also:
 DatabaseMetaData.supportsTransactionIsolationLevel(int), getTransactionIsolation()
 </code></pre>
 <p>3.回答问题2</p>
-<h3 id="-2">死锁发生的频率不是很大，如何避免？</h3>
+<h3 id="%E6%AD%BB%E9%94%81%E5%8F%91%E7%94%9F%E7%9A%84%E9%A2%91%E7%8E%87%E4%B8%8D%E6%98%AF%E5%BE%88%E5%A4%A7%EF%BC%8C%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%EF%BC%9F" tabindex="-1">死锁发生的频率不是很大，如何避免？</h3>
 <p>You can cope with deadlocks and reduce the likelihood of their occurrence with the following techniques:</p>
 <ul>
-<li>用'show engine innodb status;'查看最后一次死锁的状态详情，并以此来更改应用程序尝试分析和避免</li>
+<li>用’show engine innodb status;'查看最后一次死锁的状态详情，并以此来更改应用程序尝试分析和避免</li>
 <li>随时准备在出现死锁的时候，再重新执行一次提交，死锁并不可怕也不危险，再试一次就好</li>
 <li>尽量保持事务简洁和短小，以此来避免死锁的易发性，减少冲突</li>
 <li>在做完一系列相关操作之后，立刻提交事务，在手动提交事务的场景下，尽量避免长时间保持耦合度高的session</li>
@@ -666,19 +675,19 @@ DatabaseMetaData.supportsTransactionIsolationLevel(int), getTransactionIsolation
 <li>另一种方法，创建一个“信号”表，其中包含一个单行。在访问其它表之前，该行每个事务更新。以这种方式，所有的交易发生以串行方式。注意，InnoDB的瞬间死锁检测算法也适用于这种情况下，因为串行化锁是一个行级锁。随着MySQL表级锁，超时方法必须被用来解决死锁。</li>
 </ul>
 <p>4.回答问题1</p>
-<h3 id="insert-a-insert-b-select-a">为什么insert表A和insert表B并且select表A会产生死锁？</h3>
-<p>在innodb默认的事务隔离级别下，普通的SELECT是不需要加行锁的，但LOCK IN SHARE MODE、FOR UPDATE及高串行化级别中的SELECT都要加锁。有一个例外,这个例外就是我遇到的问题：
-对表A加表锁，表所有行的主键索引（即聚簇索引）加共享锁。默认对其使用主键索引。
-锁冲突的产生：
+<h3 id="%E4%B8%BA%E4%BB%80%E4%B9%88insert%E8%A1%A8a%E5%92%8Cinsert%E8%A1%A8b%E5%B9%B6%E4%B8%94select%E8%A1%A8a%E4%BC%9A%E4%BA%A7%E7%94%9F%E6%AD%BB%E9%94%81%EF%BC%9F" tabindex="-1">为什么insert表A和insert表B并且select表A会产生死锁？</h3>
+<p>在innodb默认的事务隔离级别下，普通的SELECT是不需要加行锁的，但LOCK IN SHARE MODE、FOR UPDATE及高串行化级别中的SELECT都要加锁。有一个例外,这个例外就是我遇到的问题：<br>
+对表A加表锁，表所有行的主键索引（即聚簇索引）加共享锁。默认对其使用主键索引。<br>
+锁冲突的产生：<br>
 由于共享锁与排他锁是互斥的，当一方拥有了某行记录的排他锁后，另一方就不能其拥有共享锁，同样，一方拥有了其共享锁后，另一方也无法得到其排他锁。所以，当语句1、2同时运行时，相当于两个事务会同时申请某相同记录行的锁资源，于是会产生锁冲突。由于两个事务都会申请主键索引，锁冲突只会发生在主键索引上.</p>
-<h3 id="-3">最终，我自己打算尝试的解决方法有几种：</h3>
-<p>1.在抛出异常之后，进行commit尝试，尝试一定次数之后，再进行回滚处理
-2.将事务过程缩减，加快提交频率
+<h3 id="%E6%9C%80%E7%BB%88%EF%BC%8C%E6%88%91%E8%87%AA%E5%B7%B1%E6%89%93%E7%AE%97%E5%B0%9D%E8%AF%95%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95%E6%9C%89%E5%87%A0%E7%A7%8D%EF%BC%9A" tabindex="-1">最终，我自己打算尝试的解决方法有几种：</h3>
+<p>1.在抛出异常之后，进行commit尝试，尝试一定次数之后，再进行回滚处理<br>
+2.将事务过程缩减，加快提交频率<br>
 3.其实表A的索引有优化的余地，对索引精确优化也可以有效的避免，只是个人mysql水平有限，过段时间尝试联合索引的替换</p>
-<h3 id="3">然而周二写下上面3个解决办法，周四发现我还是过于天真。</h3>
-<h3 id="-4">后续：</h3>
+<h3 id="%E7%84%B6%E8%80%8C%E5%91%A8%E4%BA%8C%E5%86%99%E4%B8%8B%E4%B8%8A%E9%9D%A23%E4%B8%AA%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%EF%BC%8C%E5%91%A8%E5%9B%9B%E5%8F%91%E7%8E%B0%E6%88%91%E8%BF%98%E6%98%AF%E8%BF%87%E4%BA%8E%E5%A4%A9%E7%9C%9F%E3%80%82" tabindex="-1">然而周二写下上面3个解决办法，周四发现我还是过于天真。</h3>
+<h3 id="%E5%90%8E%E7%BB%AD%EF%BC%9A" tabindex="-1">后续：</h3>
 <p>1.事务过程缩减并没有有效的制止现象的发生，我又自己指定了connection的隔离级别，并记录了入库失败时的sql，用于出错补救。当在java里指定隔离级别的时候，程序报错了</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim"><span class="token number">2015</span><span class="token operator">-</span><span class="token number">12</span><span class="token operator">-</span><span class="token number">09</span> <span class="token number">13</span><span class="token punctuation">:</span><span class="token number">26</span><span class="token punctuation">:</span><span class="token number">44</span>  <span class="token punctuation">[</span> Thread<span class="token operator">-</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">95608</span> <span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token punctuation">[</span> ERROR <span class="token punctuation">]</span>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim"><span class="token number">2015</span><span class="token operator">-</span><span class="token number">12</span><span class="token operator">-</span><span class="token number">09</span> <span class="token number">13</span><span class="token punctuation">:</span><span class="token number">26</span><span class="token punctuation">:</span><span class="token number">44</span>  <span class="token punctuation">[</span> Thread<span class="token operator">-</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">95608</span> <span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token punctuation">[</span> ERROR <span class="token punctuation">]</span>
 入库失败<span class="token operator">-</span>Binary logging not possible<span class="token operator">.</span>
 Message<span class="token punctuation">:</span>
 Transaction level <span class="token string">'READ-COMMITTED'</span> <span class="token keyword">in</span> InnoDB <span class="token operator">is</span> not safe <span class="token keyword">for</span> binlog <span class="token keyword">mode</span> <span class="token string">'STATEMENT'</span>
@@ -702,25 +711,25 @@ Message<span class="token punctuation">:</span> Transaction level <span class="t
     at <span class="token builtin">com</span><span class="token operator">.</span>mysql<span class="token operator">.</span>jdbc<span class="token operator">.</span>PreparedStatement<span class="token operator">.</span><span class="token function">executeUpdate</span><span class="token punctuation">(</span>PreparedStatement<span class="token operator">.</span>java<span class="token punctuation">:</span><span class="token number">2141</span><span class="token punctuation">)</span>
     at <span class="token builtin">com</span><span class="token operator">.</span>mysql<span class="token operator">.</span>jdbc<span class="token operator">.</span>PreparedStatement<span class="token operator">.</span><span class="token function">executeBatchSerially</span><span class="token punctuation">(</span>PreparedStatement<span class="token operator">.</span>java<span class="token punctuation">:</span><span class="token number">1773</span><span class="token punctuation">)</span>
     <span class="token operator">.</span><span class="token operator">.</span><span class="token operator">.</span> <span class="token number">3</span> <span class="token builtin">more</span></code></pre>
-<p>周二、周三、周四三天改了很多版的程序，依然会偶尔报deadlock，平均2小时报一次，是窝无法忍受的
-其中，我用试错的方法，prepareStatement.excuteBatch()之后connection.commit()，事实证明，在我试图在excuteBatch()执行抛出异常之后，将线程等待一段时间，继续excuteBatch()并且commit()是无效的。
+<p>周二、周三、周四三天改了很多版的程序，依然会偶尔报deadlock，平均2小时报一次，是窝无法忍受的<br>
+其中，我用试错的方法，prepareStatement.excuteBatch()之后connection.commit()，事实证明，在我试图在excuteBatch()执行抛出异常之后，将线程等待一段时间，继续excuteBatch()并且commit()是无效的。<br>
 数据依然插入不到数据库中</p>
-<p>其实本身数据库的隔离级别和binlog的格式我并没有深入的实验和研究，这也是我一个犯错的必然因素
+<p>其实本身数据库的隔离级别和binlog的格式我并没有深入的实验和研究，这也是我一个犯错的必然因素<br>
 后来我无意中看到了一段话：</p>
-<h3 id="insert-select">insert …select …带来的问题</h3>
-<p>&quot;当使用insert...select...进行记录的插入时，如果select的表是innodb类型的，不论insert的表是什么类型的表，都会对select的表的纪录进行锁定。</p>
-<p>对于那些从oracle迁移过来的应用，需要特别的注意，因为oracle并不存在类似的问题，所以在oracle的应用中insert...select...操作非常的常见。例如：有时候会对比较多的纪录进行统计分析，然后将统计的中间结果插入到另外一个表，这样的操作因为进行的非常少，所以可能并没有设置相应的索引。如果迁移到mysql数据库后不进行相应的调整，那么在进行这个操作期间，对需要select的表实际上是进行的全表扫描导致的所有记录的锁定，将会对应用的其他操作造成非常严重的影响。</p>
+<h3 id="insert-%E2%80%A6select-%E2%80%A6%E5%B8%A6%E6%9D%A5%E7%9A%84%E9%97%AE%E9%A2%98" tabindex="-1">insert …select …带来的问题</h3>
+<p>&quot;当使用insert…select…进行记录的插入时，如果select的表是innodb类型的，不论insert的表是什么类型的表，都会对select的表的纪录进行锁定。</p>
+<p>对于那些从oracle迁移过来的应用，需要特别的注意，因为oracle并不存在类似的问题，所以在oracle的应用中insert…select…操作非常的常见。例如：有时候会对比较多的纪录进行统计分析，然后将统计的中间结果插入到另外一个表，这样的操作因为进行的非常少，所以可能并没有设置相应的索引。如果迁移到mysql数据库后不进行相应的调整，那么在进行这个操作期间，对需要select的表实际上是进行的全表扫描导致的所有记录的锁定，将会对应用的其他操作造成非常严重的影响。</p>
 <p>究其主要原因，是因为mysql在实现复制的机制时和oracle是不同的，如果不进行select表的锁定，则可能造成从数据库在恢复期间插入结果集的不同，造成主从数据的不一致。如果不采用主从复制，关闭binlog并不能避免对select纪录的锁定，某些文档中提到可以通过设置innodb_locks_unsafe_for_binlog来避免这个现象，当这个参数设置为true的时候，将不会对select的结果集加锁，但是这样的设置将可能带来非常严重的隐患。如果使用这个binlog进行从数据库的恢复，或者进行主数据库的灾难恢复，都将可能和主数据库的执行效果不同。</p>
-<p>因此，我们并不推荐通过设置这个参数来避免insert...select...导致的锁，如果需要进行可能会扫描大量数据的insert...select操作，我们推荐使用select...into outfile和load data infile的组合来实现，这样是不会对纪录进行锁定的。&quot;
-我深知如果能阻止高频的insert...select...操作，将会完全避免deadlock情况，然而实际的解决办法，并不是建立在让别人改实现方式的，应该是我们努力让程序变的健壮。
-周四的凌晨，我将每20条甚至50条的记录一次性提交，改为了一条一条的提交:)没错，我放弃的在这种场景下继续使用事务。
-在数据的不可丢失和追求批量提交的性能诱惑下，我选择了前者。
+<p>因此，我们并不推荐通过设置这个参数来避免insert…select…导致的锁，如果需要进行可能会扫描大量数据的insert…select操作，我们推荐使用select…into outfile和load data infile的组合来实现，这样是不会对纪录进行锁定的。&quot;<br>
+我深知如果能阻止高频的insert…select…操作，将会完全避免deadlock情况，然而实际的解决办法，并不是建立在让别人改实现方式的，应该是我们努力让程序变的健壮。<br>
+周四的凌晨，我将每20条甚至50条的记录一次性提交，改为了一条一条的提交:)没错，我放弃的在这种场景下继续使用事务。<br>
+在数据的不可丢失和追求批量提交的性能诱惑下，我选择了前者。<br>
 在很多场景下，业务的很多步不可拆分需要披上原子性的外衣，使用事务是必要的，只是我相信那种情况下，和我处的这种环境，是不一致的。</p>
 <p>学到了很多，感谢。</p>
-<p>主要参考：
-1.<a href="http://stackoverflow.com/questions/4940648/how-to-start-a-transaction-in-jdbc">How to start a transaction in JDBC?</a>
-2.<a href="http://dev.mysql.com/doc/refman/5.0/en/innodb-deadlocks.html">mysql官网-如何避免死锁</a>
-3.<a href="http://slevin.blog.51cto.com/441770/314203">mysql binlog格式与事务级别read committed的关系</a>
+<p>主要参考：<br>
+1.<a href="http://stackoverflow.com/questions/4940648/how-to-start-a-transaction-in-jdbc">How to start a transaction in JDBC?</a><br>
+2.<a href="http://dev.mysql.com/doc/refman/5.0/en/innodb-deadlocks.html">mysql官网-如何避免死锁</a><br>
+3.<a href="http://slevin.blog.51cto.com/441770/314203">mysql binlog格式与事务级别read committed的关系</a><br>
 4.<a href="http://c.biancheng.net/cpp/html/1481.html">Mysql锁的优化</a></p>
 
 </div>
@@ -748,7 +757,7 @@ Message<span class="token punctuation">:</span> Transaction level <span class="t
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-12-08-mysql-deadlock-transaction/` was built on 2026-02-15T02:38:54.780Z -->
+		<!-- This page `/blog/2015-12-08-mysql-deadlock-transaction/` was built on 2026-02-15T13:56:14.182Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

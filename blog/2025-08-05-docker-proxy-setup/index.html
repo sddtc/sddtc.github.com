@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="ss-trojan-qt5-colima-docker-proxy-docker-images">SS+Trojan-Qt5+colima 配置docker proxy从而正常下载docker images</h1>
+<h1>SS+Trojan-Qt5+colima 配置docker proxy从而正常下载docker images</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2025-08-05">05 August 2025</time></li>
@@ -570,9 +574,14 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="">碎碎念:</h3>
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E7%A2%8E%E7%A2%8E%E5%BF%B5%3A">碎碎念:</a></li><li><a href="#%E7%A1%AE%E4%BF%9D%E4%BD%A0%E5%B7%B2%E7%BB%8F%E5%85%B7%E5%A4%87%E7%9A%84%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6%3A">确保你已经具备的前提条件:</a></li><li><a href="#%E9%85%8D%E7%BD%AEwifi-%E7%9A%84-vpn-proxy.pac">配置WIFI 的 VPN proxy.pac</a></li><li><a href="#%E5%AE%9A%E4%B9%89-colima-%E9%BB%98%E8%AE%A4-docker">定义 Colima 默认 Docker</a></li><li><a href="#%E9%85%8D%E7%BD%AE-docker-proxies">配置 Docker proxies</a></li><li><a href="#%E4%BF%AE%E5%A4%8D-docker-proxy-url">修复 Docker proxy url</a></li><li><a href="#iterm2-%E9%85%8D%E7%BD%AE-proxy-%E5%BC%80%E5%85%B3">iTerm2 配置 proxy 开关</a></li></ul>
+      </div>
+</aside>
+  <h3 id="%E7%A2%8E%E7%A2%8E%E5%BF%B5%3A" tabindex="-1">碎碎念:</h3>
 <p>虽然 docker desktop app 个人免费, 有友好的 UI 界面且下载 images 也很快, 但是当重新配置 CPU 和 memory 的时候, 一旦运行一些 container 会经常造成卡顿, 导致我的电脑很容易无响应. 再加上个人觉得命令行模式简单易用, 于是克服了之前 colima+docker 无法下载 docker images 的问题. 本文详细介绍了解决方案.</p>
-<h2 id="-2">确保你已经具备的前提条件:</h2>
+<h2 id="%E7%A1%AE%E4%BF%9D%E4%BD%A0%E5%B7%B2%E7%BB%8F%E5%85%B7%E5%A4%87%E7%9A%84%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6%3A" tabindex="-1">确保你已经具备的前提条件:</h2>
 <ul>
 <li>VPN(SS) + Trojan-Qt5(client)</li>
 <li><a href="https://github.com/abiosoft/colima">colima</a>: 一款开源的 docker desktop app 平替
@@ -582,15 +591,15 @@ pre[class*="language-"] {
 </ul>
 </li>
 </ul>
-<h2 id="wifi-vpn-proxy-pac">配置WIFI 的 VPN proxy.pac</h2>
+<h2 id="%E9%85%8D%E7%BD%AEwifi-%E7%9A%84-vpn-proxy.pac" tabindex="-1">配置WIFI 的 VPN proxy.pac</h2>
 <p>如果你的 VPN 采用的是动态寻址(proxy.pac) - 有个白名单定义了哪些网址走 VPN, 哪些不走.<br>
 那么如果没有为WIFI配置代理, 下载 docker images 会访问失败(说到底是因为docker.io和docker.com在某些区域被限制访问🙂), 如图所示, 确保打开 Automatic proxy configuration, 在 URL 配置 proxy.pac:<br>
 <picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/UqpKAGBEM1-1320.avif 1320w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/UqpKAGBEM1-1320.webp 1320w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/UqpKAGBEM1-1320.png" alt="proxies" width="1320" height="826"></picture></p>
-<h2 id="colima-docker">定义 Colima 默认 Docker</h2>
+<h2 id="%E5%AE%9A%E4%B9%89-colima-%E9%BB%98%E8%AE%A4-docker" tabindex="-1">定义 Colima 默认 Docker</h2>
 <p>笔者采用动态修改 docker container 配置的策略.<br>
 colima 启动 docker 虚拟机的时候, 利用 <code>colima template</code> 进行了自定义模版, 模版文件地址:<br>
-<code>/Users/sddtc/.colima/default/colima.yaml</code>(将sddtc替换为你的用户名)
-<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/Z-Ox9bBZVo-2332.avif 2332w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/Z-Ox9bBZVo-2332.webp 2332w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/Z-Ox9bBZVo-2332.png" alt="colima-default" width="2332" height="188"></picture>
+<code>/Users/sddtc/.colima/default/colima.yaml</code>(将sddtc替换为你的用户名)<br>
+<picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/Z-Ox9bBZVo-2332.avif 2332w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/Z-Ox9bBZVo-2332.webp 2332w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/Z-Ox9bBZVo-2332.png" alt="colima-default" width="2332" height="188"></picture><br>
 配置文件的内容如上图所示:</p>
 <ul>
 <li>虚拟机架构是 x86_64</li>
@@ -600,21 +609,21 @@ colima 启动 docker 虚拟机的时候, 利用 <code>colima template</code> 进
 <li>运行时是 docker</li>
 </ul>
 <p>而我本机配置是 Mac(Intel Core i7+16G内存+500G), 所以 docker 的配置突出一个够用就行.</p>
-<h2 id="docker-proxies">配置 Docker proxies</h2>
+<h2 id="%E9%85%8D%E7%BD%AE-docker-proxies" tabindex="-1">配置 Docker proxies</h2>
 <p>proxies 的位置在 Docker 虚拟机的<code>/etc/docker/daemon.json</code>的<strong>proxies</strong>节点:</p>
-<pre class="language-json" tabindex="0"><code class="language-json"><span class="token property">"proxies"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+<pre class="language-json" tabindex="0"><code class="hljs language-json"><span class="token property">"proxies"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"http-proxy"</span><span class="token operator">:</span> <span class="token string">"http://&lt;url>:&lt;port>"</span><span class="token punctuation">,</span>
     <span class="token property">"https-proxy"</span><span class="token operator">:</span> <span class="token string">"http://&lt;url>:&lt;port>"</span><span class="token punctuation">,</span>
     <span class="token property">"no-proxy"</span><span class="token operator">:</span> <span class="token string">"localhost,127.0.0.1"</span>
   <span class="token punctuation">}</span></code></pre>
 <p>其中:</p>
 <ul>
-<li><code>&lt;url&gt;</code>: VPN 所配置的地址. 基本上本机代理的 url 就是<code>127.0.0.1</code>. 这里有个坑就是协议(这里使用的是http而不能是socks5). 不过这个坑应该只有使用 VPN(SS) + Trojan-Qt5(client)
-会遇到: <a href="https://stackoverflow.com/questions/73798733/why-socks5-protocol-in-http-proxy-lead-curl-52-empty-reply-from-server">stackoverflow: why socks5 protocol in http_proxy lead &quot;curl: (52) Empty reply from server&quot;?</a></li>
+<li><code>&lt;url&gt;</code>: VPN 所配置的地址. 基本上本机代理的 url 就是<code>127.0.0.1</code>. 这里有个坑就是协议(这里使用的是http而不能是socks5). 不过这个坑应该只有使用 VPN(SS) + Trojan-Qt5(client)<br>
+会遇到: <a href="https://stackoverflow.com/questions/73798733/why-socks5-protocol-in-http-proxy-lead-curl-52-empty-reply-from-server">stackoverflow: why socks5 protocol in http_proxy lead “curl: (52) Empty reply from server”?</a></li>
 <li><code>&lt;port&gt;</code>: VPN 所配置的端口号.</li>
 </ul>
 <p>该配置在你把colima的Docker删除再新创建的时候会被清除, 因此要在<code>/Users/sddtc/.colima/default/colima.yaml</code> 的 <strong>env</strong> 节点下也配置 proxy 好:</p>
-<pre class="language-json" tabindex="0"><code class="language-json">env<span class="token operator">:</span>
+<pre class="language-json" tabindex="0"><code class="hljs language-json">env<span class="token operator">:</span>
   http_proxy<span class="token operator">:</span> http<span class="token operator">:</span><span class="token comment">//&lt;url>:&lt;port>,</span>
   https_proxy<span class="token operator">:</span> http<span class="token operator">:</span><span class="token comment">//&lt;url>:&lt;port>,</span>
   no_proxy<span class="token operator">:</span> <span class="token string">"localhost,127.0.0.1"</span></code></pre>
@@ -629,11 +638,11 @@ colima 启动 docker 虚拟机的时候, 利用 <code>colima template</code> 进
 <li><a href="https://github.com/abiosoft/colima/issues/1144">Colima does not auto-replace gateway address for proxy variables in docker daemon.json</a></li>
 <li><a href="https://github.com/abiosoft/colima/issues/956">colima x86_64 daemon.json file has incorrect proxy</a></li>
 </ul>
-<p>查看colima版本:
+<p>查看colima版本:<br>
 <picture><source type="image/avif" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/esYa0WXJ8I-1616.avif 1616w"><source type="image/webp" srcset="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/esYa0WXJ8I-1616.webp 1616w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/esYa0WXJ8I-1616.png" alt="colima-verison" width="1616" height="482"></picture></p>
-<h2 id="docker-proxy-url">修复 Docker proxy url</h2>
+<h2 id="%E4%BF%AE%E5%A4%8D-docker-proxy-url" tabindex="-1">修复 Docker proxy url</h2>
 <p>手动执行修复(评论提到可以使用provision脚本更新, 但我发现 template 并没有在重启后自动执行脚本):</p>
-<pre class="language-shell" tabindex="0"><code class="language-shell">colima <span class="token function">ssh</span>
+<pre class="language-shell" tabindex="0"><code class="hljs language-shell">colima <span class="token function">ssh</span>
 <span class="token comment"># 检查一下proxies的值</span>
 <span class="token function">cat</span> /etc/docker/daemon.json 
 <span class="token comment">#我是本机代理所以是127.0.0.1</span>
@@ -642,9 +651,9 @@ colima 启动 docker 虚拟机的时候, 利用 <code>colima template</code> 进
 <span class="token function">sudo</span> systemctl reload <span class="token function">docker</span>
 <span class="token builtin class-name">exit</span></code></pre>
 <p>这样一配就好了.</p>
-<h2 id="iterm2-proxy">iTerm2 配置 proxy 开关</h2>
+<h2 id="iterm2-%E9%85%8D%E7%BD%AE-proxy-%E5%BC%80%E5%85%B3" tabindex="-1">iTerm2 配置 proxy 开关</h2>
 <p>如果你用了类似 iTerm2 的命令行工具, 会需要 run <code>docker login</code> 等命令, 同样需要命令行工具在访问某些网站时使用代理,可以在 <code>~/.zshrc</code> 配置一下子:</p>
-<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token comment"># setup proxy can turn on/off then iTerms can also use proxy to visit google</span>
+<pre class="language-shell" tabindex="0"><code class="hljs language-shell"><span class="token comment"># setup proxy can turn on/off then iTerms can also use proxy to visit google</span>
 <span class="token builtin class-name">alias</span> <span class="token assign-left variable">proxy</span><span class="token operator">=</span><span class="token string">"export all_proxy=http://&lt;url>:&lt;port>"</span>
 <span class="token builtin class-name">alias</span> <span class="token assign-left variable">unproxy</span><span class="token operator">=</span><span class="token string">"unset all_proxy"</span>
 
@@ -677,7 +686,7 @@ colima 启动 docker 虚拟机的时候, 利用 <code>colima template</code> 进
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2025-08-05-docker-proxy-setup/` was built on 2026-02-15T02:38:54.796Z -->
+		<!-- This page `/blog/2025-08-05-docker-proxy-setup/` was built on 2026-02-15T13:56:14.190Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

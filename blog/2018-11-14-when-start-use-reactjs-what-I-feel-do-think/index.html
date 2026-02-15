@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="react">当我在写 React 我在写什么</h1>
+<h1>当我在写 React 我在写什么</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2018-11-14">14 November 2018</time></li>
@@ -570,36 +574,41 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="">背景</h3>
-<p>如果你有这样的经历，要在一周左右的时间对一个功能小而美的代码库添加一个完整的功能模块。
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E8%83%8C%E6%99%AF">背景</a></li><li><a href="#%E5%BF%83%E8%B7%AF%E5%8E%86%E7%A8%8B">心路历程</a><ul><li><a href="#%E6%84%9F%E8%A7%A6%E4%B8%80">感触一</a></li><li><a href="#%E5%BC%AF%E8%B7%AF%E4%B8%80">弯路一</a></li><li><a href="#%E7%9B%B4%E7%90%83%E4%B8%80">直球一</a></li><li><a href="#%E6%84%9F%E8%A7%A6%E4%BA%8C">感触二</a></li><li><a href="#%E5%BC%AF%E8%B7%AF%E4%BA%8C">弯路二</a></li><li><a href="#%E7%9B%B4%E7%90%83%E4%BA%8C">直球二</a></li><li><a href="#%E6%84%9F%E8%A7%A6%E4%B8%89">感触三</a></li></ul></li><li><a href="#%E6%80%BB%E7%BB%93">总结</a></li></ul>
+      </div>
+</aside>
+  <h3 id="%E8%83%8C%E6%99%AF" tabindex="-1">背景</h3>
+<p>如果你有这样的经历，要在一周左右的时间对一个功能小而美的代码库添加一个完整的功能模块。<br>
 而你没有相关的技术栈经验，该怎么样去整理保证最快的实践曲线呢？我有了一些小小的感触。</p>
-<h3 id="-2">心路历程</h3>
-<h4 id="-3">感触一</h4>
-<p>我对于 <code>React</code> 的理解，仅仅停留在是一个流行且强大的东西。
+<h3 id="%E5%BF%83%E8%B7%AF%E5%8E%86%E7%A8%8B" tabindex="-1">心路历程</h3>
+<h4 id="%E6%84%9F%E8%A7%A6%E4%B8%80" tabindex="-1">感触一</h4>
+<p>我对于 <code>React</code> 的理解，仅仅停留在是一个流行且强大的东西。<br>
 那么在工作里，快速实现一个符合产品的需求是一件不会很难的事情，难的是<strong>正确的使用</strong>一个你不熟悉的东西。</p>
-<h4 id="-4">弯路一</h4>
+<h4 id="%E5%BC%AF%E8%B7%AF%E4%B8%80" tabindex="-1">弯路一</h4>
 <p>什么时候用 <code>state</code>，什么时候用 <code>props</code> ？</p>
-<h4 id="-5">直球一</h4>
+<h4 id="%E7%9B%B4%E7%90%83%E4%B8%80" tabindex="-1">直球一</h4>
 <p><code>React</code> 是一个JS库，库意味着较好的封装性、使用性，可说到底，也是基于JS这门语言，万变不离其宗才是真谛。</p>
-<p><strong>什么时候用 <code>state</code> ?</strong>
+<p><strong>什么时候用 <code>state</code> ?</strong><br>
 什么时候用我还没有实践，但是尽量不用是我的一个体会。因为我在使用 <code>window</code> 时把它放在了 <code>state</code> 里， 现在想想很可笑，而当时是因为不理解 <code>state</code>，并不是可以实现功能就是正确的实践。</p>
 <p><strong>Tips</strong>: <code>state</code> 是为了维护组件内部的数据状态，用于组件保存、控制以及修改自己的状态，修改 <code>state</code> 属性会导致组件的重新渲染。 <a href="https://daveceddia.com/where-initialize-state-react/">Where to Initialize State in React</a></p>
 <p><em>没有state的叫做无状态组件，有state的叫做有状态组件</em></p>
-<p><strong>什么时候用 <code>props</code> ?</strong>
+<p><strong>什么时候用 <code>props</code> ?</strong><br>
 <code>props</code> 是组件一个非常方便的特性，从外部传入参数写入组件内部读取、处理。组件的 <code>props</code> 尽量保持精简，组件之间的属性保持简洁、解耦。而我犯的一个错误是过多的给组件添加了 <code>props</code> 属性，换一句话说，用不到的 <code>props</code> 一定不要传递给组件。</p>
 <p><strong>Tips</strong>: <code>props</code> 经常被用作渲染组件和初始化状态，当一个组件被实例化之后，它的props是只读的，不可改变的。如果props在渲染过程中可以被改变，会导致这个组件显示的形态变得不可预测。只有通过父组件重新渲染的方式才可以把新的props传入组件中。</p>
-<h4 id="-6">感触二</h4>
+<h4 id="%E6%84%9F%E8%A7%A6%E4%BA%8C" tabindex="-1">感触二</h4>
 <p>测试必要且有用。</p>
-<h4 id="-7">弯路二</h4>
+<h4 id="%E5%BC%AF%E8%B7%AF%E4%BA%8C" tabindex="-1">弯路二</h4>
 <p>在你对这项技术栈理解不深的时候，测试框架会再一次逼迫你的时间并增加你的学习成本，那么，逃避不好吗？ 于是我犯的第二个错就是逃避了测试。当然，是在一个&quot;合理&quot;的理由之下。</p>
-<h4 id="-8">直球二</h4>
-<p>编写测试，就像你在实现真实的业务逻辑，它能帮助你精简你不擅长的技术栈的逻辑实现，循环迭代自己的代码。
+<h4 id="%E7%9B%B4%E7%90%83%E4%BA%8C" tabindex="-1">直球二</h4>
+<p>编写测试，就像你在实现真实的业务逻辑，它能帮助你精简你不擅长的技术栈的逻辑实现，循环迭代自己的代码。<br>
 后来我完成了相关的测试，并体会到了其中的美妙。🙂</p>
-<h4 id="-9">感触三</h4>
+<h4 id="%E6%84%9F%E8%A7%A6%E4%B8%89" tabindex="-1">感触三</h4>
 <p>尽快的实现不是不好，而是会在后期暴露一些问题，在实现之前，稳重的学习。</p>
-<h3 id="-10">总结</h3>
-<p>通过两周的时间，走了很多弯路，有些感受，也有些思考，组件和组件之间可以怎样合理的交互？
-肯定很多人会觉得，有那么多 quickStart，明明是可以做到更好的。
+<h3 id="%E6%80%BB%E7%BB%93" tabindex="-1">总结</h3>
+<p>通过两周的时间，走了很多弯路，有些感受，也有些思考，组件和组件之间可以怎样合理的交互？<br>
+肯定很多人会觉得，有那么多 quickStart，明明是可以做到更好的。<br>
 那么时间怎么悄悄流逝，是我发现的一个关于自身更重要的一个问题。啊，人生啊。😔</p>
 
 </div>
@@ -627,7 +636,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-11-14-when-start-use-reactjs-what-I-feel-do-think/` was built on 2026-02-15T02:38:54.791Z -->
+		<!-- This page `/blog/2018-11-14-when-start-use-reactjs-what-I-feel-do-think/` was built on 2026-02-15T13:56:14.186Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="the-log">关于The-Log这篇文章的摘要</h1>
+<h1>关于The-Log这篇文章的摘要</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2015-07-20">20 July 2015</time></li>
@@ -570,22 +574,25 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <p>实际上，对数据进行有效利用，很符合马斯洛的层次需求理论。
-金字塔的最底层，是收集数据，将其整合进应用系统中（无论是实时计算引擎，还是文本文件，还是python脚本）。
-而这些数据，需要经过转换，保持一个统一、规范、整洁的格式，以易于被读取和处理。
-当上面的要求被满足后，就可以开始考虑多种多样的数据处理方式，比如map – reduce 或者实时查询系统。
-很显然，如果没有一个可靠的、完备的数据流，Hadoop就仅仅是一个昂贵的、难以整合的加热器（集群很费电么？）。
-相反，如果能保证数据流可靠、可用且完备，就可以考虑更高级的玩法、更好的数据模型和一致的、更易被理解的语义。
+<aside>
+  
+</aside>
+  <p>实际上，对数据进行有效利用，很符合马斯洛的层次需求理论。<br>
+金字塔的最底层，是收集数据，将其整合进应用系统中（无论是实时计算引擎，还是文本文件，还是python脚本）。<br>
+而这些数据，需要经过转换，保持一个统一、规范、整洁的格式，以易于被读取和处理。<br>
+当上面的要求被满足后，就可以开始考虑多种多样的数据处理方式，比如map – reduce 或者实时查询系统。<br>
+很显然，如果没有一个可靠的、完备的数据流，Hadoop就仅仅是一个昂贵的、难以整合的加热器（集群很费电么？）。<br>
+相反，如果能保证数据流可靠、可用且完备，就可以考虑更高级的玩法、更好的数据模型和一致的、更易被理解的语义。<br>
 接着，注意力就可以转移到可视化、报表、算法和预测上来（挖啊机啊深度啊）。</p>
 <blockquote>
 <p>更重要的是，订阅者，只需要知道log，而不需要对其所消费的数据的来源有任何了解，无论这个数据源是RDBMS、Hadoop，还是一个最新流行的K-V数据库，等等。</p>
 </blockquote>
-<p>之所以讨论log，而不是消息系统，是因为不同的消息系统所保证的特性不同，并且用消息系统这个词，难以全面和精确表达某种语义，因为消息系统，更重要的在于重定向消息。
+<p>之所以讨论log，而不是消息系统，是因为不同的消息系统所保证的特性不同，并且用消息系统这个词，难以全面和精确表达某种语义，因为消息系统，更重要的在于重定向消息。<br>
 但是，可以将log理解为这样一种消息系统，其提供了持久性保证及强有序的语义，在通讯系统中，这称作原子广播。</p>
-<p>也许很多人认为在log中维护数据的单独备份，特别是做全量数据拷贝太浪费、太奢侈，但事实并非如此：
-1） linkedin（注：2013年）的kafka生产集群维护了每数据中心75TB的数据，而应用集群需要的存储空间和存储条件（SSD+更多的内存）比kafka集群要高。
-2） 全文搜索的索引，最好全部装入内存，而logs因为都是线性读写，所以可以利用廉价的大容量磁盘。
-3） 因为kafka集群实际运作在多个订阅者的模式之下，多个系统消费数据，所以log集群的开销被摊还了。
+<p>也许很多人认为在log中维护数据的单独备份，特别是做全量数据拷贝太浪费、太奢侈，但事实并非如此：<br>
+1） linkedin（注：2013年）的kafka生产集群维护了每数据中心75TB的数据，而应用集群需要的存储空间和存储条件（SSD+更多的内存）比kafka集群要高。<br>
+2） 全文搜索的索引，最好全部装入内存，而logs因为都是线性读写，所以可以利用廉价的大容量磁盘。<br>
+3） 因为kafka集群实际运作在多个订阅者的模式之下，多个系统消费数据，所以log集群的开销被摊还了。<br>
 4） 所有以上原因，导致基于外部log系统（kafka或者类似系统）的开销变得非常小。</p>
 
 </div>
@@ -613,7 +620,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-07-20-part-about-notes_about_distributed_system_and_The_log/` was built on 2026-02-15T02:38:54.775Z -->
+		<!-- This page `/blog/2015-07-20-part-about-notes_about_distributed_system_and_The_log/` was built on 2026-02-15T13:56:14.181Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

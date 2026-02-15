@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="java">Java 实现二分法回忆片段和解决方案</h1>
+<h1>Java 实现二分法回忆片段和解决方案</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2015-10-14">14 October 2015</time></li>
@@ -570,11 +574,14 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <p>今天突然就非常怀念在我的第一份工作的时候, 我们的老大曾经出了一道题: <strong>实现二分法算法</strong>. 这道题直到现在对我的影响依然很大. 其实说了这么多, 大家肯定会说这谁不会写啊, 结果写出来的往往就踩了那么几个坑
-首先让我们思考一个简单的问题: <strong>什么样的情况适合使用二分查找法?</strong>
-数组的值从小到大有序排列. 如果别人给你数组你就写也不问一下, 那是不是代表你在工作中也常常先动手后思考呢：）
+<aside>
+  
+</aside>
+  <p>今天突然就非常怀念在我的第一份工作的时候, 我们的老大曾经出了一道题: <strong>实现二分法算法</strong>. 这道题直到现在对我的影响依然很大. 其实说了这么多, 大家肯定会说这谁不会写啊, 结果写出来的往往就踩了那么几个坑<br>
+首先让我们思考一个简单的问题: <strong>什么样的情况适合使用二分查找法?</strong><br>
+数组的值从小到大有序排列. 如果别人给你数组你就写也不问一下, 那是不是代表你在工作中也常常先动手后思考呢：）<br>
 那么开始动手实现吧, 已知数组有序</p>
-<pre class="language-java" tabindex="0"><code class="language-java"><span class="token comment">/**
+<pre class="language-java" tabindex="0"><code class="hljs language-java"><span class="token comment">/**
  *
  * @param demo 有序数组
  * @param key 待查找元素
@@ -606,25 +613,25 @@ pre[class*="language-"] {
 <ol>
 <li>方法入口处的边界值判断</li>
 <li>mid值求法避免溢出</li>
-<li>重复值处理, 上面的方法没有处理重复数字情况, 要根据实际需要来修改
-后续:
+<li>重复值处理, 上面的方法没有处理重复数字情况, 要根据实际需要来修改<br>
+后续:<br>
 其实jdk的源码是这样处理mid求和除以2的</li>
 </ol>
-<pre class="language-java" tabindex="0"><code class="language-java"><span class="token keyword">int</span> mid <span class="token operator">=</span> <span class="token punctuation">(</span>left <span class="token operator">+</span> right<span class="token punctuation">)</span> <span class="token operator">>>></span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>
-<p>java常用不不常用的计算符号
-1、左移( &lt;&lt; )
-2、右移( &gt;&gt; )
-3、无符号右移( &gt;&gt;&gt; )
-我们知道在Java中int类型占32位, 可以表示一个正数, 也可以表示一个负数。正数换算成二进制后的最高位为0, 负数的二进制最高为为1
-通过其结果转换成二进制后, 我们可以发现, 正数右移, 高位用0补, 负数右移, 高位用1补, 当负数使用无符号右移时, 用0进行部位(自然而然的, 就由负数变成了正数了)
-注意：笔者在这里说的是右移, 高位补位的情况。正数或者负数左移, 低位都是用0补。
-4、位与( &amp; )
-位与：第一个操作数的的第n位于第二个操作数的第n位如果都是1, 那么结果的第n为也为1, 否则为0
-5、位或( | )
-位或操作：第一个操作数的的第n位于第二个操作数的第n位 只要有一个是1, 那么结果的第n为也为1, 否则为0
-6、位异或( ^ )
-位异或：第一个操作数的的第n位于第二个操作数的第n位 相反, 那么结果的第n为也为1, 否则为0
-7、位非( ~ )           位非是一元操作符
+<pre class="language-java" tabindex="0"><code class="hljs language-java"><span class="token keyword">int</span> mid <span class="token operator">=</span> <span class="token punctuation">(</span>left <span class="token operator">+</span> right<span class="token punctuation">)</span> <span class="token operator">>>></span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>
+<p>java常用不不常用的计算符号<br>
+1、左移( &lt;&lt; )<br>
+2、右移( &gt;&gt; )<br>
+3、无符号右移( &gt;&gt;&gt; )<br>
+我们知道在Java中int类型占32位, 可以表示一个正数, 也可以表示一个负数。正数换算成二进制后的最高位为0, 负数的二进制最高为为1<br>
+通过其结果转换成二进制后, 我们可以发现, 正数右移, 高位用0补, 负数右移, 高位用1补, 当负数使用无符号右移时, 用0进行部位(自然而然的, 就由负数变成了正数了)<br>
+注意：笔者在这里说的是右移, 高位补位的情况。正数或者负数左移, 低位都是用0补。<br>
+4、位与( &amp; )<br>
+位与：第一个操作数的的第n位于第二个操作数的第n位如果都是1, 那么结果的第n为也为1, 否则为0<br>
+5、位或( | )<br>
+位或操作：第一个操作数的的第n位于第二个操作数的第n位 只要有一个是1, 那么结果的第n为也为1, 否则为0<br>
+6、位异或( ^ )<br>
+位异或：第一个操作数的的第n位于第二个操作数的第n位 相反, 那么结果的第n为也为1, 否则为0<br>
+7、位非( ~ )           位非是一元操作符<br>
 位非：操作数的第n位为1, 那么结果的第n位为0, 反之。</p>
 
 </div>
@@ -652,7 +659,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-10-14-java-binary-search/` was built on 2026-02-15T02:38:54.778Z -->
+		<!-- This page `/blog/2015-10-14-java-binary-search/` was built on 2026-02-15T13:56:14.182Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

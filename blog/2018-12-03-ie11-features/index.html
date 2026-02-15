@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="window-opener-and-window-postmessage">关于 window.opener &amp; window.postMessage</h1>
+<h1>关于 window.opener &amp; window.postMessage</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2018-12-03">03 December 2018</time></li>
@@ -570,19 +574,24 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="">背景</h3>
-<p>最近在开发的时候遇见一些有趣的问题，其中之一就是在 IE11 上有些功能不可用，怎么说呢，具体要讲一下关于 <code>window.opener</code> 与 <code>window.opener.postMessage</code> 这两个特性.
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E8%83%8C%E6%99%AF">背景</a></li><li><a href="#%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA-demo">构建一个 DEMO</a></li><li><a href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95">解决方法</a><ul><li><a href="#%E6%96%B9%E6%B3%95%E4%B8%80">方法一</a></li><li><a href="#%E6%96%B9%E6%B3%95%E4%BA%8C">方法二</a></li></ul></li><li><a href="#%E4%BB%A5%E4%B8%8A">以上</a></li></ul>
+      </div>
+</aside>
+  <h3 id="%E8%83%8C%E6%99%AF" tabindex="-1">背景</h3>
+<p>最近在开发的时候遇见一些有趣的问题，其中之一就是在 IE11 上有些功能不可用，怎么说呢，具体要讲一下关于 <code>window.opener</code> 与 <code>window.opener.postMessage</code> 这两个特性.<br>
 解决问题的思路便是，不论你怎么想的，构造一个 demo 是有效且强大的方式之一。</p>
-<p>使用场景： 在登录之后的跳转成功页面需要发一条消息给登录界面，告诉登录界面登录成功。
+<p>使用场景： 在登录之后的跳转成功页面需要发一条消息给登录界面，告诉登录界面登录成功。<br>
 例如登录页面的URL： <code>https://test.com/oauth2/login?redirect_uri=https://client1.com/callback</code></p>
-<p>1.在 <code>https://test.com/oauth2/login</code> 页面输入用户名，密码
-2.点击登录按钮
-3.登录成功会跳转到 <code>redirect_uri</code> 页面，那么这时在 <code>https://client1.com/callback</code> 页面使用<code>window.opener.postMessage</code> 发送一条消息
+<p>1.在 <code>https://test.com/oauth2/login</code> 页面输入用户名，密码<br>
+2.点击登录按钮<br>
+3.登录成功会跳转到 <code>redirect_uri</code> 页面，那么这时在 <code>https://client1.com/callback</code> 页面使用<code>window.opener.postMessage</code> 发送一条消息<br>
 4.<code>https://test.com/oauth2/login</code> 页面会收到消息来进行后续的处理</p>
-<h3 id="demo">构建一个 DEMO</h3>
+<h3 id="%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA-demo" tabindex="-1">构建一个 DEMO</h3>
 <p>需要构建两个页面， 登录页面A与跳转页面B:</p>
 <p><strong>页面A：</strong></p>
-<pre class="language-html" tabindex="0"><code class="language-html"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">></span></span>
+<pre class="language-html" tabindex="0"><code class="hljs language-html"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>main<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>X-UA-Compatible<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>IE=edge<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
@@ -619,7 +628,7 @@ pre[class*="language-"] {
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span></code></pre>
 <p>点击 <code>Sign in</code> 按钮时，首先会打开一个新的 tab 页面，并在当前 window 添加一个监听器来监听从子页面过来的消息，如果子页面关闭，则清除监听器</p>
 <p><strong>页面B：</strong></p>
-<pre class="language-html" tabindex="0"><code class="language-html"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">></span></span>
+<pre class="language-html" tabindex="0"><code class="hljs language-html"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>child<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>X-UA-Compatible<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>IE=edge<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
@@ -632,27 +641,27 @@ pre[class*="language-"] {
 Then click the browser Back button when ready.
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span></code></pre>
 <p>子页面被打开时，会发送一条消息给父页面。</p>
-<p>其中,
-<code>window.opener</code> 兼容性：<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/opener">MDN-window.opener</a>
+<p>其中,<br>
+<code>window.opener</code> 兼容性：<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/opener">MDN-window.opener</a><br>
 <code>window.postmessage</code> 兼容性：<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postmessage">MDN-window.postmessage</a></p>
-<p>这个 Demo 可以完成一个简单的页面间通讯，并且工作于 Chrome 和 Safari, 虽然 MDN 上 <code>window.opener</code> 对于 IE 的支持是一个问号，但是实际上它是工作的。
-然而在 IE11 上面&quot;工作&quot;的含义是父页面的domain和子页面的domain是在同一域名下。
+<p>这个 Demo 可以完成一个简单的页面间通讯，并且工作于 Chrome 和 Safari, 虽然 MDN 上 <code>window.opener</code> 对于 IE 的支持是一个问号，但是实际上它是工作的。<br>
+然而在 IE11 上面&quot;工作&quot;的含义是父页面的domain和子页面的domain是在同一域名下。<br>
 在跨域的情况下，子页面 <code>window.postmessage</code> 的消息是无法发送给父页面的。</p>
-<p>举例来说：
-页面A和页面B运行在一台服务器上，访问域名是: <code>https://serverA.com</code>
-页面A需要打开一个登陆页面链接为: <code>https://test.com/oauth2/login?redirect_uri=https://client1.com/callback</code>
-而跳转页面是: <code>https://client1.com/callback</code>
+<p>举例来说：<br>
+页面A和页面B运行在一台服务器上，访问域名是: <code>https://serverA.com</code><br>
+页面A需要打开一个登陆页面链接为: <code>https://test.com/oauth2/login?redirect_uri=https://client1.com/callback</code><br>
+而跳转页面是: <code>https://client1.com/callback</code><br>
 这种情况下，我们会处在一个跨域的情况下发送消息，IE11不支持也就是页面A收不到跳转链接页面的消息，那么问题来了，为什么要解决这个问题？因为 IE11 的用户是我们不能放弃的用户群。如果你不在意这部分用户，可以不用太过关注。</p>
-<h3 id="-2">解决方法</h3>
-<h4 id="-3">方法一</h4>
+<h3 id="%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95" tabindex="-1">解决方法</h3>
+<h4 id="%E6%96%B9%E6%B3%95%E4%B8%80" tabindex="-1">方法一</h4>
 <p>保证页面A需要打开的登录页面链接和页面A在同一域名之下，也就是在页面A所在的服务器上添加一个路由，例如: <code>https://serverA.com/gotoSignin</code>, 而这个路由可以打开一个跨域的链接：<code>https://test.com/oauth2/login?redirect_uri=https://client1.com/callback</code>.  也就是说：只要保证<code>window.open</code> 了一个同域名的链接，那么接下来无论中间会如何跳转，哪怕跳到天上去，父页面也可以收到子页面的消息。</p>
-<p>优点: 依然可以使用 <code>window.opener</code> 和 <code>window.postMessage</code>
+<p>优点: 依然可以使用 <code>window.opener</code> 和 <code>window.postMessage</code><br>
 缺点: 需要额外添加一个服务器端的路由</p>
-<h4 id="-4">方法二</h4>
-<p>使用 <code>window.localStorage</code> 保证子页面写入数据，父页面使用定时器循环读取，仍然需要保证 <code>window.open</code> 在同域名下。
+<h4 id="%E6%96%B9%E6%B3%95%E4%BA%8C" tabindex="-1">方法二</h4>
+<p>使用 <code>window.localStorage</code> 保证子页面写入数据，父页面使用定时器循环读取，仍然需要保证 <code>window.open</code> 在同域名下。<br>
 类似的，写 <code>cookie</code> 也是可以的，只是我们不建议采用的原因取决于具体的使用场景：如果传输的信息安全性很高，我们不希望写入浏览器内。</p>
-<h3 id="-5">以上</h3>
-<p>工作在前端的话，浏览器支持问题是一件有趣的事，也许你实现了功能，突然恍然大悟这玩意儿在 IEXX 下根本不支持。
+<h3 id="%E4%BB%A5%E4%B8%8A" tabindex="-1">以上</h3>
+<p>工作在前端的话，浏览器支持问题是一件有趣的事，也许你实现了功能，突然恍然大悟这玩意儿在 IEXX 下根本不支持。<br>
 解决的方法有很多，重要的走出你的第一步，构建一个 demo.</p>
 
 </div>
@@ -680,7 +689,7 @@ Then click the browser Back button when ready.
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-12-03-ie11-features/` was built on 2026-02-15T02:38:54.791Z -->
+		<!-- This page `/blog/2018-12-03-ie11-features/` was built on 2026-02-15T13:56:14.186Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

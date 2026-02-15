@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="">业务开发是前端驱动后端？亦或是后端提供服务给前端？</h1>
+<h1>业务开发是前端驱动后端？亦或是后端提供服务给前端？</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2022-10-21">21 October 2022</time></li>
@@ -570,6 +574,11 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#reference">Reference</a></li></ul>
+      </div>
+</aside>
   <p>在日常开发中，不同的组织结构喜欢采用不同的开发模式。基本上可以分为三大类：</p>
 <ul>
 <li>Outside-in: 始于前端，终于后端</li>
@@ -589,13 +598,13 @@ pre[class*="language-"] {
 </ul>
 <p>看到一篇文章提到,  Inside-out 一个很好的例子是苹果公司, 它开发的产品首先回答了为什么,并能给用户一定指导作用.</p>
 <blockquote>
-<p>苹果并没有说一个企业有一个好的产品和好的设计——用这些话来销售它——而是从圈子的中心开始，把它的本质放在最前面。
-这家公司一直很明确地说，它的目标是挑战现状，思考不同。 结果是精心设计的产品，易于使用，用户友好的界面。
-根据 Simon Sinek 的说法，这种逻辑让人们购买“因为”苹果生产它，而不是苹果生产的“什么”。
+<p>苹果并没有说一个企业有一个好的产品和好的设计——用这些话来销售它——而是从圈子的中心开始，把它的本质放在最前面。<br>
+这家公司一直很明确地说，它的目标是挑战现状，思考不同。 结果是精心设计的产品，易于使用，用户友好的界面。<br>
+根据 Simon Sinek 的说法，这种逻辑让人们购买“因为”苹果生产它，而不是苹果生产的“什么”。<br>
 我们知道这种策略给苹果带来了很大的成功，但这并不一定意味着由外而内的方法无效。</p>
 </blockquote>
 <p>但其实文章说的 Inside-out 和我说的不一样, 我说的是具体的日常开发, 而文章提到的更是从产品的角度. 所以从日常开发的角度, 还有一种是 Parallel 的方式, 就是团队成员分为两组, 同时开发前端和后端, 通过高频的沟通来确保数据服务的正确性, 且不需要花费额外的时间和精力去学习自己不熟悉的领域,而缺点也同样明显,需要频繁的修改保证前端后端交互的正确性,团队的能力建设受限,可能有深度,但是缺乏广度,团队的能力弹性不能保证.而且作为软件工程师,理解全部的生态很重要,不过那是另一个话题了.</p>
-<h4 id="reference">Reference</h4>
+<h4 id="reference" tabindex="-1">Reference</h4>
 <p><a href="https://www.sydle.com/blog/inside-out-and-outside-in-strategies-6144a26be83193407d5fbb26/">参考链接</a></p>
 
 </div>
@@ -623,7 +632,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2022-10-21-outside-in-vs-inside-out/` was built on 2026-02-15T02:38:54.795Z -->
+		<!-- This page `/blog/2022-10-21-outside-in-vs-inside-out/` was built on 2026-02-15T13:56:14.189Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

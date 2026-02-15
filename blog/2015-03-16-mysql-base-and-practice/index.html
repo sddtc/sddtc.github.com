@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="mysql-tips">MYSQL服务器配置文件的修改Tips</h1>
+<h1>MYSQL服务器配置文件的修改Tips</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2015-03-16">16 March 2015</time></li>
@@ -570,13 +574,18 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="1">1.基本操作</h3>
-<pre class="language-vim" tabindex="0"><code class="language-vim">mysql<span class="token operator">></span>mysqladmin <span class="token operator">-</span>uxxx <span class="token operator">-</span><span class="token keyword">p</span> processlist
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#1.%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C">1.基本操作</a></li><li><a href="#2.mysql%E7%B4%A2%E5%BC%95%E4%BD%BF%E7%94%A8">2.mysql索引使用</a></li></ul>
+      </div>
+</aside>
+  <h3 id="1.%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C" tabindex="-1">1.基本操作</h3>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">mysql<span class="token operator">></span>mysqladmin <span class="token operator">-</span>uxxx <span class="token operator">-</span><span class="token keyword">p</span> processlist
 mysql<span class="token operator">></span>mysqladmin <span class="token operator">-</span>uxxx <span class="token operator">-</span><span class="token keyword">p</span> status</code></pre>
-<p>1.1 修改mysql的库、表、客户端的字符编码格式
-a.停止mysql服务
+<p>1.1 修改mysql的库、表、客户端的字符编码格式<br>
+a.停止mysql服务<br>
 b.修改my.cnf文件</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim"><span class="token punctuation">[</span>client<span class="token punctuation">]</span>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim"><span class="token punctuation">[</span>client<span class="token punctuation">]</span>
 default<span class="token operator">-</span>character<span class="token operator">-</span><span class="token keyword">set</span><span class="token operator">=</span>utf8
 
 <span class="token punctuation">[</span>mysql<span class="token punctuation">]</span>
@@ -586,11 +595,11 @@ default<span class="token operator">-</span>character<span class="token operator
 collation<span class="token operator">-</span>server <span class="token operator">=</span> utf8_unicode_ci
 init<span class="token operator">-</span>connect<span class="token operator">=</span><span class="token string">'SET NAMES utf8'</span>
 character<span class="token operator">-</span><span class="token keyword">set</span><span class="token operator">-</span>server <span class="token operator">=</span> utf8</code></pre>
-<p>c.启动mysql服务
+<p>c.启动mysql服务<br>
 d.验证是否修改成功</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim">mysql<span class="token operator">></span>show variables like <span class="token string">'character%'</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">mysql<span class="token operator">></span>show variables like <span class="token string">'character%'</span><span class="token punctuation">;</span></code></pre>
 <p>1.2 mysql server相关</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim"><span class="token operator">/</span><span class="token operator">/</span>mysql添加一个server<span class="token punctuation">:</span>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim"><span class="token operator">/</span><span class="token operator">/</span>mysql添加一个server<span class="token punctuation">:</span>
 CREATE SERVER $<span class="token punctuation">{</span>servername<span class="token punctuation">}</span> FOREIGN DATA WRAPPER mysql
 OPTIONS
 	<span class="token punctuation">(</span>
@@ -603,12 +612,12 @@ OPTIONS
 <span class="token operator">/</span><span class="token operator">/</span>删除一个mysq server<span class="token punctuation">:</span>
 <span class="token keyword">drop</span> server <span class="token keyword">if</span> exists $<span class="token punctuation">{</span>servername<span class="token punctuation">}</span></code></pre>
 <hr>
-<h3 id="2-mysql">2.mysql索引使用</h3>
+<h3 id="2.mysql%E7%B4%A2%E5%BC%95%E4%BD%BF%E7%94%A8" tabindex="-1">2.mysql索引使用</h3>
 <p><em>场景一</em>：</p>
-<p>发现一个现象:'select id,sum(cnt) from a group by id'这条语句,在id建立索引之后，仍然使用不到索引，并且该表若数量到达1KW,该语句效率问题导致无法使用，后来寻求解答，得出结论，若建立联合索引(id, cnt),该语句能用到索引，速度提升明显，借此机会发现了联合索引的强大力量</p>
+<p>发现一个现象:'select id,sum(cnt) from a group by id’这条语句,在id建立索引之后，仍然使用不到索引，并且该表若数量到达1KW,该语句效率问题导致无法使用，后来寻求解答，得出结论，若建立联合索引(id, cnt),该语句能用到索引，速度提升明显，借此机会发现了联合索引的强大力量</p>
 <p><em>场景二</em>：</p>
 <p>某一天，每30分钟统计一次数据：</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim">SELECT <span class="token function">HOUR</span><span class="token punctuation">(</span>created_time<span class="token punctuation">)</span> AS <span class="token keyword">h</span><span class="token punctuation">,</span>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">SELECT <span class="token function">HOUR</span><span class="token punctuation">(</span>created_time<span class="token punctuation">)</span> AS <span class="token keyword">h</span><span class="token punctuation">,</span>
        <span class="token function">FLOOR</span><span class="token punctuation">(</span><span class="token function">MINUTE</span><span class="token punctuation">(</span>created_time<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">30</span><span class="token punctuation">)</span> AS v<span class="token punctuation">,</span>
        <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span>
 FROM record
@@ -641,7 +650,7 @@ GROUP BY <span class="token keyword">h</span><span class="token punctuation">,</
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-03-16-mysql-base-and-practice/` was built on 2026-02-15T02:38:54.769Z -->
+		<!-- This page `/blog/2015-03-16-mysql-base-and-practice/` was built on 2026-02-15T13:56:14.178Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="uml">UML类之间的关系</h1>
+<h1>UML类之间的关系</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2015-08-24">24 August 2015</time></li>
@@ -570,6 +574,9 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
+<aside>
+  
+</aside>
   <ul>
 <li>依赖关系(Dependence)</li>
 </ul>
@@ -580,8 +587,8 @@ pre[class*="language-"] {
 <p>在UML中，依赖关系用带箭头的虚线表示，由依赖的一方指向被依赖的一方</p>
 </blockquote>
 <p>依赖关系有如下三种情况：</p>
-<p>A类是B类中的（某中方法的）局部变量；
-A类是B类方法当中的一个参数；
+<p>A类是B类中的（某中方法的）局部变量；<br>
+A类是B类方法当中的一个参数；<br>
 A类向B类发送消息，从而影响B类发生变化；</p>
 <ul>
 <li>泛化关系（Generalization）</li>
@@ -593,8 +600,8 @@ A类向B类发送消息，从而影响B类发生变化；</p>
 </blockquote>
 <p>在代码实现时，使用面向对象的继承机制来实现泛化关系，如在Java语言中使用extends关键字、在C++/C#中使用冒号“：”来实现。</p>
 <p>在UML当中，对泛化关系有三个要求：</p>
-<p>1、子类与父类应该完全一致，父类所具有的属性、操作，子类应该都有；
-2、子类中除了与父类一致的信息以外，还包括额外的信息；
+<p>1、子类与父类应该完全一致，父类所具有的属性、操作，子类应该都有；<br>
+2、子类中除了与父类一致的信息以外，还包括额外的信息；<br>
 3、可以使用父类的实例的地方，也可以使用子类的实例；</p>
 <ul>
 <li>关联关系（Association）</li>
@@ -606,10 +613,10 @@ A类向B类发送消息，从而影响B类发生变化；</p>
 <p>在UML类图中，用实线连接有关联的对象所对应的类</p>
 </blockquote>
 <p>在使用Java、C#和C++等编程语言实现关联关系时，通常将一个类的对象作为另一个类的属性。</p>
-<p>在使用类图表示关联关系时可以在关联线上标注角色名。
-双向关联: 默认情况下，关联是双向的。
-单向关联:类的关联关系也可以是单向的，单向关联用带箭头的实线表示。
-自关联: 在系统中可能会存在一些类的属性对象类型为该类本身，这种特殊的关联关系称为自关联。
+<p>在使用类图表示关联关系时可以在关联线上标注角色名。<br>
+双向关联: 默认情况下，关联是双向的。<br>
+单向关联:类的关联关系也可以是单向的，单向关联用带箭头的实线表示。<br>
+自关联: 在系统中可能会存在一些类的属性对象类型为该类本身，这种特殊的关联关系称为自关联。<br>
 重数性关联: 重数性关联关系又称为多重性关联关系(Multiplicity)，表示一个类的对象与另一个类的对象连接的个数。在UML中多重性关系可以直接在关联直线上增加一个数字表示与之对应的另一个类的对象的个数。</p>
 <ul>
 <li>聚合关系（Aggregation）</li>
@@ -663,7 +670,7 @@ A类向B类发送消息，从而影响B类发生变化；</p>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-08-24-uml-class-design-relation/` was built on 2026-02-15T02:38:54.777Z -->
+		<!-- This page `/blog/2015-08-24-uml-class-design-relation/` was built on 2026-02-15T13:56:14.181Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

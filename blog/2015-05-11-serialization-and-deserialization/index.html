@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="">序列化与反序列化的选型</h1>
+<h1>序列化与反序列化的选型</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2015-05-11">11 May 2015</time></li>
@@ -570,7 +574,12 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="-2">序列化和反序列化协议都各自具有相应的特点，适用于不同的场景。</h3>
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8C%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%8D%8F%E8%AE%AE%E9%83%BD%E5%90%84%E8%87%AA%E5%85%B7%E6%9C%89%E7%9B%B8%E5%BA%94%E7%9A%84%E7%89%B9%E7%82%B9%EF%BC%8C%E9%80%82%E7%94%A8%E4%BA%8E%E4%B8%8D%E5%90%8C%E7%9A%84%E5%9C%BA%E6%99%AF%E3%80%82">序列化和反序列化协议都各自具有相应的特点，适用于不同的场景。</a></li></ul>
+      </div>
+</aside>
+  <h3 id="%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8C%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%8D%8F%E8%AE%AE%E9%83%BD%E5%90%84%E8%87%AA%E5%85%B7%E6%9C%89%E7%9B%B8%E5%BA%94%E7%9A%84%E7%89%B9%E7%82%B9%EF%BC%8C%E9%80%82%E7%94%A8%E4%BA%8E%E4%B8%8D%E5%90%8C%E7%9A%84%E5%9C%BA%E6%99%AF%E3%80%82" tabindex="-1">序列化和反序列化协议都各自具有相应的特点，适用于不同的场景。</h3>
 <ul>
 <li>对于公司间的系统调用，如果性能要求在100ms以上的服务，基于XML的SOAP协议是一个值得考虑的方案。</li>
 <li>基于Web browser的Ajax，以及Mobile app与服务端之间的通讯，JSON协议是首选。对于性能要求不太高，或者以动态类型语言为主，或者传输数据载荷很小的的运用场景，JSON也是非常不错的选择。</li>
@@ -609,7 +618,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-05-11-serialization-and-deserialization/` was built on 2026-02-15T02:38:54.773Z -->
+		<!-- This page `/blog/2015-05-11-serialization-and-deserialization/` was built on 2026-02-15T13:56:14.180Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

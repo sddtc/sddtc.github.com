@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="mockito">Mockito 之初步使用静态测试方法</h1>
+<h1>Mockito 之初步使用静态测试方法</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2017-01-05">05 January 2017</time></li>
@@ -570,24 +574,29 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E8%83%8C%E6%99%AF">背景</a></li></ul>
+      </div>
+</aside>
   <p>mockito,一种🌿口味的鸡尾酒🍸,用这种名字做的单元测试框架,一下就吸引了窝~ 这两天在搜索问题的时候,搜到了以前同事的博客,内心感到莫名的开心. 昨天斯托卡了下以前同事的简书博客,真为我们这群勤于更新博客的人感到骄傲😏</p>
-<h3 id="">背景</h3>
+<h3 id="%E8%83%8C%E6%99%AF" tabindex="-1">背景</h3>
 <p>这几天写了一个项目,主要使用System.exit()来判断结果的成功与失败,在写单元测试的时候,需要用到可以调取这种静态方法的工具,因为System.exit(0)会使得JVM进程退出,之后是不会有返回结果的,于是有了这个特殊的需求,发现了PowerMock可以很好地满足这一点</p>
 <ol>
 <li>主要需要三个依赖</li>
 </ol>
-<pre class="language-vim" tabindex="0"><code class="language-vim">powermock<span class="token operator">-</span>api<span class="token operator">-</span>mockito
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">powermock<span class="token operator">-</span>api<span class="token operator">-</span>mockito
 powermock<span class="token operator">-</span>module<span class="token operator">-</span>junit4
 powermock<span class="token operator">-</span>api<span class="token operator">-</span>mockito<span class="token operator">-</span>common</code></pre>
 <ol start="2">
 <li>在单元测试类需要以下注解</li>
 </ol>
-<pre class="language-java" tabindex="0"><code class="language-java"><span class="token annotation punctuation">@RunWith</span><span class="token punctuation">(</span><span class="token class-name">PowerMockRunner</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+<pre class="language-java" tabindex="0"><code class="hljs language-java"><span class="token annotation punctuation">@RunWith</span><span class="token punctuation">(</span><span class="token class-name">PowerMockRunner</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
 <span class="token annotation punctuation">@PrepareForTest</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token class-name">System</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token class-name">App</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">(</span>待测试类<span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token annotation punctuation">@PowerMockIgnore</span><span class="token punctuation">(</span>“javax<span class="token punctuation">.</span>net<span class="token punctuation">.</span>ssl<span class="token punctuation">.</span>*"<span class="token punctuation">)</span></code></pre>
-<p>其中PowerMockIgnore(“javax.net.ssl.*&quot;)出现的原因,是因为在我的方法中需要用到HttpClient相关的接口实现,不想使用PowerMock给我初始化好的同样的接口实现
+<p>其中PowerMockIgnore(“javax.net.ssl.*&quot;)出现的原因,是因为在我的方法中需要用到HttpClient相关的接口实现,不想使用PowerMock给我初始化好的同样的接口实现<br>
 3. 主要涉及到的方法</p>
-<pre class="language-java" tabindex="0"><code class="language-java"><span class="token class-name">PowerMockito</span><span class="token punctuation">.</span><span class="token function">mockStatic</span><span class="token punctuation">(</span><span class="token class-name">System</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class="language-java" tabindex="0"><code class="hljs language-java"><span class="token class-name">PowerMockito</span><span class="token punctuation">.</span><span class="token function">mockStatic</span><span class="token punctuation">(</span><span class="token class-name">System</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">App</span><span class="token punctuation">.</span><span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">PowerMockito</span><span class="token punctuation">.</span><span class="token function">verifyStatic</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">exit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -619,7 +628,7 @@ powermock<span class="token operator">-</span>api<span class="token operator">-<
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2017-01-05-something-about-mockito/` was built on 2026-02-15T02:38:54.784Z -->
+		<!-- This page `/blog/2017-01-05-something-about-mockito/` was built on 2026-02-15T13:56:14.184Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

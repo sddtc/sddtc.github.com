@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="">来到一个新环境总会有些新收获</h1>
+<h1>来到一个新环境总会有些新收获</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2017-01-01">01 January 2017</time></li>
@@ -570,10 +574,15 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#gradle">Gradle</a></li><li><a href="#jenkins-jobs">Jenkins Jobs</a></li><li><a href="#python-virtualenv">Python VirtualEnv</a></li><li><a href="#java8">Java8</a></li></ul>
+      </div>
+</aside>
   <p>第一周,学到的东西也很多.</p>
-<h3 id="gradle">Gradle</h3>
-<p>一直使用Maven来进行Java项目搭建和管理、构建，如今切换技术栈到Gradle上，在此了解了一些它的优势和区别。
-1.相同点:依赖管理
+<h3 id="gradle" tabindex="-1">Gradle</h3>
+<p>一直使用Maven来进行Java项目搭建和管理、构建，如今切换技术栈到Gradle上，在此了解了一些它的优势和区别。<br>
+1.相同点:依赖管理<br>
 区别:</p>
 <ul>
 <li>Maven是xml文档编写,语法较为复杂;Gradle语法更加精简</li>
@@ -581,26 +590,26 @@ pre[class*="language-"] {
 <li>Gradle支持动态的版本依赖.在版本号后面使用+号的方式可以实现动态的版本管理</li>
 <li>依赖冲突处理</li>
 </ul>
-<p>2.相同点:多模块构建
+<p>2.相同点:多模块构建<br>
 区别:</p>
 <ul>
 <li>在Maven中需要定义个parent POM作为一组module的聚合POM, 而Gradle也支持多模块构建。而在parent的build.gradle中可以使用allprojects和subprojects代码块来分别定义里面的配置是应用于所有项目还是子项目。对于子模块的定义是放置在setttings.gradle文件中的。在gradle的设计当中，每个模块都是Project的对象实例。而在parent build.gradle中通过allprojects或subprojects可以对这些对象进行各种操作。这无疑比Maven要灵活的多</li>
 </ul>
 <p>3.相同点:一致的项目结构</p>
 <p>4.相同点:插件机制,在创建自定义插件方面，Maven和Gradle的机制都差不多，都是继承自插件基类，然后实现要求的方法</p>
-<p>5:相同点:一致的构建模型
-区别:
+<p>5:相同点:一致的构建模型<br>
+区别:<br>
 在Gradle世界里可以轻松创建一个task，并随时通过depends语法建立与已有task的依赖关系。甚至对于Java项目的构建来说，Gradle是通过名为java的插件来包含了一个对Java项目的构建周期，这等于Gradle本身直接与项目构建周期是解耦的</p>
 <p>其它:gradlew这个组件很好用，简化了很多步骤，可默认build出可执行文件</p>
-<h3 id="jenkins-jobs">Jenkins Jobs</h3>
-<p>通过job，作为第三方系统的调用的插件平台
-可使用shell,python，perl等脚本语言编写
+<h3 id="jenkins-jobs" tabindex="-1">Jenkins Jobs</h3>
+<p>通过job，作为第三方系统的调用的插件平台<br>
+可使用shell,python，perl等脚本语言编写<br>
 可将从Git仓库拉取代码，执行job任务</p>
-<h3 id="python-virtualenv">Python VirtualEnv</h3>
+<h3 id="python-virtualenv" tabindex="-1">Python VirtualEnv</h3>
 <p>python虚拟环境是python的一个第三方package，用于给每个应用部署一套python环境，这样一来，每个应用可依赖相同第三方包的不同版本，并不会造成版本冲突</p>
-<h3 id="java8">Java8</h3>
+<h3 id="java8" tabindex="-1">Java8</h3>
 <p>对于新技术的使用要快准狠,为了更多的使用新技术带来的便捷,同事推荐下买了java8 in action;)</p>
-<p>参考文章:
+<p>参考文章:<br>
 <a href="http://www.importnew.com/18008.html">Maven和Gradle对比</a></p>
 
 </div>
@@ -628,7 +637,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2017-01-01-first-week-about-c/` was built on 2026-02-15T02:38:54.784Z -->
+		<!-- This page `/blog/2017-01-01-first-week-about-c/` was built on 2026-02-15T13:56:14.184Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

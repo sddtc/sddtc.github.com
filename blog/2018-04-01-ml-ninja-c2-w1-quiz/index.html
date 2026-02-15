@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="coursera-quiz">Coursera 第二阶段第一课 Quiz</h1>
+<h1>Coursera 第二阶段第一课 Quiz</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2018-04-01">01 April 2018</time></li>
@@ -570,41 +574,46 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="1-if-you-have-10-000-000-examples-how-would-you-split-the-train-dev-test-set">1. If you have 10,000,000 examples, how would you split the train/dev/test set?</h3>
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#1.-if-you-have-10%2C000%2C000-examples%2C-how-would-you-split-the-train%2Fdev%2Ftest-set%3F">1. If you have 10,000,000 examples, how would you split the train/dev/test set?</a></li><li><a href="#2.the-dev-and-test-set-should%3A">2.The dev and test set should:</a></li><li><a href="#3.if-your-neural-network-model-seems-to-have-high-variance%2C-what-of-the-following-would-be-promising-things-to-try%3F">3.If your Neural Network model seems to have high variance, what of the following would be promising things to try?</a></li><li><a href="#4.you-are-working-on-an-automated-check-out-kiosk-for-a-supermarket%2C-and-are-building-a-classifier-for-apples%2C-bananas-and-oranges.-suppose-your-classifier-obtains-a-training-set-error-of-0.5%25%2C-and-a-dev-set-error-of-7%25.-which-of-the-following-are-promising-things-to-try-to-improve-your-classifier%3F-(check-all-that-apply.)">4.You are working on an automated check-out kiosk for a supermarket, and are building a classifier for apples, bananas and oranges. Suppose your classifier obtains a training set error of 0.5%, and a dev set error of 7%. Which of the following are promising things to try to improve your classifier? (Check all that apply.)</a></li><li><a href="#5.what-is-weight-decay%3F">5.What is weight decay?</a></li><li><a href="#6.what-happens-when-you-increase-the-regularization-hyperparameter-lambda%3F">6.What happens when you increase the regularization hyperparameter lambda?</a></li><li><a href="#7.with-the-inverted-dropout-technique%2C-at-test-time%3A">7.With the inverted dropout technique, at test time:</a></li><li><a href="#8.increasing-the-parameter-keep_prob-from-(say)-0.5-to-0.6-will-likely-cause-the-following%3A-(check-the-two-that-apply)">8.Increasing the parameter keep_prob from (say) 0.5 to 0.6 will likely cause the following: (Check the two that apply)</a></li><li><a href="#9.which-of-these-techniques-are-useful-for-reducing-variance-(reducing-overfitting)%3F-(check-all-that-apply.)">9.Which of these techniques are useful for reducing variance (reducing overfitting)? (Check all that apply.)</a></li><li><a href="#10.why-do-we-normalize-the-inputs-x%3F">10.Why do we normalize the inputs x?</a></li></ul>
+      </div>
+</aside>
+  <h3 id="1.-if-you-have-10%2C000%2C000-examples%2C-how-would-you-split-the-train%2Fdev%2Ftest-set%3F" tabindex="-1">1. If you have 10,000,000 examples, how would you split the train/dev/test set?</h3>
 <p>[√] 98% train . 1% dev . 1% test</p>
-<h3 id="2-the-dev-and-test-set-should">2.The dev and test set should:</h3>
+<h3 id="2.the-dev-and-test-set-should%3A" tabindex="-1">2.The dev and test set should:</h3>
 <p>[√] Come from the same distribution</p>
-<h3 id="3-if-your-neural-network-model-seems-to-have-high-variance-what-of-the-following-would-be-promising-things-to-try">3.If your Neural Network model seems to have high variance, what of the following would be promising things to try?</h3>
-<p>[√] Get more training data
-[√] Add regularization
-[x] Increase the number of units in each hidden layer
-[x] Make the Neural Network deeper
+<h3 id="3.if-your-neural-network-model-seems-to-have-high-variance%2C-what-of-the-following-would-be-promising-things-to-try%3F" tabindex="-1">3.If your Neural Network model seems to have high variance, what of the following would be promising things to try?</h3>
+<p>[√] Get more training data<br>
+[√] Add regularization<br>
+[x] Increase the number of units in each hidden layer<br>
+[x] Make the Neural Network deeper<br>
 [x] Get more test data</p>
-<h3 id="4-you-are-working-on-an-automated-check-out-kiosk-for-a-supermarket-and-are-building-a-classifier-for-apples-bananas-and-oranges-suppose-your-classifier-obtains-a-training-set-error-of-0-5-and-a-dev-set-error-of-7-which-of-the-following-are-promising-things-to-try-to-improve-your-classifier-check-all-that-apply">4.You are working on an automated check-out kiosk for a supermarket, and are building a classifier for apples, bananas and oranges. Suppose your classifier obtains a training set error of 0.5%, and a dev set error of 7%. Which of the following are promising things to try to improve your classifier? (Check all that apply.)</h3>
-<p>[√] Increase the regularization parameter lambda
-[√] Get more training data
-[x] Decrease the regularization parameter lambda
+<h3 id="4.you-are-working-on-an-automated-check-out-kiosk-for-a-supermarket%2C-and-are-building-a-classifier-for-apples%2C-bananas-and-oranges.-suppose-your-classifier-obtains-a-training-set-error-of-0.5%25%2C-and-a-dev-set-error-of-7%25.-which-of-the-following-are-promising-things-to-try-to-improve-your-classifier%3F-(check-all-that-apply.)" tabindex="-1">4.You are working on an automated check-out kiosk for a supermarket, and are building a classifier for apples, bananas and oranges. Suppose your classifier obtains a training set error of 0.5%, and a dev set error of 7%. Which of the following are promising things to try to improve your classifier? (Check all that apply.)</h3>
+<p>[√] Increase the regularization parameter lambda<br>
+[√] Get more training data<br>
+[x] Decrease the regularization parameter lambda<br>
 [x] Use a bigger neural network</p>
-<h3 id="5-what-is-weight-decay">5.What is weight decay?</h3>
+<h3 id="5.what-is-weight-decay%3F" tabindex="-1">5.What is weight decay?</h3>
 <p>[√] A regularization technique (such as L2 regularization) that results in gradient descent shrinking the weights on every iteration.</p>
-<h3 id="6-what-happens-when-you-increase-the-regularization-hyperparameter-lambda">6.What happens when you increase the regularization hyperparameter lambda?</h3>
+<h3 id="6.what-happens-when-you-increase-the-regularization-hyperparameter-lambda%3F" tabindex="-1">6.What happens when you increase the regularization hyperparameter lambda?</h3>
 <p>[√] Weights are pushed toward becoming smaller (closer to 0)</p>
-<h3 id="7-with-the-inverted-dropout-technique-at-test-time">7.With the inverted dropout technique, at test time:</h3>
+<h3 id="7.with-the-inverted-dropout-technique%2C-at-test-time%3A" tabindex="-1">7.With the inverted dropout technique, at test time:</h3>
 <p>TBD</p>
-<h3 id="8-increasing-the-parameter-keep-prob-from-say-0-5-to-0-6-will-likely-cause-the-following-check-the-two-that-apply">8.Increasing the parameter keep_prob from (say) 0.5 to 0.6 will likely cause the following: (Check the two that apply)</h3>
-<p>[√] Causing the neural network to end up with a lower training set error
-[√] Reducing the regularization effect
-[x] Causing the neural network to end up with a higher training set error
+<h3 id="8.increasing-the-parameter-keep_prob-from-(say)-0.5-to-0.6-will-likely-cause-the-following%3A-(check-the-two-that-apply)" tabindex="-1">8.Increasing the parameter keep_prob from (say) 0.5 to 0.6 will likely cause the following: (Check the two that apply)</h3>
+<p>[√] Causing the neural network to end up with a lower training set error<br>
+[√] Reducing the regularization effect<br>
+[x] Causing the neural network to end up with a higher training set error<br>
 [x] Increasing the regularization effect</p>
-<h3 id="9-which-of-these-techniques-are-useful-for-reducing-variance-reducing-overfitting-check-all-that-apply">9.Which of these techniques are useful for reducing variance (reducing overfitting)? (Check all that apply.)</h3>
-<p>[√] Dropout
-[√] L2 regularization
-[√] Data augmentation
-[x] Xavier initialization
-[x] Vanishing gradient
-[x] Gradient Checking
+<h3 id="9.which-of-these-techniques-are-useful-for-reducing-variance-(reducing-overfitting)%3F-(check-all-that-apply.)" tabindex="-1">9.Which of these techniques are useful for reducing variance (reducing overfitting)? (Check all that apply.)</h3>
+<p>[√] Dropout<br>
+[√] L2 regularization<br>
+[√] Data augmentation<br>
+[x] Xavier initialization<br>
+[x] Vanishing gradient<br>
+[x] Gradient Checking<br>
 [x] Exploding gradient</p>
-<h3 id="10-why-do-we-normalize-the-inputs-x">10.Why do we normalize the inputs x?</h3>
+<h3 id="10.why-do-we-normalize-the-inputs-x%3F" tabindex="-1">10.Why do we normalize the inputs x?</h3>
 <p><strong>It makes the cost function faster to optimize</strong></p>
 
 </div>
@@ -632,7 +641,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-04-01-ml-ninja-c2-w1-quiz/` was built on 2026-02-15T02:38:54.788Z -->
+		<!-- This page `/blog/2018-04-01-ml-ninja-c2-w1-quiz/` was built on 2026-02-15T13:56:14.185Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="mapreduce">非常重要的 MapReduce 本质理解</h1>
+<h1>非常重要的 MapReduce 本质理解</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2015-04-07">07 April 2015</time></li>
@@ -570,48 +574,53 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="">此处必须引入一段写的非常彻底的文章片段:</h3>
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E6%AD%A4%E5%A4%84%E5%BF%85%E9%A1%BB%E5%BC%95%E5%85%A5%E4%B8%80%E6%AE%B5%E5%86%99%E7%9A%84%E9%9D%9E%E5%B8%B8%E5%BD%BB%E5%BA%95%E7%9A%84%E6%96%87%E7%AB%A0%E7%89%87%E6%AE%B5%3A">此处必须引入一段写的非常彻底的文章片段:</a></li><li><a href="#%E9%A6%96%E5%85%88%E8%AE%B2%E8%AE%B2%E7%89%A9%E7%90%86%E5%AE%9E%E4%BD%93%EF%BC%8C%E5%8F%82%E5%85%A5mapreduce%E4%BD%9C%E4%B8%9A%E6%89%A7%E8%A1%8C%E6%B6%89%E5%8F%8A4%E4%B8%AA%E7%8B%AC%E7%AB%8B%E7%9A%84%E5%AE%9E%E4%BD%93%EF%BC%9A">首先讲讲物理实体，参入mapreduce作业执行涉及4个独立的实体：</a></li><li><a href="#%E9%82%A3%E4%B9%88mapreduce%E5%88%B0%E5%BA%95%E6%98%AF%E5%A6%82%E4%BD%95%E8%BF%90%E8%A1%8C%E7%9A%84%E5%91%A2%EF%BC%9F">那么mapreduce到底是如何运行的呢？</a></li><li><a href="#%E8%BE%93%E5%85%A5%E5%88%86%E7%89%87%EF%BC%88input-split%EF%BC%89%EF%BC%9A">输入分片（input split）：</a></li><li><a href="#map%E9%98%B6%E6%AE%B5%EF%BC%9A">map阶段：</a></li><li><a href="#combiner%E9%98%B6%E6%AE%B5%EF%BC%9A">combiner阶段：</a></li><li><a href="#shuffle%E9%98%B6%E6%AE%B5%EF%BC%9A">shuffle阶段：</a></li><li><a href="#reduce%E9%98%B6%E6%AE%B5%EF%BC%9A">reduce阶段：</a></li></ul>
+      </div>
+</aside>
+  <h3 id="%E6%AD%A4%E5%A4%84%E5%BF%85%E9%A1%BB%E5%BC%95%E5%85%A5%E4%B8%80%E6%AE%B5%E5%86%99%E7%9A%84%E9%9D%9E%E5%B8%B8%E5%BD%BB%E5%BA%95%E7%9A%84%E6%96%87%E7%AB%A0%E7%89%87%E6%AE%B5%3A" tabindex="-1">此处必须引入一段写的非常彻底的文章片段:</h3>
 <p>&quot;</p>
-<h3 id="mapreduce-4">首先讲讲物理实体，参入mapreduce作业执行涉及4个独立的实体：</h3>
-<p>客户端（client）：编写mapreduce程序，配置作业，提交作业，这就是程序员完成的工作；
-JobTracker：初始化作业，分配作业，与TaskTracker通信，协调整个作业的执行；
-TaskTracker：保持与JobTracker的通信，在分配的数据片段上执行Map或Reduce任务，TaskTracker和JobTracker的不同有个很重要的方面，就是在执行任务时候TaskTracker可以有n多个，JobTracker则只会有一个（JobTracker只能有一个就和hdfs里namenode一样存在单点故障，我会在后面的mapreduce的相关问题里讲到这个问题的）
+<h3 id="%E9%A6%96%E5%85%88%E8%AE%B2%E8%AE%B2%E7%89%A9%E7%90%86%E5%AE%9E%E4%BD%93%EF%BC%8C%E5%8F%82%E5%85%A5mapreduce%E4%BD%9C%E4%B8%9A%E6%89%A7%E8%A1%8C%E6%B6%89%E5%8F%8A4%E4%B8%AA%E7%8B%AC%E7%AB%8B%E7%9A%84%E5%AE%9E%E4%BD%93%EF%BC%9A" tabindex="-1">首先讲讲物理实体，参入mapreduce作业执行涉及4个独立的实体：</h3>
+<p>客户端（client）：编写mapreduce程序，配置作业，提交作业，这就是程序员完成的工作；<br>
+JobTracker：初始化作业，分配作业，与TaskTracker通信，协调整个作业的执行；<br>
+TaskTracker：保持与JobTracker的通信，在分配的数据片段上执行Map或Reduce任务，TaskTracker和JobTracker的不同有个很重要的方面，就是在执行任务时候TaskTracker可以有n多个，JobTracker则只会有一个（JobTracker只能有一个就和hdfs里namenode一样存在单点故障，我会在后面的mapreduce的相关问题里讲到这个问题的）<br>
 Hdfs：保存作业的数据、配置信息等等，最后的结果也是保存在hdfs上面</p>
-<h3 id="mapreduce-2">那么mapreduce到底是如何运行的呢？</h3>
+<h3 id="%E9%82%A3%E4%B9%88mapreduce%E5%88%B0%E5%BA%95%E6%98%AF%E5%A6%82%E4%BD%95%E8%BF%90%E8%A1%8C%E7%9A%84%E5%91%A2%EF%BC%9F" tabindex="-1">那么mapreduce到底是如何运行的呢？</h3>
 <p>首先是客户端要编写好mapreduce程序，配置好mapreduce的作业也就是job，接下来就是提交job了，提交job是提交到JobTracker上的，这个时候JobTracker就会构建这个job，具体就是分配一个新的job任务的ID值，接下来它会做检查操作，这个检查就是确定输出目录是否存在，如果存在那么job就不能正常运行下去，JobTracker会抛出错误给客户端，接下来还要检查输入目录是否存在，如果不存在同样抛出错误，如果存在JobTracker会根据输入计算输入分片（Input Split），如果分片计算不出来也会抛出错误，至于输入分片我后面会做讲解的，这些都做好了JobTracker就会配置Job需要的资源了。分配好资源后，JobTracker就会初始化作业，初始化主要做的是将Job放入一个内部的队列，让配置好的作业调度器能调度到这个作业，作业调度器会初始化这个job，初始化就是创建一个正在运行的job对象（封装任务和记录信息），以便JobTracker跟踪job的状态和进程。初始化完毕后，作业调度器会获取输入分片信息（input split），每个分片创建一个map任务。接下来就是任务分配了，这个时候tasktracker会运行一个简单的循环机制定期发送心跳给jobtracker，心跳间隔是5秒，程序员可以配置这个时间，心跳就是jobtracker和tasktracker沟通的桥梁，通过心跳，jobtracker可以监控tasktracker是否存活，也可以获取tasktracker处理的状态和问题，同时tasktracker也可以通过心跳里的返回值获取jobtracker给它的操作指令。任务分配好后就是执行任务了。在任务执行时候jobtracker可以通过心跳机制监控tasktracker的状态和进度，同时也能计算出整个job的状态和进度，而tasktracker也可以本地监控自己的状态和进度。当jobtracker获得了最后一个完成指定任务的tasktracker操作成功的通知时候，jobtracker会把整个job状态置为成功，然后当客户端查询job运行状态时候（注意：这个是异步操作），客户端会查到job完成的通知的。如果job中途失败，mapreduce也会有相应机制处理，一般而言如果不是程序员程序本身有bug，mapreduce错误处理机制都能保证提交的job能正常完成。</p>
 <p>下面我从逻辑实体的角度讲解mapreduce运行机制，这些按照时间顺序包括：输入分片（input split）、map阶段、combiner阶段、shuffle阶段和reduce阶段。</p>
-<h3 id="input-split">输入分片（input split）：</h3>
+<h3 id="%E8%BE%93%E5%85%A5%E5%88%86%E7%89%87%EF%BC%88input-split%EF%BC%89%EF%BC%9A" tabindex="-1">输入分片（input split）：</h3>
 <p>在进行map计算之前，mapreduce会根据输入文件计算输入分片（input split），每个输入分片（input split）针对一个map任务，输入分片（input split）存储的并非数据本身，而是一个分片长度和一个记录数据的位置的数组，输入分片（input split）往往和hdfs的block（块）关系很密切，假如我们设定hdfs的块的大小是64mb，如果我们输入有三个文件，大小分别是3mb、65mb和127mb，那么mapreduce会把3mb文件分为一个输入分片（input split），65mb则是两个输入分片（input split）而127mb也是两个输入分片（input split），换句话说我们如果在map计算前做输入分片调整，例如合并小文件，那么就会有5个map任务将执行，而且每个map执行的数据大小不均，这个也是mapreduce优化计算的一个关键点。</p>
-<h3 id="map">map阶段：</h3>
+<h3 id="map%E9%98%B6%E6%AE%B5%EF%BC%9A" tabindex="-1">map阶段：</h3>
 <p>就是程序员编写好的map函数了，因此map函数效率相对好控制，而且一般map操作都是本地化操作也就是在数据存储节点上进行；</p>
-<h3 id="combiner">combiner阶段：</h3>
+<h3 id="combiner%E9%98%B6%E6%AE%B5%EF%BC%9A" tabindex="-1">combiner阶段：</h3>
 <p>combiner阶段是程序员可以选择的，combiner其实也是一种reduce操作，因此我们看见WordCount类里是用reduce进行加载的。Combiner是一个本地化的reduce操作，它是map运算的后续操作，主要是在map计算出中间文件前做一个简单的合并重复key值的操作，例如我们对文件里的单词频率做统计，map计算时候如果碰到一个hadoop的单词就会记录为1，但是这篇文章里hadoop可能会出现n多次，那么map输出文件冗余就会很多，因此在reduce计算前对相同的key做一个合并操作，那么文件会变小，这样就提高了宽带的传输效率，毕竟hadoop计算力宽带资源往往是计算的瓶颈也是最为宝贵的资源，但是combiner操作是有风险的，使用它的原则是combiner的输入不会影响到reduce计算的最终输入，例如：如果计算只是求总数，最大值，最小值可以使用combiner，但是做平均值计算使用combiner的话，最终的reduce计算结果就会出错。</p>
-<h3 id="shuffle">shuffle阶段：</h3>
+<h3 id="shuffle%E9%98%B6%E6%AE%B5%EF%BC%9A" tabindex="-1">shuffle阶段：</h3>
 <p>将map的输出作为reduce的输入的过程就是shuffle了，这个是mapreduce优化的重点地方。这里我不讲怎么优化shuffle阶段，讲讲shuffle阶段的原理，因为大部分的书籍里都没讲清楚shuffle阶段。Shuffle一开始就是map阶段做输出操作，一般mapreduce计算的都是海量数据，map输出时候不可能把所有文件都放到内存操作，因此map写入磁盘的过程十分的复杂，更何况map输出时候要对结果进行排序，内存开销是很大的，map在做输出时候会在内存里开启一个环形内存缓冲区，这个缓冲区专门用来输出的，默认大小是100mb，并且在配置文件里为这个缓冲区设定了一个阀值，默认是0.80（这个大小和阀值都是可以在配置文件里进行配置的），同时map还会为输出操作启动一个守护线程，如果缓冲区的内存达到了阀值的80%时候，这个守护线程就会把内容写到磁盘上，这个过程叫spill，另外的20%内存可以继续写入要写进磁盘的数据，写入磁盘和写入内存操作是互不干扰的，如果缓存区被撑满了，那么map就会阻塞写入内存的操作，让写入磁盘操作完成后再继续执行写入内存操作，前面我讲到写入磁盘前会有个排序操作，这个是在写入磁盘操作时候进行，不是在写入内存时候进行的，如果我们定义了combiner函数，那么排序前还会执行combiner操作。每次spill操作也就是写入磁盘操作时候就会写一个溢出文件，也就是说在做map输出有几次spill就会产生多少个溢出文件，等map输出全部做完后，map会合并这些输出文件。这个过程里还会有一个Partitioner操作，对于这个操作很多人都很迷糊，其实Partitioner操作和map阶段的输入分片（Input split）很像，一个Partitioner对应一个reduce作业，如果我们mapreduce操作只有一个reduce操作，那么Partitioner就只有一个，如果我们有多个reduce操作，那么Partitioner对应的就会有多个，Partitioner因此就是reduce的输入分片，这个程序员可以编程控制，主要是根据实际key和value的值，根据实际业务类型或者为了更好的reduce负载均衡要求进行，这是提高reduce效率的一个关键所在。到了reduce阶段就是合并map输出文件了，Partitioner会找到对应的map输出文件，然后进行复制操作，复制操作时reduce会开启几个复制线程，这些线程默认个数是5个，程序员也可以在配置文件更改复制线程的个数，这个复制过程和map写入磁盘过程类似，也有阀值和内存大小，阀值一样可以在配置文件里配置，而内存大小是直接使用reduce的tasktracker的内存大小，复制时候reduce还会进行排序操作和合并文件操作，这些操作完了就会进行reduce计算了。</p>
-<h3 id="reduce">reduce阶段：</h3>
+<h3 id="reduce%E9%98%B6%E6%AE%B5%EF%BC%9A" tabindex="-1">reduce阶段：</h3>
 <p>和map函数一样也是程序员编写的，最终结果是存储在hdfs上的。</p>
 <p>&quot;</p>
 <p><strong>How Many Maps?</strong></p>
 <ul>
 <li>The number of maps is usually driven by the total size of the inputs, that is, the total number of blocks of the input files.</li>
 <li>The right level of parallelism for maps seems to be around 10-100 maps per-node, although it has been set up to 300 maps for very cpu-light map tasks. Task setup takes a while, so it is best if the maps take at least a minute to execute.</li>
-<li>Thus, if you expect 10TB of input data and have a blocksize of 128MB, you'll end up with 82,000 maps, unless Configuration.set(MRJobConfig.NUM_MAPS, int) (which only provides a hint to the framework) is used to set it even higher.</li>
+<li>Thus, if you expect 10TB of input data and have a blocksize of 128MB, you’ll end up with 82,000 maps, unless Configuration.set(MRJobConfig.NUM_MAPS, int) (which only provides a hint to the framework) is used to set it even higher.</li>
 </ul>
 <p>一次mr需要多少个map取决于文件大小和文件块大小</p>
 <p><strong>How to get the input file name in the mapper in a Hadoop program?</strong></p>
-<pre class="language-java" tabindex="0"><code class="language-java"><span class="token class-name">String</span> fileName <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name">FileSplit</span><span class="token punctuation">)</span> context<span class="token punctuation">.</span><span class="token function">getInputSplit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-java" tabindex="0"><code class="hljs language-java"><span class="token class-name">String</span> fileName <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name">FileSplit</span><span class="token punctuation">)</span> context<span class="token punctuation">.</span><span class="token function">getInputSplit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <p><strong>hive建表</strong></p>
 <ul>
-<li>hive建表时默认的分隔符是'\001',若在建表的时候没有指明分隔符，load文件的时候文件的分隔符需要是'\001'的，若文件分隔符不是'\001'，程序不会报错，但表查询的结果会全部为'NULL'.</li>
-<li>用vi编辑器Ctrl+v然后Ctrl+a就可以通过键盘输入'\001'.</li>
+<li>hive建表时默认的分隔符是’\001’,若在建表的时候没有指明分隔符，load文件的时候文件的分隔符需要是’\001’的，若文件分隔符不是’\001’，程序不会报错，但表查询的结果会全部为’NULL’.</li>
+<li>用vi编辑器Ctrl+v然后Ctrl+a就可以通过键盘输入’\001’.</li>
 </ul>
 <p>hive修改表字段类型(例如：column_name int -&gt; string)</p>
-<pre class="language-sql" tabindex="0"><code class="language-sql"><span class="token keyword">alter</span> <span class="token keyword">table</span> xxx change column_name column_name string</code></pre>
+<pre class="language-sql" tabindex="0"><code class="hljs language-sql"><span class="token keyword">alter</span> <span class="token keyword">table</span> xxx change column_name column_name string</code></pre>
 <p>编码相关注意问题:</p>
-<pre class="language-java" tabindex="0"><code class="language-java"><span class="token class-name">MultipleOutputs</span><span class="token punctuation">.</span><span class="token function">addNamedOutput</span><span class="token punctuation">(</span>job<span class="token punctuation">,</span> <span class="token string">"base"</span><span class="token punctuation">,</span> <span class="token class-name">TextOutputFormat</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token class-name">Text</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token class-name">ShowWritable</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-java" tabindex="0"><code class="hljs language-java"><span class="token class-name">MultipleOutputs</span><span class="token punctuation">.</span><span class="token function">addNamedOutput</span><span class="token punctuation">(</span>job<span class="token punctuation">,</span> <span class="token string">"base"</span><span class="token punctuation">,</span> <span class="token class-name">TextOutputFormat</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token class-name">Text</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token class-name">ShowWritable</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <p>base是输出文件名称</p>
-<pre class="language-java" tabindex="0"><code class="language-java">mos<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"base"</span><span class="token punctuation">,</span> <span class="token class-name">NullWritable</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">,</span> key<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>参考资料:
+<pre class="language-java" tabindex="0"><code class="hljs language-java">mos<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"base"</span><span class="token punctuation">,</span> <span class="token class-name">NullWritable</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">,</span> key<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>参考资料:<br>
 <a href="http://www.cnblogs.com/sharpxiajun/p/3151395.html">hadoop 学习笔记：mapreduce框架详解</a></p>
 
 </div>
@@ -639,7 +648,7 @@ Hdfs：保存作业的数据、配置信息等等，最后的结果也是保存�
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-04-07-mr/` was built on 2026-02-15T02:38:54.771Z -->
+		<!-- This page `/blog/2015-04-07-mr/` was built on 2026-02-15T13:56:14.179Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

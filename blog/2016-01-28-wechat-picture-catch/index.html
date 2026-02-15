@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="wechat">wechat 通过抓包获取图片方法实践</h1>
+<h1>wechat 通过抓包获取图片方法实践</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2016-01-28">28 January 2016</time></li>
@@ -570,22 +574,27 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <p>今天无意中看到<a href="http://mp.weixin.qq.com/s?__biz=MjM5MzA0ODkyMA==&amp;mid=405276891&amp;idx=1&amp;sn=ebd98476ad94725d57d2570bde17e45d&amp;scene=23&amp;srcid=0128POvbcBkiuZTd9TG7aCs2#rd">developerWorks</a>的一篇抓微信红包图片的方法，在电脑上试了一下，第一次看到APP的数据包，还蛮新奇的，特此记录一下，等大年三十红包接口开放了，我们一家可以看免费图片了：）虽然并不想看【。
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#1.%E8%8E%B7%E5%8F%96%E8%87%AA%E5%B7%B1%E6%89%8B%E6%9C%BA%E7%9A%84udid">1.获取自己手机的udid</a></li><li><a href="#2.%E6%89%93%E5%BC%80%E7%94%B5%E8%84%91%E7%BB%88%E7%AB%AF%EF%BC%8C%E5%B0%86udid%E6%B7%BB%E5%8A%A0%E5%88%B0rvictl%E5%91%BD%E4%BB%A4%E4%B8%AD">2.打开电脑终端，将udid添加到rvictl命令中</a></li><li><a href="#3.tcpdump%E8%BF%90%E8%A1%8C%E6%8A%93%E5%8C%85%E5%91%BD%E4%BB%A4%E5%AE%9E%E6%96%BD%E7%9B%91%E6%8E%A7">3.tcpdump运行抓包命令实施监控</a></li><li><a href="#4.%E4%BA%8B%E6%88%90%E4%B9%8B%E5%90%8E%2C%E5%B0%86%E8%87%AA%E5%B7%B1%E7%9A%84%E8%AE%BE%E5%A4%87%E4%BB%8Ervictl%E7%A7%BB%E9%99%A4">4.事成之后,将自己的设备从rvictl移除</a></li></ul>
+      </div>
+</aside>
+  <p>今天无意中看到<a href="http://mp.weixin.qq.com/s?__biz=MjM5MzA0ODkyMA==&amp;mid=405276891&amp;idx=1&amp;sn=ebd98476ad94725d57d2570bde17e45d&amp;scene=23&amp;srcid=0128POvbcBkiuZTd9TG7aCs2#rd">developerWorks</a>的一篇抓微信红包图片的方法，在电脑上试了一下，第一次看到APP的数据包，还蛮新奇的，特此记录一下，等大年三十红包接口开放了，我们一家可以看免费图片了：）虽然并不想看【。<br>
 有3个步骤(针对iPhone；安卓的在开发者平台那个APP有文章说明，在此不做记录)：</p>
-<h3 id="1-udid">1.获取自己手机的udid</h3>
-<p>连接iTunes，手机信息，点击'序列号'，会出现UDID</p>
-<h3 id="2-udid-rvictl">2.打开电脑终端，将udid添加到rvictl命令中</h3>
-<pre class="language-vim" tabindex="0"><code class="language-vim"><span class="token operator">></span>rvictl <span class="token operator">-</span>s $<span class="token punctuation">{</span>udid<span class="token punctuation">}</span></code></pre>
-<p>iOS 5后，apple引入了RVI remote virtual interface的特性，它只需要将iOS设备使用USB数据线连接到mac上，然后使用rvictl工具以iOS设备的UDID为参数在Mac中建立一个虚拟网络接口rvi，就可以在mac设备上使用tcpdump，wireshark等工具对创建的接口进行抓包分析了
+<h3 id="1.%E8%8E%B7%E5%8F%96%E8%87%AA%E5%B7%B1%E6%89%8B%E6%9C%BA%E7%9A%84udid" tabindex="-1">1.获取自己手机的udid</h3>
+<p>连接iTunes，手机信息，点击’序列号’，会出现UDID</p>
+<h3 id="2.%E6%89%93%E5%BC%80%E7%94%B5%E8%84%91%E7%BB%88%E7%AB%AF%EF%BC%8C%E5%B0%86udid%E6%B7%BB%E5%8A%A0%E5%88%B0rvictl%E5%91%BD%E4%BB%A4%E4%B8%AD" tabindex="-1">2.打开电脑终端，将udid添加到rvictl命令中</h3>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim"><span class="token operator">></span>rvictl <span class="token operator">-</span>s $<span class="token punctuation">{</span>udid<span class="token punctuation">}</span></code></pre>
+<p>iOS 5后，apple引入了RVI remote virtual interface的特性，它只需要将iOS设备使用USB数据线连接到mac上，然后使用rvictl工具以iOS设备的UDID为参数在Mac中建立一个虚拟网络接口rvi，就可以在mac设备上使用tcpdump，wireshark等工具对创建的接口进行抓包分析了<br>
 重要信息：RVI 设备重现的是 iOS 设备的整个网络堆栈，无法跟踪设备上指定的网络接口，或者判断哪些包是通过哪个网络接口传输的，将 WLAN 关闭就可以抓 3G 连接的包。</p>
-<h3 id="3-tcpdump">3.tcpdump运行抓包命令实施监控</h3>
-<pre class="language-vim" tabindex="0"><code class="language-vim"><span class="token operator">></span>sudo tcpdump <span class="token operator">-</span>i rvi0 <span class="token operator">-</span>AAl
+<h3 id="3.tcpdump%E8%BF%90%E8%A1%8C%E6%8A%93%E5%8C%85%E5%91%BD%E4%BB%A4%E5%AE%9E%E6%96%BD%E7%9B%91%E6%8E%A7" tabindex="-1">3.tcpdump运行抓包命令实施监控</h3>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim"><span class="token operator">></span>sudo tcpdump <span class="token operator">-</span>i rvi0 <span class="token operator">-</span>AAl
 or
 <span class="token operator">></span>sudo tcpdump <span class="token operator">-</span>i rvi0 <span class="token operator">-</span>AAl |<span class="token keyword">grep</span> <span class="token string">'GET'</span>
 or Wechat红包
 <span class="token operator">></span>sudo tcpdump <span class="token operator">-</span>i rvi0 <span class="token operator">-</span>AAl |<span class="token keyword">grep</span> <span class="token string">'GET /mmsns'</span></code></pre>
-<h3 id="4-rvictl">4.事成之后,将自己的设备从rvictl移除</h3>
-<pre class="language-vim" tabindex="0"><code class="language-vim"><span class="token operator">></span>rvictl <span class="token operator">-</span><span class="token keyword">x</span> $<span class="token punctuation">{</span>udid<span class="token punctuation">}</span></code></pre>
+<h3 id="4.%E4%BA%8B%E6%88%90%E4%B9%8B%E5%90%8E%2C%E5%B0%86%E8%87%AA%E5%B7%B1%E7%9A%84%E8%AE%BE%E5%A4%87%E4%BB%8Ervictl%E7%A7%BB%E9%99%A4" tabindex="-1">4.事成之后,将自己的设备从rvictl移除</h3>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim"><span class="token operator">></span>rvictl <span class="token operator">-</span><span class="token keyword">x</span> $<span class="token punctuation">{</span>udid<span class="token punctuation">}</span></code></pre>
 
 </div>
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-12-29-twitter-log-bookkeeper/">Twitter 高性能分布式日志系统架构解析</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2016-03-01-combine-github-and-gitlab/">一台电脑同时支持 github 和 gitlab 的提交</a></li>
@@ -612,7 +621,7 @@ or Wechat红包
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2016-01-28-wechat-picture-catch/` was built on 2026-02-15T02:38:54.782Z -->
+		<!-- This page `/blog/2016-01-28-wechat-picture-catch/` was built on 2026-02-15T13:56:14.183Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

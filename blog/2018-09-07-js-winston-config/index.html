@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="winston">winston 日志设置指南</h1>
+<h1>winston 日志设置指南</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2018-09-07">07 September 2018</time></li>
@@ -570,12 +574,17 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="">背景</h3>
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E8%83%8C%E6%99%AF">背景</a></li><li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li><li><a href="#%E4%B8%8B%E4%B8%80%E6%AD%A5">下一步</a></li></ul>
+      </div>
+</aside>
+  <h3 id="%E8%83%8C%E6%99%AF" tabindex="-1">背景</h3>
 <p>为了清晰的定位出错误堆栈, 我们通常会将 <code>Error</code> 的 <code>stack</code> 信息输出, 那么使用强大好用的 winston 组件时, 如何优雅的设置呢?</p>
-<h3 id="-2">思路</h3>
+<h3 id="%E6%80%9D%E8%B7%AF" tabindex="-1">思路</h3>
 <p>我们的日志输出是 <code>json</code> 格式的, 但是直接将 <code>Error</code> Json化会隐藏 <code>stack</code> 的信息, 于是, 我们希望能将 <code>Error.stack</code> 附加到结果中, 组成一个 <code>json</code> 结构的结果</p>
 <p>我能想到最优雅的办法, 就是在 winston 的 <code>format</code> 方法里加一个 <code>converter</code> 的方法, 对 <code>Error</code> 做一个处理:</p>
-<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token keyword">const</span> logger <span class="token operator">=</span> winston<span class="token punctuation">.</span><span class="token function">createLogger</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+<pre class="language-javascript" tabindex="0"><code class="hljs language-javascript"><span class="token keyword">const</span> logger <span class="token operator">=</span> winston<span class="token punctuation">.</span><span class="token function">createLogger</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
   <span class="token literal-property property">level</span><span class="token operator">:</span> <span class="token string">'info'</span><span class="token punctuation">,</span>
   <span class="token literal-property property">format</span><span class="token operator">:</span> winston<span class="token punctuation">.</span>format<span class="token punctuation">.</span><span class="token function">combine</span><span class="token punctuation">(</span>
     winston<span class="token punctuation">.</span>format<span class="token punctuation">.</span><span class="token function">timestamp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
@@ -585,22 +594,22 @@ pre[class*="language-"] {
   <span class="token literal-property property">transports</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token keyword">new</span> <span class="token class-name">winston<span class="token punctuation">.</span>transports<span class="token punctuation">.</span>Console</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <p>而 <code>converter</code> 的方法:</p>
-<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token keyword">const</span> formatErrorConverter <span class="token operator">=</span> winston<span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">info</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+<pre class="language-javascript" tabindex="0"><code class="hljs language-javascript"><span class="token keyword">const</span> formatErrorConverter <span class="token operator">=</span> winston<span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">info</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
   <span class="token keyword">return</span> info <span class="token keyword">instanceof</span> <span class="token class-name">Error</span>
     <span class="token operator">?</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">stack</span><span class="token operator">:</span> info<span class="token punctuation">.</span>stack <span class="token punctuation">}</span><span class="token punctuation">,</span> info<span class="token punctuation">)</span>
     <span class="token operator">:</span> info<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>结果很简单, 但是坑的地方有两点:
-1.winston 的文档里根本没有<strong>示例</strong>告诉你这种 <code>custom format</code> 怎么写
+<p>结果很简单, 但是坑的地方有两点:<br>
+1.winston 的文档里根本没有<strong>示例</strong>告诉你这种 <code>custom format</code> 怎么写<br>
 2.<code>combine</code>的顺序非常重要, <code>winston.format.json()</code> 一定必须要放在你自己实现的<code>formatErrorConverter()</code> 函数之后</p>
-<p>突然发现搜到的<strong>示例</strong>就是人家 <code>winston</code> 家自己的 <code>examples</code> 🌚...
+<p>突然发现搜到的<strong>示例</strong>就是人家 <code>winston</code> 家自己的 <code>examples</code> 🌚…<br>
 <a href="https://github.com/winstonjs/winston/blob/master/examples/format-mutate.js">示例里面有一段话格外瞩目</a>:</p>
-<pre><code>// Order is important here, the formats are called in the
+<pre><code class="hljs">// Order is important here, the formats are called in the
 // order they are passed to combine.
 </code></pre>
 <p>对不起 <code>winston</code> 我误会你了, 只是你的 <code>README</code> 太 <code>emmmmm</code>🌝</p>
 <p>当然, 还搜到了一种可行的实现方式:</p>
-<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token keyword">const</span> logger <span class="token operator">=</span> winston<span class="token punctuation">.</span><span class="token function">createLogger</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+<pre class="language-javascript" tabindex="0"><code class="hljs language-javascript"><span class="token keyword">const</span> logger <span class="token operator">=</span> winston<span class="token punctuation">.</span><span class="token function">createLogger</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
   <span class="token literal-property property">level</span><span class="token operator">:</span> <span class="token string">'info'</span><span class="token punctuation">,</span>
   <span class="token literal-property property">format</span><span class="token operator">:</span> winston<span class="token punctuation">.</span>format<span class="token punctuation">.</span><span class="token function">combine</span><span class="token punctuation">(</span>
     winston<span class="token punctuation">.</span>format<span class="token punctuation">.</span><span class="token function">timestamp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
@@ -626,7 +635,7 @@ pre[class*="language-"] {
     <span class="token keyword">return</span> value<span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
 <p>鉴于 <code>replacer</code> 这个关键字也无从文档可以查取, 并且也不如上面那个方案简单, 于是这个实现就仅此记录了.</p>
-<h3 id="-3">下一步</h3>
+<h3 id="%E4%B8%8B%E4%B8%80%E6%AD%A5" tabindex="-1">下一步</h3>
 <p>使用 <code>filter</code> 特性去做敏感信息加星的实现方式</p>
 <p><a href="https://github.com/winstonjs/winston/issues/1243">感谢所有在 issues 里热心讨论的开发者</a></p>
 
@@ -655,7 +664,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-09-07-js-winston-config/` was built on 2026-02-15T02:38:54.791Z -->
+		<!-- This page `/blog/2018-09-07-js-winston-config/` was built on 2026-02-15T13:56:14.186Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

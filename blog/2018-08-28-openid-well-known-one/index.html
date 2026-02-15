@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="well-known-1">关于 .well-known 规范的那些事 (1)</h1>
+<h1>关于 .well-known 规范的那些事 (1)</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2018-08-28">28 August 2018</time></li>
@@ -570,20 +574,25 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="abstract">Abstract</h3>
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#abstract">Abstract</a></li><li><a href="#intro">Intro</a></li><li><a href="#openid-provider-issuer-discovery">OpenID Provider Issuer Discovery</a></li><li><a href="#openid-provider-metadata">OpenID Provider Metadata</a></li></ul>
+      </div>
+</aside>
+  <h3 id="abstract" tabindex="-1">Abstract</h3>
 <blockquote>
 <p>OpenID Connect 1.0 is a simple identity layer on top of the OAuth 2.0 protocol. It enables Clients to verify the identity of the End-User based on the authentication performed by an Authorization Server, as well as to obtain basic profile information about the End-User in an interoperable and REST-like manner.</p>
 </blockquote>
 <p>OpenID Connect 1.0 是 OAuth 2.0 协议最上层的简单身份验证层. 它使客户端能够根据授权服务器执行的身份验证来验证最终用户的身份, 以及以可操作性和类似 Restful 的方式获取有关最终用户的基本配置文件信息.</p>
-<h3 id="intro">Intro</h3>
-<p>为了使 OpenID Connect 依赖方能够为最终用户使用 OpenID Connect 服务, 依赖方需要知道 OpenID Provider 的位置. OpenID Connect 使用 <code>WebFinger</code> 为最终用户定位 OpenID 提供程序.
+<h3 id="intro" tabindex="-1">Intro</h3>
+<p>为了使 OpenID Connect 依赖方能够为最终用户使用 OpenID Connect 服务, 依赖方需要知道 OpenID Provider 的位置. OpenID Connect 使用 <code>WebFinger</code> 为最终用户定位 OpenID 提供程序.<br>
 一旦 <code>OpenID Provider</code> 被确定, 该 <code>OpenID Provider</code> 的配置信息作为 JSON 文档从 <code>well-known</code> 的位置检索, 还包括有 OAuth2.0 的接口地址.</p>
-<h3 id="openid-provider-issuer-discovery">OpenID Provider Issuer Discovery</h3>
+<h3 id="openid-provider-issuer-discovery" tabindex="-1">OpenID Provider Issuer Discovery</h3>
 <blockquote>
 <p>OpenID Provider Issuer Discovery 是一个确定 OpenID Provider 位置的过程</p>
 </blockquote>
 <p>关于 <code>GET /.well-known/webfinger?xxxxxx</code> 的一些标准</p>
-<h3 id="openid-provider-metadata">OpenID Provider Metadata</h3>
+<h3 id="openid-provider-metadata" tabindex="-1">OpenID Provider Metadata</h3>
 <p><strong>issuer</strong>: 必选项</p>
 <ul>
 <li>HTTPS</li>
@@ -615,7 +624,7 @@ pre[class*="language-"] {
 <p><strong>registration_endpoint</strong>: 推荐</p>
 <ul>
 <li>值是 OpenID Provider 的 Dynamic Client Registration Endpoint</li>
-<li>据说谷歌<a href="https://accounts.google.com/.well-known/openid-configuration">google's well-known config</a>是不暴露这个端口因为不想让客户端通过此方式注册~</li>
+<li>据说谷歌<a href="https://accounts.google.com/.well-known/openid-configuration">google’s well-known config</a>是不暴露这个端口因为不想让客户端通过此方式注册~</li>
 </ul>
 <p><strong>scopes_supported</strong>: 推荐</p>
 <ul>
@@ -694,7 +703,7 @@ pre[class*="language-"] {
 <li>Token Endpoint 支持的 Client Authentication methods</li>
 <li>方法有 <code>client_secret_post</code>, <code>client_secret_basic</code>, <code>client_secret_jwt</code> 和 <code>private_key_jwt</code></li>
 <li>其它 authentication methods <strong>可能</strong> 在扩展中定义</li>
-<li>缺省值是 <code>clien_secret_basic</code> -- the HTTP Basic Authentication Scheme specified</li>
+<li>缺省值是 <code>clien_secret_basic</code> – the HTTP Basic Authentication Scheme specified</li>
 </ul>
 <p><strong>token_endpoint_auth_signing_alg_values_supported</strong>: 可选项</p>
 <ul>
@@ -751,12 +760,12 @@ pre[class*="language-"] {
 </ul>
 <p><strong>op_policy_uri</strong>: 可选项</p>
 <ul>
-<li>URL that the OpenID Provider provides to the person registering the Client to read about the OP's requirements on how the Relying Party can use the data provided by the OP.</li>
+<li>URL that the OpenID Provider provides to the person registering the Client to read about the OP’s requirements on how the Relying Party can use the data provided by the OP.</li>
 <li>The registration process SHOULD display this URL to the person registering the Client if it is given.</li>
 </ul>
 <p><strong>op_tos_uri</strong>: 可选项</p>
 <ul>
-<li>URL that the OpenID Provider provides to the person registering the Client to read about OpenID Provider's terms of service.</li>
+<li>URL that the OpenID Provider provides to the person registering the Client to read about OpenID Provider’s terms of service.</li>
 <li>The registration process SHOULD display this URL to the person registering the Client if it is given.</li>
 </ul>
 
@@ -785,7 +794,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-08-28-openid-well-known-one/` was built on 2026-02-15T02:38:54.790Z -->
+		<!-- This page `/blog/2018-08-28-openid-well-known-one/` was built on 2026-02-15T13:56:14.186Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="mapreduce">分布式缓存在 MapReduce 上的使用</h1>
+<h1>分布式缓存在 MapReduce 上的使用</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2016-04-17">17 April 2016</time></li>
@@ -570,19 +574,22 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <p>在写mapreduce时，简单的统计可以用一个文件搞定，只是如果需要关联其它文件的列
+<aside>
+  
+</aside>
+  <p>在写mapreduce时，简单的统计可以用一个文件搞定，只是如果需要关联其它文件的列<br>
 诸如文件A中有id字段，对文件A输出需要得到id对应的name字段，在其它小文件中，我们就需要用到这个非常实用的分布式缓存接口</p>
-<p>生产环境hadoop版本在2.5以上，也不打算使用旧mapreduce接口
-那么关于DistributedCache一律不再使用
+<p>生产环境hadoop版本在2.5以上，也不打算使用旧mapreduce接口<br>
+那么关于DistributedCache一律不再使用<br>
 当然，新版的分布式缓存也只是将相应的方法放在了Job里</p>
-<p>当我们想要关联字段以及含义的时候，会选择在map阶段、或者reduce阶段
-我选择在map的时候进行关联，本质上来讲，会将一个个小文件读到每一个datanode节点的内存里
-以复制的姿态作为分布式的一种冗余实现方式
+<p>当我们想要关联字段以及含义的时候，会选择在map阶段、或者reduce阶段<br>
+我选择在map的时候进行关联，本质上来讲，会将一个个小文件读到每一个datanode节点的内存里<br>
+以复制的姿态作为分布式的一种冗余实现方式<br>
 具体方法如下:</p>
 <ol>
 <li>Job装配阶段，将小文件的hdfs相对路径地址写入</li>
 </ol>
-<pre class="language-java" tabindex="0"><code class="language-java"><span class="token class-name">Configuration</span> configuration <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Configuration</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class="language-java" tabindex="0"><code class="hljs language-java"><span class="token class-name">Configuration</span> configuration <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Configuration</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">Job</span> job <span class="token operator">=</span> <span class="token class-name">Job</span><span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span>configuration<span class="token punctuation">,</span> <span class="token string">"new-job-task"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 <span class="token keyword">try</span> <span class="token punctuation">{</span>
@@ -594,7 +601,7 @@ pre[class*="language-"] {
 <ol start="2">
 <li>map阶段，将小文件读入内存中</li>
 </ol>
-<pre class="language-java" tabindex="0"><code class="language-java"><span class="token keyword">private</span> <span class="token class-name">FileSystem</span> hdfs <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<pre class="language-java" tabindex="0"><code class="hljs language-java"><span class="token keyword">private</span> <span class="token class-name">FileSystem</span> hdfs <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
 <span class="token keyword">private</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span></span> publisherIdWithName <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 <span class="token annotation punctuation">@Override</span>
@@ -652,7 +659,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2016-04-17-distributed-cache-in-mapreduce/` was built on 2026-02-15T02:38:54.783Z -->
+		<!-- This page `/blog/2016-04-17-distributed-cache-in-mapreduce/` was built on 2026-02-15T13:56:14.183Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

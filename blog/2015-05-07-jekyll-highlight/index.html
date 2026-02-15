@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="jekyll">Jekyll我们都会喜欢的语法高亮</h1>
+<h1>Jekyll我们都会喜欢的语法高亮</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2015-05-07">07 May 2015</time></li>
@@ -570,27 +574,30 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
+<aside>
+  
+</aside>
   <p>jekyll语法高亮之pygments系列：</p>
 <ol>
 <li><a href="https://pypi.python.org/pypi/Pygments">下载Pygments</a> Pygments-x.x.tar.gz,解压安装</li>
 </ol>
-<pre class="language-python" tabindex="0"><code class="language-python">sudo python setup<span class="token punctuation">.</span>py install</code></pre>
+<pre class="language-python" tabindex="0"><code class="hljs language-python">sudo python setup<span class="token punctuation">.</span>py install</code></pre>
 <ol start="2">
-<li>选择一种喜欢的代码高亮样式，我用的native
+<li>选择一种喜欢的代码高亮样式，我用的native<br>
 通过命令可以查看支持的样式:</li>
 </ol>
-<pre class="language-python" tabindex="0"><code class="language-python"><span class="token operator">>></span><span class="token operator">></span><span class="token keyword">from</span> pygments<span class="token punctuation">.</span>styles <span class="token keyword">import</span> STYLE_MAP
+<pre class="language-python" tabindex="0"><code class="hljs language-python"><span class="token operator">>></span><span class="token operator">></span><span class="token keyword">from</span> pygments<span class="token punctuation">.</span>styles <span class="token keyword">import</span> STYLE_MAP
 <span class="token operator">>></span><span class="token operator">></span>STYLE_MAP<span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <ol start="3">
 <li>应用在jekyll里:</li>
 </ol>
-<pre class="language-vim" tabindex="0"><code class="language-vim"><span class="token keyword">cd</span> $<span class="token builtin">path</span><span class="token operator">/</span>css
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim"><span class="token keyword">cd</span> $<span class="token builtin">path</span><span class="token operator">/</span>css
 pygmentize <span class="token operator">-</span>S native <span class="token operator">-</span><span class="token keyword">f</span> html <span class="token operator">></span> pygments<span class="token operator">.</span>css</code></pre>
 <ol start="4">
 <li>在layout中引用该pygments.css</li>
 <li>修改jekyll的_config.yml</li>
 </ol>
-<pre class="language-vim" tabindex="0"><code class="language-vim">markdown<span class="token punctuation">:</span> redcarpet
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">markdown<span class="token punctuation">:</span> redcarpet
 pygments<span class="token punctuation">:</span> true</code></pre>
 
 </div>
@@ -618,7 +625,7 @@ pygments<span class="token punctuation">:</span> true</code></pre>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-05-07-jekyll-highlight/` was built on 2026-02-15T02:38:54.773Z -->
+		<!-- This page `/blog/2015-05-07-jekyll-highlight/` was built on 2026-02-15T13:56:14.180Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

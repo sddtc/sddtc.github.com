@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="gists">运用 Gists 来进行嵌套代码块管理</h1>
+<h1>运用 Gists 来进行嵌套代码块管理</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2021-02-05">05 February 2021</time></li>
@@ -570,6 +574,11 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E5%B0%86%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5%E5%90%88%E6%88%90%E5%9B%BE%E7%89%87%E6%9D%A5%E5%B1%95%E7%A4%BA">将代码片段合成图片来展示</a></li><li><a href="#%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%A0%81%E5%B5%8C%E5%A5%97%2B%E8%BF%90%E8%A1%8C%E7%9A%84%E5%B9%B3%E5%8F%B0">使用代码嵌套+运行的平台</a></li><li><a href="#github-gists">github gists</a></li></ul>
+      </div>
+</aside>
   <p>最近一直在更新重构的读书笔记，而后发现其中的一些代码片段非常适合结合内容一起展示出来。以前写文章的时候，遇到代码片段都会直接写出来，例如：</p>
 <p><picture><source type="image/avif" srcset="/sddtc.github.com/blog/2021-02-05-use-gists-in-blog-to-show-code-snapshot/Vy3rvInzTZ-768.avif 768w"><source type="image/webp" srcset="/sddtc.github.com/blog/2021-02-05-use-gists-in-blog-to-show-code-snapshot/Vy3rvInzTZ-768.webp 768w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2021-02-05-use-gists-in-blog-to-show-code-snapshot/Vy3rvInzTZ-768.png" alt="2021-02-05-Hf61Ob-XNbBls" width="768" height="249"></picture></p>
 <p>优点：</p>
@@ -582,13 +591,13 @@ pre[class*="language-"] {
 <li>为了代码高亮我需要安装相关的代码片段高亮插件。</li>
 </ul>
 <p>为了可复用的目的我开始寻找替代方式，大概有三种方式：</p>
-<h3 id="">将代码片段合成图片来展示</h3>
+<h3 id="%E5%B0%86%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5%E5%90%88%E6%88%90%E5%9B%BE%E7%89%87%E6%9D%A5%E5%B1%95%E7%A4%BA" tabindex="-1">将代码片段合成图片来展示</h3>
 <p>把代码制作成图片，我拒绝这种方式的主要原因是 1. 不利于选中相关的内容 2. 不利于有复制粘贴需求的用户</p>
-<h3 id="-2">使用代码嵌套+运行的平台</h3>
+<h3 id="%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%A0%81%E5%B5%8C%E5%A5%97%2B%E8%BF%90%E8%A1%8C%E7%9A%84%E5%B9%B3%E5%8F%B0" tabindex="-1">使用代码嵌套+运行的平台</h3>
 <p><picture><source type="image/avif" srcset="/sddtc.github.com/blog/2021-02-05-use-gists-in-blog-to-show-code-snapshot/_Vs9iVvImi-684.avif 684w"><source type="image/webp" srcset="/sddtc.github.com/blog/2021-02-05-use-gists-in-blog-to-show-code-snapshot/_Vs9iVvImi-684.webp 684w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2021-02-05-use-gists-in-blog-to-show-code-snapshot/_Vs9iVvImi-684.png" alt="2021-02-05-wgrHpT-i6Y4gx" width="684" height="248"></picture></p>
-<p>这种我在 Stackoverflow 的答案里见过，网上也有很多例如 <a href="https://codepen.io/">codepen.io</a> 或者 <a href="https://jsfiddle.net/">jsfiddle.net</a> 的运行平台
+<p>这种我在 Stackoverflow 的答案里见过，网上也有很多例如 <a href="https://codepen.io/">codepen.io</a> 或者 <a href="https://jsfiddle.net/">jsfiddle.net</a> 的运行平台<br>
 这种运用在博客里稍微有点大材小用了，我倾向于写较为复杂且可以执行演示的例子时，可以使用它们</p>
-<h3 id="github-gists">github gists</h3>
+<h3 id="github-gists" tabindex="-1">github gists</h3>
 <p>我知道 gists 好用，但是莫得想到它这么好用我直接扣哎扣. <a href="https://gist.github.com/">创建</a>你的代码片段:</p>
 <script src="https://gist.github.com/sddtc/25cf4829dcd0206a5bc2e3b43b22ebca.js"></script>
 <p>就它了嗷！</p>
@@ -618,7 +627,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2021-02-05-use-gists-in-blog-to-show-code-snapshot/` was built on 2026-02-15T02:38:54.793Z -->
+		<!-- This page `/blog/2021-02-05-use-gists-in-blog-to-show-code-snapshot/` was built on 2026-02-15T13:56:14.187Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

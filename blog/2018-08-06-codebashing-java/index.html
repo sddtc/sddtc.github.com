@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="codebashing">Codebashing</h1>
+<h1>Codebashing</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2018-08-06">06 August 2018</time></li>
@@ -570,22 +574,27 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="session-fixation">Session Fixation</h3>
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#session-fixation">Session Fixation</a></li><li><a href="#dom-xss">Dom XSS</a></li><li><a href="#cross-site-request-forgery-post">Cross Site Request Forgery Post</a></li></ul>
+      </div>
+</aside>
+  <h3 id="session-fixation" tabindex="-1">Session Fixation</h3>
 <p>The principle of defense in depth (combining multiple best practices) is necessary for defending against Session Fixation attacks. These include to:</p>
-<p>1.Ensure that only server generated session values are accepted by the application.
-2.Upon a successful login, invalidate the original session value, and re-issue a new session value.
+<p>1.Ensure that only server generated session values are accepted by the application.<br>
+2.Upon a successful login, invalidate the original session value, and re-issue a new session value.<br>
 3.Prevent the application from accepting session values via GET or POST requests and instead store session values within HTTP Cookies only.</p>
-<h3 id="dom-xss">Dom XSS</h3>
-<p>To defend against Cross Site Scripting attacks within the application user's Browser Document Object Model (DOM) environment a defense-in-depth approach is required, combining a number of security best practices.
+<h3 id="dom-xss" tabindex="-1">Dom XSS</h3>
+<p>To defend against Cross Site Scripting attacks within the application user’s Browser Document Object Model (DOM) environment a defense-in-depth approach is required, combining a number of security best practices.<br>
 Note You should recall that for Stored XSS and Reflected XSS injection takes place server side, rather than client browser side.</p>
 <p>Whereas with DOM XSS, the attack is injected into the Browser DOM, this adds additional complexity and makes it very difficult to prevent and highly context specific, because an attacker can inject HTML, HTML Attributes, CSS as well as URLs. As a general set of principles the application should first HTML encode and then Javascript encode any user supplied data that is returned to the client.</p>
-<p>Due to the very large attack surface developers are strongly encouraged to review areas of code that are potentially susceptible to DOM XSS, including but not limited:
-window.name document.referrer document.URL document.documentURI location location.href location.search location.hash eval setTimeout setInterval document.write document.writeIn innerHTML outerHTML.</p>
-<p>Let's apply a suitable Regex pattern to remediate this particular DOM XSS vulnerability.</p>
-<h3 id="cross-site-request-forgery-post">Cross Site Request Forgery Post</h3>
+<p>Due to the very large attack surface developers are strongly encouraged to review areas of code that are potentially susceptible to DOM XSS, including but not limited:<br>
+<a href="http://window.name">window.name</a> document.referrer document.URL document.documentURI location location.href location.search location.hash eval setTimeout setInterval document.write document.writeIn innerHTML outerHTML.</p>
+<p>Let’s apply a suitable Regex pattern to remediate this particular DOM XSS vulnerability.</p>
+<h3 id="cross-site-request-forgery-post" tabindex="-1">Cross Site Request Forgery Post</h3>
 <p>To be effective, each response from the web server requires a Random Token to be generated. This token is then inserted by the application, as a hidden parameter, into sensitive form fields.</p>
 <p>By taking this approach, the application can then check, whenever a user submits/posts a form, that the token is both valid and correct. Because an attacker should never know this randomly generated value, it is a good strategy to protect against CSRF attacks.</p>
-<p>In essence it allows the application to determine the answer to this simple question: Was the form that the user POSTed legitimately created by the application (valid) or by an unknown third party (invalid)?'</p>
+<p>In essence it allows the application to determine the answer to this simple question: Was the form that the user POSTed legitimately created by the application (valid) or by an unknown third party (invalid)?’</p>
 <p>Note wherever cryptographically secure pseudo-random number generation (pRNG) is required, the wheel should not be re-invented. Correct use of java.security.SecureRandom is strongly preferred over bespoke/custom random number generation code, the latter being extremely prone to developer error.</p>
 
 </div>
@@ -613,7 +622,7 @@ window.name document.referrer document.URL document.documentURI location locatio
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-08-06-codebashing-java/` was built on 2026-02-15T02:38:54.789Z -->
+		<!-- This page `/blog/2018-08-06-codebashing-java/` was built on 2026-02-15T13:56:14.186Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

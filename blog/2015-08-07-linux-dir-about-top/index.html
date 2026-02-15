@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="linux-top">Linux关于top命令的说明</h1>
+<h1>Linux关于top命令的说明</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2015-08-07">07 August 2015</time></li>
@@ -570,8 +574,13 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="top">top命令关键参数解析:</h3>
-<pre class="language-vim" tabindex="0"><code class="language-vim"><span class="token builtin">top</span> <span class="token operator">-</span> <span class="token number">15</span><span class="token punctuation">:</span><span class="token number">44</span><span class="token punctuation">:</span><span class="token number">40</span> <span class="token keyword">up</span>  <span class="token number">5</span><span class="token punctuation">:</span><span class="token number">49</span><span class="token punctuation">,</span>  <span class="token number">5</span> users<span class="token punctuation">,</span>
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#top%E5%91%BD%E4%BB%A4%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90%3A">top命令关键参数解析:</a></li></ul>
+      </div>
+</aside>
+  <h3 id="top%E5%91%BD%E4%BB%A4%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90%3A" tabindex="-1">top命令关键参数解析:</h3>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim"><span class="token builtin">top</span> <span class="token operator">-</span> <span class="token number">15</span><span class="token punctuation">:</span><span class="token number">44</span><span class="token punctuation">:</span><span class="token number">40</span> <span class="token keyword">up</span>  <span class="token number">5</span><span class="token punctuation">:</span><span class="token number">49</span><span class="token punctuation">,</span>  <span class="token number">5</span> users<span class="token punctuation">,</span>
 load average<span class="token punctuation">:</span> <span class="token number">2.01</span><span class="token punctuation">,</span> <span class="token number">2.22</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token operator">.</span><span class="token function">15</span><span class="token punctuation">(</span>系统负载<span class="token punctuation">,</span>三个数值分别为 <span class="token number">1</span>分钟、<span class="token number">5</span>分钟、<span class="token number">15</span>分钟前到现在务队列的平均长度<span class="token punctuation">)</span>
 Tasks<span class="token punctuation">:</span> <span class="token number">263</span> total<span class="token punctuation">,</span>   <span class="token number">1</span> running<span class="token punctuation">,</span> <span class="token number">262</span> sleeping<span class="token punctuation">,</span>   <span class="token number">0</span> stopped<span class="token punctuation">,</span>   <span class="token number">0</span> zombie
 <span class="token operator">%</span><span class="token function">Cpu</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token number">27.9</span> <span class="token function">us</span><span class="token punctuation">(</span>用户空间占用CPU百分比<span class="token punctuation">)</span><span class="token punctuation">,</span>
@@ -586,10 +595,10 @@ KiB Mem<span class="token punctuation">:</span>   <span class="token number">799
 KiB Swap<span class="token punctuation">:</span>  <span class="token number">1999868</span> <span class="token function">total</span><span class="token punctuation">(</span>交换区总量<span class="token punctuation">)</span><span class="token punctuation">,</span>
 <span class="token number">1900</span> <span class="token function">used</span><span class="token punctuation">(</span>使用的交换区总量<span class="token punctuation">)</span><span class="token punctuation">,</span>
 <span class="token number">1997968</span> free<span class="token operator">.</span>  <span class="token number">3040700</span> cached Mem</code></pre>
-<p>平均负载（load average）,一般对于单个cpu来说，负载在0～1.00之间是正常的，超过1.00须引起注意.在多核cpu中，系统平均负载不应该高于cpu核心的总数.
-Swap cached Mem:内存中的内容被换出到交换区，而后又被换入到内存，但使用过的交换区尚未被覆盖，该数值即为这些内容已存在于内存中的交换区的大小.
+<p>平均负载（load average）,一般对于单个cpu来说，负载在0～1.00之间是正常的，超过1.00须引起注意.在多核cpu中，系统平均负载不应该高于cpu核心的总数.<br>
+Swap cached Mem:内存中的内容被换出到交换区，而后又被换入到内存，但使用过的交换区尚未被覆盖，该数值即为这些内容已存在于内存中的交换区的大小.<br>
 相应的内存再次被换出时可不必再对交换区写入.</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim">PID USER      PR  NI
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">PID USER      PR  NI
 <span class="token function">VIRT</span><span class="token punctuation">(</span>进程使用的虚拟内存总量，单位kb<span class="token operator">.</span>VIRT<span class="token operator">=</span>SWAP<span class="token operator">+</span>RES<span class="token punctuation">)</span>
 <span class="token function">RES</span><span class="token punctuation">(</span>进程使用的、未被换出的物理内存大小，单位kb<span class="token operator">.</span>RES<span class="token operator">=</span>CODE<span class="token operator">+</span>DATA<span class="token punctuation">)</span>
 <span class="token function">SHR</span><span class="token punctuation">(</span>共享内存大小，单位kb<span class="token punctuation">)</span>
@@ -622,7 +631,7 @@ TIME<span class="token operator">+</span> COMMAND</code></pre>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-08-07-linux-dir-about-top/` was built on 2026-02-15T02:38:54.776Z -->
+		<!-- This page `/blog/2015-08-07-linux-dir-about-top/` was built on 2026-02-15T13:56:14.181Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

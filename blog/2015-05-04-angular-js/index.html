@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="angularjs-http-div">AngularJs的http请求要点和div的操作</h1>
+<h1>AngularJs的http请求要点和div的操作</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2015-05-04">04 May 2015</time></li>
@@ -570,10 +574,13 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
+<aside>
+  
+</aside>
   <ul>
 <li>post请求，需要transFn方法</li>
 </ul>
-<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token function-variable function">transFn</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<pre class="language-javascript" tabindex="0"><code class="hljs language-javascript"><span class="token function-variable function">transFn</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">return</span> $<span class="token punctuation">.</span><span class="token function">param</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
@@ -585,35 +592,35 @@ postCfg <span class="token operator">=</span> <span class="token punctuation">{<
 <ul>
 <li>返回值http-status，success回调函数将status参数添加上即可</li>
 </ul>
-<pre class="language-javascript" tabindex="0"><code class="language-javascript">$http<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span>url<span class="token punctuation">,</span> param<span class="token punctuation">,</span> postCfg<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">success</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">response<span class="token punctuation">,</span> status</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+<pre class="language-javascript" tabindex="0"><code class="hljs language-javascript">$http<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span>url<span class="token punctuation">,</span> param<span class="token punctuation">,</span> postCfg<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">success</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">response<span class="token punctuation">,</span> status</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
     $scope<span class="token punctuation">.</span>result <span class="token operator">=</span> response<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 <ul>
 <li>error,finally 处理，链式回调函数处理</li>
 </ul>
-<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+<pre class="language-javascript" tabindex="0"><code class="hljs language-javascript"><span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token punctuation">.</span><span class="token function">finally</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
 <ul>
-<li>Angular 实现tableA删除行，行消失，tableB添加行，行出现
+<li>Angular 实现tableA删除行，行消失，tableB添加行，行出现<br>
 删除,splice方法</li>
 </ul>
-<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token keyword">var</span> index <span class="token operator">=</span> $scope<span class="token punctuation">.</span>myConfigList<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span>mine<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class="language-javascript" tabindex="0"><code class="hljs language-javascript"><span class="token keyword">var</span> index <span class="token operator">=</span> $scope<span class="token punctuation">.</span>myConfigList<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span>mine<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">!==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
         $scope<span class="token punctuation">.</span>myConfigList<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span>index<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span></code></pre>
 <p>添加,push方法即可</p>
-<pre class="language-javascript" tabindex="0"><code class="language-javascript">$scope<span class="token punctuation">.</span>systemConfigList<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>mine<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-javascript" tabindex="0"><code class="hljs language-javascript">$scope<span class="token punctuation">.</span>systemConfigList<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>mine<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <ul>
 <li>foreach相关</li>
 </ul>
-<pre class="language-javascript" tabindex="0"><code class="language-javascript">angular<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>objToIterator<span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">value<span class="token punctuation">,</span> key</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-javascript" tabindex="0"><code class="hljs language-javascript">angular<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>objToIterator<span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">value<span class="token punctuation">,</span> key</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <ul>
 <li>操作dom的div,添加div的id</li>
 </ul>
-<pre class="language-javascript" tabindex="0"><code class="language-javascript"><span class="token keyword">var</span> divId <span class="token operator">=</span> obj<span class="token punctuation">.</span>widgetRender<span class="token punctuation">.</span><span class="token function">substr</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> obj<span class="token punctuation">.</span>widgetRender<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class="language-javascript" tabindex="0"><code class="hljs language-javascript"><span class="token keyword">var</span> divId <span class="token operator">=</span> obj<span class="token punctuation">.</span>widgetRender<span class="token punctuation">.</span><span class="token function">substr</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> obj<span class="token punctuation">.</span>widgetRender<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span>
 $scope<span class="token punctuation">.</span>div <span class="token operator">=</span> obj<span class="token punctuation">.</span>divContent<span class="token punctuation">;</span>
 $scope<span class="token punctuation">.</span>div <span class="token operator">=</span> angular<span class="token punctuation">.</span><span class="token function">element</span><span class="token punctuation">(</span>$scope<span class="token punctuation">.</span>div<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">'id'</span><span class="token punctuation">,</span> divId<span class="token punctuation">)</span><span class="token punctuation">;</span>
 angular<span class="token punctuation">.</span><span class="token function">element</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'dashboardDiv'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>$scope<span class="token punctuation">.</span>div<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
@@ -643,7 +650,7 @@ angular<span class="token punctuation">.</span><span class="token function">elem
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-05-04-angular-js/` was built on 2026-02-15T02:38:54.772Z -->
+		<!-- This page `/blog/2015-05-04-angular-js/` was built on 2026-02-15T13:56:14.179Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

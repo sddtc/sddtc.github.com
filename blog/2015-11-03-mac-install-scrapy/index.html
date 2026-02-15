@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="scrapy-mac-scrapy">Scrapy的 mac 安装 scrapy 实践</h1>
+<h1>Scrapy的 mac 安装 scrapy 实践</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2015-11-03">03 November 2015</time></li>
@@ -570,19 +574,22 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
+<aside>
+  
+</aside>
   <p>以前用ubuntu的时候，装过scrapy，很顺利. 自己换了电脑之后，发现官网没有针对mac安装scrapy的说明，特此记录一下</p>
 <ol>
 <li>python2.7是电脑自带的，没卸载没重装过</li>
-<li>去官网下载(http://scrapy.org/download/)zip包: 官网目前是1.0版本的zip找不到下载路径, 我下的是(the development branch)的zip版本. 安装完了显示是dev1.1版本</li>
+<li>去官网下载(<a href="http://scrapy.org/download/">http://scrapy.org/download/</a>)zip包: 官网目前是1.0版本的zip找不到下载路径, 我下的是(the development branch)的zip版本. 安装完了显示是dev1.1版本</li>
 <li>下载zip，解压到自己的目录, 发现里面有个setup.py文件并执行:</li>
 </ol>
-<pre class="language-vim" tabindex="0"><code class="language-vim">sudo <span class="token keyword">python</span> setup<span class="token operator">.</span><span class="token keyword">py</span> install</code></pre>
-<p>安装完成.
-4. 在命令行运行scrapy的时候报错. 查了下原因，后来解决，解决网址(http://stackoverflow.com/questions/17911345/scrapy-unable-to-create-a-project)，命令如下：</p>
-<pre class="language-vim" tabindex="0"><code class="language-vim">sudo easy_install <span class="token operator">-</span><span class="token operator">-</span>upgrade lxml
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">sudo <span class="token keyword">python</span> setup<span class="token operator">.</span><span class="token keyword">py</span> install</code></pre>
+<p>安装完成.<br>
+4. 在命令行运行scrapy的时候报错. 查了下原因，后来解决，解决网址(<a href="http://stackoverflow.com/questions/17911345/scrapy-unable-to-create-a-project">http://stackoverflow.com/questions/17911345/scrapy-unable-to-create-a-project</a>)，命令如下：</p>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">sudo easy_install <span class="token operator">-</span><span class="token operator">-</span>upgrade lxml
 sudo easy_install <span class="token operator">-</span><span class="token operator">-</span>upgrade scrapy</code></pre>
-<p>安装lxml过程中，还安装了xcode的一个小插件的样子
-5. 上面两个执行完成，scrapy就显示成功了
+<p>安装lxml过程中，还安装了xcode的一个小插件的样子<br>
+5. 上面两个执行完成，scrapy就显示成功了<br>
 6. 可以scrapy startproject bilibili辣</p>
 <p>耶耶耶</p>
 
@@ -611,7 +618,7 @@ sudo easy_install <span class="token operator">-</span><span class="token operat
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-11-03-mac-install-scrapy/` was built on 2026-02-15T02:38:54.779Z -->
+		<!-- This page `/blog/2015-11-03-mac-install-scrapy/` was built on 2026-02-15T13:56:14.182Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

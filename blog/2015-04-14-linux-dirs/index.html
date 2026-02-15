@@ -348,6 +348,10 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
+
+.content-tableau {
+	background-color: #dedfd1;
+}
 body {
 	max-width: 50em;
 }
@@ -547,7 +551,7 @@ pre[class*="language-"] {
 		<header>
 			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
 			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
@@ -561,7 +565,7 @@ pre[class*="language-"] {
 			<heading-anchors>
 				
 
-<h1 id="shell">shell常用压缩命令</h1>
+<h1>shell常用压缩命令</h1>
 
 <ul class="post-metadata">
 	<li><time datetime="2015-04-14">14 April 2015</time></li>
@@ -570,27 +574,32 @@ pre[class*="language-"] {
 </ul>
 
 <div class="page-post">
-  <h3 id="">压缩和解压</h3>
-<pre class="language-vim" tabindex="0"><code class="language-vim">tar <span class="token operator">-</span>xzf kafka_2<span class="token operator">.</span><span class="token keyword">x</span><span class="token operator">.</span><span class="token keyword">x</span><span class="token operator">.</span><span class="token keyword">x</span><span class="token operator">.</span>tgz <span class="token operator">/</span><span class="token operator">/</span>解压
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%A7%A3%E5%8E%8B">压缩和解压</a></li><li><a href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%97%B4%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93">服务器间文件传输</a><ul><li><a href="#du%3A-find-files-with-size-info">du: Find files with size info</a></li></ul></li><li><a href="#%E6%9C%AA%E5%88%86%E7%B1%BB">未分类</a></li><li><a href="#sed%E7%9B%B8%E5%85%B3%E7%9A%84%E7%9F%A5%E8%AF%86">sed相关的知识</a></li></ul>
+      </div>
+</aside>
+  <h3 id="%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%A7%A3%E5%8E%8B" tabindex="-1">压缩和解压</h3>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">tar <span class="token operator">-</span>xzf kafka_2<span class="token operator">.</span><span class="token keyword">x</span><span class="token operator">.</span><span class="token keyword">x</span><span class="token operator">.</span><span class="token keyword">x</span><span class="token operator">.</span>tgz <span class="token operator">/</span><span class="token operator">/</span>解压
 tar xvf xxx<span class="token operator">.</span>tar <span class="token operator">/</span><span class="token operator">/</span>解压
 tar cvf xxx<span class="token operator">.</span>tar folder <span class="token operator">/</span><span class="token operator">/</span>压缩
 
 tar zxvf xxx<span class="token operator">.</span>tar<span class="token operator">.</span>gz <span class="token operator">/</span><span class="token operator">/</span>解压
 tar zcvf xxx<span class="token operator">.</span>tar<span class="token operator">.</span>gz folder <span class="token operator">/</span><span class="token operator">/</span>压缩</code></pre>
-<h3 id="-2">服务器间文件传输</h3>
-<pre class="language-vim" tabindex="0"><code class="language-vim">nc <span class="token operator">-</span><span class="token keyword">l</span> <span class="token number">4444</span> <span class="token operator">></span> kafka<span class="token operator">-</span>demo<span class="token operator">.</span>zip
+<h3 id="%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%97%B4%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93" tabindex="-1">服务器间文件传输</h3>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">nc <span class="token operator">-</span><span class="token keyword">l</span> <span class="token number">4444</span> <span class="token operator">></span> kafka<span class="token operator">-</span>demo<span class="token operator">.</span>zip
 nc serverip <span class="token number">4444</span> <span class="token operator">&lt;</span> kafka<span class="token operator">-</span>demo<span class="token operator">.</span>zip
 
 scp <span class="token operator">-</span>P10033 localFile sddtc@serverip<span class="token punctuation">:</span><span class="token operator">/</span>home<span class="token operator">/</span>sddtc
 scp <span class="token operator">-</span>P10033 sddtc@serverip<span class="token punctuation">:</span><span class="token operator">/</span>home<span class="token operator">/</span>sddtc<span class="token operator">/</span>remote<span class="token operator">.</span>txt <span class="token operator">.</span></code></pre>
-<h4 id="du-find-files-with-size-info">du: Find files with size info</h4>
-<pre class="language-vim" tabindex="0"><code class="language-vim">du <span class="token operator">-</span><span class="token keyword">h</span> <span class="token operator">-</span><span class="token operator">-</span>max<span class="token operator">-</span>depth<span class="token operator">=</span><span class="token number">1</span>
+<h4 id="du%3A-find-files-with-size-info" tabindex="-1">du: Find files with size info</h4>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">du <span class="token operator">-</span><span class="token keyword">h</span> <span class="token operator">-</span><span class="token operator">-</span>max<span class="token operator">-</span>depth<span class="token operator">=</span><span class="token number">1</span>
 du <span class="token operator">-</span><span class="token keyword">h</span> <span class="token operator">-</span><span class="token keyword">d</span> <span class="token number">1</span> <span class="token punctuation">(</span>macOS<span class="token punctuation">)</span>
 
 du <span class="token operator">-</span>s folder<span class="token operator">/</span><span class="token operator">*</span> | <span class="token keyword">sort</span> <span class="token operator">-</span>rn | head <span class="token operator">/</span><span class="token operator">/</span>显示文件夹下所有文件的大小，按照M展示，并按照<span class="token punctuation">[</span>数字<span class="token punctuation">]</span>排序取出最大的前<span class="token number">10</span>
 du <span class="token operator">-</span><span class="token keyword">sh</span> folder<span class="token operator">/</span><span class="token operator">*</span> | <span class="token keyword">sort</span> <span class="token operator">-</span>rn | head</code></pre>
-<h3 id="-3">未分类</h3>
-<pre class="language-vim" tabindex="0"><code class="language-vim">nohup java <span class="token operator">-</span>classpath $CLASS_PATH $<span class="token punctuation">{</span>jarpath<span class="token punctuation">}</span> &amp; <span class="token operator">/</span><span class="token operator">/</span>nohup代表后台运行
+<h3 id="%E6%9C%AA%E5%88%86%E7%B1%BB" tabindex="-1">未分类</h3>
+<pre class="language-vim" tabindex="0"><code class="hljs language-vim">nohup java <span class="token operator">-</span>classpath $CLASS_PATH $<span class="token punctuation">{</span>jarpath<span class="token punctuation">}</span> &amp; <span class="token operator">/</span><span class="token operator">/</span>nohup代表后台运行
 
 <span class="token keyword">source</span> <span class="token operator">/</span>etc<span class="token operator">/</span><span class="token keyword">profile</span> <span class="token operator">/</span><span class="token operator">/</span>马上使<span class="token operator">/</span>etc<span class="token operator">/</span><span class="token keyword">profile</span>文件生效
 
@@ -603,7 +612,7 @@ uname <span class="token operator">-</span>a <span class="token operator">/</spa
 
 zip <span class="token operator">-</span><span class="token keyword">r</span> filename<span class="token operator">.</span>zip $<span class="token punctuation">{</span>filesdir<span class="token punctuation">}</span>	 <span class="token operator">/</span><span class="token operator">/</span>压缩zip
 zip <span class="token operator">-</span><span class="token keyword">r</span> filename<span class="token operator">.</span>zip file1 file2 $<span class="token punctuation">{</span>filesdir<span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">/</span>同时处理多个文件和目录，可以将它们逐一列出，并用空格间隔</code></pre>
-<h3 id="sed">sed相关的知识</h3>
+<h3 id="sed%E7%9B%B8%E5%85%B3%E7%9A%84%E7%9F%A5%E8%AF%86" tabindex="-1">sed相关的知识</h3>
 <p><a href="http://coolshell.cn/articles/9104.html">耗子的博客</a></p>
 
 </div>
@@ -631,7 +640,7 @@ zip <span class="token operator">-</span><span class="token keyword">r</span> fi
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-04-14-linux-dirs/` was built on 2026-02-15T02:38:54.771Z -->
+		<!-- This page `/blog/2015-04-14-linux-dirs/` was built on 2026-02-15T13:56:14.179Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>
