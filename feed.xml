@@ -1,0 +1,1110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-cn">
+  <title>sddtc&#39;s blog</title>
+  <subtitle>recent 10 articles about software development, technology, and other things that I find interesting.</subtitle>
+  <link href="https://www.sddtc.florist/sddtc.github.com/feed.xml" rel="self" />
+  <link href="https://www.sddtc.florist/sddtc.github.com/" />
+  <updated>2026-02-12T00:00:00Z</updated>
+  <id>https://www.sddtc.florist/sddtc.github.com/</id>
+  <author>
+    <name>sddtc</name>
+    <email>changhbaga@gmail.com</email>
+  </author>
+  <entry>
+    <title>Fastify 模块化项目实战(一)</title>
+    <link href="https://www.sddtc.florist/sddtc.github.com/blog/2026-02-12-fastify-modules-tutorials-1/" />
+    <updated>2026-02-12T00:00:00Z</updated>
+    <id>https://www.sddtc.florist/sddtc.github.com/blog/2026-02-12-fastify-modules-tutorials-1/</id>
+    <content type="html">&lt;h2 id=&quot;%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-fastify-%E8%80%8C%E9%9D%9E-nestjs%2C-expressjs%2C-koa%3F&quot; tabindex=&quot;-1&quot;&gt;为什么选择 Fastify 而非 NestJS, ExpressJS, Koa?&lt;/h2&gt;
+&lt;p&gt;按照我的个人经验, 之前使用 ExpressJS 来搭建项目, 项目结构基本如下所示:&lt;/p&gt;
+&lt;pre class=&quot;language-txt&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-txt&quot;&gt;src/
+└───── infrastructures/
+    │   ├── db.js
+    │   └── server.js
+    │
+    ├── middlewares/
+    │   └── authMiddleware.js
+    │
+    ├── routes/
+    │   ├── authRoutes.js
+    │   └── messageRoutes.js
+    │
+    └── services/
+        ├── messagesService.js
+        ├── userService.js
+        └── authService.js&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这次在构思模块化项目的时候, 想尝试一些新东西, 能够满足我的封装性高的需求, 首先对比了 NestJS 和 ExpressJS&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;对比项&lt;/th&gt;
+&lt;th&gt;&lt;strong&gt;NestJS&lt;/strong&gt;&lt;/th&gt;
+&lt;th&gt;&lt;strong&gt;ExpressJS&lt;/strong&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;定位&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;进阶型全栈后端框架&lt;/td&gt;
+&lt;td&gt;轻量级 Web 框架&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;架构风格&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;强制 MVC + 模块化 + DI（受 Angular 启发）&lt;/td&gt;
+&lt;td&gt;无架构规范，自由度高&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;学习成本&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;🟠 中等偏高（需要理解装饰器/依赖注入）&lt;/td&gt;
+&lt;td&gt;🟢 低（API 简洁易用）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;TypeScript 支持&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;原生支持，强类型优先&lt;/td&gt;
+&lt;td&gt;需要手动配置 TS&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;依赖注入（DI）&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;内置支持&lt;/td&gt;
+&lt;td&gt;无（通常用单例/全局或自定义 DI）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;路由定义&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;注解式控制&lt;/td&gt;
+&lt;td&gt;手动配置路由&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;扩展性&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;⭐⭐⭐⭐&lt;/td&gt;
+&lt;td&gt;⭐⭐&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;生态和插件&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;模块化（Auth、Cache、Swagger、GraphQL、Jobs）&lt;/td&gt;
+&lt;td&gt;需要自行组合中间件&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;适合场景&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;企业级复杂业务、大团队合作&lt;/td&gt;
+&lt;td&gt;小项目、快速原型、灵活业务流程&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;性能&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;接近 Express&lt;/td&gt;
+&lt;td&gt;基于 Express / Fastify，性能优秀&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;社区 &amp;amp; 文档&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;成熟活跃&lt;/td&gt;
+&lt;td&gt;经典稳定&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;在这之后又了解了 Fastify 和 Koa 框架:&lt;br&gt;
+&lt;strong&gt;Fastify&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;性能比 Express 更高&lt;/li&gt;
+&lt;li&gt;插件机制&lt;/li&gt;
+&lt;li&gt;原生支持超快 JSON 序列化&lt;/li&gt;
+&lt;li&gt;适合高性能 API 服务&lt;/li&gt;
+&lt;li&gt;学习成本略高于 Express&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Koa&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;由 Express 核心团队打造&lt;/li&gt;
+&lt;li&gt;Promise + async/await 原生支持&lt;/li&gt;
+&lt;li&gt;更现代、更轻量&lt;/li&gt;
+&lt;li&gt;中间件采用新版洋葱模型&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;然而 Fastify 的高性能以及插件机制吸引了我, 于是我打算基于 Fastify 开始搭建项目&lt;/p&gt;
+&lt;h2 id=&quot;%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BA-fastify-%E9%A1%B9%E7%9B%AE%E4%B9%8B%E5%89%8D%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E7%9A%84%E4%B8%89%E4%BB%B6%E4%BA%8B&quot; tabindex=&quot;-1&quot;&gt;开始搭建 Fastify 项目之前需要考虑的三件事&lt;/h2&gt;
+&lt;h3 id=&quot;%E9%80%89%E6%8B%A9js%E8%BF%98%E6%98%AFts%3F&quot; tabindex=&quot;-1&quot;&gt;选择JS还是TS?&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;维度&lt;/th&gt;
+&lt;th&gt;JS&lt;/th&gt;
+&lt;th&gt;TS&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;学习成本&lt;/td&gt;
+&lt;td&gt;低&lt;/td&gt;
+&lt;td&gt;中&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;开发速度（短期）&lt;/td&gt;
+&lt;td&gt;快&lt;/td&gt;
+&lt;td&gt;稍慢&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;维护成本（长期）&lt;/td&gt;
+&lt;td&gt;高&lt;/td&gt;
+&lt;td&gt;低&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;重构安全性&lt;/td&gt;
+&lt;td&gt;低&lt;/td&gt;
+&lt;td&gt;高&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;模块扩展能力&lt;/td&gt;
+&lt;td&gt;中&lt;/td&gt;
+&lt;td&gt;高&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;工程化能力&lt;/td&gt;
+&lt;td&gt;中&lt;/td&gt;
+&lt;td&gt;极高&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;架构演进能力&lt;/td&gt;
+&lt;td&gt;弱&lt;/td&gt;
+&lt;td&gt;强&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;模板复用价值&lt;/td&gt;
+&lt;td&gt;低&lt;/td&gt;
+&lt;td&gt;高&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;项目规模适配&lt;/td&gt;
+&lt;td&gt;小项目&lt;/td&gt;
+&lt;td&gt;中大型项目&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;技术资产价值&lt;/td&gt;
+&lt;td&gt;低&lt;/td&gt;
+&lt;td&gt;高&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;对于复用价值来说, 选择TS是必须的&lt;/p&gt;
+&lt;h3 id=&quot;%E9%80%89%E6%8B%A9common-js-%E8%BF%98%E6%98%AF-es-module%3F&quot; tabindex=&quot;-1&quot;&gt;选择Common JS 还是 ES Module?&lt;/h3&gt;
+&lt;p&gt;我们都知道JS有两种模块系统&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ES Modules (ESM) 是 ECMAScript 标准化的现代 JavaScript 模块系统，使用 import/export，支持静态分析、异步加载和单例模式，适用于浏览器和新版 Node.js。CommonJS (CJS) 是 Node.js 传统的默认系统，使用 require/module.exports，同步加载模块，主要用于服务器端。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;所以它们之间的本质区别是底层机制的差异:&lt;br&gt;
+CSJ是运行时加载&lt;/p&gt;
+&lt;pre class=&quot;language-txt&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-txt&quot;&gt;require() 是函数
+→ 运行到这行才加载
+→ 动态加载
+→ 无法静态分析依赖关系&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;而ESJ（编译期静态分析）&lt;/p&gt;
+&lt;pre class=&quot;language-txt&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-txt&quot;&gt;import 是语法
+→ 编译期分析依赖
+→ 构建依赖图
+→ 支持 Tree-shaking
+→ 支持模块优化&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在语法层面:&lt;br&gt;
+CommonJS:&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-js&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// 导入&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; fs &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;fs&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;// 导出&lt;/span&gt;
+module&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;exports &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token function&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ES Module:&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-js&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// 导入&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; fs &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;fs&#39;&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;// 导出&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;于是我选择了ESM来搭建项目模块, 这也是当下的工程趋势&lt;/p&gt;
+&lt;h3 id=&quot;%E9%80%89%E6%8B%A9node%E5%8E%9F%E7%94%9F%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E8%BF%98%E6%98%AF%E5%85%B6%E5%AE%83%3F&quot; tabindex=&quot;-1&quot;&gt;选择Node原生测试框架还是其它?&lt;/h3&gt;
+&lt;p&gt;谈到JS测试框架, 立马能想到 Jest, Vitest, Mocha, Chai, 在JS生态里, 一般在前端会测试组件渲染, 在后端是一些简单的断言, 例如测试 Rest API 的请求, 工具库的单元测试等, 接触了 Fastify 我了解到了 Node 原生测试方法.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;能力&lt;/th&gt;
+&lt;th&gt;Jest&lt;/th&gt;
+&lt;th&gt;Vitest&lt;/th&gt;
+&lt;th&gt;node:test&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Runner&lt;/td&gt;
+&lt;td&gt;✅&lt;/td&gt;
+&lt;td&gt;✅&lt;/td&gt;
+&lt;td&gt;✅&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Mock&lt;/td&gt;
+&lt;td&gt;✅ 强&lt;/td&gt;
+&lt;td&gt;✅ 强&lt;/td&gt;
+&lt;td&gt;⚠️ 基础&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;覆盖率&lt;/td&gt;
+&lt;td&gt;✅&lt;/td&gt;
+&lt;td&gt;✅&lt;/td&gt;
+&lt;td&gt;⚠️ 外接&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Watch&lt;/td&gt;
+&lt;td&gt;✅&lt;/td&gt;
+&lt;td&gt;✅&lt;/td&gt;
+&lt;td&gt;❌&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;快照测试&lt;/td&gt;
+&lt;td&gt;✅&lt;/td&gt;
+&lt;td&gt;✅&lt;/td&gt;
+&lt;td&gt;❌&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;并发执行&lt;/td&gt;
+&lt;td&gt;⚠️&lt;/td&gt;
+&lt;td&gt;✅&lt;/td&gt;
+&lt;td&gt;✅&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ESM 支持&lt;/td&gt;
+&lt;td&gt;⚠️ 配置复杂&lt;/td&gt;
+&lt;td&gt;✅ 原生&lt;/td&gt;
+&lt;td&gt;✅ 原生&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;TS 支持&lt;/td&gt;
+&lt;td&gt;⚠️ 依赖 ts-jest&lt;/td&gt;
+&lt;td&gt;✅ 原生&lt;/td&gt;
+&lt;td&gt;⚠️ 手动&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;生态插件&lt;/td&gt;
+&lt;td&gt;✅ 非常成熟&lt;/td&gt;
+&lt;td&gt;🟡 成长中&lt;/td&gt;
+&lt;td&gt;❌ 几乎无&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;举几个简单的例子吧, 在 vitest 里:&lt;br&gt;
+前端的测试:&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-js&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// 使用 vitest 的方法&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; describe&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; expect&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; vi &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;vitest&quot;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; fireEvent&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; render&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; screen&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; waitFor &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;@testing-library/react&quot;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; App &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;../../src/components/App&quot;&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;// 通过 vi.hoisted 来 mock 方法&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; mockGetNotes&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; mockDeleteNote&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; mockPutNote &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; vi&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;hoisted&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token literal-property property&quot;&gt;mockGetNotes&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; vi&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token literal-property property&quot;&gt;mockDeleteNote&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; vi&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token literal-property property&quot;&gt;mockPutNote&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; vi&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;// 使用上面的mock方法来替换后端的具体方法&lt;/span&gt;
+vi&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;mock&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;../../src/services/notesService&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token literal-property property&quot;&gt;getNotes&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; mockGetNotes&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token literal-property property&quot;&gt;deleteNote&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; mockDeleteNote&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token literal-property property&quot;&gt;putNote&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; mockPutNote &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token function&quot;&gt;describe&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;render app&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token function&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;should show notes successfully&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token comment&quot;&gt;//mock实现&lt;/span&gt;
+    mockGetNotes&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;mockResolvedValue&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;fake note1&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token function&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;App &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;waitFor&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; screen&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getByText&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;fake note1&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;token function&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;screen&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getByText&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;fake note1&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toBeInTheDocument&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+  &lt;span class=&quot;token function&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;should delete note successfully when click delete note button&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    mockGetNotes&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;mockResolvedValue&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;fake note1&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token function&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;App &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;waitFor&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; screen&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getByText&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;fake note1&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; deleteNoteBtn &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; screen&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getByTestId&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;delete-note&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    fireEvent&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;deleteNoteBtn&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;token function&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;mockDeleteNote&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toHaveBeenCalled&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;后端的测试例子:&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-js&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// vitest 的方法&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; beforeEach&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; describe&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; it&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; vi&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; expect &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;vitest&quot;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; notesService &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;../../src/services/notesService&quot;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; mockSelect &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; vi&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; mockInsert &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; vi&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; mockDelete &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; vi&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; mockEq &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; vi&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;// mock 基础设施(DB)的 client 的相关方法&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; supabaseMockClient &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; vi&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;hoisted&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token literal-property property&quot;&gt;supabaseMockClient&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token literal-property property&quot;&gt;from&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; vi&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token literal-property property&quot;&gt;select&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; mockSelect&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token literal-property property&quot;&gt;insert&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; mockInsert&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;delete&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; vi&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;token literal-property property&quot;&gt;eq&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; mockEq
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;// 替换外部依赖的具体方法为mock方法&lt;/span&gt;
+vi&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;mock&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;@supabase/supabase-js&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token literal-property property&quot;&gt;createClient&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; vi&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; supabaseMockClient&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token function&quot;&gt;describe&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;notes service layer tests&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token function&quot;&gt;beforeEach&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    vi&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;clearAllMocks&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+  &lt;span class=&quot;token function&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;should return notes array&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    mockSelect&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;mockResolvedValue&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token literal-property property&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token literal-property property&quot;&gt;note&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;note1&#39;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token literal-property property&quot;&gt;note&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;note2&#39;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token literal-property property&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;null&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; result &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; notesService&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getNotes&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;token function&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;supabaseMockClient&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;from&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toHaveBeenCalledWith&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;notes-online&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token function&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;supabaseMockClient&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;from&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;select&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toHaveBeenCalledWith&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;note&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token function&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;result&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toEqual&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;note1&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;note2&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+  &lt;span class=&quot;token function&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;should return empty array when return error&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    mockSelect&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;mockResolvedValue&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token literal-property property&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token literal-property property&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;some errors&quot;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; result &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; notesService&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getNotes&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;token function&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;result&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toEqual&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+  &lt;span class=&quot;token function&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;should save note successfully&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    mockInsert&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;mockResolvedValue&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; notesService&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;putNote&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;new fake note&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;token function&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;supabaseMockClient&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;from&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toHaveBeenCalledWith&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;notes-online&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token function&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;supabaseMockClient&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;from&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;insert&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toHaveBeenCalledWith&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token literal-property property&quot;&gt;note&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;new fake note&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token literal-property property&quot;&gt;creator&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;anonymous&quot;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token literal-property property&quot;&gt;returning&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;minimal&#39;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+  &lt;span class=&quot;token function&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;should delete note successfully&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    mockDelete&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;mockResolvedValue&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    mockEq&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;mockResolvedValue&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; notesService&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;deleteNote&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;fake note&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;token function&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;supabaseMockClient&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;from&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;delete&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;eq&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toHaveBeenCalledWith&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;note&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;fake note&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;而最近使用了 node:test, 例如:&lt;/p&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; describe&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; it &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;node:test&#39;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; assert &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;node:assert&#39;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; build&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; expectValidationError &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;../../../../helper.js&#39;&lt;/span&gt;
+
+&lt;span class=&quot;token function&quot;&gt;describe&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;Security api&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token function&quot;&gt;describe&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;POST /api/v1/auth/login&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token function&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;Transaction should rollback on error&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;t&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; app &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;t&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+      &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; mock&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; mockCompare &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; t&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;mock&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;passwordManager&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;compare&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+      mockCompare&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;mockImplementationOnce&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;value&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; hash&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Error&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;Kaboom!&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+      &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; mock&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; mockLogError &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; t&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;mock&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;log&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;error&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+      &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; res &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;inject&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        method&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;POST&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        url&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;/api/v1/auth/login&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        payload&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+          email&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;basic@example.com&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+          password&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;Password123$&#39;&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+      assert&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;strictEqual&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;mockCompare&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;callCount&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+      &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; arg &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; mockLogError&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;calls&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;arguments&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;unknown&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        err&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Error&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+      assert&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;strictEqual&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;res&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;statusCode&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;500&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+      assert&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;deepStrictEqual&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;arg&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;err&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;message&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;Kaboom!&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;使用之后也很顺手, 一个是没有外部依赖, 另外也能满足需求, 所以目前我也并未使用其它测试框架.&lt;/p&gt;
+&lt;h2 id=&quot;%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BAfastify%E9%A1%B9%E7%9B%AE&quot; tabindex=&quot;-1&quot;&gt;开始搭建Fastify项目&lt;/h2&gt;
+&lt;p&gt;TBC&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Something About Javassist</title>
+    <link href="https://www.sddtc.florist/sddtc.github.com/blog/2026-01-07-something-about-javassist/" />
+    <updated>2026-01-07T00:00:00Z</updated>
+    <id>https://www.sddtc.florist/sddtc.github.com/blog/2026-01-07-something-about-javassist/</id>
+    <content type="html">&lt;h2 id=&quot;%E4%BB%80%E4%B9%88%E6%98%AF-javassist%EF%BC%9F&quot; tabindex=&quot;-1&quot;&gt;什么是 Javassist？&lt;/h2&gt;
+&lt;p&gt;Javassist（Java 编程助手）是一个用于编辑 Java 字节码的类库。它允许 Java 程序在运行时定义新类，并在 JVM 加载类文件时对其进行修改。&lt;/p&gt;
+&lt;h3 id=&quot;%E4%B8%A4%E7%A7%8D-api-%E7%BA%A7%E5%88%AB&quot; tabindex=&quot;-1&quot;&gt;两种 API 级别&lt;/h3&gt;
+&lt;p&gt;Javassist 提供两种 API 级别：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;源代码级别 API&lt;/strong&gt;：使用 Java 语言词汇表，无需了解字节码规范即可编辑类文件。可以以源代码文本形式指定要插入的字节码，Javassist 会实时编译。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;字节码级别 API&lt;/strong&gt;：直接编辑类文件，与其他字节码编辑器类似。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;%E8%AF%BB%E5%8F%96%E5%92%8C%E5%86%99%E5%85%A5%E5%AD%97%E8%8A%82%E7%A0%81&quot; tabindex=&quot;-1&quot;&gt;读取和写入字节码&lt;/h2&gt;
+&lt;h3 id=&quot;%E8%8E%B7%E5%8F%96-ctclass-%E5%AF%B9%E8%B1%A1&quot; tabindex=&quot;-1&quot;&gt;获取 CtClass 对象&lt;/h3&gt;
+&lt;p&gt;使用 &lt;code&gt;ClassPool&lt;/code&gt; 获取 &lt;code&gt;CtClass&lt;/code&gt; 对象：&lt;/p&gt;
+&lt;pre class=&quot;language-java&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-java&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// 创建类池&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;ClassPool&lt;/span&gt; classPool &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;ClassPool&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;// 通过系统类加载器加载类&lt;/span&gt;
+classPool&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;appendClassPath&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;LoaderClassPath&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;ClassLoader&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getSystemClassLoader&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;// 通过自定义类加载器加载类&lt;/span&gt;
+classPool&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;appendClassPath&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;LoaderClassPath&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;loader&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;%E4%BF%AE%E6%94%B9%E7%B1%BB%E5%AE%9A%E4%B9%89&quot; tabindex=&quot;-1&quot;&gt;修改类定义&lt;/h3&gt;
+&lt;p&gt;向类中添加新字段：&lt;/p&gt;
+&lt;pre class=&quot;language-java&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-java&quot;&gt;&lt;span class=&quot;token class-name&quot;&gt;CtClass&lt;/span&gt; cc &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; xxx&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token class-name&quot;&gt;CtField&lt;/span&gt; f &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;CtField&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;CtClass&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;intType&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;newField&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; cc&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+cc&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;addField&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;f&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;classpool-%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84&quot; tabindex=&quot;-1&quot;&gt;ClassPool 的层次结构&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;ClassPool&lt;/code&gt; 支持层次结构。如果子 &lt;code&gt;ClassPool&lt;/code&gt; 在本地找不到类文件，它会委托父 &lt;code&gt;ClassPool&lt;/code&gt; 查找。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;使用场景&lt;/strong&gt;：为每个类加载器创建一个子 &lt;code&gt;ClassPool&lt;/code&gt;，并让它们共享一个公共的父 &lt;code&gt;ClassPool&lt;/code&gt;。这样，不同类加载器加载的类可以共享相同的 &lt;code&gt;CtClass&lt;/code&gt; 对象。&lt;/p&gt;
+&lt;h2 id=&quot;%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8&quot; tabindex=&quot;-1&quot;&gt;类加载器&lt;/h2&gt;
+&lt;h3 id=&quot;%E4%BD%BF%E7%94%A8-toclass()-%E6%96%B9%E6%B3%95&quot; tabindex=&quot;-1&quot;&gt;使用 toClass() 方法&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;CtClass.toClass()&lt;/code&gt; 方法将 &lt;code&gt;CtClass&lt;/code&gt; 对象转换为 &lt;code&gt;java.lang.Class&lt;/code&gt; 对象，供 Java 应用程序使用。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;：调用者的类加载器必须能够加载 &lt;code&gt;CtClass&lt;/code&gt; 对象所表示的类，否则会抛出 &lt;code&gt;ClassNotFoundException&lt;/code&gt;。&lt;/p&gt;
+&lt;pre class=&quot;language-kotlin&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-kotlin&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; instance &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; ctClass&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toClass&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getDeclaredConstructor&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;newInstance&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8&quot; tabindex=&quot;-1&quot;&gt;自定义类加载器&lt;/h3&gt;
+&lt;p&gt;如果需要更复杂的类加载行为，可以定义自己的类加载器：&lt;/p&gt;
+&lt;pre class=&quot;language-java&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-java&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;MyLoader&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;ClassLoader&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;ClassPool&lt;/span&gt; pool&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;MyLoader&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;ClassPool&lt;/span&gt; pool&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;pool &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; pool&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Class&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;findClass&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;String&lt;/span&gt; name&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;ClassNotFoundException&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token class-name&quot;&gt;CtClass&lt;/span&gt; cc &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; pool&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;name&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token comment&quot;&gt;// 修改 cc...&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;byte&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; b &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; cc&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toBytecode&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;defineClass&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;name&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; b&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; b&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;length&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;%E4%BF%AE%E6%94%B9%E7%8E%B0%E6%9C%89%E7%B1%BB&quot; tabindex=&quot;-1&quot;&gt;修改现有类&lt;/h2&gt;
+&lt;h3 id=&quot;%E5%9C%A8%E6%96%B9%E6%B3%95%E4%BD%93%E4%B8%AD%E6%8F%92%E5%85%A5%E4%BB%A3%E7%A0%81&quot; tabindex=&quot;-1&quot;&gt;在方法体中插入代码&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;CtMethod&lt;/code&gt; 和 &lt;code&gt;CtConstructor&lt;/code&gt; 提供以下方法用于在方法体中插入代码：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;insertBefore()&lt;/code&gt;：在方法体开头插入代码&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;insertAfter()&lt;/code&gt;：在方法体结尾插入代码&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;addCatch()&lt;/code&gt;：添加异常处理代码&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这些方法接受一个表示 Java 代码块的字符串参数：&lt;/p&gt;
+&lt;pre class=&quot;language-java&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-java&quot;&gt;&lt;span class=&quot;token class-name&quot;&gt;CtMethod&lt;/span&gt; m &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; xxx&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+m&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;insertBefore&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;{ System.out.println(&#92;&quot;start&#92;&quot;); }&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;重要&lt;/strong&gt;：插入的代码块可以访问方法的局部变量和参数。&lt;/p&gt;
+&lt;h3 id=&quot;%E6%B7%BB%E5%8A%A0%E6%96%B0%E6%96%B9%E6%B3%95&quot; tabindex=&quot;-1&quot;&gt;添加新方法&lt;/h3&gt;
+&lt;p&gt;使用 &lt;code&gt;addMethod()&lt;/code&gt; 方法向类中添加新方法：&lt;/p&gt;
+&lt;pre class=&quot;language-java&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-java&quot;&gt;&lt;span class=&quot;token class-name&quot;&gt;CtClass&lt;/span&gt; cc &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; xxx&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token class-name&quot;&gt;CtMethod&lt;/span&gt; newMethod &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;CtNewMethod&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;make&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;token string&quot;&gt;&quot;public int newMethod(int x) { return x * 2; }&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    cc&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+cc&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;addMethod&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;newMethod&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;%E5%BC%95%E7%94%A8%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0&quot; tabindex=&quot;-1&quot;&gt;引用方法参数&lt;/h3&gt;
+&lt;p&gt;在插入的代码中，使用以下符号引用方法参数：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;$0&lt;/code&gt;：&lt;code&gt;this&lt;/code&gt; 对象（实例方法）或 &lt;code&gt;null&lt;/code&gt;（静态方法）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$1&lt;/code&gt;：第一个参数&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$2&lt;/code&gt;：第二个参数&lt;/li&gt;
+&lt;li&gt;以此类推&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;示例：&lt;/p&gt;
+&lt;pre class=&quot;language-java&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-java&quot;&gt;m&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;insertBefore&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;{ System.out.println($1); }&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;：对于递归方法，使用参数引用（如 &lt;code&gt;$1&lt;/code&gt;）而不是方法名，可以避免插入的代码被递归调用导致无限循环。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;应用场景&lt;/strong&gt;：Javassist 可用于在方法调用前后插入代码，在 J2EE 中用于实现拦截器。&lt;/p&gt;
+&lt;h2 id=&quot;%E7%94%9F%E6%88%90%E6%96%B0%E7%B1%BB%E5%92%8C%E6%96%B9%E6%B3%95&quot; tabindex=&quot;-1&quot;&gt;生成新类和方法&lt;/h2&gt;
+&lt;h3 id=&quot;%E5%88%9B%E5%BB%BA%E6%96%B0%E7%B1%BB&quot; tabindex=&quot;-1&quot;&gt;创建新类&lt;/h3&gt;
+&lt;p&gt;使用 &lt;code&gt;ClassPool.makeClass()&lt;/code&gt; 方法创建新类：&lt;/p&gt;
+&lt;pre class=&quot;language-java&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-java&quot;&gt;&lt;span class=&quot;token class-name&quot;&gt;ClassPool&lt;/span&gt; pool &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;ClassPool&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getDefault&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token class-name&quot;&gt;CtClass&lt;/span&gt; cc &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; pool&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;makeClass&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Apple&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;%E6%B7%BB%E5%8A%A0%E5%AD%97%E6%AE%B5%E5%92%8C%E6%96%B9%E6%B3%95&quot; tabindex=&quot;-1&quot;&gt;添加字段和方法&lt;/h3&gt;
+&lt;p&gt;创建类后，使用 &lt;code&gt;CtClass&lt;/code&gt; 的方法添加字段和方法：&lt;/p&gt;
+&lt;pre class=&quot;language-java&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-java&quot;&gt;&lt;span class=&quot;token class-name&quot;&gt;CtMethod&lt;/span&gt; m &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;CtNewMethod&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;make&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;token string&quot;&gt;&quot;public String getColor() { return color; }&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    cc&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+cc&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;addMethod&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;m&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;%E8%B0%83%E8%AF%95&quot; tabindex=&quot;-1&quot;&gt;调试&lt;/h2&gt;
+&lt;h3 id=&quot;%E5%A4%84%E7%90%86%E7%BC%96%E8%AF%91%E9%94%99%E8%AF%AF&quot; tabindex=&quot;-1&quot;&gt;处理编译错误&lt;/h3&gt;
+&lt;p&gt;如果插入的代码无法编译，Javassist 会抛出 &lt;code&gt;CannotCompileException&lt;/code&gt;。调用 &lt;code&gt;CannotCompileException.getReason()&lt;/code&gt; 获取编译错误的原因。&lt;/p&gt;
+&lt;h3 id=&quot;%E6%A3%80%E6%9F%A5%E5%AD%97%E8%8A%82%E7%A0%81&quot; tabindex=&quot;-1&quot;&gt;检查字节码&lt;/h3&gt;
+&lt;p&gt;调用 &lt;code&gt;CtMethod&lt;/code&gt; 的 &lt;code&gt;instrument()&lt;/code&gt; 方法检查插入代码的字节码。&lt;/p&gt;
+&lt;h2 id=&quot;%E5%8F%82%E8%80%83%E8%B5%84%E6%BA%90&quot; tabindex=&quot;-1&quot;&gt;参考资源&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.javassist.org/&quot;&gt;Javassist 官方网站&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+  </entry>
+  <entry>
+    <title>SS+Trojan-Qt5+colima 配置docker proxy从而正常下载docker images</title>
+    <link href="https://www.sddtc.florist/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/" />
+    <updated>2025-08-05T00:00:00Z</updated>
+    <id>https://www.sddtc.florist/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/</id>
+    <content type="html">&lt;h3 id=&quot;%E7%A2%8E%E7%A2%8E%E5%BF%B5%3A&quot; tabindex=&quot;-1&quot;&gt;碎碎念:&lt;/h3&gt;
+&lt;p&gt;虽然 docker desktop app 个人免费, 有友好的 UI 界面且下载 images 也很快, 但是当重新配置 CPU 和 memory 的时候, 一旦运行一些 container 会经常造成卡顿, 导致我的电脑很容易无响应. 再加上个人觉得命令行模式简单易用, 于是克服了之前 colima+docker 无法下载 docker images 的问题. 本文详细介绍了解决方案.&lt;/p&gt;
+&lt;h2 id=&quot;%E7%A1%AE%E4%BF%9D%E4%BD%A0%E5%B7%B2%E7%BB%8F%E5%85%B7%E5%A4%87%E7%9A%84%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6%3A&quot; tabindex=&quot;-1&quot;&gt;确保你已经具备的前提条件:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;VPN(SS) + Trojan-Qt5(client)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/abiosoft/colima&quot;&gt;colima&lt;/a&gt;: 一款开源的 docker desktop app 平替
+&lt;ul&gt;
+&lt;li&gt;需要额外安装qemu(和colima template的默认配置相关 &lt;strong&gt;vmType: qemu&lt;/strong&gt;): &lt;a href=&quot;https://formulae.brew.sh/formula/qemu&quot;&gt;brew install qemu&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;需要额外安装docker: &lt;a href=&quot;https://formulae.brew.sh/formula/docker&quot;&gt;brew install docker&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;%E9%85%8D%E7%BD%AEwifi-%E7%9A%84-vpn-proxy.pac&quot; tabindex=&quot;-1&quot;&gt;配置WIFI 的 VPN proxy.pac&lt;/h2&gt;
+&lt;p&gt;如果你的 VPN 采用的是动态寻址(proxy.pac) - 有个白名单定义了哪些网址走 VPN, 哪些不走.&lt;br&gt;
+那么如果没有为WIFI配置代理, 下载 docker images 会访问失败(说到底是因为docker.io和docker.com在某些区域被限制访问🙂), 如图所示, 确保打开 Automatic proxy configuration, 在 URL 配置 proxy.pac:&lt;br&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/UqpKAGBEM1-1320.avif 1320w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/UqpKAGBEM1-1320.webp 1320w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/UqpKAGBEM1-1320.png&quot; alt=&quot;proxies&quot; width=&quot;1320&quot; height=&quot;826&quot;&gt;&lt;/picture&gt;&lt;/p&gt;
+&lt;h2 id=&quot;%E5%AE%9A%E4%B9%89-colima-%E9%BB%98%E8%AE%A4-docker&quot; tabindex=&quot;-1&quot;&gt;定义 Colima 默认 Docker&lt;/h2&gt;
+&lt;p&gt;笔者采用动态修改 docker container 配置的策略.&lt;br&gt;
+colima 启动 docker 虚拟机的时候, 利用 &lt;code&gt;colima template&lt;/code&gt; 进行了自定义模版, 模版文件地址:&lt;br&gt;
+&lt;code&gt;/Users/sddtc/.colima/default/colima.yaml&lt;/code&gt;(将sddtc替换为你的用户名)&lt;br&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/Z-Ox9bBZVo-2332.avif 2332w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/Z-Ox9bBZVo-2332.webp 2332w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/Z-Ox9bBZVo-2332.png&quot; alt=&quot;colima-default&quot; width=&quot;2332&quot; height=&quot;188&quot;&gt;&lt;/picture&gt;&lt;br&gt;
+配置文件的内容如上图所示:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;虚拟机架构是 x86_64&lt;/li&gt;
+&lt;li&gt;配置 4 个 CPU&lt;/li&gt;
+&lt;li&gt;内存 4G&lt;/li&gt;
+&lt;li&gt;硬盘 30G&lt;/li&gt;
+&lt;li&gt;运行时是 docker&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;而我本机配置是 Mac(Intel Core i7+16G内存+500G), 所以 docker 的配置突出一个够用就行.&lt;/p&gt;
+&lt;h2 id=&quot;%E9%85%8D%E7%BD%AE-docker-proxies&quot; tabindex=&quot;-1&quot;&gt;配置 Docker proxies&lt;/h2&gt;
+&lt;p&gt;proxies 的位置在 Docker 虚拟机的&lt;code&gt;/etc/docker/daemon.json&lt;/code&gt;的&lt;strong&gt;proxies&lt;/strong&gt;节点:&lt;/p&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;&lt;span class=&quot;token property&quot;&gt;&quot;proxies&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;http-proxy&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;http://&amp;lt;url&gt;:&amp;lt;port&gt;&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;https-proxy&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;http://&amp;lt;url&gt;:&amp;lt;port&gt;&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;no-proxy&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;localhost,127.0.0.1&quot;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;其中:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;url&amp;gt;&lt;/code&gt;: VPN 所配置的地址. 基本上本机代理的 url 就是&lt;code&gt;127.0.0.1&lt;/code&gt;. 这里有个坑就是协议(这里使用的是http而不能是socks5). 不过这个坑应该只有使用 VPN(SS) + Trojan-Qt5(client)&lt;br&gt;
+会遇到: &lt;a href=&quot;https://stackoverflow.com/questions/73798733/why-socks5-protocol-in-http-proxy-lead-curl-52-empty-reply-from-server&quot;&gt;stackoverflow: why socks5 protocol in http_proxy lead “curl: (52) Empty reply from server”?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;port&amp;gt;&lt;/code&gt;: VPN 所配置的端口号.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;该配置在你把colima的Docker删除再新创建的时候会被清除, 因此要在&lt;code&gt;/Users/sddtc/.colima/default/colima.yaml&lt;/code&gt; 的 &lt;strong&gt;env&lt;/strong&gt; 节点下也配置 proxy 好:&lt;/p&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;env&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;
+  http_proxy&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; http&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token comment&quot;&gt;//&amp;lt;url&gt;:&amp;lt;port&gt;,&lt;/span&gt;
+  https_proxy&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; http&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token comment&quot;&gt;//&amp;lt;url&gt;:&amp;lt;port&gt;,&lt;/span&gt;
+  no_proxy&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;localhost,127.0.0.1&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;template 写好之后:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;启动/重新启动 colima: &lt;code&gt;colima start&lt;/code&gt;/&lt;code&gt;colima restart&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;使用 &lt;code&gt;colima ssh&lt;/code&gt; 进入到虚拟机内部:&lt;br&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/H_eQZNopKj-1884.avif 1884w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/H_eQZNopKj-1884.webp 1884w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/H_eQZNopKj-1884.png&quot; alt=&quot;colima-ssh&quot; width=&quot;1884&quot; height=&quot;888&quot;&gt;&lt;/picture&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这里你会发现url会被重写为!!!&lt;code&gt;192.168.5.2&lt;/code&gt;!!!, 这是 colima 的一个 issue(最新版0.8.2也没有修复), 见&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/abiosoft/colima/issues/1144&quot;&gt;Colima does not auto-replace gateway address for proxy variables in docker daemon.json&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/abiosoft/colima/issues/956&quot;&gt;colima x86_64 daemon.json file has incorrect proxy&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;查看colima版本:&lt;br&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/esYa0WXJ8I-1616.avif 1616w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/esYa0WXJ8I-1616.webp 1616w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/esYa0WXJ8I-1616.png&quot; alt=&quot;colima-verison&quot; width=&quot;1616&quot; height=&quot;482&quot;&gt;&lt;/picture&gt;&lt;/p&gt;
+&lt;h2 id=&quot;%E4%BF%AE%E5%A4%8D-docker-proxy-url&quot; tabindex=&quot;-1&quot;&gt;修复 Docker proxy url&lt;/h2&gt;
+&lt;p&gt;手动执行修复(评论提到可以使用provision脚本更新, 但我发现 template 并没有在重启后自动执行脚本):&lt;/p&gt;
+&lt;pre class=&quot;language-shell&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-shell&quot;&gt;colima &lt;span class=&quot;token function&quot;&gt;ssh&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;# 检查一下proxies的值&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;cat&lt;/span&gt; /etc/docker/daemon.json 
+&lt;span class=&quot;token comment&quot;&gt;#我是本机代理所以是127.0.0.1&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;sed&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-i&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;s/192.168.5.2/127.0.0.1/&quot;&lt;/span&gt; /etc/docker/daemon.json
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; systemctl daemon-reload
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; systemctl reload &lt;span class=&quot;token function&quot;&gt;docker&lt;/span&gt;
+&lt;span class=&quot;token builtin class-name&quot;&gt;exit&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这样一配就好了.&lt;/p&gt;
+&lt;h2 id=&quot;iterm2-%E9%85%8D%E7%BD%AE-proxy-%E5%BC%80%E5%85%B3&quot; tabindex=&quot;-1&quot;&gt;iTerm2 配置 proxy 开关&lt;/h2&gt;
+&lt;p&gt;如果你用了类似 iTerm2 的命令行工具, 会需要 run &lt;code&gt;docker login&lt;/code&gt; 等命令, 同样需要命令行工具在访问某些网站时使用代理,可以在 &lt;code&gt;~/.zshrc&lt;/code&gt; 配置一下子:&lt;/p&gt;
+&lt;pre class=&quot;language-shell&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-shell&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# setup proxy can turn on/off then iTerms can also use proxy to visit google&lt;/span&gt;
+&lt;span class=&quot;token builtin class-name&quot;&gt;alias&lt;/span&gt; &lt;span class=&quot;token assign-left variable&quot;&gt;proxy&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;export all_proxy=http://&amp;lt;url&gt;:&amp;lt;port&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;token builtin class-name&quot;&gt;alias&lt;/span&gt; &lt;span class=&quot;token assign-left variable&quot;&gt;unproxy&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;unset all_proxy&quot;&lt;/span&gt;
+
+&lt;span class=&quot;token builtin class-name&quot;&gt;source&lt;/span&gt; ~/.zshrc&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;需要走代理的时候运行下 proxy, 不需要走代理运行下 unproxy.&lt;/p&gt;
+&lt;p&gt;一切都配置好了, 正常pull images, 搞定.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Agent AI: Surveying the Horizons of Multimodal Interaction 读后感</title>
+    <link href="https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/" />
+    <updated>2025-08-01T00:00:00Z</updated>
+    <id>https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/</id>
+    <content type="html">&lt;p&gt;前几天小某书刷到了李飞飞参与的这篇论文 这周花了两天时间看完了(&lt;a href=&quot;https://arxiv.org/abs/2401.03568&quot;&gt;Agent AI: Surveying the Horizons of Multimodal Interaction&lt;/a&gt;). 看的时候播客也听不了了, 眼睛和脑子一边看内容一边二次翻译, 也意识到自己的专注力好像提高了.&lt;br&gt;
+提到人工智能, 那么我心目中的NO.1非&lt;a href=&quot;https://movie.douban.com/subject/5980670/&quot;&gt;《疑犯追踪》&lt;/a&gt;莫属: 人类创造出程序代码, 交互接口是显示器、耳机. 程序的输入是国际象棋的一盘盘棋局, 人类干预与之下棋, 在下棋的过程中通过每一步博弈, 最终得出胜利或者失败, 并传达隐晦的人类情感表达和更抽象的哲思:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“象棋的可能棋局数比宇宙中的原子的数量还多，没人能预料到一切，即便是你。&lt;br&gt;
+这也就是说，第一步会很令人害怕，因为它是距离结局最远的一步，在这一步与终点之间充满了无穷无尽的可能性。&lt;br&gt;
+但这也意味着，即使你走错一步，接下来也会有无数种补救的方法。&lt;br&gt;
+所以放松，出招就好。”&lt;br&gt;
+–《疑犯追踪》&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;程序还有一段神奇的代码, 它能迭代自己, 从屏幕中你能看到它在编写自己, 只要有电, 它就能没日没夜的编写自己, 这也是我觉得最智能的地方, 不依赖人类的编写, 自己编写自己.&lt;br&gt;
+再之后呢, 程序的输入更加丰富: 通过真实世界的摄像头收集大量的视频、音频数据. 用来分析剧中几位主角是否处在安全的环境, 一旦有危险产生, 通过预测制定出计划来帮助主角们逃离危险.&lt;br&gt;
+这个AI的特点是有极为严格的道德约束, 极为智慧绝不做恶. 通过自己的逻辑指定了唯一超级管理员和除了显示器、耳机之外的交互接口: 一位人类(阿根QAQ), 如今我大概理解编剧是想表达让阿根作为交互接口是因为想表达AI已经能够像人一样思考, 有情感和有局限&lt;br&gt;
+如果说这是一个“品学兼优”的好AI, 那么剧里的反派AI就是一个吸收了更多的数据集且不被约束的程序代码, 它可以随意的执行各种指令, 毫无节制的利用资源追杀主角们, 最终把她们逼到走投无路, 也把我逼成了BE美学人.&lt;br&gt;
+这部剧至今仍让我回味的另一个原因是论文里面提出的 Multimodal 就是一系列的 AI agent 的集合, 包括视频和音频, 还有游戏等agent协作起来处理问题. 如今想来真是异曲同工之妙啊.&lt;/p&gt;
+&lt;p&gt;读论文很多概念都不太清楚, 需要反复学习, 先从论文里面的图片开始理解:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我们将“Agent AI”定义为一类能够感知视觉刺激、语言输入和其他基于环境的数据，并能产生有意义的具体动作的交互式系统。具体来说，我们探索旨在通过结合外部知识、多感官输入和人类反馈，基于下一个具体化动作预测来改进agent的系统。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/o-CpkdOcxT-2234.avif 2234w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/o-CpkdOcxT-2234.webp 2234w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/o-CpkdOcxT-2234.png&quot; alt=&quot;&quot; width=&quot;2234&quot; height=&quot;1952&quot;&gt;&lt;/picture&gt;  
+&lt;p&gt;&lt;strong&gt;X轴:&lt;/strong&gt; 真实的世界, 虚拟世界, Agent 范式, 具身智能(强调有物理身体的智能体通过与物理环境进行交互而获得智能的人工智能研究范式), 各种AI产品&lt;br&gt;
+&lt;strong&gt;Y轴:&lt;/strong&gt;  理论, 数据, 基础设施, 应用&lt;br&gt;
+&lt;strong&gt;Z轴:&lt;/strong&gt;  Agent 的范式(基本理念和实施套路)&lt;/p&gt;
+&lt;p&gt;从右上角向左下角看, 有游戏产品, 健康领域的产品; 无人驾驶, 脑机接口, 机械臂; 泛化的agent, 助理, LLM, VLM, 传感器那些; VR/VA, 3D; 哲学, 物理学等等&lt;/p&gt;
+&lt;p&gt;很多概念都是熟悉又陌生, 也有很多新概念, 不过这样看来人工智能确实迎来了蓬勃的发展&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/hU3_pO3EgH-2500.avif 2500w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/hU3_pO3EgH-2500.webp 2500w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/hU3_pO3EgH-2500.png&quot; alt=&quot;&quot; width=&quot;2500&quot; height=&quot;1664&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;论文结合了很多游戏领域的内容和虚拟现实的模拟, Agent AI 强调环境的重要性, 例如视频会议室有白板、放映机、桌子和凳子; 蓝色公交车旁边的红色广告牌🪧等. 图内也表明 AI Agent 需要为每个新任务收集大量训练数据， 这对于许多领域来说可能是昂贵的，甚至是不可能的&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/PwZGt_57a9-1354.avif 1354w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/PwZGt_57a9-1354.webp 1354w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/PwZGt_57a9-1354.png&quot; alt=&quot;&quot; width=&quot;1354&quot; height=&quot;1344&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;论文提到, Agents通常使用强化学习 (RL) 或模仿学习 (IL) 中的连续反馈循环进行训练, 从随机初始化的策略开始. 然而这种方法在陌生环境中获取初始奖励时面临挑战， 尤其是在奖励稀少或仅在long-step交互结束时才可用的情况下. 因此，一个更好的解决方案是使用通过模仿学习(IL)训练的拥有长期记忆的agent，它可以从专家数据中学习策略，并通过图中 所示的智能涌现(Emergent Intelligence)改进对未知环境空间的探索和利用. 专家特征可以帮助agent更好地探索和利用未知环境空间.&lt;br&gt;
+Agent AI 可以直接从专家数据中学习策略和新范式. 传统的模仿学习(IL) 中， agent会模仿专家演示者的行为来学习策略. 然而，直接学习专家策略并非总是最佳方法， 因为agent可能无法很好地泛化到未知情况. 为了解决这个问题， 我们建议学习一个具有情境提示或隐式奖励函数的agent， 该函数可以捕捉专家行为的关键方面， 如图中所示。这为拥有长期记忆的agent提供了从专家演示中学习到的物理世界行为数据， 用于执行任务. 这有助于克服现有的模仿学习的缺点， 例如需要大量的专家数据以及在复杂任务中可能出现的错误.&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/nJQP6SDL9f-2602.avif 2602w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/nJQP6SDL9f-2602.webp 2602w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/nJQP6SDL9f-2602.png&quot; alt=&quot;&quot; width=&quot;2602&quot; height=&quot;1736&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;When employing LLM/VLMs for a human-machine collaboration system, it is essential to note that these operate as&lt;br&gt;
+black boxes, generating unpredictable output. This uncertainty can become crucial in a physical setup, such as operating&lt;br&gt;
+actual robotics. An approach to address this challenge is constraining the focus of the LLM/VLM through prompt&lt;br&gt;
+engineering. For instance, in robotic task planning from instructions, providing environmental information within the&lt;br&gt;
+prompt has been reported to yield more stable outputs than relying solely on text (Gramopadhye and Szafir, 2022). This report is supported by the Minsky’s frame theory of AI (Minsky, 1975), suggesting that the problem space to be solved&lt;br&gt;
+by LLM/VLMs is defined by the given prompts. Another approach is designing prompts to make LLM/VLMs include&lt;br&gt;
+explanatory text to allow users understand what the model has focused on or recognized. Additionally, implementing&lt;br&gt;
+a higher layer that allows for pre-execution verification and modification under human guidance can facilitate the&lt;br&gt;
+operation of systems working under such guidance&lt;/p&gt;
+&lt;p&gt;论文说, 在将 LLM/VLM 用于人机协作系统时， 必须注意到它们的操作是个黑盒，会产生不可预测的输出. 这种不确定性在物理设置（例如操作实际机器人）中至关重要. 应对这一挑战的一种方法是通过提示工程(prompt)来限制 LLM/VLM 的关注点. 例如， 在根据指令进行机器人任务规划时，在提示中提供环境信息比单纯依赖文本能产生更稳定的输出. 另一种方法是设计提示，使 LLM/VLM 包含解释性文本，以便用户了解模型关注或识别的内容. 此外，实现允许在人工指导下进行执行前验证和修改的更高层代码，可以促进在此类指导下的系统运行, 如上图所示.&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/8zn4Q_19s2-2408.avif 2408w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/8zn4Q_19s2-2408.webp 2408w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/8zn4Q_19s2-2408.png&quot; alt=&quot;&quot; width=&quot;2408&quot; height=&quot;904&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;论文提到了上图是一种用于训练 agent AI 的新范式.通过提出的框架实现以下几个目标：&lt;br&gt;
+• 利用现有的预训练模型和预训练策略，有效地引导我们的agents理解重要的模态信息，例如文本或视觉输入&lt;br&gt;
+• 支持足够的长期任务规划能力&lt;br&gt;
+• 整合一个记忆框架，允许将学习到的知识进行编码并在之后检索&lt;br&gt;
+• 允许利用环境反馈来有效地训练agent学习应该采取的行动&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/yxRp1Try5K-2452.avif 2452w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/yxRp1Try5K-2452.webp 2452w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/yxRp1Try5K-2452.png&quot; alt=&quot;&quot; width=&quot;2452&quot; height=&quot;1006&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;论文提到我们仍然可以像上图所示那样使用 LLM 和 LVM 初始化子模块， 但也可以使用agent令牌来训练模型，使其在特定领域（例如机器人技术）中执行agent行为&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/ecVCyXpcrd-2460.avif 2460w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/ecVCyXpcrd-2460.webp 2460w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/ecVCyXpcrd-2460.png&quot; alt=&quot;&quot; width=&quot;2460&quot; height=&quot;1182&quot;&gt;&lt;/picture&gt;  
+&lt;p&gt;在上图我们可以将agent token与视觉和语言token相结合，生成一个用于训练多模态agent AI的统一接口.与使用大型专有 LLM 作为agent相比，使用agent transformer具有诸多优势, 论文提到了一些子优势.&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/_VgG9tQKi1-2416.avif 2416w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/_VgG9tQKi1-2416.webp 2416w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/_VgG9tQKi1-2416.png&quot; alt=&quot;&quot; width=&quot;2416&quot; height=&quot;1598&quot;&gt;&lt;/picture&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/latvG8dDwv-1306.avif 1306w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/latvG8dDwv-1306.webp 1306w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/latvG8dDwv-1306.png&quot; alt=&quot;&quot; width=&quot;1306&quot; height=&quot;1652&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;论文提到图 8 和图 9 使用 GPT-4V 进行高级描述和动作预测.图 8 展示了一些使用 GPT-4V 生成和编辑动作描述的定性示例.  Agent-enhanced文本开辟了一种利用游戏动作priors生成 3D 场景的新方法，有助于提升场景的自然度.因此，GPT-4V 可以生成与游戏视频相符的相关高级描述.&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/eLsgWKEyve-1182.avif 1182w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/eLsgWKEyve-1182.webp 1182w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/eLsgWKEyve-1182.png&quot; alt=&quot;&quot; width=&quot;1182&quot; height=&quot;1554&quot;&gt;&lt;/picture&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/NHF6QoMqXN-1122.avif 1122w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/NHF6QoMqXN-1122.webp 1122w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/NHF6QoMqXN-1122.png&quot; alt=&quot;&quot; width=&quot;1122&quot; height=&quot;1360&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;论文提到图 10 表明相对较小的agent架构可以针对训练期间未见过的 Minecraft 场景生成合理的输出.图 11 展示了模型的预测结果与真实人类玩家动作的对比，也表明了小型agent模型具有潜在的低级理解能力&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/kjsRSmSVZZ-2484.avif 2484w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/kjsRSmSVZZ-2484.webp 2484w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/kjsRSmSVZZ-2484.png&quot; alt=&quot;&quot; width=&quot;2484&quot; height=&quot;1674&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;很像分手厨房的游戏, 两个NPC伙伴和一个人类的游戏🎮&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/kFLILLvIYL-2370.avif 2370w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/kFLILLvIYL-2370.webp 2370w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/kFLILLvIYL-2370.png&quot; alt=&quot;&quot; width=&quot;2370&quot; height=&quot;1592&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;上图是为了介绍一项研究，是利用 ChatGPT 进行任务规划，并通过利用可供性(Affordance: 一个物体或环境元素所提供的“可供”人们进行某种行为的属性或特征)信息对其进行参数化来丰富计划，以促进有效和精确的执行.&lt;br&gt;
+这些指令与一组预定义的机器人动作和输出规范一起，被编译成提供给 ChatGPT 的综合提示，然后 ChatGPT 生成一系列分解的任务及其文本描述.&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/zehwMGo4UK-2434.avif 2434w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/zehwMGo4UK-2434.webp 2434w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/zehwMGo4UK-2434.png&quot; alt=&quot;&quot; width=&quot;2434&quot; height=&quot;1480&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;上图展示了基于 VirtualHome 进行agent模拟的定性结果.结果证明了论文里描述的方法具有合理的任务规划及其调整输出的灵活性，表明了方法的广泛适用性.&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/2Gl9INd0Is-2354.avif 2354w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/2Gl9INd0Is-2354.webp 2354w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/2Gl9INd0Is-2354.png&quot; alt=&quot;&quot; width=&quot;2354&quot; height=&quot;848&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;通过与 VLM 集成，LLM 赋能的任务规划可以扩展到功能更丰富的机器人系统. 上图展示了一个示例，其中使用 GPT-4V(ision) 在多模态输入环境中扩展了任务规划器，其中人类执行了机器人想要复制的动. 全部详情见 &lt;a href=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/microsoft.github.io/GPT4Vision-Robot-Manipulation-Prompts&quot;&gt;microsoft.github.io/GPT4Vision-Robot-Manipulation-Prompts&lt;/a&gt;&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/WsZ5LQar4h-2390.avif 2390w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/WsZ5LQar4h-2390.webp 2390w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/WsZ5LQar4h-2390.png&quot; alt=&quot;&quot; width=&quot;2390&quot; height=&quot;1416&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;上图演示了如何使用文本输入让用户对 GPT-4V 的识别结果提供反馈以进行纠正.&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/gAIHuJrLlL-1506.avif 1506w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/gAIHuJrLlL-1506.webp 1506w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/gAIHuJrLlL-1506.png&quot; alt=&quot;&quot; width=&quot;1506&quot; height=&quot;1282&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;上图展示了场景分析器的示例输出.GPT-4V 成功地选择了与操作相关的对象.例如，当人类在桌子上移动一个垃圾盒时，输出中包含一张桌子，而对于打开冰箱的任务，输出则忽略了桌子.这些结果表明，场景分析器根据人类的动作对场景信息进行了编码.&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/W54nbigNTV-2100.avif 2100w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/W54nbigNTV-2100.webp 2100w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/W54nbigNTV-2100.png&quot; alt=&quot;&quot; width=&quot;2100&quot; height=&quot;1206&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;如上图所示，论文提出了一种新颖的强化跨模态匹配方法，该方法通过强化学习 (RL) 在局部和全局上强化跨模态基础.具体而言，利用匹配评判器提供内在奖励，以鼓励指令和轨迹之间的全局匹配，并利用推理导航器在局部视觉场景中进行跨模态基础训练.&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/XXSukQYfK2-2102.avif 2102w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/XXSukQYfK2-2102.webp 2102w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/XXSukQYfK2-2102.png&quot; alt=&quot;&quot; width=&quot;2102&quot; height=&quot;1482&quot;&gt;&lt;/picture&gt; 
+&lt;p&gt;在上图，论文展示了 GPT-4V 等现代多模态agent在医疗保健领域中的当前能力和局限性.可以看到尽管 GPT-4V 对医院护理所涉及的设备和程序拥有丰富的内部知识，但它并不总是能够响应用户更具规范性或诊断性的查询.&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/dROclpbvI4-2182.avif 2182w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/dROclpbvI4-2182.webp 2182w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/dROclpbvI4-2182.png&quot; alt=&quot;&quot; width=&quot;2182&quot; height=&quot;1576&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;论文从两个方面研究了 VLM 代理在医学视频理解方面的表现.首先, 研究 VLM 代理在临床空间中识别重要患者护理活动的能力.&lt;br&gt;
+其次，探索了 VLM 在超声波等技术含量更高的视频中的应用. 上图展示了 GPT-4V 目前在医院护理和医学视频分析方面的一些功能和局限.&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/RCdZ5cqU-b-2156.avif 2156w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/RCdZ5cqU-b-2156.webp 2156w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/RCdZ5cqU-b-2156.png&quot; alt=&quot;&quot; width=&quot;2156&quot; height=&quot;1052&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;并未过多说明.&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/Fue7t79hw6-2128.avif 2128w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/Fue7t79hw6-2128.webp 2128w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/Fue7t79hw6-2128.png&quot; alt=&quot;&quot; width=&quot;2128&quot; height=&quot;1608&quot;&gt;&lt;/picture&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/PJTPIgBWBc-2076.avif 2076w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/PJTPIgBWBc-2076.webp 2076w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/PJTPIgBWBc-2076.png&quot; alt=&quot;&quot; width=&quot;2076&quot; height=&quot;1152&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;图22和图23所示了基于知识的视觉问答和视觉语言检索任务是多模态机器学习中具有挑战性的任务，需要图像内容以外的知识.近期关于大规模 Transformer 的研究主要集中于最大化模型参数存储信息的效率.论文研究探索了一个不同的方面：多模态 Transformer 能否在决策过程中运用显性知识.&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/tOAMmm1BU9-2080.avif 2080w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/tOAMmm1BU9-2080.webp 2080w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/tOAMmm1BU9-2080.png&quot; alt=&quot;&quot; width=&quot;2080&quot; height=&quot;1388&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;并未过多说明.&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/1i4KTfzQLH-2104.avif 2104w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/1i4KTfzQLH-2104.webp 2104w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/1i4KTfzQLH-2104.png&quot; alt=&quot;&quot; width=&quot;2104&quot; height=&quot;1112&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;我们在上图中展示了两个示例输出.然而，现有的agents无法完全理解视频内容中精确、细粒度的视觉细节.视觉指令调整方法也存在类似的局限性，它们缺乏人类水平的通用感知能力，而多模态模型和agents仍有待解决这一问题.&lt;br&gt;
+指令调整后的模型在准确概括视频中可见的动作以及有效识别诸如图 25 中的“坐在长椅上的人”之类的动作方面表现出色.然而，它们有时会添加不正确的细节，例如“对着镜头微笑的人”，这表明它们在捕捉对话主题或视频氛围方面存在不足，而这些元素对于人类观察者来说显而易见.&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/cdM6j7ZtlR-2098.avif 2098w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/cdM6j7ZtlR-2098.webp 2098w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/cdM6j7ZtlR-2098.png&quot; alt=&quot;&quot; width=&quot;2098&quot; height=&quot;1454&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;上图所示的结果比较了不同视频agent在视频摘要任务上的表现.视频教学调整模型提供了准确的内容，但缺乏全面性和细节性，缺少一些具体的动作，例如有条不紊地使用扫帚测量树的高度.&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/xrcveGBgU7-1616.avif 1616w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/xrcveGBgU7-1616.webp 1616w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/xrcveGBgU7-1616.png&quot; alt=&quot;&quot; width=&quot;1616&quot; height=&quot;1614&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;论文中, 描述上图所示，我们主要使用 StackOverflow 获取初始问题，然后使用“Bing 搜索”API 检索与该问题对应的相关视频和音频.接下来，我们主要使用 GPT-4V 获取相关文本信息和高级视频描述.另一方面，我们通过 ASR 将关键帧音频转换为关键帧的低级片段描述.最后，我们使用 GPT-4V 生成令人信服的“幻觉”，作为视频问答任务的硬性负面查询.我们支持在视频当前帧中进行交互和问答，以及对整个高级视频描述的摘要.在推理过程中，我们还结合通过网络搜索获取的外部知识信息来提升回答能力.&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/NetE3jA887-2238.avif 2238w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/NetE3jA887-2238.webp 2238w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/NetE3jA887-2238.png&quot; alt=&quot;&quot; width=&quot;2238&quot; height=&quot;1510&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;整个 Alpaca 训练流程&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/QluZfsPa7w-1794.avif 1794w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/QluZfsPa7w-1794.webp 1794w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/QluZfsPa7w-1794.png&quot; alt=&quot;&quot; width=&quot;1794&quot; height=&quot;1332&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;如上图所示，论文提到为 Transformer 语言模型引入了一种新的建模范式，它从输入文本中检测并提取重要的逻辑结构和信息，然后通过精心设计的多层级逻辑投影将它们集成到输入嵌入中，从而将逻辑结构作为一种NLP agent注入到预先训练的语言模型中.&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/yBMTkBy5QA-1802.avif 1802w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/yBMTkBy5QA-1802.webp 1802w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/yBMTkBy5QA-1802.png&quot; alt=&quot;&quot; width=&quot;1802&quot; height=&quot;1008&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;如上图所示，知识选择器agent作为我们新颖的相互学习框架的一个组件进行训练，该框架迭代地训练知识选择器和阅读器.我们采用一种简单而新颖的方法，利用策略梯度来优化知识选择器agent，并利用阅读器的反馈来训练它选择一小段信息丰富的段落集合.这种方法避免了暴力搜索或手动设计的启发式算法，也不需要任何带注释的查询-文档对进行监督.论文提到了它证明了迭代训练阅读器和知识选择器agents可以在一些公共开放领域问答基准上获得更好的预测性能.&lt;/p&gt;
+&lt;p&gt;以上就是论文55页以前的所有配图. 和内容结合在一起看也是蛮有趣的. 后面我还专门看了下所有论文参与者的个人介绍, 学生会介绍自己感兴趣的领域, 李飞飞的介绍是工作经历.没有感情全是年份系列.&lt;/p&gt;
+&lt;p&gt;以上.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>搭建基于websocket的在线多人聊天室</title>
+    <link href="https://www.sddtc.florist/sddtc.github.com/blog/2025-07-24-websocket-chat-room/" />
+    <updated>2025-07-24T00:00:00Z</updated>
+    <id>https://www.sddtc.florist/sddtc.github.com/blog/2025-07-24-websocket-chat-room/</id>
+    <content type="html">&lt;p&gt;不论是chatGPT还是DeepSeek, 目前用户的交互界面仍然是以聊天框的形式出现, 其背后都离不开WebSocket技术.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;WebSocket 是一种在客户端和服务器之间提供全双工通信的协议，允许实时、双向的数据传输。它通过持久连接而不是传统的请求-响应模式，减少了延迟和网络流量，适用于需要实时交互的应用，如在线游戏和聊天应用.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;我所喜欢的很多网页游戏也都是用了它, 比如&lt;a href=&quot;https://multiplayerpiano.com/&quot;&gt;多人在线弹钢琴&lt;/a&gt;. 突然发现书签里&amp;quot;useless-but-fun&amp;quot;文件夹的好多链接如今也无法访问了, 我猜测归根到底一些平台改变了收费模式, 作者如今还没有更新它们.&lt;br&gt;
+最近也是完成了一个在线聊天室, 撒花🎉&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://chat.sddtc.florist/&quot;&gt;sddtc’s chat room&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;其中前后端分离两个仓库, 前端部署在&lt;a href=&quot;https://vercel.com/home&quot;&gt;Vercel平台&lt;/a&gt;, 后端部署在&lt;a href=&quot;https://www.render.com/&quot;&gt;Render&lt;/a&gt;, 数据存储部分用了 MongoDB Atlas.&lt;br&gt;
+一开始没有拆分项目, 然而Vercel平台的免费版本并不支持长链接, 它提供的后端平台是以 serverless 函数的形式出现. 也就意味着每次请求的处理都需要是无状态的. 所以思索之下拆分了前后端, 也初次尝试了Render这个平台. 目前体验还不错. 另外一个注意的点便是跨域的安全问题. 前后端部署在不同的域名之下, 如果使用cookie等安全规范严格的技术, 是要处理该问题的, 其中一个办法便是将它们放在统一的域名下. 所以有自己的域名还是有很多方便之处的.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;前端项目使用:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;React + Vite, 这个组合部署在Vercel非常顺畅. 见&lt;a href=&quot;https://www.sddtc.florist/sddtc.github.com/blog/2025-06-16-technology-selection/&quot;&gt;当你做技术选型时需要考虑的&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pmndrs/zustand&quot;&gt;zustand&lt;/a&gt;, 使用了一个React状态库来处理组件刷新行为&lt;/li&gt;
+&lt;li&gt;socket.io-client 在和ws库对比之后使用了socket.io的客户端, 文档很不错&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://tailwindcss.com/&quot;&gt;tailwindcss&lt;/a&gt; + &lt;a href=&quot;https://daisyui.com/&quot;&gt;daisyui-Tailwind CSS plugin&lt;/a&gt; 新学习了这一套样式组合, 搭建出来的网站更好看了.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;后端项目使用:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://socket.io&quot;&gt;socket.io&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;express  nodeJS的web框架&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://mongoosejs.com/&quot;&gt;mongoose&lt;/a&gt;  管理mongoDB的ODM库&lt;/li&gt;
+&lt;li&gt;MongoDB Atlas.  聊天记录和简单的用户管理用了下mongoDB的cloud平台存储&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;整个下来的感受还是很开心的, 因为从0到1是勇气的开始, 而1到100便是日积月累的循规蹈矩. 2个项目打算在测试完善之后开源, 基于WebSocket技术的应用还是很有趣的.&lt;br&gt;
+以上.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>博客静态页面生成工具从jekyll切换为11ty, 告别ruby 拥抱js</title>
+    <link href="https://www.sddtc.florist/sddtc.github.com/blog/2025-07-22-bye-jekyll-hi-11ty/" />
+    <updated>2025-07-22T00:00:00Z</updated>
+    <id>https://www.sddtc.florist/sddtc.github.com/blog/2025-07-22-bye-jekyll-hi-11ty/</id>
+    <content type="html">&lt;p&gt;从我知道github自带&lt;code&gt;gh-pages&lt;/code&gt;特性那会儿, 便把个人博客从自建服务器迁移到了这里,也快11年了(第一篇文章发布于2014年), 后来知道了一些便宜的域名服务, 换过2个域名. 从GoDaddy平台换成了&lt;a href=&quot;https://porkbun.com/&quot;&gt;porkbun&lt;/a&gt;. 然而静态页面生成器一直使用github官方推荐的jekyll, 也用爱发电换了好几个主题, 最近的&lt;a href=&quot;https://github.com/TMaize/tmaize-blog&quot;&gt;tmaize&lt;/a&gt;主题确实是我一直很喜欢的… 但是!! 这两天还是谨慎思考(花了一个下午的时间), 彻底放弃jekyll, 也是要从一个一直困惑我的报错开始…&lt;br&gt;
+容器化启动项目是一个习惯, 它可以不依赖电脑本地的环境, 用一个docker image文件, 包含着项目需要的依赖, 运行环境, 很方便的让你快速启动. 一直以来我用了jekyll的image在本地启动博客:&lt;/p&gt;
+&lt;pre class=&quot;language-yml&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-yml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;services&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;jekyll&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; jekyll/jekyll&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;latest
+    &lt;span class=&quot;token key atrule&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;jekyll serve&quot;&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;working_dir&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; /app
+    &lt;span class=&quot;token key atrule&quot;&gt;container_name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; sddtc_blog
+    &lt;span class=&quot;token key atrule&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; $PWD&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;/srv/jekyll
+      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; .&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;/app
+    &lt;span class=&quot;token key atrule&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;4000:4000&quot;&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;JEKYLL_UID&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1001&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;JEKYLL_GID&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1001&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这一段我也不得不吐槽, &lt;code&gt;JEKYLL_UID&lt;/code&gt;和&lt;code&gt;JEKYLL_GID&lt;/code&gt; 还是后来加上的, 因为一些ruby升级还是gem升级啥的导致权限问题之类的, 当时也花了好多时间解决. 然而那还是解决了的, 然而这一次的错误:&lt;/p&gt;
+&lt;pre class=&quot;language-shell&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-shell&quot;&gt;/usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/conflict.rb:47:in &lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;conflicting_dependencies&#39;: undefined method &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;request&lt;span class=&quot;token string&quot;&gt;&#39; for nil:NilClass (NoMethodError)
+    [@failed_dep.dependency, @activated.request.dependency]
+                                       ^^^^^^^^
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/exceptions.rb:61:in `conflicting_dependencies&#39;&lt;/span&gt;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/exceptions.rb:55:in &lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;initialize&#39;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver.rb:193:in &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;exception&lt;span class=&quot;token string&quot;&gt;&#39;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver.rb:193:in `raise&#39;&lt;/span&gt;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver.rb:193:in &lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;rescue &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; resolve&#39;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver.rb:191:in &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;resolve&lt;span class=&quot;token string&quot;&gt;&#39;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/request_set.rb:411:in `resolve&#39;&lt;/span&gt;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/request_set.rb:423:in &lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;resolve_current&#39;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:230:in &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;finish_resolve&lt;span class=&quot;token string&quot;&gt;&#39;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:287:in `block in activate_bin_path&#39;&lt;/span&gt;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:285:in &lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;synchronize&#39;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:285:in &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;activate_bin_path&lt;span class=&quot;token string&quot;&gt;&#39;
+	from /usr/local/bin/bundle:25:in `&amp;lt;main&gt;&#39;&lt;/span&gt;
+/usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/molinillo/lib/molinillo/resolution.rb:317:in &lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;raise_error_unless_state&#39;: Unable to satisfy the following requirements: &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;Gem::Resolver::Molinillo::VersionConflict&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+- &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;bundler &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;2.7&lt;/span&gt;.0&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt; required by &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;user-specified dependency&lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/molinillo/lib/molinillo/resolution.rb:299:in &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;block &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; unwind_for_conflict&lt;span class=&quot;token string&quot;&gt;&#39;
+	from &amp;lt;internal:kernel&gt;:90:in `tap&#39;&lt;/span&gt;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/molinillo/lib/molinillo/resolution.rb:297:in &lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;unwind_for_conflict&#39;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/molinillo/lib/molinillo/resolution.rb:682:in &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;attempt_to_activate&lt;span class=&quot;token string&quot;&gt;&#39;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/molinillo/lib/molinillo/resolution.rb:254:in `process_topmost_state&#39;&lt;/span&gt;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/molinillo/lib/molinillo/resolution.rb:182:in &lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;resolve&#39;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/molinillo/lib/molinillo/resolver.rb:43:in &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;resolve&lt;span class=&quot;token string&quot;&gt;&#39;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver.rb:190:in `resolve&#39;&lt;/span&gt;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/request_set.rb:411:in &lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;resolve&#39;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/request_set.rb:423:in &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;resolve_current&lt;span class=&quot;token string&quot;&gt;&#39;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:230:in `finish_resolve&#39;&lt;/span&gt;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:287:in &lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;block &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; activate_bin_path&#39;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:285:in &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;synchronize&lt;span class=&quot;token string&quot;&gt;&#39;
+	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:285:in `activate_bin_path&#39;&lt;/span&gt;
+	from /usr/local/bin/bundle:25:in `&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;main&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;首先想到了升级bundle, 升级本地依赖, 定位这依赖冲突到底冲突在了哪里. &amp;lt;— 至少从这个堆栈里根本看不出来谁和谁冲突了. 所以没定位出来哈哈哈哈QAQ. 然后开始病急乱投医整自己本地的ruby版本, 发现又有3.1.0又有3.3.0但是&lt;code&gt;gem env&lt;/code&gt;又展示了多版本, 于是安装了rbenv(ruby的多版本管理工具), 配置进了.zshrc还是报错. 其实写到这里我想, 或许把bunde再降回2.5.x或许和ruby 3.1.0就兼容了, 但是这种对于ruby的缺乏兴趣与理解让我太痛苦了. 一想到未来还要解决这些乱七八糟的问题, 我宁愿被js折磨. 于是决定拥抱js工具.&lt;/p&gt;
+&lt;p&gt;那么那么, 切换一个新的静态页面生成工具需要几步呢?&lt;/p&gt;
+&lt;h2 id=&quot;%E7%AC%AC%E4%B8%80%E6%AD%A5%2C-%E9%80%89%E6%8B%A9%E4%B8%80%E4%B8%AA%E5%B7%A5%E5%85%B7%F0%9F%94%A7&quot; tabindex=&quot;-1&quot;&gt;第一步, 选择一个工具🔧&lt;/h2&gt;
+&lt;p&gt;基于JS的静态页面生成工具有很多,Gatsby, Astro, 11ty, next, etc. 且快速确定了目标: &lt;a href=&quot;https://www.11ty.dev/&quot;&gt;Eleventy&lt;/a&gt;. 毕竟它的slogan:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Eleventy is a simpler static site generator.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;简单这个词一下子就击中了我的心.&lt;br&gt;
+或者稍微对比一下也会发现:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;For large, content-rich sites with a React focus, Gatsby is a strong contender.&lt;/li&gt;
+&lt;li&gt;Astro excels at building content-driven websites where minimal JavaScript and fast performance are crucial.&lt;/li&gt;
+&lt;li&gt;11ty is a great choice for simpler static sites that value speed and flexibility with various templating languages.&lt;/li&gt;
+&lt;li&gt;Next.js offers a balance between static site generation and dynamic rendering, making it suitable for a wide range of projects.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;%E7%AC%AC%E4%BA%8C%E6%AD%A5%2C-%E6%9C%AC%E5%9C%B0%E8%B0%83%E8%AF%95%E6%96%B0%E5%B7%A5%E5%85%B7&quot; tabindex=&quot;-1&quot;&gt;第二步, 本地调试新工具&lt;/h2&gt;
+&lt;p&gt;如果类似的经验不多, 建议使用新工具开启新的github分支, 在能保证自己现有博客一直能运行的前提下尝试新东西. 否则可能会出现进退两难的情况, 有一些挫败感.&lt;br&gt;
+在梳理了&lt;a href=&quot;https://github.com/11ty/eleventy-base-blog&quot;&gt;eleventy-base-blog&lt;/a&gt;的博客结构之后我在主分支直接操作了.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;初始化package.json, 安装eleventy-base-blog里面的依赖&lt;/li&gt;
+&lt;li&gt;创建/复制eleventy-base-blog相关的文件夹和文件: _config, _data, _includes, css, public, .nojekyll, eleventy.config.js 和 netlify.toml&lt;/li&gt;
+&lt;li&gt;创建/复制eleventy-base-blog的content文件夹和文件: content的blog是真实的博客文章, 因此我把自己的143篇文章全部复制到blog文件夹下, 删除示例文章&lt;/li&gt;
+&lt;li&gt;本地运行: &lt;code&gt;npx @11ty/eleventy --serve&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;开始处理错误:&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;每篇文章的开头保持统一格式, 有title, date和tags(tags必须是英文,不能是中文, 否则会报错&amp;lt;–这也贼坑), 例如:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&quot;hljs&quot;&gt;
+---
+title: 该网站在某些区域被阻止, 例如 中国
+date: 2025-07-03
+tags: self-talking
+---
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&quot;2&quot;&gt;
+&lt;li&gt;文章内容的&amp;quot;#&amp;quot; 需要处理一下&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;2个错误处理完就能启动成功了, 只不过只有在这个时候我才发现文章多也不好, 至少开头之前用jekyll的时候就不一致, 大量的体力工作, 心里全是恨, 想写脚本的心情此刻来到了最高峰.&lt;/p&gt;
+&lt;h2 id=&quot;%E7%AC%AC%E4%B8%89%E6%AD%A5%2C-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F&quot; tabindex=&quot;-1&quot;&gt;第三步, 自定义样式&lt;/h2&gt;
+&lt;p&gt;11ty默认的博客样式是&lt;a href=&quot;https://demo-base-blog.11ty.dev/&quot;&gt;蓝色调&lt;/a&gt;, 在参考了&lt;a href=&quot;https://colorhunt.co/&quot;&gt;colorhunt&lt;/a&gt;之后选择了绿色调于是添加了自定义css文件&lt;a href=&quot;https://github.com/sddtc/sddtc.github.com/blob/main/css/customized-theme.css&quot;&gt;customized-theme.css&lt;/a&gt;. 这个文件会覆盖默认样式, 保持独立. 在软件工程领域里, 对修改关闭, 对扩展开放是好实践.&lt;br&gt;
+因为&lt;code&gt;base.njk&lt;/code&gt;文件是博客系统的基础文件, css文件自然要在这里进行额外的声明来保证它的加载, 因此添加一行:&lt;/p&gt;
+&lt;pre class=&quot;language-html&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-html&quot;&gt;
+&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;style&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token style&quot;&gt;&lt;span class=&quot;token language-css&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;% include &lt;span class=&quot;token string&quot;&gt;&quot;css/customized-theme.css&quot;&lt;/span&gt; %&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;style&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;它保证了自定义的css文件内容会被打包到统一的css文件里.&lt;br&gt;
+而css文件夹也是在根目录下&lt;/p&gt;
+&lt;h2 id=&quot;%E7%AC%AC%E5%9B%9B%E6%AD%A5%2C-%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89js%E8%84%9A%E6%9C%AC&quot; tabindex=&quot;-1&quot;&gt;第四步, 添加自定义js脚本&lt;/h2&gt;
+&lt;p&gt;google页面统计和一些俏皮的脚本(鼠标点击出现二十四字社会主义核心价值观😉)也需要迁移. 类似于css脚本方式. 具体可以参考&lt;a href=&quot;https://github.com/sddtc/sddtc.github.com/blob/main/_includes/layouts/base.njk#L51&quot;&gt;代码片段&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;%E7%AC%AC%E4%BA%94%E6%AD%A5%2C-%E9%83%A8%E7%BD%B2!&quot; tabindex=&quot;-1&quot;&gt;第五步, 部署!&lt;/h2&gt;
+&lt;p&gt;部署之后就404了, 于是紧急查看文档: &lt;a href=&quot;https://www.11ty.dev/docs/deployment/#deploy-an-eleventy-project-to-git-hub-pages&quot;&gt;Deploy an Eleventy project to GitHub pages&lt;/a&gt;&lt;br&gt;
+快速修复之后上线了.&lt;/p&gt;
+&lt;p&gt;之后再研究研究css, 让博客好看一些&lt;br&gt;
+再研究研究11ty, 看看有什么好玩的插件&lt;/p&gt;
+&lt;p&gt;谢谢大家的观看! 鞠躬!&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>该网站在某些区域被阻止, 例如 中国</title>
+    <link href="https://www.sddtc.florist/sddtc.github.com/blog/2025-07-03-blocked-in-some-regions-for-example-China/" />
+    <updated>2025-07-03T00:00:00Z</updated>
+    <id>https://www.sddtc.florist/sddtc.github.com/blog/2025-07-03-blocked-in-some-regions-for-example-China/</id>
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;The &lt;a href=&quot;http://cdn.jsdelivr.net&quot;&gt;cdn.jsdelivr.net&lt;/a&gt; domain is currently experiencing issues in some regions, with reports of it being blocked in China and Egypt,&lt;br&gt;
+and some users experiencing SSL certificate errors.&lt;br&gt;
+These issues can prevent access to files hosted on the CDN.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;博客的春菜插件的资源无法加载了我才注意到这个问题. 且 2 年前左右 &lt;code&gt;cdn.jsdelivr.net&lt;/code&gt; 就无法在中国区访问了. 顿时有种很复杂的情绪. 这已经不是第一次发生这样的事了,&lt;br&gt;
+自从需要🪜才能访问谷歌以来, 处处都在遭受歧视. 包括 chatGPT, microsoft designer, myEdit 和 github/docker. 如果这些网站的使用还有这样的门槛, 太悲哀了. 技术本应是纯粹的. 很生气, 很无奈.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>小红书自动发笔记机器人</title>
+    <link href="https://www.sddtc.florist/sddtc.github.com/blog/2025-06-24-xhs-robot/" />
+    <updated>2025-06-24T00:00:00Z</updated>
+    <id>https://www.sddtc.florist/sddtc.github.com/blog/2025-06-24-xhs-robot/</id>
+    <content type="html">&lt;p&gt;我总是对社交网络自动化有很大的兴趣, 之前研究发微博机器人, QQ机器人, 豆瓣机器人, 也是因为我玩这些 app. 如今&lt;br&gt;
+终于轮到了小红书. 虽然小红书没有开发者平台, 但是仍然可以从抓取并分析网络请求再通过代码实现自动发笔记的功能. 整个实现最精彩的地方就是对于请求体中 &lt;code&gt;x-s&lt;/code&gt; 键值的破解, 目前我用到了 &lt;a href=&quot;https://github.com/ReaJason/xhs&quot;&gt;ReaJason/xhs&lt;/a&gt; 里的 sign 功能, 也打算下一步再实现一个 JS 版本.&lt;/p&gt;
+&lt;p&gt;本篇文章将列举小红书一些创作者平台的核心APIs&lt;/p&gt;
+&lt;h4 id=&quot;1.-%E9%80%9A%E8%BF%87%E5%85%B3%E9%94%AE%E5%AD%97%E8%8E%B7%E5%8F%96%E8%AF%9D%E9%A2%98%E5%88%97%E8%A1%A8%E8%AF%A6%E6%83%85&quot; tabindex=&quot;-1&quot;&gt;1. 通过关键字获取话题列表详情&lt;/h4&gt;
+&lt;p&gt;在笔记的内容里如果需要引入话题列表, 通过该 API 能获取需要的tag的关键字段.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;POST&lt;/strong&gt; &lt;code&gt;https://edith.xiaohongshu.com/web_api/sns/v1/search/topic&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;request headers:&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Cookie&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Origin&lt;/code&gt;: &lt;code&gt;https://creator.xiaohongshu.com&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Content-Type&lt;/code&gt;: &lt;code&gt;application/json;charset=UTF-8&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;request body:&lt;/em&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;keyword&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;比格&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;suggest_topic_request&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;title&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;desc&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;#比格&quot;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;page&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;page_size&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;page&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&quot;2.-%E8%8E%B7%E5%8F%96%E5%9B%BE%E7%89%87%E7%9A%84-file-id-%E5%88%97%E8%A1%A8%E5%92%8C-%E7%9B%B8%E5%85%B3-credentials&quot; tabindex=&quot;-1&quot;&gt;2. 获取图片的 file id 列表和 相关 credentials&lt;/h4&gt;
+&lt;p&gt;获取上传图片需要的关键信息.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;GET&lt;/strong&gt; &lt;code&gt;https://creator.xiaohongshu.com/api/media/v1/upload/web/permit?biz_name=spectrum&amp;amp;scene=image&amp;amp;file_count=1&amp;amp;version=1&amp;amp;source=web&lt;/code&gt;&lt;br&gt;
+其中 file_count 根据你要上传的图片数量而改变, 继而返回的 file id数量也于此相关.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;request headers:&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Cookie&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Referer&lt;/code&gt;: &lt;code&gt;https://creator.xiaohongshu.com/publish/publish?from=tab_switch&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;X-S&lt;/code&gt;: 需要通过一些工具获得. 本人从 &lt;a href=&quot;https://github.com/ReaJason/xhs&quot;&gt;ReaJason/xhs&lt;/a&gt; 的 /sign 接口获取&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;3.-%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87&quot; tabindex=&quot;-1&quot;&gt;3. 上传图片&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;PUT&lt;/strong&gt; &lt;code&gt;https://ros-upload.xiaohongshu.com/{file_id}&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;request headers:&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Cookie&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Content-Type&lt;/code&gt;: &lt;code&gt;image/jpeg&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;X-Cos-Security-Token&lt;/code&gt;: 值从 No.2 的返回值获取&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Origin&lt;/code&gt;: &lt;code&gt;https://creator.xiaohongshu.com&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;request body:&lt;/em&gt;&lt;br&gt;
+image 的 binary 类型&lt;/p&gt;
+&lt;h4 id=&quot;4.-%E5%8F%91%E5%B8%83%E7%AC%94%E8%AE%B0&quot; tabindex=&quot;-1&quot;&gt;4. 发布笔记&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;POST&lt;/strong&gt; &lt;code&gt;https://edith.xiaohongshu.com/web_api/sns/v2/note&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;request headers:&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Cookie&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Content-Type&lt;/code&gt;: &lt;code&gt;application/json;charset=UTF-8&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Origin&lt;/code&gt;: &lt;code&gt;https://creator.xiaohongshu.com&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;X-S&lt;/code&gt;: 需要通过一些工具获得. 本人从 &lt;a href=&quot;https://github.com/ReaJason/xhs&quot;&gt;ReaJason/xhs&lt;/a&gt; 的 /sign 接口获取&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;X-T&lt;/code&gt; 需要通过一些工具获得. 本人从 &lt;a href=&quot;https://github.com/ReaJason/xhs&quot;&gt;ReaJason/xhs&lt;/a&gt; 的 /sign 接口获取&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;request body:&lt;/em&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;common&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;type&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;normal&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;note_id&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;source&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;{&#92;&quot;type&#92;&quot;:&#92;&quot;web&#92;&quot;,&#92;&quot;ids&#92;&quot;:&#92;&quot;&#92;&quot;,&#92;&quot;extraInfo&#92;&quot;:&#92;&quot;{&#92;&#92;&#92;&quot;systemId&#92;&#92;&#92;&quot;:&#92;&#92;&#92;&quot;web&#92;&#92;&#92;&quot;}&#92;&quot;}&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;title&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;小比格&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;desc&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;﻿#比格犬就是世界上最好的小狗[话题]#﻿&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;ats&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;hash_tag&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token property&quot;&gt;&quot;id&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;67dba606000000001d010ac8&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token property&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;比格犬就是世界上最好的小狗&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token property&quot;&gt;&quot;link&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;https://www.xiaohongshu.com/page/topics/67dba60601d4000000000001?naviHidden=yes&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token property&quot;&gt;&quot;type&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;topic&quot;&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;business_binds&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;{&#92;&quot;version&#92;&quot;:1,&#92;&quot;noteId&#92;&quot;:0,&#92;&quot;bizType&#92;&quot;:0,&#92;&quot;noteOrderBind&#92;&quot;:{},&#92;&quot;notePostTiming&#92;&quot;:{},&#92;&quot;noteCollectionBind&#92;&quot;:{&#92;&quot;id&#92;&quot;:&#92;&quot;&#92;&quot;},&#92;&quot;noteSketchCollectionBind&#92;&quot;:{&#92;&quot;id&#92;&quot;:&#92;&quot;&#92;&quot;},&#92;&quot;coProduceBind&#92;&quot;:{&#92;&quot;enable&#92;&quot;:false},&#92;&quot;noteCopyBind&#92;&quot;:{&#92;&quot;copyable&#92;&quot;:false},&#92;&quot;interactionPermissionBind&#92;&quot;:{&#92;&quot;commentPermission&#92;&quot;:0},&#92;&quot;optionRelationList&#92;&quot;:[]}&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;privacy_info&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;op_type&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;type&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;user_ids&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;goods_info&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;biz_relations&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;image_info&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;images&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token property&quot;&gt;&quot;file_id&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;spectrum/HYyKFIJ01wmBc3x2xaRRMfgLuR1zR0Gp7tk5uAM79ccq_kQ&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token property&quot;&gt;&quot;width&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;510&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token property&quot;&gt;&quot;height&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;510&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token property&quot;&gt;&quot;metadata&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;token property&quot;&gt;&quot;source&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;-1&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token property&quot;&gt;&quot;stickers&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;token property&quot;&gt;&quot;version&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+          &lt;span class=&quot;token property&quot;&gt;&quot;floating&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token property&quot;&gt;&quot;extra_info_json&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;{&#92;&quot;mimeType&#92;&quot;:&#92;&quot;image/jpeg&#92;&quot;}&quot;&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;video_info&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token null keyword&quot;&gt;null&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;以上的 request body 里只有以下部分节点可变, 其余部分硬编码即可:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;title&lt;/li&gt;
+&lt;li&gt;desc&lt;/li&gt;
+&lt;li&gt;hash_tag&lt;/li&gt;
+&lt;li&gt;images&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其中 desc 中的话题的前后需要添加不可见字符&lt;code&gt;0xfeff&lt;/code&gt;, 否则不会被识别为话题.&lt;/p&gt;
+&lt;p&gt;除了上述的 API 之外, 很多开源项目有点赞、评论、发布视频笔记等 API. 可以根据个人需求进行定制, 我没有用到&lt;br&gt;
+就不在此列举了.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>当你做技术选型时需要考虑的</title>
+    <link href="https://www.sddtc.florist/sddtc.github.com/blog/2025-06-16-technology-selection/" />
+    <updated>2025-06-16T00:00:00Z</updated>
+    <id>https://www.sddtc.florist/sddtc.github.com/blog/2025-06-16-technology-selection/</id>
+    <content type="html">&lt;p&gt;软件工程是手段,不是目的. 不论是做企业软件开发, 做产品验证 POC 还是个人产品开发, 你总会在不同的时刻考虑技术框架, 亦或是不用框架; 考虑使用某个工具 A 而非工具 B, 使用云平台 C 还是读取文件使用缓存策略, 都是基于现阶段, 以及未来(短期)可能会出现的可能性的考虑. 毕竟有句很火的话&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;先做一个垃圾出来&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;并不是说你做出来的东西是“垃圾”, 而是说简单/粗糙是开始的好起点.&lt;/p&gt;
+&lt;p&gt;最近使用 &lt;code&gt;mui+vite+vitest+supabase+vercel&lt;/code&gt; 快速搭建了一个站点, 借此来记录一些经验.&lt;br&gt;
+首先确定开发工具, 写前端首选 &lt;code&gt;vscode&lt;/code&gt;, 对于 &lt;code&gt;js&lt;/code&gt; 语法高亮的支持好&lt;br&gt;
+其次选择前端框架, 测试框架, 这次选择了 &lt;a href=&quot;https://vite.dev/&quot;&gt;vite&lt;/a&gt; + React + &lt;a href=&quot;https://vitest.dev/&quot;&gt;vitest&lt;/a&gt;. 用 &lt;code&gt;Material UI+React&lt;/code&gt; 搭建了简单的页面, 本地调试了样式与功能.&lt;br&gt;
+在选择云部署平台的时候参照了目前网络上&lt;a href=&quot;https://gist.github.com/imba-tjd/d73258f0817255dbe77d64d40d985e76&quot;&gt;推荐的免费云平台&lt;/a&gt;, 各有各的优劣, 主要考虑的方面有:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;免费额度: 如果是 POC, 那么使用免费的云平台是为了降低成本, 快速验证&lt;/li&gt;
+&lt;li&gt;域名污染: 指的是很多平台会绑定固定的域名, 例如 &lt;a href=&quot;https://vercel.com/home&quot;&gt;vercel&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;安全性: 如果你选择是无后端服务或者其他BaaS, 那么后期要考虑支持 &lt;code&gt;client credentials&lt;/code&gt; 服务&lt;/li&gt;
+&lt;li&gt;语言支持&lt;/li&gt;
+&lt;li&gt;易用性&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;最终选择了 &lt;a href=&quot;https://vercel.com/home&quot;&gt;vercel&lt;/a&gt;, 合适的免费配额, 快速的部署流程, 和 &lt;code&gt;github repo&lt;/code&gt; 的集成简单, 再加上本人有年包的域名服务, vercel 也能方便的进行配置.&lt;br&gt;
+将本地的项目进行远端部署就需要一个构建工具, &lt;a href=&quot;https://vite.dev/&quot;&gt;vite&lt;/a&gt; 引起了我的注意, 因为初始化项目时并没有使用 CRA(create-react-app脚手架), 我并不是一个热衷于通过简单的却未知的命令来启动项目的人, 因为丰富的依赖和配置让我并不能立刻意识到它们都是做什么的, 也让本身简单的事情复杂化. 毕竟新增容易, 但是删除的成本是巨大的. 在没有搞清楚之前, 为什么要埋下一颗小小的炸弹呢😄, btw: 今年2月14日的文章&lt;a href=&quot;https://react.dev/blog/2025/02/14/sunsetting-create-react-app&quot;&gt;Sunsetting Create React App&lt;/a&gt;也意味着 CRA 不再被官方推荐使用.&lt;br&gt;
+目前 vite.config.js 的内容仅有:&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; defineConfig &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;vite&#39;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; configDefaults &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;vitest/config&#39;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; react &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;@vitejs/plugin-react&#39;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;defineConfig&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token literal-property property&quot;&gt;plugins&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;react&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token literal-property property&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token literal-property property&quot;&gt;globals&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token literal-property property&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;jsdom&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token literal-property property&quot;&gt;setupFiles&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;./vitest-setup.js&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token literal-property property&quot;&gt;coverage&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token literal-property property&quot;&gt;reporter&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;text&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;json&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;html&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token literal-property property&quot;&gt;exclude&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;configDefaults&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;exclude&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&#39;src/index.jsx&#39;&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;其中 &lt;code&gt;globals: true&lt;/code&gt; 是为了解决跑一个测试文件的多个单元测试时, 避免 &lt;code&gt;render&lt;/code&gt; 重复的元素, 保证每次的 dom 挂载时全局时是被其它单测可见的. &lt;code&gt;environment: &#39;jsdom&#39;&lt;/code&gt; 和 &lt;code&gt;&#39;./vitest-setup.js&#39;&lt;/code&gt; 是为了 components 测试模拟真实的浏览器html dom树. 项目在本地跑单测时, 而非用户真实的使用场景(浏览器内部), 而是在 js 的运行时环境(node), 于是使用 &lt;code&gt;jsdom&lt;/code&gt; 是为了保证组件的渲染和行为能够模拟用户的使用场景. 见&lt;a href=&quot;https://testing-library.com/docs/svelte-testing-library/setup/#vitest&quot;&gt;testing-library: add vitest-setup.js&lt;/a&gt;.&lt;br&gt;
+最后 &lt;code&gt;coverage&lt;/code&gt; 的配置是为了理直气壮的不为 &lt;code&gt;src/index.jsx&lt;/code&gt; 写测试😉.&lt;br&gt;
+&lt;a href=&quot;https://supabase.com/&quot;&gt;supabase&lt;/a&gt; 是众多免费开源数据库平台, 通过jwt token(client level, service level) 来提供读写服务, 其中可以配置 row level policy 来保证用户对于数据的权限验证. 选择它也是因为它的使用性简单, 但是访问速度在此打出一个小问号吧.&lt;/p&gt;
+&lt;p&gt;在考虑测试框架和测试金字塔时选择 &lt;code&gt;vitest&lt;/code&gt; + (组件单测+业务逻辑单测)+页面集成测试+UI测试.&lt;br&gt;
+其中 &lt;code&gt;vitest&lt;/code&gt; 基本上可以平替 &lt;code&gt;jest&lt;/code&gt;: 提供 &lt;code&gt;describe, it, expect, vi, beforeEach&lt;/code&gt; 等方法. 其中在 &lt;code&gt;mock&lt;/code&gt; 的使用上有小小差别. 例如 &lt;code&gt;vitest&lt;/code&gt; 需要使用 &lt;code&gt;vi.hoisted&lt;/code&gt; 方法来进行 mock 函数的声明.&lt;br&gt;
+而在测试 react 组件时依然使用 &lt;code&gt;@testing-library/react&lt;/code&gt; 的 &lt;code&gt;render, screen, fireEvent&lt;/code&gt; 等方法.&lt;br&gt;
+写下这些的时候突然想起之前为一个产品设计测试金字塔, 其实最难的并不是设计, 而是让他人理解, 在大家提起 “为什么要写测试”, “如果写了 xx 是不是就不用写 yy&amp;quot;, “zz 这么难写有什么意义” 之类的困惑. 我想, 首先测试的编写是用自动化的程序简化人工验证的繁琐, 其次编写测试程序是促使开发人员切换产品的角度思考问题; 最后对于测试类型的抉择和删减的讨论, 我想说, 如果测试能解决问题, 存在就是合理的.&lt;/p&gt;
+&lt;p&gt;最后的最后再配置下自己的 eslint, 一整个项目就完备了 🎉&lt;br&gt;
+以上.&lt;/p&gt;
+&lt;p&gt;文后话:&lt;br&gt;
+挂载VPN时 docker 下载镜像一直报错&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Error response from daemon: Get “&lt;a href=&quot;https://registry-1.docker.io/v2/&quot;&gt;https://registry-1.docker.io/v2/&lt;/a&gt;”: context deadline exceeded (Client.Timeout exceeded while awaiting headers)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;本机使用 colima 启动 docker, 查了半天也没找到解决方案, 放弃使用 colima, 下载 docker desktop 解决了问题. 真是柳暗花明又一村 😎&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>2024快要结束啦</title>
+    <link href="https://www.sddtc.florist/sddtc.github.com/blog/2024-12-09-2024-ending/" />
+    <updated>2024-12-09T00:00:00Z</updated>
+    <id>https://www.sddtc.florist/sddtc.github.com/blog/2024-12-09-2024-ending/</id>
+    <content type="html">&lt;p&gt;翻到了3天以前的友圈, 看到好友所描述的&amp;quot;一事无成的一年&amp;quot;, 那是按照每个月份描绘的一年&lt;br&gt;
+1月份他在祖国的北边看火山, 吃羊&lt;br&gt;
+2月份他跑到了厦门, 吃海鲜&lt;br&gt;
+3月份的时候他去了马来西亚, 吃到了那里的榴莲&lt;br&gt;
+4月份的时候他到达新加坡, 看鱼狮尾雕像&lt;br&gt;
+5月份, 他去了日本, 吃了和牛&lt;br&gt;
+6月份他去了加拿大, 吃burger&lt;br&gt;
+7月份回到了北京打卡各种景点&lt;br&gt;
+8月份再次抵达马来西亚&lt;br&gt;
+9月份的时候去了山东&lt;br&gt;
+10月份的时候又回到了加拿大&lt;br&gt;
+11月份的时候蒙特利尔下大雪&lt;br&gt;
+而这条消息发在12月份的早上10点半, 那天是周六&lt;/p&gt;
+&lt;p&gt;发者有没有心我不知道, 但是我听到了自己震耳欲聋的沉默, 小心翼翼的回头品自己的这一年, 又是怎样的一年&lt;/p&gt;
+&lt;p&gt;12月份的我换了第三个电脑, 800块不出意外的回购, 买了一个新的樱桃键盘, 这样一来, 上下班终于做到了各种意义的切换.&lt;br&gt;
+11月份我在干嘛, 天啊, 在乌鲁木齐和家人们待了5天, 遇到了大雪, 吃到了一年份量的羊肉, 很香. 跳脱出来深刻地感受到父亲对于他家乡的喜爱, 对于家族的珍惜. 小姑在一个夜晚带我9连胜上王者, 开打之前我是没有信心的, 开打之后宛如坐上了云霄飞车, 看看小姑的好友列表让我知道了什么是人以群分, 物以类聚. 听着小姑给我的建议, 不得不说哪怕是简单的道理, 没有对的人在对的时间告诉你, 你还是无法理解. 人就是这么奇怪的生物.&lt;br&gt;
+订阅了一整年的三联周刊, 每周都会收到一本, 阅读杂志的体验很美妙. 虽然之前有关注公众号但是也并没有用过多的时间阅读. 而杂志能够让我下班回来翻阅, 了解笔者文字的魅力. 也让我无法停止对于写作的魅力的思考.&lt;br&gt;
+项目推进了企业级敏捷框架, 学习和探索. 我也不得不思考, &amp;quot;小敏捷&amp;quot;在项目里都很难说贯彻的好了, 比如拥抱变化, 比如说敏捷宣言的价值高的那部分做到了哪些? 可工作的软件高于详尽的文档, 个体和互动高于流程和工具. 几乎把右边做了个遍. 乐观一点想, 或许&amp;quot;企业级&amp;quot;才能有效果 :).&lt;br&gt;
+10月份开心的事情是发现了银泰简直是二次元的天堂, 每一层都有数不尽的谷子店, 和各种表演, 大部分是宅舞. 大家自由的cos各种各样的角色,CP. 印象很深的就是蛇恋! 上一次被年轻人们的cos击中还是小排球上映那会儿, 真视觉盛宴.&lt;br&gt;
+不开心的事情🙂, 那便是第一次在项目上和一个组产生了超出我预期的拉扯. 就称之为A吧. 咱们用技术的角度思考问题, 提出问题, 讨论问题. 会被对方用没有相关技能, 生产旧系统不想动, 也没有排期为理由避重就轻. 再用自己的那套符合自己利益的方案, 不论这个方案在可复用性, 可扩展性, 可阅读性, 可维护性有多差. 只要选对了场合, 含糊了所有技术问题, 得到了领导们的理解, 把依托答辩试图猛猛扣在你的头上. 我属于比较容易生气的人, 但也因此看到了自己的天真. 如今我还常常思考, 和A之间的文化鸿沟, 社会环境的差异是否在当中有不可忽视的力量. 大家虽然在一个项目里, 但是生存之道不同, 甚至是面对同样的客户. 我看不透到底哪种是对的, 开始不断反省自己, 或用劣币淘汰良币的说法自我安慰. 今后该如何是好, 有些人或许能从中学习, 强大. 也有些人不屑于这个环境, 彻底离开. 而我呢, 试图站着罢了.&lt;br&gt;
+9月份走了很多遍朱雀门-南门-和平门, 喜欢看安静的鸭子和好奇的猫咪. 南门是游客们的门, 也是我们滴城门!&lt;br&gt;
+这个月听了一场古典音乐会的分享, 包括她之前分享过修行指南, 葡萄酒指北, 我的感觉是她除了不写代码, 啥都会干. 包括最近还在织毛物, 给Suki提产品反馈, 总之是个永远表面上很平静但其实里面已经碎了的感觉的人. 是我不太能理解的绿老头. 月底的时候和另一个组里滴伙伴做Showcase, 找回了做视频的感觉, 我们一起录音的记录回听起来还是很好笑, 或许做视频, 不断的做视频, 是一件重要的事.&lt;br&gt;
+8月份去了秦岭植物园, 购入了人生第一套休闲西装! 这个月也第一次很严肃的思考了离开项目的可能性, 那会儿最大的感受应该是不值得. 从个人风格, 个人追求, 性别现状等各个角度看, 都有不同的合理性. 大概有些人可以思考到共赢的要点, 如果我也在这些人里就好了🤤.&lt;br&gt;
+7月份去了广元, 一座房子在山上的城市. 组里第一次有了小伙伴的离开, 其实那时候我就在想, 离开和留下, 都不能说明什么. 每个人都有自己精彩的人生, 这原地也不是啥厉害东西, 而她云游四海的人生, 才是可望而不可及的珍贵呢.&lt;br&gt;
+6月份和组里的小伙伴一起征服了朱雀森林公园的2380米! 其实爬山不带厚衣服的我才暴露了离开父母生活就没有什么生活常识的可怕现实. 独立生活, 学习生活, 才是对生活最大的尊重. 这个月一直在帮忙做review, 没什么自己的时间, 浪费了生命.&lt;br&gt;
+5月份去了很多次曲江遗址公园, 一圈一圈的走着, 公园20分钟让身心愉悦.&lt;br&gt;
+4月份在家休息了一周.&lt;br&gt;
+3月份去了长沙, 橘子洲头, 毛主席雕塑! 喝到了茶颜悦色, 古德墨宁, 大香肠和臭豆腐! 五一广场太热闹了.&lt;br&gt;
+2月份过年, 在西安.&lt;br&gt;
+1月份跨年那天大半夜被堵在了老城根, 打不上车与拥挤的人流, 路上的烟花, 不合脚的鞋子, 延迟下班了4个小时的公交车, 令人印象深刻回忆.&lt;/p&gt;
+</content>
+  </entry>
+</feed>
