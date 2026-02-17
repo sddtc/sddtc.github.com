@@ -6,6 +6,7 @@ import markdownItPlugin from "markdown-it";
 import markdownItAnchorPlugin from "markdown-it-anchor";
 import markdownItHighlightJSPlugin from "markdown-it-highlightjs";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
+import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 
 import pluginFilters from "./_config/filters.js";
 
@@ -101,6 +102,25 @@ export default async function (eleventyConfig) {
 
 	//content of section
 	eleventyConfig.addPlugin(pluginTOC);
+	//rss feed
+	eleventyConfig.addPlugin(feedPlugin, {
+		type: "atom", // or "rss", "json"
+		outputPath: "/feed.xml",
+		collection: {
+			name: "posts", // iterate over `collections.posts`
+			limit: 10,     // 0 means no limit
+		},
+		metadata: {
+			language: "zh-cn",
+			title: "sddtc's blog",
+			subtitle: "recent 10 articles about software development, technology, and other things that I find interesting.",
+			base: "https://www.sddtc.florist/",
+			author: {
+				name: "sddtc",
+				email: "changhbaga@gmail.com"
+			}
+		}
+	});
 
 	eleventyConfig.addShortcode("currentBuildDate", () => {
 		return (new Date()).toISOString();
