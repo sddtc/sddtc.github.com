@@ -4,12 +4,141 @@
   <subtitle>recent 10 articles about software development, technology, and other things that I find interesting.</subtitle>
   <link href="https://www.sddtc.florist/sddtc.github.com/feed.xml" rel="self" />
   <link href="https://www.sddtc.florist/sddtc.github.com/" />
-  <updated>2026-02-12T00:00:00Z</updated>
+  <updated>2026-02-26T00:00:00Z</updated>
   <id>https://www.sddtc.florist/sddtc.github.com/</id>
   <author>
     <name>sddtc</name>
     <email>changhbaga@gmail.com</email>
   </author>
+  <entry>
+    <title>Fastify 模块化项目实战(二)</title>
+    <link href="https://www.sddtc.florist/sddtc.github.com/blog/2026-02-26-fastify-modular-monolith-demo/" />
+    <updated>2026-02-26T00:00:00Z</updated>
+    <id>https://www.sddtc.florist/sddtc.github.com/blog/2026-02-26-fastify-modular-monolith-demo/</id>
+    <content type="html">&lt;h2 id=&quot;%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BA-fastify-%E9%A1%B9%E7%9B%AE&quot; tabindex=&quot;-1&quot;&gt;开始搭建 Fastify 项目&lt;/h2&gt;
+&lt;p&gt;Fastify最吸引我的特性有两个, 一个是高性能, 另一个就是“一切接插件”的理念, 插件的特点就是可拔插, 可快速替换, 快速集成等. 所以这篇文章会简单介绍如何利用这一特性来快速启动一个modular monolith项目.&lt;br&gt;
+首先我们心里大概构思出项目结构, 如下所示:&lt;/p&gt;
+&lt;pre class=&quot;language-txt&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-txt&quot;&gt;src/
+├────── modules/
+│       ├── module-a
+│       │   ├──plugins
+│       │   ├──routes
+│       │   └──index.ts
+│       ├── module-b
+│       │   ├──plugins
+│       │   ├──routes
+│       ├── └──index.ts
+|       │...other modules
+├────── plugins      
+├────── routes
+└────── app.ts&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;其中:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;module-a 可以是用户模块, 提供类似于 &lt;code&gt;/user/api/v1/profile&lt;/code&gt;, &lt;code&gt;/user/api/v1/links&lt;/code&gt; 等能力&lt;/li&gt;
+&lt;li&gt;module-b 可以是支付模块, 提供类似于 &lt;code&gt;/payment/api/v1/wechat&lt;/code&gt;, &lt;code&gt;/payment/api/alipay&lt;/code&gt; 等能力&lt;/li&gt;
+&lt;li&gt;plugins 是服务本身需要的插件, 可以来自于Fastify生态, 例如&lt;code&gt;cookies&lt;/code&gt;, &lt;code&gt;swaggerui&lt;/code&gt;, &lt;code&gt;rate-limit&lt;/code&gt; 等, 也可以是自定义的utility插件和app插件等&lt;/li&gt;
+&lt;li&gt;routes可以是服务暴露的基础api, 也可以作为aggregate存在来整合模块内部的api来提供能力&lt;/li&gt;
+&lt;li&gt;app.ts专注于启动服务&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;关键点是模块需要以插件的方式封装并暴露出来.&lt;/p&gt;
+&lt;h3 id=&quot;%E5%88%9B%E5%BB%BA-app-%E5%B9%B6%E7%9B%91%E5%90%AC%E7%AB%AF%E5%8F%A3&quot; tabindex=&quot;-1&quot;&gt;创建 app 并监听端口&lt;/h3&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; Fastify &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;fastify&#39;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; app &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;Fastify&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    logger&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;/&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;request&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; reply&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; hello&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;world&#39;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;listen&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; port&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;3000&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;err&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; address&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;err&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;log&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;err&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+        process&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;log&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token template-string&quot;&gt;&lt;span class=&quot;token template-punctuation string&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;Server listening at &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;${&lt;/span&gt;address&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token template-punctuation string&quot;&gt;`&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;%E5%88%9B%E5%BB%BA%E6%A8%A1%E5%9D%97a&quot; tabindex=&quot;-1&quot;&gt;创建模块a&lt;/h3&gt;
+&lt;h4 id=&quot;%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%B8%80%E4%B8%AAapi(api-a.ts)%3A&quot; tabindex=&quot;-1&quot;&gt;创建第一个api(&lt;code&gt;api-a.ts&lt;/code&gt;):&lt;/h4&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;routes&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;fastify&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; options&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    fastify&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;/hello-first&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;request&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; reply&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; hello&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;from a&#39;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;default&lt;/span&gt; routes&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&quot;%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%BA%8C%E4%B8%AAapi(api-b.ts)%3A&quot; tabindex=&quot;-1&quot;&gt;创建第二个api(&lt;code&gt;api-b.ts&lt;/code&gt;):&lt;/h4&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;routes&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;fastify&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; options&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    fastify&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;/hello-second&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;request&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; reply&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; hello&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;from another api in a&#39;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;default&lt;/span&gt; routes&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&quot;%E6%95%B4%E5%90%88%E5%A4%9A%E4%B8%AAapi%E5%88%B0index.ts%E4%B8%AD(%E5%8F%AF%E9%80%89)&quot; tabindex=&quot;-1&quot;&gt;整合多个API到index.ts中(可选)&lt;/h4&gt;
+&lt;p&gt;如果创建多个职责单一的api, 并把它们放在一个文件夹下, 那么可以创建一个&lt;code&gt;index.ts&lt;/code&gt;文件来整合模块下的所有api:&lt;/p&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; apiA &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;./api-a&#39;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; apiASecond &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;./api-b&#39;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;routes&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;fastify&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; options&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    fastify&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;register&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;apiA&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    fastify&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;register&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;apiASecond&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;default&lt;/span&gt; routes&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;%E6%B3%A8%E5%86%8C%E5%88%B0-app&quot; tabindex=&quot;-1&quot;&gt;注册到 app&lt;/h3&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; Fastify &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;fastify&#39;&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;// import api-a and api-b from index file&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; routes &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;./modules/a/routes/index&#39;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; app &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;Fastify&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    logger&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;/&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;request&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; reply&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; hello&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;world&#39;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;// register routes and add prefix with module name&lt;/span&gt;
+app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;register&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;routes&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; prefix&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;/a&#39;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;listen&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; port&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;3000&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;err&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; address&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;err&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;log&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;err&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+        process&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;log&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token template-string&quot;&gt;&lt;span class=&quot;token template-punctuation string&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;Server listening at &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;${&lt;/span&gt;address&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token template-punctuation string&quot;&gt;`&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;app.register&lt;/code&gt; 可以注册模块暴露的路由, 并可以设置URL前缀, 以上配置完成之后, 你可以通过:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;GET &lt;code&gt;localhost:3000/a/hello-first&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;GET &lt;code&gt;localhost:3000/a/hello-second&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;来访问模块a的API, 其中localhost:3000是本地的默认配置, 你可以替换端口号为你自己指定的端口号.&lt;/p&gt;
+&lt;h3 id=&quot;%E4%BD%BF%E7%94%A8-%40fastify%2Fautoload-%E5%B9%B6%E6%90%AD%E9%85%8D-prefix&quot; tabindex=&quot;-1&quot;&gt;使用 &lt;code&gt;@fastify/autoload&lt;/code&gt; 并搭配 &lt;code&gt;prefix&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;如果你使用了&lt;code&gt;@fastify/autoload&lt;/code&gt;, 那么以上示例代码中的&lt;code&gt;prefix&lt;/code&gt;恐怕无法如你预期那样生效, 因为一些参数使用方式的不同:&lt;/p&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; path &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;node:path&#39;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; fastifyAutoload &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;@fastify/autoload&#39;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; FastifyInstance&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; FastifyPluginOptions &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;fastify&#39;&lt;/span&gt;
+
+fastify&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;register&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;fastifyAutoload&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  dir&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; path&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;meta&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dirname&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;routes&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  options&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;opts&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; prefix&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;/a&#39;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;其中&lt;code&gt;routes&lt;/code&gt;文件夹下放着所有的api接口文件, 在 app.ts 中注册模块如下所示:&lt;/p&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; Fastify &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;fastify&#39;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; fp &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;fastify-plugin&#39;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; moduleARoutes &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;./modules/a/index.js&#39;&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;// ...&lt;/span&gt;
+app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;register&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;fp&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;moduleARoutes&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;// ...&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;可以看到一旦模块化, 项目将具有很强的可扩展性, 能够展现出高内聚性和低耦合性, 对于模块的测试也更加的可控, 拥有清晰的边界.&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Fastify 模块化项目实战(一)</title>
     <link href="https://www.sddtc.florist/sddtc.github.com/blog/2026-02-12-fastify-modules-tutorials-1/" />
@@ -431,8 +560,6 @@ vi&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&
     &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;使用之后也很顺手, 一个是没有外部依赖, 另外也能满足需求, 所以目前我也并未使用其它测试框架.&lt;/p&gt;
-&lt;h2 id=&quot;%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BAfastify%E9%A1%B9%E7%9B%AE&quot; tabindex=&quot;-1&quot;&gt;开始搭建Fastify项目&lt;/h2&gt;
-&lt;p&gt;TBC&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -1068,43 +1195,6 @@ image 的 binary 类型&lt;/p&gt;
 &lt;p&gt;Error response from daemon: Get “&lt;a href=&quot;https://registry-1.docker.io/v2/&quot;&gt;https://registry-1.docker.io/v2/&lt;/a&gt;”: context deadline exceeded (Client.Timeout exceeded while awaiting headers)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;本机使用 colima 启动 docker, 查了半天也没找到解决方案, 放弃使用 colima, 下载 docker desktop 解决了问题. 真是柳暗花明又一村 😎&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>2024快要结束啦</title>
-    <link href="https://www.sddtc.florist/sddtc.github.com/blog/2024-12-09-2024-ending/" />
-    <updated>2024-12-09T00:00:00Z</updated>
-    <id>https://www.sddtc.florist/sddtc.github.com/blog/2024-12-09-2024-ending/</id>
-    <content type="html">&lt;p&gt;翻到了3天以前的友圈, 看到好友所描述的&amp;quot;一事无成的一年&amp;quot;, 那是按照每个月份描绘的一年&lt;br&gt;
-1月份他在祖国的北边看火山, 吃羊&lt;br&gt;
-2月份他跑到了厦门, 吃海鲜&lt;br&gt;
-3月份的时候他去了马来西亚, 吃到了那里的榴莲&lt;br&gt;
-4月份的时候他到达新加坡, 看鱼狮尾雕像&lt;br&gt;
-5月份, 他去了日本, 吃了和牛&lt;br&gt;
-6月份他去了加拿大, 吃burger&lt;br&gt;
-7月份回到了北京打卡各种景点&lt;br&gt;
-8月份再次抵达马来西亚&lt;br&gt;
-9月份的时候去了山东&lt;br&gt;
-10月份的时候又回到了加拿大&lt;br&gt;
-11月份的时候蒙特利尔下大雪&lt;br&gt;
-而这条消息发在12月份的早上10点半, 那天是周六&lt;/p&gt;
-&lt;p&gt;发者有没有心我不知道, 但是我听到了自己震耳欲聋的沉默, 小心翼翼的回头品自己的这一年, 又是怎样的一年&lt;/p&gt;
-&lt;p&gt;12月份的我换了第三个电脑, 800块不出意外的回购, 买了一个新的樱桃键盘, 这样一来, 上下班终于做到了各种意义的切换.&lt;br&gt;
-11月份我在干嘛, 天啊, 在乌鲁木齐和家人们待了5天, 遇到了大雪, 吃到了一年份量的羊肉, 很香. 跳脱出来深刻地感受到父亲对于他家乡的喜爱, 对于家族的珍惜. 小姑在一个夜晚带我9连胜上王者, 开打之前我是没有信心的, 开打之后宛如坐上了云霄飞车, 看看小姑的好友列表让我知道了什么是人以群分, 物以类聚. 听着小姑给我的建议, 不得不说哪怕是简单的道理, 没有对的人在对的时间告诉你, 你还是无法理解. 人就是这么奇怪的生物.&lt;br&gt;
-订阅了一整年的三联周刊, 每周都会收到一本, 阅读杂志的体验很美妙. 虽然之前有关注公众号但是也并没有用过多的时间阅读. 而杂志能够让我下班回来翻阅, 了解笔者文字的魅力. 也让我无法停止对于写作的魅力的思考.&lt;br&gt;
-项目推进了企业级敏捷框架, 学习和探索. 我也不得不思考, &amp;quot;小敏捷&amp;quot;在项目里都很难说贯彻的好了, 比如拥抱变化, 比如说敏捷宣言的价值高的那部分做到了哪些? 可工作的软件高于详尽的文档, 个体和互动高于流程和工具. 几乎把右边做了个遍. 乐观一点想, 或许&amp;quot;企业级&amp;quot;才能有效果 :).&lt;br&gt;
-10月份开心的事情是发现了银泰简直是二次元的天堂, 每一层都有数不尽的谷子店, 和各种表演, 大部分是宅舞. 大家自由的cos各种各样的角色,CP. 印象很深的就是蛇恋! 上一次被年轻人们的cos击中还是小排球上映那会儿, 真视觉盛宴.&lt;br&gt;
-不开心的事情🙂, 那便是第一次在项目上和一个组产生了超出我预期的拉扯. 就称之为A吧. 咱们用技术的角度思考问题, 提出问题, 讨论问题. 会被对方用没有相关技能, 生产旧系统不想动, 也没有排期为理由避重就轻. 再用自己的那套符合自己利益的方案, 不论这个方案在可复用性, 可扩展性, 可阅读性, 可维护性有多差. 只要选对了场合, 含糊了所有技术问题, 得到了领导们的理解, 把依托答辩试图猛猛扣在你的头上. 我属于比较容易生气的人, 但也因此看到了自己的天真. 如今我还常常思考, 和A之间的文化鸿沟, 社会环境的差异是否在当中有不可忽视的力量. 大家虽然在一个项目里, 但是生存之道不同, 甚至是面对同样的客户. 我看不透到底哪种是对的, 开始不断反省自己, 或用劣币淘汰良币的说法自我安慰. 今后该如何是好, 有些人或许能从中学习, 强大. 也有些人不屑于这个环境, 彻底离开. 而我呢, 试图站着罢了.&lt;br&gt;
-9月份走了很多遍朱雀门-南门-和平门, 喜欢看安静的鸭子和好奇的猫咪. 南门是游客们的门, 也是我们滴城门!&lt;br&gt;
-这个月听了一场古典音乐会的分享, 包括她之前分享过修行指南, 葡萄酒指北, 我的感觉是她除了不写代码, 啥都会干. 包括最近还在织毛物, 给Suki提产品反馈, 总之是个永远表面上很平静但其实里面已经碎了的感觉的人. 是我不太能理解的绿老头. 月底的时候和另一个组里滴伙伴做Showcase, 找回了做视频的感觉, 我们一起录音的记录回听起来还是很好笑, 或许做视频, 不断的做视频, 是一件重要的事.&lt;br&gt;
-8月份去了秦岭植物园, 购入了人生第一套休闲西装! 这个月也第一次很严肃的思考了离开项目的可能性, 那会儿最大的感受应该是不值得. 从个人风格, 个人追求, 性别现状等各个角度看, 都有不同的合理性. 大概有些人可以思考到共赢的要点, 如果我也在这些人里就好了🤤.&lt;br&gt;
-7月份去了广元, 一座房子在山上的城市. 组里第一次有了小伙伴的离开, 其实那时候我就在想, 离开和留下, 都不能说明什么. 每个人都有自己精彩的人生, 这原地也不是啥厉害东西, 而她云游四海的人生, 才是可望而不可及的珍贵呢.&lt;br&gt;
-6月份和组里的小伙伴一起征服了朱雀森林公园的2380米! 其实爬山不带厚衣服的我才暴露了离开父母生活就没有什么生活常识的可怕现实. 独立生活, 学习生活, 才是对生活最大的尊重. 这个月一直在帮忙做review, 没什么自己的时间, 浪费了生命.&lt;br&gt;
-5月份去了很多次曲江遗址公园, 一圈一圈的走着, 公园20分钟让身心愉悦.&lt;br&gt;
-4月份在家休息了一周.&lt;br&gt;
-3月份去了长沙, 橘子洲头, 毛主席雕塑! 喝到了茶颜悦色, 古德墨宁, 大香肠和臭豆腐! 五一广场太热闹了.&lt;br&gt;
-2月份过年, 在西安.&lt;br&gt;
-1月份跨年那天大半夜被堵在了老城根, 打不上车与拥挤的人流, 路上的烟花, 不合脚的鞋子, 延迟下班了4个小时的公交车, 令人印象深刻回忆.&lt;/p&gt;
 </content>
   </entry>
 </feed>

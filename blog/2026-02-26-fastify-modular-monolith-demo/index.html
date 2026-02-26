@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Fastify 模块化项目实战(二)</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+
+html {
+	overflow-y: scroll;
+}
+
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img {
+	max-width: 100%;
+}
+
+img[width][height] {
+	height: auto;
+}
+
+img[src$=".svg"] {
+	width: 100%;
+	height: auto;
+	max-width: none;
+}
+
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+
+.links-nextprev>* {
+	flex-grow: 1;
+}
+
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	/* Merges borders */
+	margin-bottom: 1rem;
+}
+
+th,
+td {
+	padding: 12px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+}
+
+th {
+	background-color: var(--background-color);
+	color: #333;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375;
+	/* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+
+.home-link {
+	flex-grow: 1;
+	font-size: 1em;
+	/* 16px /16 */
+	font-weight: 700;
+}
+
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.nav-item {
+	display: inline-block;
+}
+
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em;
+	/* 13px /16 */
+	color: var(--color-gray-90);
+}
+
+.postlist-date {
+	word-spacing: -0.5px;
+}
+
+.postlist-link {
+	font-size: 1.1875em;
+	/* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+
+.postlist-item>.post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.post-metadata time {
+	margin-right: 1em;
+}
+
+.content-tableau {
+	background-color: #dedfd1;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+
+/* 其他页面样式, 例如: 关于我 */
+blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post {
+	font-size: 18px;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
+/* 单行代码 */
+.page-post code {
+	font-size: 13px;
+	background-color: #F2EFE7;
+	word-break: break-all;
+	padding: 3px 5px;
+	margin: 0 4px;
+	border-radius: 5px;
+	color: #333333;
+	transition: all 500ms ease;
+	font-style: normal;
+}
+/**
+ * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
+ * Based on https://github.com/chriskempson/tomorrow-theme
+ * @author Rose Pritchard
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #ccc;
+	background: none;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #2d2d2d;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #999;
+}
+
+.token.punctuation {
+	color: #ccc;
+}
+
+.token.tag,
+.token.attr-name,
+.token.namespace,
+.token.deleted {
+	color: #e2777a;
+}
+
+.token.function-name {
+	color: #6196cc;
+}
+
+.token.boolean,
+.token.number,
+.token.function {
+	color: #f08d49;
+}
+
+.token.property,
+.token.class-name,
+.token.constant,
+.token.symbol {
+	color: #f8c555;
+}
+
+.token.selector,
+.token.important,
+.token.atrule,
+.token.keyword,
+.token.builtin {
+	color: #cc99cd;
+}
+
+.token.string,
+.token.char,
+.token.attr-value,
+.token.regex,
+.token.variable {
+	color: #7ec699;
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+	color: #67cdcc;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+
+.token.inserted {
+	color: green;
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+<h1>Fastify 模块化项目实战(二)</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2026-02-26">26 February 2026</time></li>
+	标签:
+	<li><a href="/sddtc.github.com/tags/fastify/" class="post-tag">Fastify</a>, </li>
+	<li><a href="/sddtc.github.com/tags/typescript/" class="post-tag">Typescript</a>, </li>
+	<li><a href="/sddtc.github.com/tags/esm/" class="post-tag">ESM</a></li>
+</ul>
+
+<div class="page-post">
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BA-fastify-%E9%A1%B9%E7%9B%AE">开始搭建 Fastify 项目</a><ul><li><a href="#%E5%88%9B%E5%BB%BA-app-%E5%B9%B6%E7%9B%91%E5%90%AC%E7%AB%AF%E5%8F%A3">创建 app 并监听端口</a></li><li><a href="#%E5%88%9B%E5%BB%BA%E6%A8%A1%E5%9D%97a">创建模块a</a><ul><li><a href="#%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%B8%80%E4%B8%AAapi(api-a.ts)%3A">创建第一个api(api-a.ts):</a></li><li><a href="#%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%BA%8C%E4%B8%AAapi(api-b.ts)%3A">创建第二个api(api-b.ts):</a></li><li><a href="#%E6%95%B4%E5%90%88%E5%A4%9A%E4%B8%AAapi%E5%88%B0index.ts%E4%B8%AD(%E5%8F%AF%E9%80%89)">整合多个API到index.ts中(可选)</a></li></ul></li><li><a href="#%E6%B3%A8%E5%86%8C%E5%88%B0-app">注册到 app</a></li><li><a href="#%E4%BD%BF%E7%94%A8-%40fastify%2Fautoload-%E5%B9%B6%E6%90%AD%E9%85%8D-prefix">使用 @fastify/autoload 并搭配 prefix</a></li></ul></li></ul>
+      </div>
+</aside>
+  <h2 id="%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BA-fastify-%E9%A1%B9%E7%9B%AE" tabindex="-1">开始搭建 Fastify 项目</h2>
+<p>Fastify最吸引我的特性有两个, 一个是高性能, 另一个就是“一切接插件”的理念, 插件的特点就是可拔插, 可快速替换, 快速集成等. 所以这篇文章会简单介绍如何利用这一特性来快速启动一个modular monolith项目.<br>
+首先我们心里大概构思出项目结构, 如下所示:</p>
+<pre class="language-txt" tabindex="0"><code class="hljs language-txt">src/
+├────── modules/
+│       ├── module-a
+│       │   ├──plugins
+│       │   ├──routes
+│       │   └──index.ts
+│       ├── module-b
+│       │   ├──plugins
+│       │   ├──routes
+│       ├── └──index.ts
+|       │...other modules
+├────── plugins      
+├────── routes
+└────── app.ts</code></pre>
+<p>其中:</p>
+<ul>
+<li>module-a 可以是用户模块, 提供类似于 <code>/user/api/v1/profile</code>, <code>/user/api/v1/links</code> 等能力</li>
+<li>module-b 可以是支付模块, 提供类似于 <code>/payment/api/v1/wechat</code>, <code>/payment/api/alipay</code> 等能力</li>
+<li>plugins 是服务本身需要的插件, 可以来自于Fastify生态, 例如<code>cookies</code>, <code>swaggerui</code>, <code>rate-limit</code> 等, 也可以是自定义的utility插件和app插件等</li>
+<li>routes可以是服务暴露的基础api, 也可以作为aggregate存在来整合模块内部的api来提供能力</li>
+<li>app.ts专注于启动服务</li>
+</ul>
+<p>关键点是模块需要以插件的方式封装并暴露出来.</p>
+<h3 id="%E5%88%9B%E5%BB%BA-app-%E5%B9%B6%E7%9B%91%E5%90%AC%E7%AB%AF%E5%8F%A3" tabindex="-1">创建 app 并监听端口</h3>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">import</span> Fastify <span class="token keyword">from</span> <span class="token string">'fastify'</span>
+
+<span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token function">Fastify</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    logger<span class="token operator">:</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token punctuation">(</span>request<span class="token punctuation">,</span> reply<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span> hello<span class="token operator">:</span> <span class="token string">'world'</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token punctuation">{</span> port<span class="token operator">:</span> <span class="token number">3000</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>err<span class="token punctuation">,</span> address<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        app<span class="token punctuation">.</span>log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+        process<span class="token punctuation">.</span><span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    app<span class="token punctuation">.</span>log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Server listening at </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>address<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
+<h3 id="%E5%88%9B%E5%BB%BA%E6%A8%A1%E5%9D%97a" tabindex="-1">创建模块a</h3>
+<h4 id="%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%B8%80%E4%B8%AAapi(api-a.ts)%3A" tabindex="-1">创建第一个api(<code>api-a.ts</code>):</h4>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">routes</span><span class="token punctuation">(</span>fastify<span class="token punctuation">,</span> options<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    fastify<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/hello-first'</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token punctuation">(</span>request<span class="token punctuation">,</span> reply<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token punctuation">{</span> hello<span class="token operator">:</span> <span class="token string">'from a'</span> <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> routes</code></pre>
+<h4 id="%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%BA%8C%E4%B8%AAapi(api-b.ts)%3A" tabindex="-1">创建第二个api(<code>api-b.ts</code>):</h4>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">routes</span><span class="token punctuation">(</span>fastify<span class="token punctuation">,</span> options<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    fastify<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/hello-second'</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token punctuation">(</span>request<span class="token punctuation">,</span> reply<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token punctuation">{</span> hello<span class="token operator">:</span> <span class="token string">'from another api in a'</span> <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> routes</code></pre>
+<h4 id="%E6%95%B4%E5%90%88%E5%A4%9A%E4%B8%AAapi%E5%88%B0index.ts%E4%B8%AD(%E5%8F%AF%E9%80%89)" tabindex="-1">整合多个API到index.ts中(可选)</h4>
+<p>如果创建多个职责单一的api, 并把它们放在一个文件夹下, 那么可以创建一个<code>index.ts</code>文件来整合模块下的所有api:</p>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">import</span> apiA <span class="token keyword">from</span> <span class="token string">'./api-a'</span>
+<span class="token keyword">import</span> apiASecond <span class="token keyword">from</span> <span class="token string">'./api-b'</span>
+
+<span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">routes</span><span class="token punctuation">(</span>fastify<span class="token punctuation">,</span> options<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    fastify<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>apiA<span class="token punctuation">)</span>
+    fastify<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>apiASecond<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> routes</code></pre>
+<h3 id="%E6%B3%A8%E5%86%8C%E5%88%B0-app" tabindex="-1">注册到 app</h3>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">import</span> Fastify <span class="token keyword">from</span> <span class="token string">'fastify'</span>
+<span class="token comment">// import api-a and api-b from index file</span>
+<span class="token keyword">import</span> routes <span class="token keyword">from</span> <span class="token string">'./modules/a/routes/index'</span>
+
+<span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token function">Fastify</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    logger<span class="token operator">:</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token punctuation">(</span>request<span class="token punctuation">,</span> reply<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span> hello<span class="token operator">:</span> <span class="token string">'world'</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment">// register routes and add prefix with module name</span>
+app<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>routes<span class="token punctuation">,</span> <span class="token punctuation">{</span> prefix<span class="token operator">:</span> <span class="token string">'/a'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token punctuation">{</span> port<span class="token operator">:</span> <span class="token number">3000</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>err<span class="token punctuation">,</span> address<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        app<span class="token punctuation">.</span>log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+        process<span class="token punctuation">.</span><span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    app<span class="token punctuation">.</span>log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Server listening at </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>address<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
+<p><code>app.register</code> 可以注册模块暴露的路由, 并可以设置URL前缀, 以上配置完成之后, 你可以通过:</p>
+<ul>
+<li>GET <code>localhost:3000/a/hello-first</code></li>
+<li>GET <code>localhost:3000/a/hello-second</code></li>
+</ul>
+<p>来访问模块a的API, 其中localhost:3000是本地的默认配置, 你可以替换端口号为你自己指定的端口号.</p>
+<h3 id="%E4%BD%BF%E7%94%A8-%40fastify%2Fautoload-%E5%B9%B6%E6%90%AD%E9%85%8D-prefix" tabindex="-1">使用 <code>@fastify/autoload</code> 并搭配 <code>prefix</code></h3>
+<p>如果你使用了<code>@fastify/autoload</code>, 那么以上示例代码中的<code>prefix</code>恐怕无法如你预期那样生效, 因为一些参数使用方式的不同:</p>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">import</span> path <span class="token keyword">from</span> <span class="token string">'node:path'</span>
+<span class="token keyword">import</span> fastifyAutoload <span class="token keyword">from</span> <span class="token string">'@fastify/autoload'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> FastifyInstance<span class="token punctuation">,</span> FastifyPluginOptions <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'fastify'</span>
+
+fastify<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>fastifyAutoload<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  dir<span class="token operator">:</span> path<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token keyword">import</span><span class="token punctuation">.</span>meta<span class="token punctuation">.</span>dirname<span class="token punctuation">,</span> <span class="token string">'routes'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  options<span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token operator">...</span>opts<span class="token punctuation">,</span> prefix<span class="token operator">:</span> <span class="token string">'/a'</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
+<p>其中<code>routes</code>文件夹下放着所有的api接口文件, 在 app.ts 中注册模块如下所示:</p>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">import</span> Fastify <span class="token keyword">from</span> <span class="token string">'fastify'</span>
+<span class="token keyword">import</span> fp <span class="token keyword">from</span> <span class="token string">'fastify-plugin'</span>
+
+<span class="token keyword">import</span> moduleARoutes <span class="token keyword">from</span> <span class="token string">'./modules/a/index.js'</span>
+
+<span class="token comment">// ...</span>
+app<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span><span class="token function">fp</span><span class="token punctuation">(</span>moduleARoutes<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">// ...</span></code></pre>
+<p>可以看到一旦模块化, 项目将具有很强的可扩展性, 能够展现出高内聚性和低耦合性, 对于模块的测试也更加的可控, 拥有清晰的边界.</p>
+
+</div>
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2026-02-12-fastify-modules-tutorials-1/">Fastify 模块化项目实战(一)</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © <span id="copyright-year"></span></p>
+		</footer>
+
+		
+
+    
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2026-02-26-fastify-modular-monolith-demo/` was built on 2026-02-26T03:30:20.662Z -->
+		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
+	</body>
+</html>
