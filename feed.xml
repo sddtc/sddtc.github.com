@@ -4,12 +4,198 @@
   <subtitle>recent 10 articles about software development, technology, and other things that I find interesting.</subtitle>
   <link href="https://www.sddtc.florist/sddtc.github.com/feed.xml" rel="self" />
   <link href="https://www.sddtc.florist/sddtc.github.com/" />
-  <updated>2026-02-26T00:00:00Z</updated>
+  <updated>2026-02-28T00:00:00Z</updated>
   <id>https://www.sddtc.florist/sddtc.github.com/</id>
   <author>
     <name>sddtc</name>
     <email>changhbaga@gmail.com</email>
   </author>
+  <entry>
+    <title>Fastify + TypeScript 中的 typebox</title>
+    <link href="https://www.sddtc.florist/sddtc.github.com/blog/2026-02-28-uses-typebox-in-fastify/" />
+    <updated>2026-02-28T00:00:00Z</updated>
+    <id>https://www.sddtc.florist/sddtc.github.com/blog/2026-02-28-uses-typebox-in-fastify/</id>
+    <content type="html">&lt;h2 id=&quot;%40sinclair%2Ftypebox&quot; tabindex=&quot;-1&quot;&gt;@sinclair/typebox&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;@sinclair/typebox&lt;/code&gt;（也常简称为 &lt;code&gt;TypeBox&lt;/code&gt;）是一个用于构建 JSON Schema 的库，同时能将这些 Schema 映射成 TypeScript 类型。这意味着你可以利用同一套定义既做静态类型检查，又做运行时验证（与 AJV 等库配合统一类型与 schema)。&lt;br&gt;
+它在 Fastify 社区非常流行，Fastify 使用 JSON Schema 来验证请求/响应，而 TypeBox 能把该 Schema 与 TS 类型无缝融合。&lt;/p&gt;
+&lt;p&gt;它的官方文档: &lt;a href=&quot;https://sinclairzx81.github.io/typebox/#/docs&quot;&gt;TypeBox Docs&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;%E6%88%91%E4%BB%AC%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8-typebox%EF%BC%9F&quot; tabindex=&quot;-1&quot;&gt;我们为什么用 TypeBox？&lt;/h2&gt;
+&lt;p&gt;传统 TS 类型只在编译阶段有效，而运行时 JS 不存在类型；而 JSON Schema 可用于运行时验证，但编写起来啰嗦、难维护。TypeBox 解决了这个矛盾：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;支持定义类型并导出 JSON Schema&lt;/li&gt;
+&lt;li&gt;TypeScript 能从 Schema 自动推断类型&lt;/li&gt;
+&lt;li&gt;与 Fastify 等框架无缝集成&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;所以, TypeBox 特别适合在：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用 Fastify 做 API 服务，需要声明请求/响应 schema&lt;/li&gt;
+&lt;li&gt;想要统一 schema 和 TypeScript 的类型&lt;/li&gt;
+&lt;li&gt;使用 AJV 等验证器做运行时校验&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;typebox-%E7%9A%84%E4%B8%BB%E8%A6%81%E7%94%A8%E6%B3%95&quot; tabindex=&quot;-1&quot;&gt;TypeBox 的主要用法&lt;/h2&gt;
+&lt;p&gt;TypeBox最核心的两个导出要属&lt;code&gt;Type&lt;/code&gt;和&lt;code&gt;Static&lt;/code&gt;了：&lt;/p&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; Static &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;@sinclair/typebox&#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;type%3A-schema-%E6%9E%84%E9%80%A0%E5%99%A8&quot; tabindex=&quot;-1&quot;&gt;Type: Schema 构造器&lt;/h3&gt;
+&lt;p&gt;TypeBox 通过 &lt;code&gt;Type&lt;/code&gt; 命名空间提供大量方法来构建 JSON Schema。每个方法都对应一个 TypeScript 类型。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;基本类型&lt;/strong&gt;:&lt;/p&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;A&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;   &lt;span class=&quot;token comment&quot;&gt;// json schema: { type: &#39;string&#39; }&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;B&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Number&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;   &lt;span class=&quot;token comment&quot;&gt;// json schema: { type: &#39;number&#39; }&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;C&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Boolean&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;token comment&quot;&gt;// json schema: { type: &#39;boolean&#39; }&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这些定义不仅是 schema，还能在 TS 中映射真实类型。&lt;/p&gt;
+&lt;h3 id=&quot;static%3A-%E6%8E%A8%E6%96%AD-typescript-%E7%B1%BB%E5%9E%8B&quot; tabindex=&quot;-1&quot;&gt;Static: 推断 TypeScript 类型&lt;/h3&gt;
+&lt;p&gt;虽然 &lt;code&gt;Type.String()&lt;/code&gt; 等返回的是 JSON Schema，但要拿到 TS 类型需要：&lt;/p&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;&lt;span class=&quot;token constant&quot;&gt;T&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Static&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;typeof&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;  &lt;span class=&quot;token comment&quot;&gt;// 等价于: string&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这样你用一个 Schema 定义，同时得到了运行时 Schema + 编译时TS类型。😉&lt;/p&gt;
+&lt;h3 id=&quot;%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95&quot; tabindex=&quot;-1&quot;&gt;常用方法&lt;/h3&gt;
+&lt;h4 id=&quot;type.object%3A-%E5%AE%9A%E4%B9%89%E5%AF%B9%E8%B1%A1%E7%BB%93%E6%9E%84&quot; tabindex=&quot;-1&quot;&gt;Type.Object: 定义对象结构&lt;/h4&gt;
+&lt;p&gt;这是最常用的组织结构类型：&lt;/p&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; UserSchema &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  name&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  email&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; format&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;email&#39;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Static&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;typeof&lt;/span&gt; UserSchema&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;// =&gt; { name: string; email: string }&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这种在 Fastify 中经常用于请求/响应 body schema&lt;/p&gt;
+&lt;h4 id=&quot;type.array%3A-%E5%AE%9A%E4%B9%89%E6%95%B0%E7%BB%84&quot; tabindex=&quot;-1&quot;&gt;Type.Array: 定义数组&lt;/h4&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; NumList &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Number&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;List&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Static&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;typeof&lt;/span&gt; NumList&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;  &lt;span class=&quot;token comment&quot;&gt;// number[]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&quot;%E5%AE%9A%E4%B9%89%E6%9E%9A%E4%B8%BE-(enum)&quot; tabindex=&quot;-1&quot;&gt;定义枚举 (Enum)&lt;/h4&gt;
+&lt;p&gt;TypeBox 支持将 TypeScript 枚举纳入 schema：&lt;/p&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;enum&lt;/span&gt; Color &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  Red &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;red&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  Blue &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;blue&#39;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; ColorSchema &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Enum&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;Color&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;&lt;span class=&quot;token constant&quot;&gt;C&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Static&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;typeof&lt;/span&gt; ColorSchema&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// &quot;red&quot; | &quot;blue&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;注：生成的 JSON Schema 只允许枚举值，不保留枚举键名。&lt;/p&gt;
+&lt;h4 id=&quot;optional&quot; tabindex=&quot;-1&quot;&gt;Optional&lt;/h4&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; Person &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  name&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  age&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Optional&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Number&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;&lt;span class=&quot;token constant&quot;&gt;P&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Static&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;typeof&lt;/span&gt; Person&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// {name: string; age?: number}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&quot;type.literal%EF%BC%9A%E5%AE%9A%E4%B9%89%E5%85%B7%E4%BD%93%E7%9A%84%E5%B8%B8%E9%87%8F%E5%80%BC%E7%B1%BB%E5%9E%8B&quot; tabindex=&quot;-1&quot;&gt;Type.Literal：定义具体的常量值类型&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;Type.Literal(value)&lt;/code&gt; 用于定义一个字面量类型，即这个类型的值只能是某一个固定的具体值。&lt;br&gt;
+在 TS 里：&lt;/p&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;&lt;span class=&quot;token constant&quot;&gt;A&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;open&#39;&lt;/span&gt;   &lt;span class=&quot;token comment&quot;&gt;// 只能是字面值 &#39;open&#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在 TypeBox 里用：&lt;/p&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;A&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Literal&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;open&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;&lt;span class=&quot;token constant&quot;&gt;TA&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Static&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;typeof&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;   &lt;span class=&quot;token comment&quot;&gt;// 等价于 TS: &#39;open&#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;对应生成的 JSON Schema 会是一个带有 &lt;code&gt;enum&lt;/code&gt; 的 schema（只有这个值允许）。&lt;/p&gt;
+&lt;h4 id=&quot;type.union%EF%BC%9A%E6%9E%84%E9%80%A0%E5%A4%9A%E4%B8%AA%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%81%94%E5%90%88&quot; tabindex=&quot;-1&quot;&gt;Type.Union：构造多个类型的联合&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;Type.Union([schema1, schema2, ...])&lt;/code&gt; 表示一个值可以是这些 schema 中&lt;strong&gt;任意一个&lt;/strong&gt;，等效于 TypeScript 中的联合类型（&lt;code&gt;|&lt;/code&gt;）。&lt;br&gt;
+在 TS 里：&lt;/p&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;AorB&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;a&#39;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;b&#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在 TypeBox 里写法：&lt;/p&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; AorB &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Union&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Literal&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;a&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Literal&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;b&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;TAorB&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Static&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;typeof&lt;/span&gt; AorB&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;  &lt;span class=&quot;token comment&quot;&gt;// 等价于 &#39;a&#39; | &#39;b&#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;联合不只是字面值，还可以是不同对象结构的联合。&lt;/p&gt;
+&lt;h4 id=&quot;type.union-%2B-type.literal-%E7%9A%84%E5%B8%B8%E8%A7%81%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F&quot; tabindex=&quot;-1&quot;&gt;Type.Union + Type.Literal 的常见组合模式&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;简单联合（枚举值）&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; Method &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Union&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
+  Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Literal&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;GET&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Literal&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;POST&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Literal&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;PUT&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Literal&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;DELETE&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;HttpMethod&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Static&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;typeof&lt;/span&gt; Method&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;  
+&lt;span class=&quot;token comment&quot;&gt;// =&gt; &#39;GET&#39; | &#39;POST&#39; | &#39;PUT&#39; | &#39;DELETE&#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;对象联合&lt;/strong&gt;&lt;br&gt;
+假设我们想建一个用户角色类型：&lt;/p&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; Admin &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  role&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Literal&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;admin&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  level&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Number&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; Guest &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  role&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Literal&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;guest&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  visitorId&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; UserType &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Union&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;Admin&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; Guest&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;UserTypeTS&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Static&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;typeof&lt;/span&gt; UserType&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;// =&gt; { role: &#39;admin&#39;; level: number } | { role: &#39;guest&#39;; visitorId: string }&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这种方式的使用非常适合做API Body 的多种模式校验。&lt;/p&gt;
+&lt;h2 id=&quot;%E5%85%B7%E4%BD%93%E7%A4%BA%E4%BE%8B&quot; tabindex=&quot;-1&quot;&gt;具体示例&lt;/h2&gt;
+&lt;p&gt;在 Fastify 中，你可以把 TypeBox 定义的 schema 用到路由里：&lt;/p&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; Fastify &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;fastify&#39;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; Static &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;@sinclair/typebox&#39;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; User &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  name&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  age&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Number&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;UserType&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Static&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;typeof&lt;/span&gt; User&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; app &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;Fastify&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token generic-function&quot;&gt;&lt;span class=&quot;token function&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;token generic class-name&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;Body&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; UserType&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;/user&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  schema&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    body&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; User
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;req&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; rep&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; user &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; req&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;body
+  rep&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;user&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;listen&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;port&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;3000&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;其中:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;User&lt;/code&gt; 是 JSON Schema&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;UserType&lt;/code&gt; 是 TS 类型&lt;/li&gt;
+&lt;li&gt;Fastify 用 schema 做验证输出类型安全。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;%E4%B8%8E-typescript-%E7%9A%84%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB&quot; tabindex=&quot;-1&quot;&gt;与 TypeScript 的映射关系&lt;/h2&gt;
+&lt;p&gt;在 TypeScript 中，我们通常写：&lt;/p&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;&lt;span class=&quot;token constant&quot;&gt;X&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; id&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; age&lt;span class=&quot;token operator&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;number&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;而在 TypeBox 里我们写：&lt;/p&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;X&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  id&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  age&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Optional&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;Type&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Number&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;XType&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Static&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;typeof&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;映射逻辑是：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;TypeBox 方法&lt;/th&gt;
+&lt;th&gt;TypeScript 对应&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Type.String()&lt;/td&gt;
+&lt;td&gt;string&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Type.Number()&lt;/td&gt;
+&lt;td&gt;number&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Type.Boolean()&lt;/td&gt;
+&lt;td&gt;boolean&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Type.Object({…})&lt;/td&gt;
+&lt;td&gt;对象结构&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Type.Enum(…)&lt;/td&gt;
+&lt;td&gt;枚举值联合类型&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;这为 JSON Schema + TS 类型之间建立了一套可互相推导的桥梁。&lt;/p&gt;
+&lt;p&gt;以上&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Fastify 模块化项目实战(二)</title>
     <link href="https://www.sddtc.florist/sddtc.github.com/blog/2026-02-26-fastify-modular-monolith-demo/" />
@@ -1135,66 +1321,6 @@ image 的 binary 类型&lt;/p&gt;
 &lt;p&gt;其中 desc 中的话题的前后需要添加不可见字符&lt;code&gt;0xfeff&lt;/code&gt;, 否则不会被识别为话题.&lt;/p&gt;
 &lt;p&gt;除了上述的 API 之外, 很多开源项目有点赞、评论、发布视频笔记等 API. 可以根据个人需求进行定制, 我没有用到&lt;br&gt;
 就不在此列举了.&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>当你做技术选型时需要考虑的</title>
-    <link href="https://www.sddtc.florist/sddtc.github.com/blog/2025-06-16-technology-selection/" />
-    <updated>2025-06-16T00:00:00Z</updated>
-    <id>https://www.sddtc.florist/sddtc.github.com/blog/2025-06-16-technology-selection/</id>
-    <content type="html">&lt;p&gt;软件工程是手段,不是目的. 不论是做企业软件开发, 做产品验证 POC 还是个人产品开发, 你总会在不同的时刻考虑技术框架, 亦或是不用框架; 考虑使用某个工具 A 而非工具 B, 使用云平台 C 还是读取文件使用缓存策略, 都是基于现阶段, 以及未来(短期)可能会出现的可能性的考虑. 毕竟有句很火的话&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;先做一个垃圾出来&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;并不是说你做出来的东西是“垃圾”, 而是说简单/粗糙是开始的好起点.&lt;/p&gt;
-&lt;p&gt;最近使用 &lt;code&gt;mui+vite+vitest+supabase+vercel&lt;/code&gt; 快速搭建了一个站点, 借此来记录一些经验.&lt;br&gt;
-首先确定开发工具, 写前端首选 &lt;code&gt;vscode&lt;/code&gt;, 对于 &lt;code&gt;js&lt;/code&gt; 语法高亮的支持好&lt;br&gt;
-其次选择前端框架, 测试框架, 这次选择了 &lt;a href=&quot;https://vite.dev/&quot;&gt;vite&lt;/a&gt; + React + &lt;a href=&quot;https://vitest.dev/&quot;&gt;vitest&lt;/a&gt;. 用 &lt;code&gt;Material UI+React&lt;/code&gt; 搭建了简单的页面, 本地调试了样式与功能.&lt;br&gt;
-在选择云部署平台的时候参照了目前网络上&lt;a href=&quot;https://gist.github.com/imba-tjd/d73258f0817255dbe77d64d40d985e76&quot;&gt;推荐的免费云平台&lt;/a&gt;, 各有各的优劣, 主要考虑的方面有:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;免费额度: 如果是 POC, 那么使用免费的云平台是为了降低成本, 快速验证&lt;/li&gt;
-&lt;li&gt;域名污染: 指的是很多平台会绑定固定的域名, 例如 &lt;a href=&quot;https://vercel.com/home&quot;&gt;vercel&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;安全性: 如果你选择是无后端服务或者其他BaaS, 那么后期要考虑支持 &lt;code&gt;client credentials&lt;/code&gt; 服务&lt;/li&gt;
-&lt;li&gt;语言支持&lt;/li&gt;
-&lt;li&gt;易用性&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;最终选择了 &lt;a href=&quot;https://vercel.com/home&quot;&gt;vercel&lt;/a&gt;, 合适的免费配额, 快速的部署流程, 和 &lt;code&gt;github repo&lt;/code&gt; 的集成简单, 再加上本人有年包的域名服务, vercel 也能方便的进行配置.&lt;br&gt;
-将本地的项目进行远端部署就需要一个构建工具, &lt;a href=&quot;https://vite.dev/&quot;&gt;vite&lt;/a&gt; 引起了我的注意, 因为初始化项目时并没有使用 CRA(create-react-app脚手架), 我并不是一个热衷于通过简单的却未知的命令来启动项目的人, 因为丰富的依赖和配置让我并不能立刻意识到它们都是做什么的, 也让本身简单的事情复杂化. 毕竟新增容易, 但是删除的成本是巨大的. 在没有搞清楚之前, 为什么要埋下一颗小小的炸弹呢😄, btw: 今年2月14日的文章&lt;a href=&quot;https://react.dev/blog/2025/02/14/sunsetting-create-react-app&quot;&gt;Sunsetting Create React App&lt;/a&gt;也意味着 CRA 不再被官方推荐使用.&lt;br&gt;
-目前 vite.config.js 的内容仅有:&lt;/p&gt;
-&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; defineConfig &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;vite&#39;&lt;/span&gt;
-&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; configDefaults &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;vitest/config&#39;&lt;/span&gt;
-&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; react &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;@vitejs/plugin-react&#39;&lt;/span&gt;
-
-&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;defineConfig&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;token literal-property property&quot;&gt;plugins&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;react&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;token literal-property property&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;token literal-property property&quot;&gt;globals&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;token literal-property property&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;jsdom&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;token literal-property property&quot;&gt;setupFiles&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;./vitest-setup.js&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;token literal-property property&quot;&gt;coverage&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;token literal-property property&quot;&gt;reporter&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;text&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;json&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;html&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
-      &lt;span class=&quot;token literal-property property&quot;&gt;exclude&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
-        &lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;configDefaults&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;exclude&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;token string&quot;&gt;&#39;src/index.jsx&#39;&lt;/span&gt;
-      &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;其中 &lt;code&gt;globals: true&lt;/code&gt; 是为了解决跑一个测试文件的多个单元测试时, 避免 &lt;code&gt;render&lt;/code&gt; 重复的元素, 保证每次的 dom 挂载时全局时是被其它单测可见的. &lt;code&gt;environment: &#39;jsdom&#39;&lt;/code&gt; 和 &lt;code&gt;&#39;./vitest-setup.js&#39;&lt;/code&gt; 是为了 components 测试模拟真实的浏览器html dom树. 项目在本地跑单测时, 而非用户真实的使用场景(浏览器内部), 而是在 js 的运行时环境(node), 于是使用 &lt;code&gt;jsdom&lt;/code&gt; 是为了保证组件的渲染和行为能够模拟用户的使用场景. 见&lt;a href=&quot;https://testing-library.com/docs/svelte-testing-library/setup/#vitest&quot;&gt;testing-library: add vitest-setup.js&lt;/a&gt;.&lt;br&gt;
-最后 &lt;code&gt;coverage&lt;/code&gt; 的配置是为了理直气壮的不为 &lt;code&gt;src/index.jsx&lt;/code&gt; 写测试😉.&lt;br&gt;
-&lt;a href=&quot;https://supabase.com/&quot;&gt;supabase&lt;/a&gt; 是众多免费开源数据库平台, 通过jwt token(client level, service level) 来提供读写服务, 其中可以配置 row level policy 来保证用户对于数据的权限验证. 选择它也是因为它的使用性简单, 但是访问速度在此打出一个小问号吧.&lt;/p&gt;
-&lt;p&gt;在考虑测试框架和测试金字塔时选择 &lt;code&gt;vitest&lt;/code&gt; + (组件单测+业务逻辑单测)+页面集成测试+UI测试.&lt;br&gt;
-其中 &lt;code&gt;vitest&lt;/code&gt; 基本上可以平替 &lt;code&gt;jest&lt;/code&gt;: 提供 &lt;code&gt;describe, it, expect, vi, beforeEach&lt;/code&gt; 等方法. 其中在 &lt;code&gt;mock&lt;/code&gt; 的使用上有小小差别. 例如 &lt;code&gt;vitest&lt;/code&gt; 需要使用 &lt;code&gt;vi.hoisted&lt;/code&gt; 方法来进行 mock 函数的声明.&lt;br&gt;
-而在测试 react 组件时依然使用 &lt;code&gt;@testing-library/react&lt;/code&gt; 的 &lt;code&gt;render, screen, fireEvent&lt;/code&gt; 等方法.&lt;br&gt;
-写下这些的时候突然想起之前为一个产品设计测试金字塔, 其实最难的并不是设计, 而是让他人理解, 在大家提起 “为什么要写测试”, “如果写了 xx 是不是就不用写 yy&amp;quot;, “zz 这么难写有什么意义” 之类的困惑. 我想, 首先测试的编写是用自动化的程序简化人工验证的繁琐, 其次编写测试程序是促使开发人员切换产品的角度思考问题; 最后对于测试类型的抉择和删减的讨论, 我想说, 如果测试能解决问题, 存在就是合理的.&lt;/p&gt;
-&lt;p&gt;最后的最后再配置下自己的 eslint, 一整个项目就完备了 🎉&lt;br&gt;
-以上.&lt;/p&gt;
-&lt;p&gt;文后话:&lt;br&gt;
-挂载VPN时 docker 下载镜像一直报错&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Error response from daemon: Get “&lt;a href=&quot;https://registry-1.docker.io/v2/&quot;&gt;https://registry-1.docker.io/v2/&lt;/a&gt;”: context deadline exceeded (Client.Timeout exceeded while awaiting headers)&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;本机使用 colima 启动 docker, 查了半天也没找到解决方案, 放弃使用 colima, 下载 docker desktop 解决了问题. 真是柳暗花明又一村 😎&lt;/p&gt;
 </content>
   </entry>
 </feed>

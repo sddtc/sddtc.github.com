@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Fastify + TypeScript 中的 typebox</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+
+html {
+	overflow-y: scroll;
+}
+
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img {
+	max-width: 100%;
+}
+
+img[width][height] {
+	height: auto;
+}
+
+img[src$=".svg"] {
+	width: 100%;
+	height: auto;
+	max-width: none;
+}
+
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+
+.links-nextprev>* {
+	flex-grow: 1;
+}
+
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	/* Merges borders */
+	margin-bottom: 1rem;
+}
+
+th,
+td {
+	padding: 12px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+}
+
+th {
+	background-color: var(--background-color);
+	color: #333;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375;
+	/* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+
+.home-link {
+	flex-grow: 1;
+	font-size: 1em;
+	/* 16px /16 */
+	font-weight: 700;
+}
+
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.nav-item {
+	display: inline-block;
+}
+
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em;
+	/* 13px /16 */
+	color: var(--color-gray-90);
+}
+
+.postlist-date {
+	word-spacing: -0.5px;
+}
+
+.postlist-link {
+	font-size: 1.1875em;
+	/* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+
+.postlist-item>.post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.post-metadata time {
+	margin-right: 1em;
+}
+
+.content-tableau {
+	background-color: #dedfd1;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: normal;
+}
+
+/* 其他页面样式, 例如: 关于我 */
+blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post {
+	font-size: 18px;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
+/* 单行代码 */
+.page-post code {
+	font-size: 13px;
+	background-color: #F2EFE7;
+	word-break: break-all;
+	padding: 3px 5px;
+	margin: 0 4px;
+	border-radius: 5px;
+	color: #333333;
+	transition: all 500ms ease;
+	font-style: normal;
+}
+/**
+ * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
+ * Based on https://github.com/chriskempson/tomorrow-theme
+ * @author Rose Pritchard
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #ccc;
+	background: none;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #2d2d2d;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #999;
+}
+
+.token.punctuation {
+	color: #ccc;
+}
+
+.token.tag,
+.token.attr-name,
+.token.namespace,
+.token.deleted {
+	color: #e2777a;
+}
+
+.token.function-name {
+	color: #6196cc;
+}
+
+.token.boolean,
+.token.number,
+.token.function {
+	color: #f08d49;
+}
+
+.token.property,
+.token.class-name,
+.token.constant,
+.token.symbol {
+	color: #f8c555;
+}
+
+.token.selector,
+.token.important,
+.token.atrule,
+.token.keyword,
+.token.builtin {
+	color: #cc99cd;
+}
+
+.token.string,
+.token.char,
+.token.attr-value,
+.token.regex,
+.token.variable {
+	color: #7ec699;
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+	color: #67cdcc;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+
+.token.inserted {
+	color: green;
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+<h1>Fastify + TypeScript 中的 typebox</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2026-02-28">28 February 2026</time></li>
+	标签:
+	<li><a href="/sddtc.github.com/tags/fastify/" class="post-tag">Fastify</a>, </li>
+	<li><a href="/sddtc.github.com/tags/typescript/" class="post-tag">Typescript</a>, </li>
+	<li><a href="/sddtc.github.com/tags/esm/" class="post-tag">ESM</a>, </li>
+	<li><a href="/sddtc.github.com/tags/typebox/" class="post-tag">typebox</a></li>
+</ul>
+
+<div class="page-post">
+<aside>
+  <div class="content-tableau">
+        <ul><li><a href="#%40sinclair%2Ftypebox">@sinclair/typebox</a></li><li><a href="#%E6%88%91%E4%BB%AC%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8-typebox%EF%BC%9F">我们为什么用 TypeBox？</a></li><li><a href="#typebox-%E7%9A%84%E4%B8%BB%E8%A6%81%E7%94%A8%E6%B3%95">TypeBox 的主要用法</a><ul><li><a href="#type%3A-schema-%E6%9E%84%E9%80%A0%E5%99%A8">Type: Schema 构造器</a></li><li><a href="#static%3A-%E6%8E%A8%E6%96%AD-typescript-%E7%B1%BB%E5%9E%8B">Static: 推断 TypeScript 类型</a></li><li><a href="#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95">常用方法</a><ul><li><a href="#type.object%3A-%E5%AE%9A%E4%B9%89%E5%AF%B9%E8%B1%A1%E7%BB%93%E6%9E%84">Type.Object: 定义对象结构</a></li><li><a href="#type.array%3A-%E5%AE%9A%E4%B9%89%E6%95%B0%E7%BB%84">Type.Array: 定义数组</a></li><li><a href="#%E5%AE%9A%E4%B9%89%E6%9E%9A%E4%B8%BE-(enum)">定义枚举 (Enum)</a></li><li><a href="#optional">Optional</a></li><li><a href="#type.literal%EF%BC%9A%E5%AE%9A%E4%B9%89%E5%85%B7%E4%BD%93%E7%9A%84%E5%B8%B8%E9%87%8F%E5%80%BC%E7%B1%BB%E5%9E%8B">Type.Literal：定义具体的常量值类型</a></li><li><a href="#type.union%EF%BC%9A%E6%9E%84%E9%80%A0%E5%A4%9A%E4%B8%AA%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%81%94%E5%90%88">Type.Union：构造多个类型的联合</a></li><li><a href="#type.union-%2B-type.literal-%E7%9A%84%E5%B8%B8%E8%A7%81%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F">Type.Union + Type.Literal 的常见组合模式</a></li></ul></li></ul></li><li><a href="#%E5%85%B7%E4%BD%93%E7%A4%BA%E4%BE%8B">具体示例</a></li><li><a href="#%E4%B8%8E-typescript-%E7%9A%84%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB">与 TypeScript 的映射关系</a></li></ul>
+      </div>
+</aside>
+  <h2 id="%40sinclair%2Ftypebox" tabindex="-1">@sinclair/typebox</h2>
+<p><code>@sinclair/typebox</code>（也常简称为 <code>TypeBox</code>）是一个用于构建 JSON Schema 的库，同时能将这些 Schema 映射成 TypeScript 类型。这意味着你可以利用同一套定义既做静态类型检查，又做运行时验证（与 AJV 等库配合统一类型与 schema)。<br>
+它在 Fastify 社区非常流行，Fastify 使用 JSON Schema 来验证请求/响应，而 TypeBox 能把该 Schema 与 TS 类型无缝融合。</p>
+<p>它的官方文档: <a href="https://sinclairzx81.github.io/typebox/#/docs">TypeBox Docs</a></p>
+<h2 id="%E6%88%91%E4%BB%AC%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8-typebox%EF%BC%9F" tabindex="-1">我们为什么用 TypeBox？</h2>
+<p>传统 TS 类型只在编译阶段有效，而运行时 JS 不存在类型；而 JSON Schema 可用于运行时验证，但编写起来啰嗦、难维护。TypeBox 解决了这个矛盾：</p>
+<ul>
+<li>支持定义类型并导出 JSON Schema</li>
+<li>TypeScript 能从 Schema 自动推断类型</li>
+<li>与 Fastify 等框架无缝集成</li>
+</ul>
+<p>所以, TypeBox 特别适合在：</p>
+<ul>
+<li>使用 Fastify 做 API 服务，需要声明请求/响应 schema</li>
+<li>想要统一 schema 和 TypeScript 的类型</li>
+<li>使用 AJV 等验证器做运行时校验</li>
+</ul>
+<h2 id="typebox-%E7%9A%84%E4%B8%BB%E8%A6%81%E7%94%A8%E6%B3%95" tabindex="-1">TypeBox 的主要用法</h2>
+<p>TypeBox最核心的两个导出要属<code>Type</code>和<code>Static</code>了：</p>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">import</span> <span class="token punctuation">{</span> Type<span class="token punctuation">,</span> Static <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@sinclair/typebox'</span></code></pre>
+<h3 id="type%3A-schema-%E6%9E%84%E9%80%A0%E5%99%A8" tabindex="-1">Type: Schema 构造器</h3>
+<p>TypeBox 通过 <code>Type</code> 命名空间提供大量方法来构建 JSON Schema。每个方法都对应一个 TypeScript 类型。</p>
+<p><strong>基本类型</strong>:</p>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">const</span> <span class="token constant">A</span> <span class="token operator">=</span> Type<span class="token punctuation">.</span><span class="token function">String</span><span class="token punctuation">(</span><span class="token punctuation">)</span>   <span class="token comment">// json schema: { type: 'string' }</span>
+<span class="token keyword">const</span> <span class="token constant">B</span> <span class="token operator">=</span> Type<span class="token punctuation">.</span><span class="token function">Number</span><span class="token punctuation">(</span><span class="token punctuation">)</span>   <span class="token comment">// json schema: { type: 'number' }</span>
+<span class="token keyword">const</span> <span class="token constant">C</span> <span class="token operator">=</span> Type<span class="token punctuation">.</span><span class="token function">Boolean</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment">// json schema: { type: 'boolean' }</span></code></pre>
+<p>这些定义不仅是 schema，还能在 TS 中映射真实类型。</p>
+<h3 id="static%3A-%E6%8E%A8%E6%96%AD-typescript-%E7%B1%BB%E5%9E%8B" tabindex="-1">Static: 推断 TypeScript 类型</h3>
+<p>虽然 <code>Type.String()</code> 等返回的是 JSON Schema，但要拿到 TS 类型需要：</p>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">type</span> <span class="token class-name"><span class="token constant">T</span></span> <span class="token operator">=</span> Static<span class="token operator">&lt;</span><span class="token keyword">typeof</span> <span class="token constant">A</span><span class="token operator">></span>  <span class="token comment">// 等价于: string</span></code></pre>
+<p>这样你用一个 Schema 定义，同时得到了运行时 Schema + 编译时TS类型。😉</p>
+<h3 id="%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95" tabindex="-1">常用方法</h3>
+<h4 id="type.object%3A-%E5%AE%9A%E4%B9%89%E5%AF%B9%E8%B1%A1%E7%BB%93%E6%9E%84" tabindex="-1">Type.Object: 定义对象结构</h4>
+<p>这是最常用的组织结构类型：</p>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">const</span> UserSchema <span class="token operator">=</span> Type<span class="token punctuation">.</span><span class="token function">Object</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  name<span class="token operator">:</span> Type<span class="token punctuation">.</span><span class="token function">String</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  email<span class="token operator">:</span> Type<span class="token punctuation">.</span><span class="token function">String</span><span class="token punctuation">(</span><span class="token punctuation">{</span> format<span class="token operator">:</span> <span class="token string">'email'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token keyword">type</span> <span class="token class-name">User</span> <span class="token operator">=</span> Static<span class="token operator">&lt;</span><span class="token keyword">typeof</span> UserSchema<span class="token operator">></span>
+<span class="token comment">// => { name: string; email: string }</span></code></pre>
+<p>这种在 Fastify 中经常用于请求/响应 body schema</p>
+<h4 id="type.array%3A-%E5%AE%9A%E4%B9%89%E6%95%B0%E7%BB%84" tabindex="-1">Type.Array: 定义数组</h4>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">const</span> NumList <span class="token operator">=</span> Type<span class="token punctuation">.</span><span class="token function">Array</span><span class="token punctuation">(</span>Type<span class="token punctuation">.</span><span class="token function">Number</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">type</span> <span class="token class-name">List</span> <span class="token operator">=</span> Static<span class="token operator">&lt;</span><span class="token keyword">typeof</span> NumList<span class="token operator">></span>  <span class="token comment">// number[]</span></code></pre>
+<h4 id="%E5%AE%9A%E4%B9%89%E6%9E%9A%E4%B8%BE-(enum)" tabindex="-1">定义枚举 (Enum)</h4>
+<p>TypeBox 支持将 TypeScript 枚举纳入 schema：</p>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">enum</span> Color <span class="token punctuation">{</span>
+  Red <span class="token operator">=</span> <span class="token string">'red'</span><span class="token punctuation">,</span>
+  Blue <span class="token operator">=</span> <span class="token string">'blue'</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> ColorSchema <span class="token operator">=</span> Type<span class="token punctuation">.</span><span class="token function">Enum</span><span class="token punctuation">(</span>Color<span class="token punctuation">)</span>
+<span class="token keyword">type</span> <span class="token class-name"><span class="token constant">C</span></span> <span class="token operator">=</span> Static<span class="token operator">&lt;</span><span class="token keyword">typeof</span> ColorSchema<span class="token operator">></span> <span class="token comment">// "red" | "blue"</span></code></pre>
+<p>注：生成的 JSON Schema 只允许枚举值，不保留枚举键名。</p>
+<h4 id="optional" tabindex="-1">Optional</h4>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">const</span> Person <span class="token operator">=</span> Type<span class="token punctuation">.</span><span class="token function">Object</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  name<span class="token operator">:</span> Type<span class="token punctuation">.</span><span class="token function">String</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  age<span class="token operator">:</span> Type<span class="token punctuation">.</span><span class="token function">Optional</span><span class="token punctuation">(</span>Type<span class="token punctuation">.</span><span class="token function">Number</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token keyword">type</span> <span class="token class-name"><span class="token constant">P</span></span> <span class="token operator">=</span> Static<span class="token operator">&lt;</span><span class="token keyword">typeof</span> Person<span class="token operator">></span> <span class="token comment">// {name: string; age?: number}</span></code></pre>
+<h4 id="type.literal%EF%BC%9A%E5%AE%9A%E4%B9%89%E5%85%B7%E4%BD%93%E7%9A%84%E5%B8%B8%E9%87%8F%E5%80%BC%E7%B1%BB%E5%9E%8B" tabindex="-1">Type.Literal：定义具体的常量值类型</h4>
+<p><code>Type.Literal(value)</code> 用于定义一个字面量类型，即这个类型的值只能是某一个固定的具体值。<br>
+在 TS 里：</p>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">type</span> <span class="token class-name"><span class="token constant">A</span></span> <span class="token operator">=</span> <span class="token string">'open'</span>   <span class="token comment">// 只能是字面值 'open'</span></code></pre>
+<p>在 TypeBox 里用：</p>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">const</span> <span class="token constant">A</span> <span class="token operator">=</span> Type<span class="token punctuation">.</span><span class="token function">Literal</span><span class="token punctuation">(</span><span class="token string">'open'</span><span class="token punctuation">)</span>
+<span class="token keyword">type</span> <span class="token class-name"><span class="token constant">TA</span></span> <span class="token operator">=</span> Static<span class="token operator">&lt;</span><span class="token keyword">typeof</span> <span class="token constant">A</span><span class="token operator">></span>   <span class="token comment">// 等价于 TS: 'open'</span></code></pre>
+<p>对应生成的 JSON Schema 会是一个带有 <code>enum</code> 的 schema（只有这个值允许）。</p>
+<h4 id="type.union%EF%BC%9A%E6%9E%84%E9%80%A0%E5%A4%9A%E4%B8%AA%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%81%94%E5%90%88" tabindex="-1">Type.Union：构造多个类型的联合</h4>
+<p><code>Type.Union([schema1, schema2, ...])</code> 表示一个值可以是这些 schema 中<strong>任意一个</strong>，等效于 TypeScript 中的联合类型（<code>|</code>）。<br>
+在 TS 里：</p>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">type</span> <span class="token class-name">AorB</span> <span class="token operator">=</span> <span class="token string">'a'</span> <span class="token operator">|</span> <span class="token string">'b'</span></code></pre>
+<p>在 TypeBox 里写法：</p>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">const</span> AorB <span class="token operator">=</span> Type<span class="token punctuation">.</span><span class="token function">Union</span><span class="token punctuation">(</span><span class="token punctuation">[</span>Type<span class="token punctuation">.</span><span class="token function">Literal</span><span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> Type<span class="token punctuation">.</span><span class="token function">Literal</span><span class="token punctuation">(</span><span class="token string">'b'</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">type</span> <span class="token class-name">TAorB</span> <span class="token operator">=</span> Static<span class="token operator">&lt;</span><span class="token keyword">typeof</span> AorB<span class="token operator">></span>  <span class="token comment">// 等价于 'a' | 'b'</span></code></pre>
+<p>联合不只是字面值，还可以是不同对象结构的联合。</p>
+<h4 id="type.union-%2B-type.literal-%E7%9A%84%E5%B8%B8%E8%A7%81%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F" tabindex="-1">Type.Union + Type.Literal 的常见组合模式</h4>
+<p><strong>简单联合（枚举值）</strong></p>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">const</span> Method <span class="token operator">=</span> Type<span class="token punctuation">.</span><span class="token function">Union</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+  Type<span class="token punctuation">.</span><span class="token function">Literal</span><span class="token punctuation">(</span><span class="token string">'GET'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  Type<span class="token punctuation">.</span><span class="token function">Literal</span><span class="token punctuation">(</span><span class="token string">'POST'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  Type<span class="token punctuation">.</span><span class="token function">Literal</span><span class="token punctuation">(</span><span class="token string">'PUT'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  Type<span class="token punctuation">.</span><span class="token function">Literal</span><span class="token punctuation">(</span><span class="token string">'DELETE'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token keyword">type</span> <span class="token class-name">HttpMethod</span> <span class="token operator">=</span> Static<span class="token operator">&lt;</span><span class="token keyword">typeof</span> Method<span class="token operator">></span>  
+<span class="token comment">// => 'GET' | 'POST' | 'PUT' | 'DELETE'</span></code></pre>
+<p><strong>对象联合</strong><br>
+假设我们想建一个用户角色类型：</p>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">const</span> Admin <span class="token operator">=</span> Type<span class="token punctuation">.</span><span class="token function">Object</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  role<span class="token operator">:</span> Type<span class="token punctuation">.</span><span class="token function">Literal</span><span class="token punctuation">(</span><span class="token string">'admin'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  level<span class="token operator">:</span> Type<span class="token punctuation">.</span><span class="token function">Number</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> Guest <span class="token operator">=</span> Type<span class="token punctuation">.</span><span class="token function">Object</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  role<span class="token operator">:</span> Type<span class="token punctuation">.</span><span class="token function">Literal</span><span class="token punctuation">(</span><span class="token string">'guest'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  visitorId<span class="token operator">:</span> Type<span class="token punctuation">.</span><span class="token function">String</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> UserType <span class="token operator">=</span> Type<span class="token punctuation">.</span><span class="token function">Union</span><span class="token punctuation">(</span><span class="token punctuation">[</span>Admin<span class="token punctuation">,</span> Guest<span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token keyword">type</span> <span class="token class-name">UserTypeTS</span> <span class="token operator">=</span> Static<span class="token operator">&lt;</span><span class="token keyword">typeof</span> UserType<span class="token operator">></span>
+<span class="token comment">// => { role: 'admin'; level: number } | { role: 'guest'; visitorId: string }</span></code></pre>
+<p>这种方式的使用非常适合做API Body 的多种模式校验。</p>
+<h2 id="%E5%85%B7%E4%BD%93%E7%A4%BA%E4%BE%8B" tabindex="-1">具体示例</h2>
+<p>在 Fastify 中，你可以把 TypeBox 定义的 schema 用到路由里：</p>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">import</span> Fastify <span class="token keyword">from</span> <span class="token string">'fastify'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> Type<span class="token punctuation">,</span> Static <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@sinclair/typebox'</span>
+
+<span class="token keyword">const</span> User <span class="token operator">=</span> Type<span class="token punctuation">.</span><span class="token function">Object</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  name<span class="token operator">:</span> Type<span class="token punctuation">.</span><span class="token function">String</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  age<span class="token operator">:</span> Type<span class="token punctuation">.</span><span class="token function">Number</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token keyword">type</span> <span class="token class-name">UserType</span> <span class="token operator">=</span> Static<span class="token operator">&lt;</span><span class="token keyword">typeof</span> User<span class="token operator">></span>
+
+<span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token function">Fastify</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">post</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token punctuation">{</span>Body<span class="token operator">:</span> UserType<span class="token punctuation">}</span><span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token string">'/user'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  schema<span class="token operator">:</span> <span class="token punctuation">{</span>
+    body<span class="token operator">:</span> User
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>req<span class="token punctuation">,</span> rep<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> user <span class="token operator">=</span> req<span class="token punctuation">.</span>body
+  rep<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token punctuation">{</span>port<span class="token operator">:</span> <span class="token number">3000</span><span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
+<p>其中:</p>
+<ul>
+<li><code>User</code> 是 JSON Schema</li>
+<li><code>UserType</code> 是 TS 类型</li>
+<li>Fastify 用 schema 做验证输出类型安全。</li>
+</ul>
+<h2 id="%E4%B8%8E-typescript-%E7%9A%84%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB" tabindex="-1">与 TypeScript 的映射关系</h2>
+<p>在 TypeScript 中，我们通常写：</p>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">type</span> <span class="token class-name"><span class="token constant">X</span></span> <span class="token operator">=</span> <span class="token punctuation">{</span> id<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span> age<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">number</span> <span class="token punctuation">}</span></code></pre>
+<p>而在 TypeBox 里我们写：</p>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">const</span> <span class="token constant">X</span> <span class="token operator">=</span> Type<span class="token punctuation">.</span><span class="token function">Object</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  id<span class="token operator">:</span> Type<span class="token punctuation">.</span><span class="token function">String</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  age<span class="token operator">:</span> Type<span class="token punctuation">.</span><span class="token function">Optional</span><span class="token punctuation">(</span>Type<span class="token punctuation">.</span><span class="token function">Number</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token keyword">type</span> <span class="token class-name">XType</span> <span class="token operator">=</span> Static<span class="token operator">&lt;</span><span class="token keyword">typeof</span> <span class="token constant">X</span><span class="token operator">></span></code></pre>
+<p>映射逻辑是：</p>
+<table>
+<thead>
+<tr>
+<th>TypeBox 方法</th>
+<th>TypeScript 对应</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Type.String()</td>
+<td>string</td>
+</tr>
+<tr>
+<td>Type.Number()</td>
+<td>number</td>
+</tr>
+<tr>
+<td>Type.Boolean()</td>
+<td>boolean</td>
+</tr>
+<tr>
+<td>Type.Object({…})</td>
+<td>对象结构</td>
+</tr>
+<tr>
+<td>Type.Enum(…)</td>
+<td>枚举值联合类型</td>
+</tr>
+</tbody>
+</table>
+<p>这为 JSON Schema + TS 类型之间建立了一套可互相推导的桥梁。</p>
+<p>以上</p>
+
+</div>
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2026-02-26-fastify-modular-monolith-demo/">Fastify 模块化项目实战(二)</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © <span id="copyright-year"></span></p>
+		</footer>
+
+		
+
+    
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2026-02-28-uses-typebox-in-fastify/` was built on 2026-02-28T05:10:27.426Z -->
+		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
+	</body>
+</html>
