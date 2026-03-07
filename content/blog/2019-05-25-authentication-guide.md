@@ -1,7 +1,8 @@
 ---
 title: 身份认证生存指南
-tags: auth
 date: 2019-05-25
+tags: [auth]
+categories: [工程实践]
 ---
 
 身份认证一直是一个复杂的主题，如果你认为不复杂那么有一点Too young too simple，因为最终你会发现它其实会令人头秃。

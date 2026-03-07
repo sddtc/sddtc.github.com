@@ -1,7 +1,7 @@
 ---
 title: 品品《重构》这本书嗷 - 中
-tags: book notes
 date: 2021-03-13
+categories: [读书笔记]
 ---
 
 ![2021-02-02-OB7st5-6Qdhz1](https://cdn.jsdelivr.net/gh/sddtc/upic-cloud@main/images/2021/2021-02-02-OB7st5-6Qdhz1.png)

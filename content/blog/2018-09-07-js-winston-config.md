@@ -1,7 +1,8 @@
 ---
 title: winston 日志设置指南
-tags: js
 date: 2018-09-07
+tags: [js]
+categories: [工程实践]
 ---
 
 ### 背景

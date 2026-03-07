@@ -2,6 +2,7 @@
 title: Fastify + TypeScript 中的 typebox
 date: 2026-02-28
 tags: [Fastify, Typescript, ESM, typebox]
+categories: [工程实践, 技术开发]
 ---
 
 ## @sinclair/typebox

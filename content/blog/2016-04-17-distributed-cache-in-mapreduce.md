@@ -1,7 +1,8 @@
 ---
 title: 分布式缓存在 MapReduce 上的使用
 date: 2016-04-17
-tags: big data
+tags: [mapreduce]
+categories: [数据智能]
 ---
 
 在写mapreduce时，简单的统计可以用一个文件搞定，只是如果需要关联其它文件的列

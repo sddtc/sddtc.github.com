@@ -1,7 +1,8 @@
 ---
 title: concurrent 包部分解读
 date: 2015-12-23
-tags: java
+tags: [java]
+categories: [工程实践, 语言生态]
 ---
 
 ### CountDownLatch

@@ -1,7 +1,8 @@
 ---
 title: 关于 Scala 这门语言的理解和它的测试框架
 date: 2017-11-08
-tags: quality engineer
+tags: [test]
+categories: [工程实践]
 ---
 
 ### 背景

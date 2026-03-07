@@ -1,0 +1,24 @@
+---js
+// <script>
+const pagination = {
+	data: "collections.categories",
+	size: 1,
+	alias: "category"
+};
+
+const eleventyExcludeFromCollections = true;
+
+const eleventyComputed = {
+	title: "{{ category.title }}",
+	permalink: function(data) {
+		return `/categories/${data.category.title}/`;
+	}
+};
+---
+
+<h2>分类: {{ category.title }}</h2>
+
+{% set postslist = category.posts %}
+{% include "postslist.njk" %}
+
+<p>See <a href="categories.njk">all categories</a>.</p>

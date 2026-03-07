@@ -1,7 +1,8 @@
 ---
 title: 2016 年度总结
 date: 2017-03-03
-tags: life
+tags: [年度总结]
+categories: [个人生活]
 ---
 
 ### 2016年度总结

@@ -1,7 +1,8 @@
 ---
 title: Insertion Sort List 解决方案
 date: 2015-09-23
-tags: algorithm
+tags: [algorithm]
+categories: [数据智能]
 ---
 
 题目链接: [Insertion Sort List](https://leetcode.com/problems/insertion-sort-list/)

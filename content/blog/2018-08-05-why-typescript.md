@@ -1,7 +1,8 @@
 ---
 title: Why typescript ?
-tags: js
 date: 2018-08-05
+tags: [js, Typescript]
+categories: [语言生态]
 ---
 
 ### 背景

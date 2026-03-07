@@ -1,7 +1,8 @@
 ---
 title: 实现一个简单的推荐系统
 date: 2016-03-27
-tags: python
+tags: [python]
+categories: [数据智能]
 ---
 
 本文转载自:[不到100行代码实现一个简单的推荐系统](http://www.kai-zhou.com/recommandation-system-implement-in-100-line/)

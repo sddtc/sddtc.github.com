@@ -1,7 +1,8 @@
 ---
 title: URLDecoder 处理文件的 case 小记
 date: 2015-12-02
-tags: java
+tags: [java]
+categories: [工程实践]
 ---
 
 ### 情景说明：

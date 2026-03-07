@@ -1,7 +1,8 @@
 ---
 title: Github - JavaScript Game Engines 使用指南
-tags: js
 date: 2021-02-10
+tags: [js]
+categories: [工程实践, 技术开发]
 ---
 
 最近想了解(~~因为要写点啥你懂的~~)一些用 js 写的绘制 2D 动画的库。于是窝找到了 [javascript-game-engines](https://github.com/collections/javascript-game-engines)

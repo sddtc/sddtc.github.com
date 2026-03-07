@@ -1,7 +1,8 @@
 ---
 title: Jekyll我们都会喜欢的语法高亮
 date: 2015-05-07
-tags: ruby
+tags: [ruby, jekyll]
+categories: [语言生态, 技术开发]
 ---
 
 jekyll语法高亮之pygments系列：

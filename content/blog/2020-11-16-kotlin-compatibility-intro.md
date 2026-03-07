@@ -1,7 +1,8 @@
 ---
 title: 由 java.lang.NoSuchMethodError 引发的思考之二进制兼容性
-tags: kotlin
 date: 2020-11-16
+tags: [kotlin]
+categories: [工程实践, 语言生态]
 ---
 
 #### 故事背景

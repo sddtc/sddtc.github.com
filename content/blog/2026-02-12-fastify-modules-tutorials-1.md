@@ -2,6 +2,7 @@
 title: Fastify 模块化项目实战(一)
 date: 2026-02-12
 tags: [Fastify, Typescript, ESM]
+categories: [工程实践, 技术开发]
 ---
 
 ## 为什么选择 Fastify 而非 NestJS, ExpressJS, Koa?

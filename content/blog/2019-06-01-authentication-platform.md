@@ -1,7 +1,8 @@
 ---
 title: 7大平台的第三方登录参考手册
-tags: auth
 date: 2019-06-01
+tags: [auth]
+categories: [工程实践]
 ---
 
 ## Facebook

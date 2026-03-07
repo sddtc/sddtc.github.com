@@ -1,7 +1,8 @@
 ---
 title: Best Practices For Writing Bash scripts
-tags: shell
 date: 2018-08-12
+tags: [shell]
+categories: [工程实践]
 ---
 
 #### 将命令参数写全 (`logger --priority vs logger -p`)

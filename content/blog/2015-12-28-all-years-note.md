@@ -1,7 +1,8 @@
 ---
 title: 2015 年度总结
 date: 2015-12-28
-tags: life
+tags: [年度总结]
+categories: [个人生活]
 ---
 
 ### 2015年终总结

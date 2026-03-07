@@ -1,7 +1,8 @@
 ---
 title: 豆瓣和python的一个小故事
 date: 2015-03-27
-tags: python
+tags: [python]
+categories: [语言生态]
 ---
 
 ### 以下引用的是对于洪强宁关于豆瓣架构的回答：

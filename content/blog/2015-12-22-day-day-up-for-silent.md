@@ -1,7 +1,8 @@
 ---
 title: 关于 Java 泛型特性的理解
 date: 2015-12-22
-tags: java
+tags: [java]
+categories: [工程实践, 语言生态]
 ---
 
 ### java泛型的优势

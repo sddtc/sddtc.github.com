@@ -1,7 +1,8 @@
 ---
 title: 使用 Gradle 插件发布 Android library 到 maven 远程仓库
-tags: mobile
 date: 2021-02-22
+tags: [mobile]
+categories: [工程实践, 技术开发]
 ---
 
 最近在项目里更新了 `gradle` 插件到 `6.1.1` 之后发现它支持使用 `maven-publish` 这个插件来打包发布并部署到 `maven` 的内部远程仓库去。简单记录下，希望能帮助到需要的人。

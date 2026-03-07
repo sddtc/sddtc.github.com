@@ -1,15 +1,15 @@
 ---js
 const eleventyNavigation = {
 	key: "标签",
-	order: 2
+	order: 3
 };
 ---
 
 <h2>标签列表</h2>
 
-<ul>
+<ul class="tags-page">
 {% for tag in collections | getKeys | filterTagList | sortAlphabetically %}
-	{% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
+	{% set tagUrl %}/tags/{{ tag }}/{% endset %}
 	<li><a href="{{ tagUrl }}" class="post-tag">{{ tag }}</a></li>
 {% endfor %}
 </ul>

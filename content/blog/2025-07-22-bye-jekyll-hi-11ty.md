@@ -2,6 +2,7 @@
 title: 博客静态页面生成工具从jekyll切换为11ty, 告别ruby 拥抱js
 date: 2025-07-22
 tags: [js, ruby]
+categories: [工程实践, 技术开发]
 ---
 
 从我知道github自带`gh-pages`特性那会儿, 便把个人博客从自建服务器迁移到了这里,也快11年了(第一篇文章发布于2014年), 后来知道了一些便宜的域名服务, 换过2个域名. 从GoDaddy平台换成了[porkbun](https://porkbun.com/). 然而静态页面生成器一直使用github官方推荐的jekyll, 也用爱发电换了好几个主题, 最近的[tmaize](https://github.com/TMaize/tmaize-blog)主题确实是我一直很喜欢的.. 但是!! 这两天还是谨慎思考(花了一个下午的时间), 彻底放弃jekyll, 也是要从一个一直困惑我的报错开始...  

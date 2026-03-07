@@ -1,7 +1,8 @@
 ---
 title: 对于简单的 XSS 攻击的概念梳理
-tags: security
 date: 2019-09-06
+tags: [security]
+categories: [云与架构]
 ---
 
 ### 背景

@@ -1,7 +1,8 @@
 ---
 title: 来到一个新环境总会有些新收获
 date: 2017-01-01
-tags: software engineer
+tags: [碎碎念]
+categories: [个人生活]
 ---
 
 第一周,学到的东西也很多.

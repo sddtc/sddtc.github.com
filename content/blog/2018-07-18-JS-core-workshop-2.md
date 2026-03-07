@@ -1,7 +1,8 @@
 ---
 title: JS The Core (2)
-tags: js
 date: 2018-07-18
+tags: [js]
+categories: [语言生态]
 ---
 
 **This article covers ES2017+ runtime system.**

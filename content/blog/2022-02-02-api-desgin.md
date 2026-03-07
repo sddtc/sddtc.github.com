@@ -1,7 +1,8 @@
 ---
 title: API 设计实践
-tags: software engineer
 date: 2022-02-02
+tags: [api]
+categories: [工程实践, 技术开发]
 ---
 
 给系统设计一套 API 不是一件简单的事情。 原则是否能被所有人真正理解， 是否能准确通过 API 来表达对资源的正确处理都是学习的目的。

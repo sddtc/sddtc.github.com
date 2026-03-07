@@ -1,7 +1,8 @@
 ---
 title: 动态规划合集
 date: 2015-11-25
-tags: algorithm
+tags: [algorithm]
+categories: [数据智能]
 ---
 
 真是活久见系列的生动范例: 动态规划实际算法习题

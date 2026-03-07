@@ -1,7 +1,8 @@
 ---
 title: MYSQL服务器端的高级优化实践
 date: 2015-07-31
-tags: big data
+tags: [mysql]
+categories: [数据智能]
 ---
 
 ### 背景:

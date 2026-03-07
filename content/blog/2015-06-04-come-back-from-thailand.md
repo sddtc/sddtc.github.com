@@ -1,7 +1,8 @@
 ---
 title: 从泰国玩肥来辣嘻嘻
 date: 2015-06-04
-tags: self-talking
+tags: [碎碎念]
+categories: [个人生活]
 ---
 
 泰国归来

@@ -1,11 +1,12 @@
 ---
 title: Shell正常和异常退出的控制命令
 date: 2017-01-24
-tags: shell
+tags: [shell]
+categories: [工程实践]
 ---
 
 需要在 shell 脚本中获取 java 调用的 System.exit() 的值, System.exit(-1), 则 $? 的值为255
-```
+```shell
 java -jar xxx.jar param param2 param3
 
 if [ $? -eq 0 ]; then

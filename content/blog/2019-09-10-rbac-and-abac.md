@@ -1,9 +1,9 @@
 ---
 title: RBAC 与 ABAC
-tags: auth
 date: 2019-09-10
+tags: [auth]
+categories: [工程实践]
 ---
-
 
 ## ABAC 还是 RBAC ?
 

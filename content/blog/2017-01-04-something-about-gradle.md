@@ -1,13 +1,14 @@
 ---
 title: 关于 Gradle 打 jar 包解决方案
 date: 2017-01-04
-tags: software engineer
+tags: [gradle]
+categories: [工程实践]
 ---
 
 感谢周围的人让我接触到了gradle,从此我要和maven说再见.
 1. 用gradle打一个包含依赖的可运行Jar包.
 
-```
+```java
 apply plugin: 'application'
 mainClassName= 'sddtc.gradle.APP'
 

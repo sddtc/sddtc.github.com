@@ -1,7 +1,8 @@
 ---
 title: 图的广度优先搜索实现
 date: 2015-11-22
-tags: algorithm
+tags: [algorithm]
+categories: [数据智能]
 ---
 
 ### 图的广度优先搜索实现

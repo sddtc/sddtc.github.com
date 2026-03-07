@@ -1,7 +1,8 @@
 ---
 title: 解读 word2vec 项目
 date: 2015-11-26
-tags: algorithm
+tags: [algorithm, word2vec]
+categories: [数据智能]
 ---
 
 ### 什么是[word2vec](https://code.google.com/p/word2vec/)

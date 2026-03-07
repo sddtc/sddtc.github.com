@@ -1,7 +1,8 @@
 ---
 title: 请不要再使用字段注入依赖的方式啦
 date: 2017-12-08
-tags: translation
+tags: [translation]
+categories: [工程实践]
 ---
 
 ### 背景

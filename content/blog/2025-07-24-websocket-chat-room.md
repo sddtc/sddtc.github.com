@@ -2,6 +2,7 @@
 title: 搭建基于websocket的在线多人聊天室
 date: 2025-07-24
 tags: [js, websocket]
+categories: [工程实践, 技术开发]
 ---
 
 不论是chatGPT还是DeepSeek, 目前用户的交互界面仍然是以聊天框的形式出现, 其背后都离不开WebSocket技术.  

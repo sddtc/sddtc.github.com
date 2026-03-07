@@ -1,7 +1,8 @@
 ---
 title: Android KTX【卡通侠神马的
-tags: mobile
 date: 2021-01-11
+tags: [mobile]
+categories: [工程实践]
 ---
 
 Android KTX 是一组 Kotlin 扩展库。它被包含在 Android Jetpack 和其他 Android 库中。 KTX 扩展为 Jetpack，Android 平台和其他 API 提供简洁的，地道的 Kotlin

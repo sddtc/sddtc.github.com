@@ -1,7 +1,8 @@
 ---
 title: 关于 RA 的一些必须掌握的 tips
 date: 2017-08-01
-tags: ruby
+tags: [ruby]
+categories: [工程实践, 语言生态]
 ---
 
 ### 一、开启白名单
@@ -14,7 +15,7 @@ config.included_models = [Brand, Product, Admin, Store]
 ### 二、修改model的显示title
 
 修改model的title, 修改model下拉框的默认'model #id'名称展示
-```
+```ruby
 config.model Brand do
   object_label_method do
     :custom_label_method
@@ -31,7 +32,7 @@ end
 ### 三、当你新增或更新, 控制model显示不同的title
 
 关键字: new_record? 代表新增
-```
+```ruby
 config.model Floor do
   object_label_method do
     :custom_label_method
@@ -52,7 +53,7 @@ end
 ### 四、不显示model的个别action
 
 有些model不需要默认的编辑、删除等action. 关键字:except
-```
+```ruby
 config.actions do
   dashboard                     # mandatory
   index                         # mandatory

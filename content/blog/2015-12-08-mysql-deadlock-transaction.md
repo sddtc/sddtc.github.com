@@ -1,7 +1,8 @@
 ---
 title: 记一次mysql的Deadlock found when trying to get lock try restarting transaction
 date: 2015-12-08
-tags: big data
+tags: [mysql]
+categories: [工程实践, 数据智能]
 ---
 
 本来，窝是一个天天开开心心，无忧无虑的少年. 直到有一天，遇见了名为deadlock的恐惧:). 周二发现的问题，直到周四才告一段落，对此我要写下泪の总结: 珍爱生命，远离事务

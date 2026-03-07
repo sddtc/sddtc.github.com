@@ -1,7 +1,8 @@
 ---
 title: Fastify 模块化项目实战(三)
 date: 2026-03-04
-tags: [Fastify, Typescript, ESM, database]
+tags: [Fastify, Typescript, ESM, 数据库]
+categories: [技术开发, 工程实践]
 ---
 
 在搭建模块的时候, 与数据库进行交互是很常见的场景; 因为如果你的模块是与业务相关, 那么存储用户数据是重要的一环; 虽然openclaw的memory策略很聪明, 用md文件进行存储; 然而大部分的系统, 关系型数据库依然是非常趁手的工具;  

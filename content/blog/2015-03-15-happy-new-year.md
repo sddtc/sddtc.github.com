@@ -1,7 +1,8 @@
 ---
 title: Happy-New-Year2015
 date: 2015-03-15 20:19:00
-tags: life
+tags: [碎碎念]
+categories: [个人生活]
 ---
 
 遇见了很多很重要的人

@@ -1,7 +1,8 @@
 ---
 title: 当我在写 React 我在写什么
-tags: react
 date: 2018-11-14
+tags: [react]
+categories: [工程实践]
 ---
 
 ### 背景

@@ -1,7 +1,8 @@
 ---
 title: MYSQL服务器配置文件的修改Tips
 date: 2015-03-16
-tags: database
+tags: [mysql]
+categories: [工程实践, 数据智能]
 ---
 
 ### 1.基本操作
