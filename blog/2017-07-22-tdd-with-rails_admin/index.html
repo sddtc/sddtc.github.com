@@ -322,15 +322,7 @@ header {
 	font-weight: bold;
 }
 
-/* Tags */
-.post-tag {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	text-transform: capitalize;
-	font-style: italic;
-}
-
+/* Tags in article */
 .postlist-item>.post-tag {
 	align-self: center;
 }
@@ -377,7 +369,29 @@ a {
 
 /* Tags */
 .post-tag {
+	font-style: italic;
+}
+
+.tags-page {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+.tags-page li {
+	float: left;
+	margin: 0 20px 10px 0;
+}
+
+/* Categories Page */
+.post-category {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
 	font-style: normal;
+	font-size: 1.2em;
 }
 
 /* 其他页面样式, 例如: 关于我 */
@@ -554,6 +568,7 @@ pre[class*="language-"] {
 				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/categories/">分类</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
@@ -570,7 +585,7 @@ pre[class*="language-"] {
 <ul class="post-metadata">
 	<li><time datetime="2017-07-22">22 July 2017</time></li>
 	标签:
-	<li><a href="/sddtc.github.com/tags/software-engineer/" class="post-tag">software engineer</a></li>
+	<li><a href="/sddtc.github.com/tags/tdd/" class="post-tag">tdd</a></li>
 </ul>
 
 <div class="page-post">
@@ -586,56 +601,52 @@ pre[class*="language-"] {
 <pre><code class="hljs">require 'mocha/test_unit'
 </code></pre>
 <h3 id="model-test" tabindex="-1">Model Test</h3>
-<pre><code class="hljs">test 'should return nil when brand not exist' do
-  Brand.expects(:find_by).with(1).returns(nil)
-  assert_nil  Brand.find_by(1)
-end
+<pre class="language-ruby" tabindex="0"><code class="hljs language-ruby">test <span class="token string-literal"><span class="token string">'should return nil when brand not exist'</span></span> <span class="token keyword">do</span>
+  Brand<span class="token punctuation">.</span>expects<span class="token punctuation">(</span><span class="token symbol">:find_by</span><span class="token punctuation">)</span><span class="token punctuation">.</span>with<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span>returns<span class="token punctuation">(</span><span class="token keyword">nil</span><span class="token punctuation">)</span>
+  assert_nil  Brand<span class="token punctuation">.</span>find_by<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
 
-test 'should return brand object when brand exist' do
-  brand = Brand.new
-  Brand.expects(:find_by).with(2).returns(brand)
-  assert_equal(brand, Brand.find_by(2))
-end
+test <span class="token string-literal"><span class="token string">'should return brand object when brand exist'</span></span> <span class="token keyword">do</span>
+  brand <span class="token operator">=</span> <span class="token class-name">Brand</span><span class="token punctuation">.</span><span class="token keyword">new</span>
+  Brand<span class="token punctuation">.</span>expects<span class="token punctuation">(</span><span class="token symbol">:find_by</span><span class="token punctuation">)</span><span class="token punctuation">.</span>with<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">.</span>returns<span class="token punctuation">(</span>brand<span class="token punctuation">)</span>
+  assert_equal<span class="token punctuation">(</span>brand<span class="token punctuation">,</span> Brand<span class="token punctuation">.</span>find_by<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
 
-test 'should not save brand without english_name' do
-	brand = Brand.new :headline=&gt;'example', :description=&gt;'example', :logo_img=&gt;'log.jpg', :background_img=&gt;'back.jpg'
-	assert_not brand.save
-end
-</code></pre>
+test <span class="token string-literal"><span class="token string">'should not save brand without english_name'</span></span> <span class="token keyword">do</span>
+	brand <span class="token operator">=</span> <span class="token class-name">Brand</span><span class="token punctuation">.</span><span class="token keyword">new</span> <span class="token symbol">:headline</span><span class="token operator">=></span><span class="token string-literal"><span class="token string">'example'</span></span><span class="token punctuation">,</span> <span class="token symbol">:description</span><span class="token operator">=></span><span class="token string-literal"><span class="token string">'example'</span></span><span class="token punctuation">,</span> <span class="token symbol">:logo_img</span><span class="token operator">=></span><span class="token string-literal"><span class="token string">'log.jpg'</span></span><span class="token punctuation">,</span> <span class="token symbol">:background_img</span><span class="token operator">=></span><span class="token string-literal"><span class="token string">'back.jpg'</span></span>
+	assert_not brand<span class="token punctuation">.</span>save
+<span class="token keyword">end</span></code></pre>
 <p>这里涉及到对Brand的方法测试, 涉及到对Brand必填项的测试</p>
 <h3 id="service-test" tabindex="-1">Service Test</h3>
-<pre><code class="hljs">test 'should return nil when brand not exist' do
-  BrandsService.expects(:find_by_id).with(1).returns(nil)
-  assert_nil BrandsService.find_by_id(1)
-end
-</code></pre>
+<pre class="language-ruby" tabindex="0"><code class="hljs language-ruby">test <span class="token string-literal"><span class="token string">'should return nil when brand not exist'</span></span> <span class="token keyword">do</span>
+  BrandsService<span class="token punctuation">.</span>expects<span class="token punctuation">(</span><span class="token symbol">:find_by_id</span><span class="token punctuation">)</span><span class="token punctuation">.</span>with<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span>returns<span class="token punctuation">(</span><span class="token keyword">nil</span><span class="token punctuation">)</span>
+  assert_nil BrandsService<span class="token punctuation">.</span>find_by_id<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span></code></pre>
 <p>service部分的测试我没有写很多, 这里只会举一个这样简单的🌰, 关于场景的期望后面会补充些更完整的测试用例. 大部分人包括我, 习惯于功能的实现先于测试的实现, 然而我之所以努力朝着先测试后实现的方向走, 确实是因为可以提前暴露有关于需求的问题. 就好比好的设计总是会优先于好的实现.</p>
 <h3 id="migration" tabindex="-1">Migration</h3>
 <p>关于rails的migration数据库集成这部分确实很强大, 集成的非常完美. 我遇到了一个小问题: 在对某个model做修改的时候, 因为方便我会使用redo操作, 而这样很容易让测试环境和他人的开发环境不能通过一条 rake db:migrate 就完成各种修改.<br>
 我的初衷是为了方便和减少脚本的创建, 然而沟通的代价较大. 所以, 在 rake db:migrate:redo 和 rake db:migrate 中还是要选择后者, 不需要在意脚本的多少. 一切改动有历史轨迹也是一种王道.</p>
 <h3 id="belongs_to-%26-has_many" tabindex="-1">belongs_to &amp; has_many</h3>
 <p>RailsAdmin的多对一配置:</p>
-<pre><code class="hljs">class Product &lt; ApplicationRecord
-  belongs_to :brand
-end
+<pre class="language-ruby" tabindex="0"><code class="hljs language-ruby"><span class="token keyword">class</span> <span class="token class-name">Product</span> <span class="token operator">&lt;</span> ApplicationRecord
+  belongs_to <span class="token symbol">:brand</span>
+<span class="token keyword">end</span>
 
-class Brand &lt; ApplicationRecord
-  has_many :products
-end
-</code></pre>
+<span class="token keyword">class</span> <span class="token class-name">Brand</span> <span class="token operator">&lt;</span> ApplicationRecord
+  has_many <span class="token symbol">:products</span>
+<span class="token keyword">end</span></code></pre>
 <p>这样在后台会直接在创建表单的时候, 出现下拉框选择, 美中不足的是下拉框的value是’Brand #id’这种以主键为展示方式的选项, 这时候如果你想展示名称, 只需要在rails_admin.rb文件里做一下修改:</p>
-<pre><code class="hljs">config.model Brand do
-  object_label_method do
-    :custom_label_method
-  end
-end
+<pre class="language-ruby" tabindex="0"><code class="hljs language-ruby">config<span class="token punctuation">.</span>model Brand <span class="token keyword">do</span>
+  object_label_method <span class="token keyword">do</span>
+    <span class="token symbol">:custom_label_method</span>
+  <span class="token keyword">end</span>
+<span class="token keyword">end</span>
 
-Brand.class_eval do
-  def custom_label_method
-    &quot;#{self.english_name}&quot;
-  end
-end
-</code></pre>
+Brand<span class="token punctuation">.</span>class_eval <span class="token keyword">do</span>
+  <span class="token keyword">def</span> <span class="token method-definition"><span class="token function">custom_label_method</span></span>
+    <span class="token string-literal"><span class="token string">"</span><span class="token interpolation"><span class="token delimiter punctuation">#{</span><span class="token content"><span class="token keyword">self</span><span class="token punctuation">.</span>english_name</span><span class="token delimiter punctuation">}</span></span><span class="token string">"</span></span>
+  <span class="token keyword">end</span>
+<span class="token keyword">end</span></code></pre>
 <p>真是完美的解决了问题.</p>
 <h3 id="%E5%85%B6%E5%AE%83" tabindex="-1">其它</h3>
 <p>最近西安很热, 希望父上下下周能平安出院.</p>
@@ -666,7 +677,7 @@ end
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2017-07-22-tdd-with-rails_admin/` was built on 2026-03-04T09:04:39.989Z -->
+		<!-- This page `/blog/2017-07-22-tdd-with-rails_admin/` was built on 2026-03-07T11:52:42.138Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

@@ -322,15 +322,7 @@ header {
 	font-weight: bold;
 }
 
-/* Tags */
-.post-tag {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	text-transform: capitalize;
-	font-style: italic;
-}
-
+/* Tags in article */
 .postlist-item>.post-tag {
 	align-self: center;
 }
@@ -377,7 +369,29 @@ a {
 
 /* Tags */
 .post-tag {
+	font-style: italic;
+}
+
+.tags-page {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+.tags-page li {
+	float: left;
+	margin: 0 20px 10px 0;
+}
+
+/* Categories Page */
+.post-category {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
 	font-style: normal;
+	font-size: 1.2em;
 }
 
 /* 其他页面样式, 例如: 关于我 */
@@ -554,6 +568,7 @@ pre[class*="language-"] {
 				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/categories/">分类</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
@@ -570,7 +585,7 @@ pre[class*="language-"] {
 <ul class="post-metadata">
 	<li><time datetime="2019-04-21">21 April 2019</time></li>
 	标签:
-	<li><a href="/sddtc.github.com/tags/mobile/" class="post-tag">mobile</a></li>
+	<li><a href="/sddtc.github.com/tags/flutter/" class="post-tag">flutter</a></li>
 </ul>
 
 <div class="page-post">
@@ -639,7 +654,7 @@ web技术 HTML+JS<br>
 <h4 id="%E6%B8%B2%E6%9F%93%E5%BA%93" tabindex="-1">渲染库</h4>
 <p>在Flutter界面渲染过程分为三个阶段：布局、绘制、合成, 布局和绘制在Flutter框架中完成,合成则交由引擎负责</p>
 <h4 id="%E6%8E%A7%E4%BB%B6%E5%BA%93" tabindex="-1">控件库</h4>
-<p>Flutter的控件库提供了非常丰富的控件，包括最基本的文本、图片、容器、输入框和动画等等.  在Flutter中&quot;一切皆是控件&quot;，通过组合、嵌套不同类型的控件，就可以构建出任意功能、任意复杂度的界面</p>
+<p>Flutter的控件库提供了非常丰富的控件，包括最基本的文本、图片、容器、输入框和动画等等. 在Flutter中&quot;一切皆是控件&quot;，通过组合、嵌套不同类型的控件，就可以构建出任意功能、任意复杂度的界面</p>
 <h3 id="flutter-2019-%E5%8F%91%E5%B1%95%E8%B7%AF%E7%BA%BF" tabindex="-1">Flutter 2019 发展路线</h3>
 <ul>
 <li>稳定迭代，更加易用</li>
@@ -673,7 +688,7 @@ web技术 HTML+JS<br>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2019-04-21-i-want-to-talk-about-flutter/` was built on 2026-03-04T09:04:39.992Z -->
+		<!-- This page `/blog/2019-04-21-i-want-to-talk-about-flutter/` was built on 2026-03-07T11:52:42.142Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

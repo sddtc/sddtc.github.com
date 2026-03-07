@@ -322,15 +322,7 @@ header {
 	font-weight: bold;
 }
 
-/* Tags */
-.post-tag {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	text-transform: capitalize;
-	font-style: italic;
-}
-
+/* Tags in article */
 .postlist-item>.post-tag {
 	align-self: center;
 }
@@ -377,7 +369,29 @@ a {
 
 /* Tags */
 .post-tag {
+	font-style: italic;
+}
+
+.tags-page {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+.tags-page li {
+	float: left;
+	margin: 0 20px 10px 0;
+}
+
+/* Categories Page */
+.post-category {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
 	font-style: normal;
+	font-size: 1.2em;
 }
 
 /* 其他页面样式, 例如: 关于我 */
@@ -432,6 +446,7 @@ blockquote {
 				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/categories/">分类</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/" aria-current="page">标签</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
@@ -444,55 +459,97 @@ blockquote {
 				
 <h2>标签列表</h2>
 
-<ul>
+<ul class="tags-page">
 
 	
-	<li><a href="/sddtc.github.com/tags/ai/" class="post-tag">AI</a></li>
+	<li><a href="/sddtc.github.com/tags/agent-ai/" class="post-tag">agent-ai</a></li>
 
 	
 	<li><a href="/sddtc.github.com/tags/algorithm/" class="post-tag">algorithm</a></li>
 
 	
+	<li><a href="/sddtc.github.com/tags/api/" class="post-tag">api</a></li>
+
+	
 	<li><a href="/sddtc.github.com/tags/auth/" class="post-tag">auth</a></li>
 
 	
-	<li><a href="/sddtc.github.com/tags/big-data/" class="post-tag">big data</a></li>
-
-	
-	<li><a href="/sddtc.github.com/tags/book-notes/" class="post-tag">book notes</a></li>
+	<li><a href="/sddtc.github.com/tags/automation/" class="post-tag">automation</a></li>
 
 	
 	<li><a href="/sddtc.github.com/tags/cloud/" class="post-tag">cloud</a></li>
 
 	
-	<li><a href="/sddtc.github.com/tags/database/" class="post-tag">database</a></li>
+	<li><a href="/sddtc.github.com/tags/colima/" class="post-tag">colima</a></li>
 
 	
 	<li><a href="/sddtc.github.com/tags/devops/" class="post-tag">devops</a></li>
 
 	
-	<li><a href="/sddtc.github.com/tags/esm/" class="post-tag">ESM</a></li>
+	<li><a href="/sddtc.github.com/tags/docker/" class="post-tag">docker</a></li>
 
 	
-	<li><a href="/sddtc.github.com/tags/fastify/" class="post-tag">Fastify</a></li>
+	<li><a href="/sddtc.github.com/tags/ESM/" class="post-tag">ESM</a></li>
+
+	
+	<li><a href="/sddtc.github.com/tags/Fastify/" class="post-tag">Fastify</a></li>
+
+	
+	<li><a href="/sddtc.github.com/tags/flutter/" class="post-tag">flutter</a></li>
+
+	
+	<li><a href="/sddtc.github.com/tags/git/" class="post-tag">git</a></li>
+
+	
+	<li><a href="/sddtc.github.com/tags/gradle/" class="post-tag">gradle</a></li>
+
+	
+	<li><a href="/sddtc.github.com/tags/hadoop/" class="post-tag">hadoop</a></li>
+
+	
+	<li><a href="/sddtc.github.com/tags/hive/" class="post-tag">hive</a></li>
+
+	
+	<li><a href="/sddtc.github.com/tags/impala/" class="post-tag">impala</a></li>
 
 	
 	<li><a href="/sddtc.github.com/tags/java/" class="post-tag">java</a></li>
 
 	
+	<li><a href="/sddtc.github.com/tags/jekyll/" class="post-tag">jekyll</a></li>
+
+	
 	<li><a href="/sddtc.github.com/tags/js/" class="post-tag">js</a></li>
+
+	
+	<li><a href="/sddtc.github.com/tags/kafka/" class="post-tag">kafka</a></li>
 
 	
 	<li><a href="/sddtc.github.com/tags/kotlin/" class="post-tag">kotlin</a></li>
 
 	
-	<li><a href="/sddtc.github.com/tags/life/" class="post-tag">life</a></li>
+	<li><a href="/sddtc.github.com/tags/log/" class="post-tag">log</a></li>
 
 	
-	<li><a href="/sddtc.github.com/tags/machine-learning/" class="post-tag">machine learning</a></li>
+	<li><a href="/sddtc.github.com/tags/mapreduce/" class="post-tag">mapreduce</a></li>
+
+	
+	<li><a href="/sddtc.github.com/tags/maven/" class="post-tag">maven</a></li>
+
+	
+	<li><a href="/sddtc.github.com/tags/mjml/" class="post-tag">mjml</a></li>
 
 	
 	<li><a href="/sddtc.github.com/tags/mobile/" class="post-tag">mobile</a></li>
+
+	
+	<li><a href="/sddtc.github.com/tags/mockito/" class="post-tag">mockito</a></li>
+
+	
+	<li><a href="/sddtc.github.com/tags/mysql/" class="post-tag">mysql</a></li>
+
+	
+	<li><a href="/sddtc.github.com/tags/npm/" class="post-tag">npm</a></li>
 
 	
 	<li><a href="/sddtc.github.com/tags/podcast/" class="post-tag">podcast</a></li>
@@ -501,31 +558,43 @@ blockquote {
 	<li><a href="/sddtc.github.com/tags/python/" class="post-tag">python</a></li>
 
 	
-	<li><a href="/sddtc.github.com/tags/quality-engineer/" class="post-tag">quality engineer</a></li>
+	<li><a href="/sddtc.github.com/tags/quality/" class="post-tag">quality</a></li>
 
 	
 	<li><a href="/sddtc.github.com/tags/react/" class="post-tag">react</a></li>
 
 	
+	<li><a href="/sddtc.github.com/tags/redis/" class="post-tag">redis</a></li>
+
+	
 	<li><a href="/sddtc.github.com/tags/ruby/" class="post-tag">ruby</a></li>
+
+	
+	<li><a href="/sddtc.github.com/tags/scrapy/" class="post-tag">scrapy</a></li>
 
 	
 	<li><a href="/sddtc.github.com/tags/security/" class="post-tag">security</a></li>
 
 	
-	<li><a href="/sddtc.github.com/tags/self-project/" class="post-tag">self-project</a></li>
-
-	
-	<li><a href="/sddtc.github.com/tags/self-talking/" class="post-tag">self-talking</a></li>
-
-	
 	<li><a href="/sddtc.github.com/tags/shell/" class="post-tag">shell</a></li>
 
 	
-	<li><a href="/sddtc.github.com/tags/software-engineer/" class="post-tag">software engineer</a></li>
+	<li><a href="/sddtc.github.com/tags/spring/" class="post-tag">spring</a></li>
 
 	
-	<li><a href="/sddtc.github.com/tags/spider/" class="post-tag">spider</a></li>
+	<li><a href="/sddtc.github.com/tags/storm/" class="post-tag">storm</a></li>
+
+	
+	<li><a href="/sddtc.github.com/tags/swift/" class="post-tag">swift</a></li>
+
+	
+	<li><a href="/sddtc.github.com/tags/tdd/" class="post-tag">tdd</a></li>
+
+	
+	<li><a href="/sddtc.github.com/tags/terraform/" class="post-tag">terraform</a></li>
+
+	
+	<li><a href="/sddtc.github.com/tags/test/" class="post-tag">test</a></li>
 
 	
 	<li><a href="/sddtc.github.com/tags/translation/" class="post-tag">translation</a></li>
@@ -534,13 +603,28 @@ blockquote {
 	<li><a href="/sddtc.github.com/tags/typebox/" class="post-tag">typebox</a></li>
 
 	
-	<li><a href="/sddtc.github.com/tags/typescript/" class="post-tag">Typescript</a></li>
+	<li><a href="/sddtc.github.com/tags/Typescript/" class="post-tag">Typescript</a></li>
+
+	
+	<li><a href="/sddtc.github.com/tags/uml/" class="post-tag">uml</a></li>
 
 	
 	<li><a href="/sddtc.github.com/tags/websocket/" class="post-tag">websocket</a></li>
 
 	
-	<li><a href="/sddtc.github.com/tags/women/" class="post-tag">women</a></li>
+	<li><a href="/sddtc.github.com/tags/word2vec/" class="post-tag">word2vec</a></li>
+
+	
+	<li><a href="/sddtc.github.com/tags/年度总结/" class="post-tag">年度总结</a></li>
+
+	
+	<li><a href="/sddtc.github.com/tags/数据库/" class="post-tag">数据库</a></li>
+
+	
+	<li><a href="/sddtc.github.com/tags/爬虫/" class="post-tag">爬虫</a></li>
+
+	
+	<li><a href="/sddtc.github.com/tags/碎碎念/" class="post-tag">碎碎念</a></li>
 
 </ul>
 
@@ -566,7 +650,7 @@ blockquote {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/tags/` was built on 2026-03-04T09:04:39.998Z -->
+		<!-- This page `/tags/` was built on 2026-03-07T11:52:42.150Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

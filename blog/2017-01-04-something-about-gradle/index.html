@@ -322,15 +322,7 @@ header {
 	font-weight: bold;
 }
 
-/* Tags */
-.post-tag {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	text-transform: capitalize;
-	font-style: italic;
-}
-
+/* Tags in article */
 .postlist-item>.post-tag {
 	align-self: center;
 }
@@ -377,7 +369,29 @@ a {
 
 /* Tags */
 .post-tag {
+	font-style: italic;
+}
+
+.tags-page {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+.tags-page li {
+	float: left;
+	margin: 0 20px 10px 0;
+}
+
+/* Categories Page */
+.post-category {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
 	font-style: normal;
+	font-size: 1.2em;
 }
 
 /* 其他页面样式, 例如: 关于我 */
@@ -554,6 +568,7 @@ pre[class*="language-"] {
 				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/categories/">分类</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
@@ -570,7 +585,7 @@ pre[class*="language-"] {
 <ul class="post-metadata">
 	<li><time datetime="2017-01-04">04 January 2017</time></li>
 	标签:
-	<li><a href="/sddtc.github.com/tags/software-engineer/" class="post-tag">software engineer</a></li>
+	<li><a href="/sddtc.github.com/tags/gradle/" class="post-tag">gradle</a></li>
 </ul>
 
 <div class="page-post">
@@ -581,17 +596,16 @@ pre[class*="language-"] {
 <ol>
 <li>用gradle打一个包含依赖的可运行Jar包.</li>
 </ol>
-<pre><code class="hljs">apply plugin: 'application'
-mainClassName= 'sddtc.gradle.APP'
+<pre class="language-java" tabindex="0"><code class="hljs language-java">apply plugin<span class="token operator">:</span> 'application'
+mainClassName<span class="token operator">=</span> 'sddtc<span class="token punctuation">.</span>gradle<span class="token punctuation">.</span><span class="token constant">APP</span>'
 
-task runnbaleJar(type: Jar) {
-    from files(sourceSets.main.output.classesDir)
-    from configurations.runtime.asFileTree.files.collect { zipTree(it) }
-    manifest {
-        attributes 'Main-Class': 	'sddtc.gradle.APP'
-    }
-}
-</code></pre>
+task <span class="token function">runnbaleJar</span><span class="token punctuation">(</span>type<span class="token operator">:</span> <span class="token class-name">Jar</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    from <span class="token function">files</span><span class="token punctuation">(</span>sourceSets<span class="token punctuation">.</span>main<span class="token punctuation">.</span>output<span class="token punctuation">.</span>classesDir<span class="token punctuation">)</span>
+    from configurations<span class="token punctuation">.</span>runtime<span class="token punctuation">.</span>asFileTree<span class="token punctuation">.</span>files<span class="token punctuation">.</span>collect <span class="token punctuation">{</span> <span class="token function">zipTree</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span> <span class="token punctuation">}</span>
+    manifest <span class="token punctuation">{</span>
+        attributes '<span class="token class-name">Main</span><span class="token operator">-</span><span class="token class-name">Class</span><span class="token char">': 	'</span>sddtc<span class="token punctuation">.</span>gradle<span class="token punctuation">.</span><span class="token constant">APP</span>'
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
 <p>说明: 这样打包并不包含配置文件,如logback.xml, 接下来我会实践一种优雅的打配置文件包方式.<br>
 今天我发现用 jar 命令就可以推翻上面的方式:</p>
 <pre class="language-vim" tabindex="0"><code class="hljs language-vim">jar <span class="token punctuation">{</span>
@@ -630,7 +644,7 @@ task runnbaleJar(type: Jar) {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2017-01-04-something-about-gradle/` was built on 2026-03-04T09:04:39.988Z -->
+		<!-- This page `/blog/2017-01-04-something-about-gradle/` was built on 2026-03-07T11:52:42.136Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

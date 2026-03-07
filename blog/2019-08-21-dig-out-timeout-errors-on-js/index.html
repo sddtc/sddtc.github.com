@@ -322,15 +322,7 @@ header {
 	font-weight: bold;
 }
 
-/* Tags */
-.post-tag {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	text-transform: capitalize;
-	font-style: italic;
-}
-
+/* Tags in article */
 .postlist-item>.post-tag {
 	align-self: center;
 }
@@ -377,7 +369,29 @@ a {
 
 /* Tags */
 .post-tag {
+	font-style: italic;
+}
+
+.tags-page {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+.tags-page li {
+	float: left;
+	margin: 0 20px 10px 0;
+}
+
+/* Categories Page */
+.post-category {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
 	font-style: normal;
+	font-size: 1.2em;
 }
 
 /* 其他页面样式, 例如: 关于我 */
@@ -554,6 +568,7 @@ pre[class*="language-"] {
 				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/categories/">分类</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
 					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
@@ -684,7 +699,7 @@ connect 函数会使用文件描述符 (file descripto). socket 表示 socket �
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2019-08-21-dig-out-timeout-errors-on-js/` was built on 2026-03-04T09:04:39.993Z -->
+		<!-- This page `/blog/2019-08-21-dig-out-timeout-errors-on-js/` was built on 2026-03-07T11:52:42.142Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>
