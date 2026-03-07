@@ -1,7 +1,8 @@
 ---
 title: 论'永远不要相信用户的输入'
 date: 2018-03-28
-tags: security
+tags: [security]
+categories: [云与架构]
 ---
 
 ### 背景

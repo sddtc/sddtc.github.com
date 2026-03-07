@@ -1,7 +1,8 @@
 ---
 title: Spring-Cloud概念理解和部署
 date: 2017-03-15
-tags: software engineer
+tags: [spring]
+categories: [工程实践]
 ---
 
 ### 背景

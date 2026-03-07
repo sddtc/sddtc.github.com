@@ -7,6 +7,7 @@ import markdownItAnchorPlugin from "markdown-it-anchor";
 import markdownItHighlightJSPlugin from "markdown-it-highlightjs";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 import { feedPlugin } from "@11ty/eleventy-plugin-rss";
+import dynamicCategories from 'eleventy-plugin-dynamic-categories'
 
 import pluginFilters from "./_config/filters.js";
 
@@ -125,6 +126,14 @@ export default async function (eleventyConfig) {
 	eleventyConfig.addShortcode("currentBuildDate", () => {
 		return (new Date()).toISOString();
 	});
+
+	eleventyConfig.addPlugin(dynamicCategories, {
+		categoryVar: "categories", // Name of your category variable from your frontmatter (default: categories)
+		itemsCollection: "posts", // Name of your collection to use for the items (default: posts)
+		categoryCollection: "categories", // Name of the new collection to use for the categories (default: value in categoryVar)
+		// categoryCollection MUST be unique currently
+		perPageCount: 15 // Number of items to display per page of categoriesByPage (default: 5)
+	})
 
 	// Features to make your build faster (when you need them)
 

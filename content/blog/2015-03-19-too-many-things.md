@@ -1,7 +1,8 @@
 ---
 title: 一篇纯粹为了凑字数的文
 date: 2015-03-19
-tags: self-talking
+tags: [碎碎念]
+categories: [个人生活]
 ---
 
 事情好多

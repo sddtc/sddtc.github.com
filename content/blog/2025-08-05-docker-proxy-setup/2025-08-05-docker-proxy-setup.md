@@ -1,7 +1,8 @@
 ---
 title: SS+Trojan-Qt5+colima 配置docker proxy从而正常下载docker images
 date: 2025-08-05
-tags: devops
+tags: [docker, colima]
+categories: [云与架构]
 ---
 
 ### 碎碎念:  

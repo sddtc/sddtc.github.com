@@ -1,7 +1,8 @@
 ---
 title: MYSQL搭建从库的方法教程
 date: 2015-11-11
-tags: big data
+tags: [mysql]
+categories: [数据智能]
 ---
 
 ### 准备环境：

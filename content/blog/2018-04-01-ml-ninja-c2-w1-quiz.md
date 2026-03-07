@@ -1,7 +1,7 @@
 ---
 title: Coursera 第二阶段第一课 Quiz
-tags: machine learning
 date: 2018-04-01
+categories: [数据智能]
 ---
 
 ### 1. If you have 10,000,000 examples, how would you split the train/dev/test set?

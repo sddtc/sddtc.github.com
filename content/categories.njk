@@ -1,0 +1,14 @@
+---js
+const eleventyNavigation = {
+	key: "分类",
+	order: 2
+};
+---
+
+<h2>分类列表</h2>
+
+<ul>
+{% for category in collections.categories %}
+    <li><a href="/categories/{{category.title}}/" class="post-category">{{ category.title }}</a></li>
+{% endfor %}
+</ul>

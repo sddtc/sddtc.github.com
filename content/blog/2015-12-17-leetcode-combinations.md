@@ -1,7 +1,8 @@
 ---
 title: Combinations解决方案
 date: 2015-12-17
-tags: algorithm
+tags: [algorithm]
+categories: [数据智能]
 ---
 
 Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.

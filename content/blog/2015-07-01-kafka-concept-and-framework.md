@@ -1,7 +1,8 @@
 ---
 title: Kafka概念详解与架构特性
 date: 2015-07-01
-tags: big data
+tags: [kafka]
+categories: [数据智能]
 ---
 
 ### 背景介绍

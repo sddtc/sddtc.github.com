@@ -1,7 +1,8 @@
 ---
 title: Mac终端的配置文件定义与修改
 date: 2015-08-01
-tags: shell
+tags: [shell]
+categories: [工程实践]
 ---
 
 ### Mac启动加载文件位置:可设置环境变量

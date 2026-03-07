@@ -1,7 +1,8 @@
 ---
 title: Storm介绍和kafka相关命令脚本
 date: 2015-06-30
-tags: big data
+tags: [storm, kafka]
+categories: [数据智能]
 ---
 
 * spout 龙卷，读取原始数据为bolt提供数据

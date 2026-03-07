@@ -1,7 +1,7 @@
 ---
 title: 《少有人走的路》 读书笔记
-tags: book notes
 date: 2018-05-14
+categories: [个人生活]
 ---
 
 最近一直在研读 [少有人走的路](https://book.douban.com/series/8110), 越往后看越豁然开朗, 似乎越来越与自己的思想密切相关了, 分享和记录书中一些段落

@@ -1,7 +1,8 @@
 ---
 title: 新浪微博自动登录脚本
 date: 2017-04-25
-tags: self-project
+tags: [automation]
+categories: [工程实践, 数据智能]
 ---
 
 ### 背景

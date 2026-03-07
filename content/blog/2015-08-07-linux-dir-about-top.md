@@ -1,7 +1,8 @@
 ---
 date: 2015-08-07
 title: Linux关于top命令的说明
-tags: shell
+tags: [shell]
+categories: [工程实践]
 ---
 
 ### top命令关键参数解析:

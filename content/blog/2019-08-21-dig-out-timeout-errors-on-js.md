@@ -1,7 +1,8 @@
 ---
 title: 浅淡 ETIMEDOUT & ESOCKETTIMEDOUT & Socket hang up
-tags: js
 date: 2019-08-21
+tags: [js]
+categories: [工程实践, 语言生态]
 ---
 
 ### 背景

@@ -1,7 +1,8 @@
 ---
 title: 再谈 ViewModel
-tags: mobile
 date: 2020-12-10
+tags: [mobile]
+categories: [工程实践]
 ---
 
 #### 背景知识

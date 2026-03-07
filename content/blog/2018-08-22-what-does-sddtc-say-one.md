@@ -1,7 +1,8 @@
 ---
 title: AWS Serverless 应用实践学习(1)
-tags: cloud
 date: 2018-08-22
+tags: [cloud]
+categories: [云与架构]
 ---
 
 ## 背景

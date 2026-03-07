@@ -1,7 +1,8 @@
 ---
 title: Shell自定义 date 命令
 date: 2015-10-08
-tags: shell
+tags: [shell]
+categories: [工程实践]
 ---
 
 ### linux下的shell date命令通常获取系统时间,例如：

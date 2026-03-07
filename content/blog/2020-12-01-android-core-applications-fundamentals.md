@@ -1,7 +1,8 @@
 ---
 title: Fundamentals 是基本原理的意思
-tags: mobile
 date: 2020-12-01
+tags: [mobile]
+categories: [工程实践]
 ---
 
 ### 概要

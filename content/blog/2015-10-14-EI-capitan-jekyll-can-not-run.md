@@ -1,7 +1,8 @@
 ---
 title: Jekyll的EI Capitan jekyll can not run 解决方案
 date: 2015-10-14
-tags: ruby
+tags: [ruby, jekyll]
+categories: [工程实践, 语言生态]
 ---
 
 EI Capitan是mac目前最新版的系统，作为更新强迫症患者总是第一时间更新, 只是这一次才发现，原来mac也会对用户安装的程序有细微的影响。。

@@ -1,7 +1,8 @@
 ---
 title: 关于 .well-known 规范的那些事 (1)
-tags: auth
 date: 2018-08-28
+tags: [auth]
+categories: [工程实践]
 ---
 
 ### Abstract

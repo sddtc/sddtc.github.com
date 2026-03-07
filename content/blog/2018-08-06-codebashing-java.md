@@ -1,7 +1,8 @@
 ---
 title: Codebashing
-tags: java
 date: 2018-08-06
+tags: [java]
+categories: [语言生态]
 ---
 
 ### Session Fixation

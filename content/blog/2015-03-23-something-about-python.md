@@ -1,7 +1,8 @@
 ---
 title: 关于Python的Thread介绍
 date: 2015-03-23
-tags: python
+tags: [python]
+categories: [语言生态, 技术开发]
 ---
 
 ### Thread

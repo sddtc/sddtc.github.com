@@ -1,7 +1,7 @@
 ---
 title: Team work
-tags: software engineer
 date: 2021-10-01
+categories: [工程实践]
 ---
 
 ### 策略： 专业度 + 沟通

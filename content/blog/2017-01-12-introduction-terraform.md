@@ -1,7 +1,8 @@
 ---
 title: Terraform基础设施即代码的概念理解
-tags: devops
 date: 2017-01-12
+tags: [terraform]
+categories: [云与架构]
 ---
 
 ### 背景

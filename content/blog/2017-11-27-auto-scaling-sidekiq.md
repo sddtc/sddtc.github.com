@@ -1,7 +1,8 @@
 ---
 title: Sidekiq的How to autoscale instances depending upon Sidekiq queue size
 date: 2017-11-27
-tags: devops
+tags: [devops]
+categories: [云与架构]
 ---
 
 ### 背景

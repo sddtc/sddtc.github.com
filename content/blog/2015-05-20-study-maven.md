@@ -1,7 +1,8 @@
 ---
 title: Maven集成打包配置说明
-tags: software engineer
 date: 2015-05-20
+tags: [maven]
+categories: [工程实践]
 ---
 
 场景一：

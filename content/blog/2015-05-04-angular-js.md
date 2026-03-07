@@ -1,7 +1,8 @@
 ---
 title: AngularJs的http请求要点和div的操作
 date: 2015-05-04
-tags: js
+tags: [js]
+categories: [技术开发, 语言生态]
 ---
 
 * post请求，需要transFn方法

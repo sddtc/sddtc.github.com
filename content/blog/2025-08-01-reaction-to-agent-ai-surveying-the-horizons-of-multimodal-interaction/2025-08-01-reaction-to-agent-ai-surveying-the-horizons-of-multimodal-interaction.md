@@ -1,7 +1,8 @@
 ---
 title: "Agent AI: Surveying the Horizons of Multimodal Interaction 读后感"
 date: 2025-08-01
-tags: [AI, book notes]
+tags: [agent-ai]
+categories: [数据智能, 读书笔记]
 ---
 
 前几天小某书刷到了李飞飞参与的这篇论文 这周花了两天时间看完了([Agent AI: Surveying the Horizons of Multimodal Interaction](https://arxiv.org/abs/2401.03568)). 看的时候播客也听不了了, 眼睛和脑子一边看内容一边二次翻译, 也意识到自己的专注力好像提高了.  

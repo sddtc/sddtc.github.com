@@ -1,7 +1,8 @@
 ---
 title: 浸泡
 date: 2017-10-31
-tags: life
+tags: [碎碎念]
+categories: [个人生活]
 ---
 
 不吹不黑, 浸泡了3天

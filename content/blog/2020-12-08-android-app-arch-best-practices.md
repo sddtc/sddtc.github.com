@@ -1,7 +1,8 @@
 ---
 title: 最佳实践什么的 可太有魅力了
-tags: mobile
 date: 2020-12-08
+tags: [mobile]
+categories: [工程实践]
 ---
 
 

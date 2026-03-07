@@ -1,7 +1,8 @@
 ---
 title: shell常用压缩命令
-tags: shell
 date: 2015-04-14
+tags: [shell]
+categories: [工程实践]
 ---
 
 ### 压缩和解压

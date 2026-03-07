@@ -1,7 +1,7 @@
 ---
 title: Log4j-业务日志输出规则实践
 date: 2015-09-08
-tags: software engineer
+categories: [工程实践]
 ---
 
 ### log4j 业务日志打印配置
