@@ -578,26 +578,28 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				
-
-<h1>Fastify 模块化项目实战(三)</h1>
-
-<ul class="post-metadata">
-	<li><time datetime="2026-03-04">04 March 2026</time></li>
-	标签:
-	<li><a href="/sddtc.github.com/tags/Fastify/" class="post-tag">Fastify</a>, </li>
-	<li><a href="/sddtc.github.com/tags/Typescript/" class="post-tag">Typescript</a>, </li>
-	<li><a href="/sddtc.github.com/tags/ESM/" class="post-tag">ESM</a>, </li>
-	<li><a href="/sddtc.github.com/tags/数据库/" class="post-tag">数据库</a></li>
-</ul>
-
-<div class="page-post">
-<aside>
-  <div class="content-tableau">
+				<div class="post-content-with-toc">
+	<aside>
+		<div class="content-tableau">
         <ul><li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF-prisma-orm">什么是 Prisma ORM</a><ul><li><a href="#prisma-%E7%9A%84%E6%98%BE%E8%91%97%E4%BC%98%E5%8A%BF">Prisma 的显著优势</a><ul><li><a href="#%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8%EF%BC%88%E9%A6%96%E8%A6%81%E4%BC%98%E5%8A%BF%EF%BC%89">类型安全（首要优势）</a></li><li><a href="#%E5%A3%B0%E6%98%8E%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%BB%BA%E6%A8%A1">声明式数据建模</a></li><li><a href="#%E8%87%AA%E5%8A%A8%E8%BF%81%E7%A7%BB%E4%B8%8E%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6">自动迁移与版本控制</a></li><li><a href="#%E4%B8%8E-fastify-%2F-node.js-%E6%B7%B1%E5%BA%A6%E9%9B%86%E6%88%90">与 Fastify / Node.js 深度集成</a></li></ul></li></ul></li><li><a href="#prisma-%E4%B8%8E-fastify-%E9%9B%86%E6%88%90%E7%9A%84%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4">Prisma 与 Fastify 集成的常用命令</a><ul><li><a href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96">安装依赖</a></li><li><a href="#%E5%88%9D%E5%A7%8B%E5%8C%96-prisma">初始化 Prisma</a></li><li><a href="#%E4%BF%AE%E6%94%B9-prisma-schema">修改 Prisma Schema</a></li><li><a href="#%E7%94%9F%E6%88%90-prisma-client">生成 Prisma Client</a></li><li><a href="#%E8%BF%90%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%81%E7%A7%BB">运行数据库迁移</a></li><li><a href="#%E5%9C%A8-fastify-%E6%8F%92%E4%BB%B6%E4%B8%AD%E7%AE%A1%E7%90%86-prisma-%E5%AE%9E%E4%BE%8B">在 Fastify 插件中管理 Prisma 实例</a></li><li><a href="#%E5%9C%A8-package.json-%E7%9A%84scripts%E4%B8%AD%E9%85%8D%E7%BD%AE-database_url">在 package.json 的scripts中配置 DATABASE_URL</a></li></ul></li><li><a href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%80%9D%E8%B7%AF">常见问题与解决思路</a><ul><li><a href="#schema-%E5%A4%A7%E6%97%B6%E7%B1%BB%E5%9E%8B%E7%94%9F%E6%88%90%E7%BC%93%E6%85%A2%E6%88%96%E7%BC%96%E8%BE%91%E5%99%A8%E5%8D%A1%E9%A1%BF">Schema 大时类型生成缓慢或编辑器卡顿</a></li><li><a href="#%E5%9C%A8-serverless%EF%BC%88lambda%EF%BC%89%E7%8E%AF%E5%A2%83%E4%B8%8B%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98">在 Serverless（Lambda）环境下连接问题</a></li><li><a href="#%E5%A4%8D%E6%9D%82%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2%E9%9A%BE%E4%BB%A5%E4%BC%98%E5%8C%96">复杂联表查询难以优化</a></li><li><a href="#%E8%BF%9E%E6%8E%A5%E8%B6%85%E6%97%B6%E6%88%96%E6%95%B0%E6%8D%AE%E5%BA%93%E9%94%99%E8%AF%AF">连接超时或数据库错误</a></li></ul></li><li><a href="#%E5%B0%8F%E7%BB%93">小结</a></li></ul>
       </div>
-</aside>
-  <p>在搭建模块的时候, 与数据库进行交互是很常见的场景; 因为如果你的模块是与业务相关, 那么存储用户数据是重要的一环; 虽然openclaw的memory策略很聪明, 用md文件进行存储; 然而大部分的系统, 关系型数据库依然是非常趁手的工具;<br>
+	</aside>
+	<div class="post-only-content">
+		
+		
+		<h1>Fastify 模块化项目实战(三)</h1>
+
+		<ul class="post-metadata">
+			<li><time datetime="2026-03-04">04 March 2026</time></li>
+			标签:
+			<li><a href="/sddtc.github.com/tags/Fastify/" class="post-tag">Fastify</a>, </li>
+			<li><a href="/sddtc.github.com/tags/Typescript/" class="post-tag">Typescript</a>, </li>
+			<li><a href="/sddtc.github.com/tags/ESM/" class="post-tag">ESM</a>, </li>
+			<li><a href="/sddtc.github.com/tags/数据库/" class="post-tag">数据库</a></li>
+		</ul>
+
+		<div class="page-post">
+		<p>在搭建模块的时候, 与数据库进行交互是很常见的场景; 因为如果你的模块是与业务相关, 那么存储用户数据是重要的一环; 虽然openclaw的memory策略很聪明, 用md文件进行存储; 然而大部分的系统, 关系型数据库依然是非常趁手的工具;<br>
 对于使用TypeScript的项目来说，Prisma已经成为最受欢迎的ORM方案之一:</p>
 <ul>
 <li>在 npm 上下载量位居 ORM 之首（社区广泛采纳）</li>
@@ -793,10 +795,11 @@ generator postClient <span class="token punctuation">{</span>
 </ul>
 <p>当然，Prisma 并非在所有场景都完美，有时候对于极其复杂查询或 serverless 用例需要额外优化或 fallback 原生 SQL。但总体而言，它极大提升了TypeScript开发体验与安全性，是构建高质量 Node.js API 服务的不错选择。</p>
 
+		</div>
+		<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2026-03-02-fanwai-multi-threads-travel-in-backend/">三月番外篇 - 你真的知道多线程在后端服务(SpringX)是如何被处理的吗?</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2026-03-16-fastify-modular-ts-config-file-intro/">Fastify 模块化项目实战 - 你真的懂 tsconfig.json 吗?</a></li>
+		</ul>
+	</div>
 </div>
-<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2026-03-02-fanwai-multi-threads-travel-in-backend/">三月番外篇 - 你真的知道多线程在后端服务(SpringX)是如何被处理的吗?</a></li>
-</ul>
-
 			</heading-anchors>
 		</main>
 
@@ -818,7 +821,7 @@ generator postClient <span class="token punctuation">{</span>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2026-03-04-fastify-modular-db-orm-intro/` was built on 2026-03-13T23:23:34.877Z -->
+		<!-- This page `/blog/2026-03-04-fastify-modular-db-orm-intro/` was built on 2026-03-16T02:49:18.537Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

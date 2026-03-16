@@ -578,23 +578,25 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				
-
-<h1>用 TDD 进行 rails_admin 开发</h1>
-
-<ul class="post-metadata">
-	<li><time datetime="2017-07-22">22 July 2017</time></li>
-	标签:
-	<li><a href="/sddtc.github.com/tags/tdd/" class="post-tag">tdd</a></li>
-</ul>
-
-<div class="page-post">
-<aside>
-  <div class="content-tableau">
+				<div class="post-content-with-toc">
+	<aside>
+		<div class="content-tableau">
         <ul><li><a href="#%E8%83%8C%E6%99%AF">背景</a></li><li><a href="#%E8%AF%B4%E6%98%8E">说明</a></li><li><a href="#model-test">Model Test</a></li><li><a href="#service-test">Service Test</a></li><li><a href="#migration">Migration</a></li><li><a href="#belongs_to-%26-has_many">belongs_to &amp; has_many</a></li><li><a href="#%E5%85%B6%E5%AE%83">其它</a></li></ul>
       </div>
-</aside>
-  <h3 id="%E8%83%8C%E6%99%AF" tabindex="-1">背景</h3>
+	</aside>
+	<div class="post-only-content">
+		
+		
+		<h1>用 TDD 进行 rails_admin 开发</h1>
+
+		<ul class="post-metadata">
+			<li><time datetime="2017-07-22">22 July 2017</time></li>
+			标签:
+			<li><a href="/sddtc.github.com/tags/tdd/" class="post-tag">tdd</a></li>
+		</ul>
+
+		<div class="page-post">
+		<h3 id="%E8%83%8C%E6%99%AF" tabindex="-1">背景</h3>
 <p>最近在做一个小而有趣的项目, 用到了rails去搭建后台. 在RailsAdmin和ActiveAdmin中选择了前者, 理由除了RA的全自动化之外, 还有它本身作为管理后台的核心思想: 既是提供一套UI, 并使所有模块可直接使用. 在我看来, ActiveAdmin需要二次开发的灵活性更大所以开发工作更多. 那么这次就用TDD的思想来做一次完整的功能开发ヾ(=･ω･=)o</p>
 <h3 id="%E8%AF%B4%E6%98%8E" tabindex="-1">说明</h3>
 <p>首先, 我们创建两个model: brand&amp;product; 其次, 引用了mocha这个测试框架:</p>
@@ -652,10 +654,11 @@ Brand<span class="token punctuation">.</span>class_eval <span class="token keywo
 <p>最近西安很热, 希望父上下下周能平安出院.</p>
 <p>以上.</p>
 
+		</div>
+		<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2017-07-03-2017-part-two/">2017 第二季度总结</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2017-08-01-tips-about-railsadmin/">关于 RA 的一些必须掌握的 tips</a></li>
+		</ul>
+	</div>
 </div>
-<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2017-07-03-2017-part-two/">2017 第二季度总结</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2017-08-01-tips-about-railsadmin/">关于 RA 的一些必须掌握的 tips</a></li>
-</ul>
-
 			</heading-anchors>
 		</main>
 
@@ -677,7 +680,7 @@ Brand<span class="token punctuation">.</span>class_eval <span class="token keywo
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2017-07-22-tdd-with-rails_admin/` was built on 2026-03-13T23:23:34.864Z -->
+		<!-- This page `/blog/2017-07-22-tdd-with-rails_admin/` was built on 2026-03-16T02:49:18.527Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

@@ -578,21 +578,23 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				
+				<div class="post-content-with-toc">
+	<aside>
+		
+	</aside>
+	<div class="post-only-content">
+		
+		
+		<h1>datanode存储空间溢出解决</h1>
 
-<h1>datanode存储空间溢出解决</h1>
+		<ul class="post-metadata">
+			<li><time datetime="2015-04-20">20 April 2015</time></li>
+			标签:
+			<li><a href="/sddtc.github.com/tags/hadoop/" class="post-tag">hadoop</a></li>
+		</ul>
 
-<ul class="post-metadata">
-	<li><time datetime="2015-04-20">20 April 2015</time></li>
-	标签:
-	<li><a href="/sddtc.github.com/tags/hadoop/" class="post-tag">hadoop</a></li>
-</ul>
-
-<div class="page-post">
-<aside>
-  
-</aside>
-  <p>今天遇到了一个关于cdh集群的hadoop问题<br>
+		<div class="page-post">
+		<p>今天遇到了一个关于cdh集群的hadoop问题<br>
 其中一个datanode的存储空间突然接近满溢，还没查出来问题<br>
 日志有报错<br>
 比其它datanode多出来将近150G<br>
@@ -603,10 +605,11 @@ start-balance.sh脚本没找到</p>
 cdh的hdfs命令可以进行dn的blk均衡move</p>
 <pre class="language-vim" tabindex="0"><code class="hljs language-vim">sudo <span class="token operator">-</span><span class="token keyword">u</span> hdfs hdfs balancer <span class="token operator">-</span>threshold <span class="token number">5</span></code></pre>
 
+		</div>
+		<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-04-14-linux-dirs/">shell常用压缩命令</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-04-27-discard/">一个有趣的小哲学</a></li>
+		</ul>
+	</div>
 </div>
-<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-04-14-linux-dirs/">shell常用压缩命令</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-04-27-discard/">一个有趣的小哲学</a></li>
-</ul>
-
 			</heading-anchors>
 		</main>
 
@@ -628,7 +631,7 @@ cdh的hdfs命令可以进行dn的blk均衡move</p>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-04-20-datanode-prob/` was built on 2026-03-13T23:23:34.856Z -->
+		<!-- This page `/blog/2015-04-20-datanode-prob/` was built on 2026-03-16T02:49:18.516Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

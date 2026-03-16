@@ -578,23 +578,25 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				
-
-<h1>Shell自定义 date 命令</h1>
-
-<ul class="post-metadata">
-	<li><time datetime="2015-10-08">08 October 2015</time></li>
-	标签:
-	<li><a href="/sddtc.github.com/tags/shell/" class="post-tag">shell</a></li>
-</ul>
-
-<div class="page-post">
-<aside>
-  <div class="content-tableau">
+				<div class="post-content-with-toc">
+	<aside>
+		<div class="content-tableau">
         <ul><li><a href="#linux%E4%B8%8B%E7%9A%84shell-date%E5%91%BD%E4%BB%A4%E9%80%9A%E5%B8%B8%E8%8E%B7%E5%8F%96%E7%B3%BB%E7%BB%9F%E6%97%B6%E9%97%B4%2C%E4%BE%8B%E5%A6%82%EF%BC%9A">linux下的shell date命令通常获取系统时间,例如：</a></li><li><a href="#%E5%A6%82%E6%9E%9C%E9%9C%80%E8%A6%81%E7%94%A8%E5%88%B0start%E5%92%8Cend%E8%BF%99%E7%A7%8D%E5%8F%98%E9%87%8F%EF%BC%8C%E5%B9%B6%E4%B8%94%E5%9C%A8%E5%8F%98%E9%87%8F%E7%9A%84%E5%9F%BA%E7%A1%80%E4%B8%8A%E8%BF%9B%E8%A1%8C%E6%97%A5%E6%9C%9F%E7%9A%84%E5%A2%9E%E5%87%8F%2C%E4%BE%8B%E5%A6%82%EF%BC%9A">如果需要用到start和end这种变量，并且在变量的基础上进行日期的增减,例如：</a></li></ul>
       </div>
-</aside>
-  <h3 id="linux%E4%B8%8B%E7%9A%84shell-date%E5%91%BD%E4%BB%A4%E9%80%9A%E5%B8%B8%E8%8E%B7%E5%8F%96%E7%B3%BB%E7%BB%9F%E6%97%B6%E9%97%B4%2C%E4%BE%8B%E5%A6%82%EF%BC%9A" tabindex="-1">linux下的shell date命令通常获取系统时间,例如：</h3>
+	</aside>
+	<div class="post-only-content">
+		
+		
+		<h1>Shell自定义 date 命令</h1>
+
+		<ul class="post-metadata">
+			<li><time datetime="2015-10-08">08 October 2015</time></li>
+			标签:
+			<li><a href="/sddtc.github.com/tags/shell/" class="post-tag">shell</a></li>
+		</ul>
+
+		<div class="page-post">
+		<h3 id="linux%E4%B8%8B%E7%9A%84shell-date%E5%91%BD%E4%BB%A4%E9%80%9A%E5%B8%B8%E8%8E%B7%E5%8F%96%E7%B3%BB%E7%BB%9F%E6%97%B6%E9%97%B4%2C%E4%BE%8B%E5%A6%82%EF%BC%9A" tabindex="-1">linux下的shell date命令通常获取系统时间,例如：</h3>
 <pre class="language-vim" tabindex="0"><code class="hljs language-vim">start<span class="token operator">=</span>$<span class="token number">1</span>
 end<span class="token operator">=</span>$<span class="token number">2</span>
 
@@ -610,10 +612,11 @@ fi</code></pre>
 custom_end<span class="token operator">=</span>`date <span class="token operator">-</span><span class="token keyword">d</span> <span class="token string">"${end} +1 day"</span> <span class="token string">"+%Y-%m-%d"</span>`
 custom_start1<span class="token operator">=</span>`date <span class="token operator">-</span><span class="token operator">-</span>date<span class="token operator">=</span><span class="token string">''</span>$start<span class="token string">' +1 day'</span> <span class="token operator">+</span><span class="token string">'%F'</span>`</code></pre>
 
+		</div>
+		<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-09-28-cpjslides/">Concurrent Programming in Java 翻译这是个坑</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-10-14-EI-capitan-jekyll-can-not-run/">Jekyll的EI Capitan jekyll can not run 解决方案</a></li>
+		</ul>
+	</div>
 </div>
-<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-09-28-cpjslides/">Concurrent Programming in Java 翻译这是个坑</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-10-14-EI-capitan-jekyll-can-not-run/">Jekyll的EI Capitan jekyll can not run 解决方案</a></li>
-</ul>
-
 			</heading-anchors>
 		</main>
 
@@ -635,7 +638,7 @@ custom_start1<span class="token operator">=</span>`date <span class="token opera
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-10-08-linux-custom-date/` was built on 2026-03-13T23:23:34.859Z -->
+		<!-- This page `/blog/2015-10-08-linux-custom-date/` was built on 2026-03-16T02:49:18.520Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

@@ -578,23 +578,25 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				
-
-<h1>关于 Java 泛型特性的理解</h1>
-
-<ul class="post-metadata">
-	<li><time datetime="2015-12-22">22 December 2015</time></li>
-	标签:
-	<li><a href="/sddtc.github.com/tags/java/" class="post-tag">java</a></li>
-</ul>
-
-<div class="page-post">
-<aside>
-  <div class="content-tableau">
+				<div class="post-content-with-toc">
+	<aside>
+		<div class="content-tableau">
         <ul><li><a href="#java%E6%B3%9B%E5%9E%8B%E7%9A%84%E4%BC%98%E5%8A%BF">java泛型的优势</a></li></ul>
       </div>
-</aside>
-  <h3 id="java%E6%B3%9B%E5%9E%8B%E7%9A%84%E4%BC%98%E5%8A%BF" tabindex="-1">java泛型的优势</h3>
+	</aside>
+	<div class="post-only-content">
+		
+		
+		<h1>关于 Java 泛型特性的理解</h1>
+
+		<ul class="post-metadata">
+			<li><time datetime="2015-12-22">22 December 2015</time></li>
+			标签:
+			<li><a href="/sddtc.github.com/tags/java/" class="post-tag">java</a></li>
+		</ul>
+
+		<div class="page-post">
+		<h3 id="java%E6%B3%9B%E5%9E%8B%E7%9A%84%E4%BC%98%E5%8A%BF" tabindex="-1">java泛型的优势</h3>
 <p>泛型的好处是在编译的时候检查类型安全，确保你只能把正确类型的对象放入集合中，避免了在运行时出现ClassCastException。</p>
 <p>泛型是通过类型擦除来实现的，编译器在编译时擦除了所有类型相关的信息，所以在运行时不存在任何类型相关的信息。<br>
 例如List<String>在运行时仅用一个List来表示。这样做的目的，是确保能和Java 5之前的版本开发二进制类库进行兼容。<br>
@@ -620,10 +622,11 @@ objectList = stringList;  //compilation error incompatible types</String></Objec
 通过使用Object作为类型，可以告知编译器该方法可以接受任何类型的对象，比如String或Integer。<br>
 它们之间的第二点区别是，你可以把任何带参数的类型传递给原始类型List，但却不能把List<String>传递给接受List<Object>的方法，因为会产生变异错误。</Object></String></Object></Object></p>
 
+		</div>
+		<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-12-17-leetcode-combinations/">Combinations解决方案</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-12-23-concurrent-java/">concurrent 包部分解读</a></li>
+		</ul>
+	</div>
 </div>
-<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-12-17-leetcode-combinations/">Combinations解决方案</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-12-23-concurrent-java/">concurrent 包部分解读</a></li>
-</ul>
-
 			</heading-anchors>
 		</main>
 
@@ -645,7 +648,7 @@ objectList = stringList;  //compilation error incompatible types</String></Objec
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-12-22-day-day-up-for-silent/` was built on 2026-03-13T23:23:34.861Z -->
+		<!-- This page `/blog/2015-12-22-day-day-up-for-silent/` was built on 2026-03-16T02:49:18.523Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

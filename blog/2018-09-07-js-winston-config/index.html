@@ -578,23 +578,25 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				
-
-<h1>winston 日志设置指南</h1>
-
-<ul class="post-metadata">
-	<li><time datetime="2018-09-07">07 September 2018</time></li>
-	标签:
-	<li><a href="/sddtc.github.com/tags/js/" class="post-tag">js</a></li>
-</ul>
-
-<div class="page-post">
-<aside>
-  <div class="content-tableau">
+				<div class="post-content-with-toc">
+	<aside>
+		<div class="content-tableau">
         <ul><li><a href="#%E8%83%8C%E6%99%AF">背景</a></li><li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li><li><a href="#%E4%B8%8B%E4%B8%80%E6%AD%A5">下一步</a></li></ul>
       </div>
-</aside>
-  <h3 id="%E8%83%8C%E6%99%AF" tabindex="-1">背景</h3>
+	</aside>
+	<div class="post-only-content">
+		
+		
+		<h1>winston 日志设置指南</h1>
+
+		<ul class="post-metadata">
+			<li><time datetime="2018-09-07">07 September 2018</time></li>
+			标签:
+			<li><a href="/sddtc.github.com/tags/js/" class="post-tag">js</a></li>
+		</ul>
+
+		<div class="page-post">
+		<h3 id="%E8%83%8C%E6%99%AF" tabindex="-1">背景</h3>
 <p>为了清晰的定位出错误堆栈, 我们通常会将 <code>Error</code> 的 <code>stack</code> 信息输出, 那么使用强大好用的 winston 组件时, 如何优雅的设置呢?</p>
 <h3 id="%E6%80%9D%E8%B7%AF" tabindex="-1">思路</h3>
 <p>我们的日志输出是 <code>json</code> 格式的, 但是直接将 <code>Error</code> Json化会隐藏 <code>stack</code> 的信息, 于是, 我们希望能将 <code>Error.stack</code> 附加到结果中, 组成一个 <code>json</code> 结构的结果</p>
@@ -654,10 +656,11 @@ pre[class*="language-"] {
 <p>使用 <code>filter</code> 特性去做敏感信息加星的实现方式</p>
 <p><a href="https://github.com/winstonjs/winston/issues/1243">感谢所有在 issues 里热心讨论的开发者</a></p>
 
+		</div>
+		<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2018-08-28-openid-well-known-one/">关于 .well-known 规范的那些事 (1)</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2018-10-23-my-jx3/">当我在说剑三我在说什么 2018 年的赛季</a></li>
+		</ul>
+	</div>
 </div>
-<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2018-08-28-openid-well-known-one/">关于 .well-known 规范的那些事 (1)</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2018-10-23-my-jx3/">当我在说剑三我在说什么 2018 年的赛季</a></li>
-</ul>
-
 			</heading-anchors>
 		</main>
 
@@ -679,7 +682,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-09-07-js-winston-config/` was built on 2026-03-13T23:23:34.868Z -->
+		<!-- This page `/blog/2018-09-07-js-winston-config/` was built on 2026-03-16T02:49:18.531Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

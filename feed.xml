@@ -4,12 +4,282 @@
   <subtitle>recent 10 articles about software development, technology, and other things that I find interesting.</subtitle>
   <link href="https://www.sddtc.florist/sddtc.github.com/feed.xml" rel="self" />
   <link href="https://www.sddtc.florist/sddtc.github.com/" />
-  <updated>2026-03-04T00:00:00Z</updated>
+  <updated>2026-03-16T00:00:00Z</updated>
   <id>https://www.sddtc.florist/sddtc.github.com/</id>
   <author>
     <name>sddtc</name>
     <email>changhbaga@gmail.com</email>
   </author>
+  <entry>
+    <title>Fastify 模块化项目实战 - 你真的懂 tsconfig.json 吗?</title>
+    <link href="https://www.sddtc.florist/sddtc.github.com/blog/2026-03-16-fastify-modular-ts-config-file-intro/" />
+    <updated>2026-03-16T00:00:00Z</updated>
+    <id>https://www.sddtc.florist/sddtc.github.com/blog/2026-03-16-fastify-modular-ts-config-file-intro/</id>
+    <content type="html">&lt;h2 id=&quot;tsconfig.json%EF%BC%9Atypescript-%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6&quot; tabindex=&quot;-1&quot;&gt;tsconfig.json：TypeScript 项目的核心配置文件&lt;/h2&gt;
+&lt;p&gt;在使用 TypeScript 开发 JavaScript 项目时，几乎所有项目都会有一个非常重要的文件：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;hljs&quot;&gt;tsconfig.json
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;TypeScript 官方文档也说明：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这个文件用于定义编译目标、模块系统、类型检查规则、输入文件范围等行为。 (&lt;a href=&quot;https://www.typescriptlang.org/docs/handbook/modules/guides/choosing-compiler-options.html?utm_source=chatgpt.com&quot; title=&quot;TypeScript: Documentation - Modules - Choosing Compiler Options&quot;&gt;typescriptlang.org&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;它决定了 TypeScript 编译器如何理解、检查和编译你的代码。如果说 TypeScript 编译器 &lt;code&gt;tsc&lt;/code&gt; 是引擎，那么 tsconfig.json 就是控制引擎运行方式的配置中心。&lt;br&gt;
+一个最简单的例子：&lt;/p&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;compilerOptions&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;target&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;ES2023&quot;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;当 TypeScript 编译器运行时：&lt;/p&gt;
+&lt;pre class=&quot;language-shell&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-shell&quot;&gt;tsc&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;它会自动读取当前目录的 &lt;code&gt;tsconfig.json&lt;/code&gt; 并按照配置执行编译。&lt;/p&gt;
+&lt;h2 id=&quot;%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81-tsconfig.json-%3F&quot; tabindex=&quot;-1&quot;&gt;为什么需要 tsconfig.json ?&lt;/h2&gt;
+&lt;p&gt;如果没有 &lt;code&gt;tsconfig.json&lt;/code&gt;，TypeScript 仍然可以编译：&lt;/p&gt;
+&lt;pre class=&quot;language-shell&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-shell&quot;&gt;tsc index.ts&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;但在真实项目中会出现很多问题：&lt;/p&gt;
+&lt;h3 id=&quot;%E7%BB%9F%E4%B8%80%E7%BC%96%E8%AF%91%E8%A7%84%E5%88%99&quot; tabindex=&quot;-1&quot;&gt;统一编译规则&lt;/h3&gt;
+&lt;p&gt;不同开发者机器必须使用相同规则，例如：&lt;/p&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;target&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ES2023
+strict&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;
+module&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ESNext&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;否则编译结果可能不同。&lt;/p&gt;
+&lt;h3 id=&quot;%E6%8E%A7%E5%88%B6%E4%BB%A3%E7%A0%81%E5%85%BC%E5%AE%B9%E6%80%A7.&quot; tabindex=&quot;-1&quot;&gt;控制代码兼容性.&lt;/h3&gt;
+&lt;p&gt;例如：&lt;/p&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;target&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ES2017&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;意味着 TypeScript 不会输出 ES2023 的语法。&lt;br&gt;
+这样可以保证代码在旧环境中运行。 (&lt;a href=&quot;https://typescriptdocs.com/modules-reference/guides/choosing-compiler-options.html?utm_source=chatgpt.com&quot; title=&quot;Modules - Choosing Compiler Options | Typescript Docs&quot;&gt;typescriptdocs.com&lt;/a&gt;)&lt;/p&gt;
+&lt;h3 id=&quot;%E6%8E%A7%E5%88%B6-typescript-%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5&quot; tabindex=&quot;-1&quot;&gt;控制 TypeScript 类型检查&lt;/h3&gt;
+&lt;p&gt;例如：&lt;/p&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;strict&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;开启严格类型检查。&lt;/p&gt;
+&lt;h3 id=&quot;%E6%8E%A7%E5%88%B6%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84&quot; tabindex=&quot;-1&quot;&gt;控制项目结构&lt;/h3&gt;
+&lt;p&gt;例如&lt;code&gt;src → 编译 → dist&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;rootDir&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;src&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;outDir&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;dist&quot;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;由此可见, &lt;code&gt;tsconfig.json&lt;/code&gt; 解决了编译规则统一、类型检查策略、项目结构管理三个核心问题。&lt;/p&gt;
+&lt;h2 id=&quot;tsconfig.json-%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84&quot; tabindex=&quot;-1&quot;&gt;tsconfig.json 的基本结构&lt;/h2&gt;
+&lt;p&gt;一个典型的 &lt;code&gt;tsconfig.json&lt;/code&gt;：&lt;/p&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;compilerOptions&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;include&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;exclude&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;extends&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;&quot;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;最核心的部分是 compilerOptions&lt;/p&gt;
+&lt;h2 id=&quot;compileroptions-%E6%98%AF%E4%BB%80%E4%B9%88%3F&quot; tabindex=&quot;-1&quot;&gt;compilerOptions 是什么?&lt;/h2&gt;
+&lt;p&gt;compilerOptions 是 TypeScript 编译器选项集合，决定了：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;编译输出&lt;/li&gt;
+&lt;li&gt;模块系统&lt;/li&gt;
+&lt;li&gt;语言版本&lt;/li&gt;
+&lt;li&gt;类型检查规则&lt;/li&gt;
+&lt;li&gt;项目结构&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;例如：&lt;/p&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;compilerOptions&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;target&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;ES2023&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;module&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;ESNext&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;moduleResolution&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;bundler&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;strict&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;esModuleInterop&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;target&quot; tabindex=&quot;-1&quot;&gt;target&lt;/h3&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;target&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;ES2023&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;控制编译后的 JavaScript 版本。例如 TypeScript → JavaScript:&lt;br&gt;
+如果：&lt;/p&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;target&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ES5&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;箭头函数会被转换:&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;token function-variable function&quot;&gt;fn&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;变成：&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;token function-variable function&quot;&gt;fn&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;官方建议：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;target 应设置为你支持的最低 JavaScript 版本。 (&lt;a href=&quot;https://typescriptdocs.com/modules-reference/guides/choosing-compiler-options.html?utm_source=chatgpt.com&quot; title=&quot;Modules - Choosing Compiler Options | Typescript Docs&quot;&gt;typescriptdocs.com&lt;/a&gt;).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;常见值：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;hljs&quot;&gt;ES2017
+ES2020
+ES2022
+ESNext
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;module&quot; tabindex=&quot;-1&quot;&gt;module&lt;/h3&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;module&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;ESNext&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;控制模块系统。例如 import/export 最终编译为：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ES Modules&lt;/li&gt;
+&lt;li&gt;CommonJS&lt;/li&gt;
+&lt;li&gt;AMD&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;常见值：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CommonJS&lt;/li&gt;
+&lt;li&gt;ESNext&lt;/li&gt;
+&lt;li&gt;NodeNext&lt;/li&gt;
+&lt;li&gt;ES2020&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;现代前端和 Node 项目通常使用 ESNext&lt;/p&gt;
+&lt;h3 id=&quot;moduleresolution&quot; tabindex=&quot;-1&quot;&gt;moduleResolution&lt;/h3&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;moduleResolution&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;bundler&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;控制模块查找规则。例如：&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; foo &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;./foo&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;控制 TypeScript 如何找到 foo。官方定义：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;bundler&lt;/li&gt;
+&lt;li&gt;node16&lt;/li&gt;
+&lt;li&gt;nodenext&lt;/li&gt;
+&lt;li&gt;classic&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;bundler 表示：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;让 bundler（Vite / Webpack / esbuild）负责解析模块路径。 (&lt;a href=&quot;https://www.typescriptlang.org/tsconfig/moduleResolution.html?utm_source=chatgpt.com&quot; title=&quot;TypeScript: TSConfig Option: moduleResolution&quot;&gt;typescriptlang.org&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;特点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;不强制写 &lt;code&gt;.js&lt;/code&gt; 扩展名&lt;/li&gt;
+&lt;li&gt;支持 package.json exports&lt;/li&gt;
+&lt;li&gt;更适合前端项目&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;strict&quot; tabindex=&quot;-1&quot;&gt;strict&lt;/h3&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;strict&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;开启严格模式。这是 TypeScript 最重要的配置之一。它实际上包含多个规则：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;noImplicitAny&lt;/li&gt;
+&lt;li&gt;strictNullChecks&lt;/li&gt;
+&lt;li&gt;strictFunctionTypes&lt;/li&gt;
+&lt;li&gt;strictBindCallApply&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;作用：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;避免隐式 any&lt;/li&gt;
+&lt;li&gt;避免 null 错误&lt;/li&gt;
+&lt;li&gt;提高类型安全&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;官方建议：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;始终开启 strict。 (&lt;a href=&quot;https://typescript.tv/new-features/the-4-must-know-typescript-compiler-configs?utm_source=chatgpt.com&quot; title=&quot;The 4 Must-Know TypeScript Compiler Configs&quot;&gt;TypeScript TV&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;esmoduleinterop&quot; tabindex=&quot;-1&quot;&gt;esModuleInterop&lt;/h3&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;esModuleInterop&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;用于解决 CommonJS 和 ES Module 互操作问题。例如：&lt;/p&gt;
+&lt;pre class=&quot;language-ts&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; express &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;express&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;而 express 实际是：&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-js&quot;&gt;module&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;exports &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; express&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;没有这个配置就必须写：&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;as&lt;/span&gt; express &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;express&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;开启后 default import 也可以使用。&lt;/p&gt;
+&lt;h3 id=&quot;%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81-compileroptions&quot; tabindex=&quot;-1&quot;&gt;其他重要 compilerOptions&lt;/h3&gt;
+&lt;p&gt;以下也是常见配置：&lt;/p&gt;
+&lt;h4 id=&quot;rootdir&quot; tabindex=&quot;-1&quot;&gt;rootDir&lt;/h4&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;rootDir&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;src&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;源码目录。&lt;/p&gt;
+&lt;h4 id=&quot;outdir&quot; tabindex=&quot;-1&quot;&gt;outDir&lt;/h4&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;outDir&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;dist&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;编译输出目录。&lt;/p&gt;
+&lt;h4 id=&quot;sourcemap&quot; tabindex=&quot;-1&quot;&gt;sourceMap&lt;/h4&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;sourceMap&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;生成 source map，方便调试。&lt;/p&gt;
+&lt;h4 id=&quot;skiplibcheck&quot; tabindex=&quot;-1&quot;&gt;skipLibCheck&lt;/h4&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;skipLibCheck&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;跳过 node_modules 类型检查。大型项目非常常见。&lt;/p&gt;
+&lt;h4 id=&quot;resolvejsonmodule&quot; tabindex=&quot;-1&quot;&gt;resolveJsonModule&lt;/h4&gt;
+&lt;p&gt;允许：&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; config &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;./config.json&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&quot;forceconsistentcasinginfilenames&quot; tabindex=&quot;-1&quot;&gt;forceConsistentCasingInFileNames&lt;/h4&gt;
+&lt;p&gt;避免：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;import User&lt;/li&gt;
+&lt;li&gt;import user&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在不同系统出现问题。&lt;/p&gt;
+&lt;h4 id=&quot;noemit&quot; tabindex=&quot;-1&quot;&gt;noEmit&lt;/h4&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;noEmit&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;让 TypeScript 只做类型检查。实际编译由：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Vite&lt;/li&gt;
+&lt;li&gt;Webpack&lt;/li&gt;
+&lt;li&gt;esbuild&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;完成。&lt;/p&gt;
+&lt;h4 id=&quot;paths&quot; tabindex=&quot;-1&quot;&gt;paths&lt;/h4&gt;
+&lt;p&gt;大型项目常使用:&lt;/p&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;compilerOptions&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;baseUrl&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;paths&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;@/*&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;src/*&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这样可以写：&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; userService &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;@/services/user&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;而不是：&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; userService &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;../../../services/user&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;include-%2F-exclude-%E6%98%AF%E4%BB%80%E4%B9%88-%3F&quot; tabindex=&quot;-1&quot;&gt;include / exclude 是什么 ?&lt;/h2&gt;
+&lt;p&gt;TypeScript 需要知道哪些文件需要编译&lt;/p&gt;
+&lt;h3 id=&quot;include&quot; tabindex=&quot;-1&quot;&gt;include&lt;/h3&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;include&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;src/**/*&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;表示 src 目录下所有 ts 文件&lt;/p&gt;
+&lt;h3 id=&quot;exclude&quot; tabindex=&quot;-1&quot;&gt;exclude&lt;/h3&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;exclude&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;node_modules&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;dist&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;排除目录。&lt;/p&gt;
+&lt;h2 id=&quot;extends-%E6%98%AF%E4%BB%80%E4%B9%88%3F&quot; tabindex=&quot;-1&quot;&gt;extends 是什么?&lt;/h2&gt;
+&lt;p&gt;extends 用于继承配置文件。例如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;tsconfig.base.json&lt;/li&gt;
+&lt;li&gt;tsconfig.json&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;extends&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;./tsconfig.base.json&quot;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这样可以：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;monorepo 共享配置&lt;/li&gt;
+&lt;li&gt;library / app 复用配置&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;很多项目都会这样：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;tsconfig.base.json&lt;/li&gt;
+&lt;li&gt;tsconfig.build.json&lt;/li&gt;
+&lt;li&gt;tsconfig.test.json&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;%E5%B8%B8%E8%A7%81%E7%9A%84-tsconfig-%E7%A4%BA%E4%BE%8B&quot; tabindex=&quot;-1&quot;&gt;常见的 tsconfig 示例&lt;/h2&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;compilerOptions&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;target&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;ES2023&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;module&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;ESNext&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;moduleResolution&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;bundler&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;strict&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;esModuleInterop&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;rootDir&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;src&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;outDir&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;dist&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;skipLibCheck&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;sourceMap&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;resolveJsonModule&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;include&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
+      &lt;span class=&quot;token string&quot;&gt;&quot;@types&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token string&quot;&gt;&quot;src/**/*.ts&quot;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;那么, 最后的最后, 在哪里查看全部 tsconfig 选项呢? TypeScript 所有配置都在官方文档：&lt;/p&gt;
+&lt;p&gt;👉 &lt;a href=&quot;https://www.typescriptlang.org/tsconfig&quot;&gt;https://www.typescriptlang.org/tsconfig&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;一个好的 &lt;code&gt;tsconfig.json&lt;/code&gt; 能让：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;项目类型更安全&lt;/li&gt;
+&lt;li&gt;编译行为更一致&lt;/li&gt;
+&lt;li&gt;工程结构更清晰&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以上。&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Fastify 模块化项目实战(三)</title>
     <link href="https://www.sddtc.florist/sddtc.github.com/blog/2026-03-04-fastify-modular-db-orm-intro/" />
@@ -1524,119 +1794,6 @@ operation of systems working under such guidance&lt;/p&gt;
 &lt;/ul&gt;
 &lt;p&gt;整个下来的感受还是很开心的, 因为从0到1是勇气的开始, 而1到100便是日积月累的循规蹈矩. 2个项目打算在测试完善之后开源, 基于WebSocket技术的应用还是很有趣的.&lt;br&gt;
 以上.&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>博客静态页面生成工具从jekyll切换为11ty, 告别ruby 拥抱js</title>
-    <link href="https://www.sddtc.florist/sddtc.github.com/blog/2025-07-22-bye-jekyll-hi-11ty/" />
-    <updated>2025-07-22T00:00:00Z</updated>
-    <id>https://www.sddtc.florist/sddtc.github.com/blog/2025-07-22-bye-jekyll-hi-11ty/</id>
-    <content type="html">&lt;p&gt;从我知道github自带&lt;code&gt;gh-pages&lt;/code&gt;特性那会儿, 便把个人博客从自建服务器迁移到了这里,也快11年了(第一篇文章发布于2014年), 后来知道了一些便宜的域名服务, 换过2个域名. 从GoDaddy平台换成了&lt;a href=&quot;https://porkbun.com/&quot;&gt;porkbun&lt;/a&gt;. 然而静态页面生成器一直使用github官方推荐的jekyll, 也用爱发电换了好几个主题, 最近的&lt;a href=&quot;https://github.com/TMaize/tmaize-blog&quot;&gt;tmaize&lt;/a&gt;主题确实是我一直很喜欢的… 但是!! 这两天还是谨慎思考(花了一个下午的时间), 彻底放弃jekyll, 也是要从一个一直困惑我的报错开始…&lt;br&gt;
-容器化启动项目是一个习惯, 它可以不依赖电脑本地的环境, 用一个docker image文件, 包含着项目需要的依赖, 运行环境, 很方便的让你快速启动. 一直以来我用了jekyll的image在本地启动博客:&lt;/p&gt;
-&lt;pre class=&quot;language-yml&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-yml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;services&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;token key atrule&quot;&gt;jekyll&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;token key atrule&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; jekyll/jekyll&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;latest
-    &lt;span class=&quot;token key atrule&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;jekyll serve&quot;&lt;/span&gt;
-    &lt;span class=&quot;token key atrule&quot;&gt;working_dir&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; /app
-    &lt;span class=&quot;token key atrule&quot;&gt;container_name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; sddtc_blog
-    &lt;span class=&quot;token key atrule&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; $PWD&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;/srv/jekyll
-      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; .&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;/app
-    &lt;span class=&quot;token key atrule&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;4000:4000&quot;&lt;/span&gt;
-    &lt;span class=&quot;token key atrule&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;token key atrule&quot;&gt;JEKYLL_UID&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1001&lt;/span&gt;
-      &lt;span class=&quot;token key atrule&quot;&gt;JEKYLL_GID&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1001&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;这一段我也不得不吐槽, &lt;code&gt;JEKYLL_UID&lt;/code&gt;和&lt;code&gt;JEKYLL_GID&lt;/code&gt; 还是后来加上的, 因为一些ruby升级还是gem升级啥的导致权限问题之类的, 当时也花了好多时间解决. 然而那还是解决了的, 然而这一次的错误:&lt;/p&gt;
-&lt;pre class=&quot;language-shell&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-shell&quot;&gt;/usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/conflict.rb:47:in &lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;conflicting_dependencies&#39;: undefined method &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;request&lt;span class=&quot;token string&quot;&gt;&#39; for nil:NilClass (NoMethodError)
-    [@failed_dep.dependency, @activated.request.dependency]
-                                       ^^^^^^^^
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/exceptions.rb:61:in `conflicting_dependencies&#39;&lt;/span&gt;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/exceptions.rb:55:in &lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;initialize&#39;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver.rb:193:in &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;exception&lt;span class=&quot;token string&quot;&gt;&#39;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver.rb:193:in `raise&#39;&lt;/span&gt;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver.rb:193:in &lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;rescue &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; resolve&#39;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver.rb:191:in &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;resolve&lt;span class=&quot;token string&quot;&gt;&#39;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/request_set.rb:411:in `resolve&#39;&lt;/span&gt;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/request_set.rb:423:in &lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;resolve_current&#39;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:230:in &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;finish_resolve&lt;span class=&quot;token string&quot;&gt;&#39;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:287:in `block in activate_bin_path&#39;&lt;/span&gt;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:285:in &lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;synchronize&#39;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:285:in &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;activate_bin_path&lt;span class=&quot;token string&quot;&gt;&#39;
-	from /usr/local/bin/bundle:25:in `&amp;lt;main&gt;&#39;&lt;/span&gt;
-/usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/molinillo/lib/molinillo/resolution.rb:317:in &lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;raise_error_unless_state&#39;: Unable to satisfy the following requirements: &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;Gem::Resolver::Molinillo::VersionConflict&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
-- &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;bundler &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;2.7&lt;/span&gt;.0&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt; required by &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;user-specified dependency&lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/molinillo/lib/molinillo/resolution.rb:299:in &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;block &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; unwind_for_conflict&lt;span class=&quot;token string&quot;&gt;&#39;
-	from &amp;lt;internal:kernel&gt;:90:in `tap&#39;&lt;/span&gt;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/molinillo/lib/molinillo/resolution.rb:297:in &lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;unwind_for_conflict&#39;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/molinillo/lib/molinillo/resolution.rb:682:in &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;attempt_to_activate&lt;span class=&quot;token string&quot;&gt;&#39;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/molinillo/lib/molinillo/resolution.rb:254:in `process_topmost_state&#39;&lt;/span&gt;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/molinillo/lib/molinillo/resolution.rb:182:in &lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;resolve&#39;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver/molinillo/lib/molinillo/resolver.rb:43:in &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;resolve&lt;span class=&quot;token string&quot;&gt;&#39;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/resolver.rb:190:in `resolve&#39;&lt;/span&gt;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/request_set.rb:411:in &lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;resolve&#39;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems/request_set.rb:423:in &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;resolve_current&lt;span class=&quot;token string&quot;&gt;&#39;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:230:in `finish_resolve&#39;&lt;/span&gt;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:287:in &lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;block &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; activate_bin_path&#39;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:285:in &lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;synchronize&lt;span class=&quot;token string&quot;&gt;&#39;
-	from /usr/local/lib/ruby/site_ruby/3.1.0/rubygems.rb:285:in `activate_bin_path&#39;&lt;/span&gt;
-	from /usr/local/bin/bundle:25:in `&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;main&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&#39;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;首先想到了升级bundle, 升级本地依赖, 定位这依赖冲突到底冲突在了哪里. &amp;lt;— 至少从这个堆栈里根本看不出来谁和谁冲突了. 所以没定位出来哈哈哈哈QAQ. 然后开始病急乱投医整自己本地的ruby版本, 发现又有3.1.0又有3.3.0但是&lt;code&gt;gem env&lt;/code&gt;又展示了多版本, 于是安装了rbenv(ruby的多版本管理工具), 配置进了.zshrc还是报错. 其实写到这里我想, 或许把bunde再降回2.5.x或许和ruby 3.1.0就兼容了, 但是这种对于ruby的缺乏兴趣与理解让我太痛苦了. 一想到未来还要解决这些乱七八糟的问题, 我宁愿被js折磨. 于是决定拥抱js工具.&lt;/p&gt;
-&lt;p&gt;那么那么, 切换一个新的静态页面生成工具需要几步呢?&lt;/p&gt;
-&lt;h2 id=&quot;%E7%AC%AC%E4%B8%80%E6%AD%A5%2C-%E9%80%89%E6%8B%A9%E4%B8%80%E4%B8%AA%E5%B7%A5%E5%85%B7%F0%9F%94%A7&quot; tabindex=&quot;-1&quot;&gt;第一步, 选择一个工具🔧&lt;/h2&gt;
-&lt;p&gt;基于JS的静态页面生成工具有很多,Gatsby, Astro, 11ty, next, etc. 且快速确定了目标: &lt;a href=&quot;https://www.11ty.dev/&quot;&gt;Eleventy&lt;/a&gt;. 毕竟它的slogan:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Eleventy is a simpler static site generator.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;简单这个词一下子就击中了我的心.&lt;br&gt;
-或者稍微对比一下也会发现:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;For large, content-rich sites with a React focus, Gatsby is a strong contender.&lt;/li&gt;
-&lt;li&gt;Astro excels at building content-driven websites where minimal JavaScript and fast performance are crucial.&lt;/li&gt;
-&lt;li&gt;11ty is a great choice for simpler static sites that value speed and flexibility with various templating languages.&lt;/li&gt;
-&lt;li&gt;Next.js offers a balance between static site generation and dynamic rendering, making it suitable for a wide range of projects.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;%E7%AC%AC%E4%BA%8C%E6%AD%A5%2C-%E6%9C%AC%E5%9C%B0%E8%B0%83%E8%AF%95%E6%96%B0%E5%B7%A5%E5%85%B7&quot; tabindex=&quot;-1&quot;&gt;第二步, 本地调试新工具&lt;/h2&gt;
-&lt;p&gt;如果类似的经验不多, 建议使用新工具开启新的github分支, 在能保证自己现有博客一直能运行的前提下尝试新东西. 否则可能会出现进退两难的情况, 有一些挫败感.&lt;br&gt;
-在梳理了&lt;a href=&quot;https://github.com/11ty/eleventy-base-blog&quot;&gt;eleventy-base-blog&lt;/a&gt;的博客结构之后我在主分支直接操作了.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;初始化package.json, 安装eleventy-base-blog里面的依赖&lt;/li&gt;
-&lt;li&gt;创建/复制eleventy-base-blog相关的文件夹和文件: _config, _data, _includes, css, public, .nojekyll, eleventy.config.js 和 netlify.toml&lt;/li&gt;
-&lt;li&gt;创建/复制eleventy-base-blog的content文件夹和文件: content的blog是真实的博客文章, 因此我把自己的143篇文章全部复制到blog文件夹下, 删除示例文章&lt;/li&gt;
-&lt;li&gt;本地运行: &lt;code&gt;npx @11ty/eleventy --serve&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;开始处理错误:&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;每篇文章的开头保持统一格式, 有title, date和tags(tags必须是英文,不能是中文, 否则会报错&amp;lt;–这也贼坑), 例如:&lt;/li&gt;
-&lt;/ol&gt;
-&lt;pre&gt;&lt;code class=&quot;hljs&quot;&gt;
----
-title: 该网站在某些区域被阻止, 例如 中国
-date: 2025-07-03
-tags: self-talking
----
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;ol start=&quot;2&quot;&gt;
-&lt;li&gt;文章内容的&amp;quot;#&amp;quot; 需要处理一下&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;2个错误处理完就能启动成功了, 只不过只有在这个时候我才发现文章多也不好, 至少开头之前用jekyll的时候就不一致, 大量的体力工作, 心里全是恨, 想写脚本的心情此刻来到了最高峰.&lt;/p&gt;
-&lt;h2 id=&quot;%E7%AC%AC%E4%B8%89%E6%AD%A5%2C-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F&quot; tabindex=&quot;-1&quot;&gt;第三步, 自定义样式&lt;/h2&gt;
-&lt;p&gt;11ty默认的博客样式是&lt;a href=&quot;https://demo-base-blog.11ty.dev/&quot;&gt;蓝色调&lt;/a&gt;, 在参考了&lt;a href=&quot;https://colorhunt.co/&quot;&gt;colorhunt&lt;/a&gt;之后选择了绿色调于是添加了自定义css文件&lt;a href=&quot;https://github.com/sddtc/sddtc.github.com/blob/main/css/customized-theme.css&quot;&gt;customized-theme.css&lt;/a&gt;. 这个文件会覆盖默认样式, 保持独立. 在软件工程领域里, 对修改关闭, 对扩展开放是好实践.&lt;br&gt;
-因为&lt;code&gt;base.njk&lt;/code&gt;文件是博客系统的基础文件, css文件自然要在这里进行额外的声明来保证它的加载, 因此添加一行:&lt;/p&gt;
-&lt;pre class=&quot;language-html&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs language-html&quot;&gt;
-&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;style&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token style&quot;&gt;&lt;span class=&quot;token language-css&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;% include &lt;span class=&quot;token string&quot;&gt;&quot;css/customized-theme.css&quot;&lt;/span&gt; %&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;style&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;它保证了自定义的css文件内容会被打包到统一的css文件里.&lt;br&gt;
-而css文件夹也是在根目录下&lt;/p&gt;
-&lt;h2 id=&quot;%E7%AC%AC%E5%9B%9B%E6%AD%A5%2C-%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89js%E8%84%9A%E6%9C%AC&quot; tabindex=&quot;-1&quot;&gt;第四步, 添加自定义js脚本&lt;/h2&gt;
-&lt;p&gt;google页面统计和一些俏皮的脚本(鼠标点击出现二十四字社会主义核心价值观😉)也需要迁移. 类似于css脚本方式. 具体可以参考&lt;a href=&quot;https://github.com/sddtc/sddtc.github.com/blob/main/_includes/layouts/base.njk#L51&quot;&gt;代码片段&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;%E7%AC%AC%E4%BA%94%E6%AD%A5%2C-%E9%83%A8%E7%BD%B2!&quot; tabindex=&quot;-1&quot;&gt;第五步, 部署!&lt;/h2&gt;
-&lt;p&gt;部署之后就404了, 于是紧急查看文档: &lt;a href=&quot;https://www.11ty.dev/docs/deployment/#deploy-an-eleventy-project-to-git-hub-pages&quot;&gt;Deploy an Eleventy project to GitHub pages&lt;/a&gt;&lt;br&gt;
-快速修复之后上线了.&lt;/p&gt;
-&lt;p&gt;之后再研究研究css, 让博客好看一些&lt;br&gt;
-再研究研究11ty, 看看有什么好玩的插件&lt;/p&gt;
-&lt;p&gt;谢谢大家的观看! 鞠躬!&lt;/p&gt;
 </content>
   </entry>
 </feed>

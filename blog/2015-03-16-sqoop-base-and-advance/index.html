@@ -578,23 +578,25 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				
-
-<h1>Sqoop基本使用要点和mysql相关的一个Tip</h1>
-
-<ul class="post-metadata">
-	<li><time datetime="2015-03-16">16 March 2015</time></li>
-	标签:
-	<li><a href="/sddtc.github.com/tags/mysql/" class="post-tag">mysql</a></li>
-</ul>
-
-<div class="page-post">
-<aside>
-  <div class="content-tableau">
+				<div class="post-content-with-toc">
+	<aside>
+		<div class="content-tableau">
         <ul><li><a href="#sqoop-%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%3A">sqoop 相关命令使用:</a></li><li><a href="#mysql%E5%92%8Csqoop%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BA%A4%E4%BA%92%E9%97%AE%E9%A2%98%3A">mysql和sqoop之间的交互问题:</a></li></ul>
       </div>
-</aside>
-  <h3 id="sqoop-%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%3A" tabindex="-1">sqoop 相关命令使用:</h3>
+	</aside>
+	<div class="post-only-content">
+		
+		
+		<h1>Sqoop基本使用要点和mysql相关的一个Tip</h1>
+
+		<ul class="post-metadata">
+			<li><time datetime="2015-03-16">16 March 2015</time></li>
+			标签:
+			<li><a href="/sddtc.github.com/tags/mysql/" class="post-tag">mysql</a></li>
+		</ul>
+
+		<div class="page-post">
+		<h3 id="sqoop-%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%3A" tabindex="-1">sqoop 相关命令使用:</h3>
 <ul>
 <li>sqoop的export命令（hdfs—&gt;mysql)<br>
 导出操作有几点需要注意的地方：<br>
@@ -624,10 +626,11 @@ b.如有权限问题，最好先查看mysql都有哪些已知用户</li>
 <pre class="language-vim" tabindex="0"><code class="hljs language-vim">mysql<span class="token operator">></span>select <span class="token operator">*</span> from mysql<span class="token operator">.</span>user<span class="token punctuation">;</span>
 mysql<span class="token operator">></span>grant <span class="token keyword">all</span> PRIVILEGES <span class="token keyword">on</span> <span class="token operator">*</span><span class="token operator">.</span><span class="token operator">*</span> <span class="token keyword">to</span> root@<span class="token string">'cdh5-slave'</span>  identified by <span class="token string">'${your.password}'</span> with grant option<span class="token punctuation">;</span></code></pre>
 
+		</div>
+		<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-03-16-mysql-base-and-practice/">MYSQL服务器配置文件的修改Tips</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-03-19-too-many-things/">一篇纯粹为了凑字数的文</a></li>
+		</ul>
+	</div>
 </div>
-<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-03-16-mysql-base-and-practice/">MYSQL服务器配置文件的修改Tips</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2015-03-19-too-many-things/">一篇纯粹为了凑字数的文</a></li>
-</ul>
-
 			</heading-anchors>
 		</main>
 
@@ -649,7 +652,7 @@ mysql<span class="token operator">></span>grant <span class="token keyword">all<
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-03-16-sqoop-base-and-advance/` was built on 2026-03-13T23:23:34.855Z -->
+		<!-- This page `/blog/2015-03-16-sqoop-base-and-advance/` was built on 2026-03-16T02:49:18.515Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

@@ -1,0 +1,893 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Fastify 模块化项目实战 - 你真的懂 tsconfig.json 吗?</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+
+html {
+	overflow-y: scroll;
+}
+
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img {
+	max-width: 100%;
+}
+
+img[width][height] {
+	height: auto;
+}
+
+img[src$=".svg"] {
+	width: 100%;
+	height: auto;
+	max-width: none;
+}
+
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+
+.links-nextprev>* {
+	flex-grow: 1;
+}
+
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	/* Merges borders */
+	margin-bottom: 1rem;
+}
+
+th,
+td {
+	padding: 12px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+}
+
+th {
+	background-color: var(--background-color);
+	color: #333;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375;
+	/* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+
+.home-link {
+	flex-grow: 1;
+	font-size: 1em;
+	/* 16px /16 */
+	font-weight: 700;
+}
+
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.nav-item {
+	display: inline-block;
+}
+
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em;
+	/* 13px /16 */
+	color: var(--color-gray-90);
+}
+
+.postlist-date {
+	word-spacing: -0.5px;
+}
+
+.postlist-link {
+	font-size: 1.1875em;
+	/* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags in article */
+.postlist-item>.post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.post-metadata time {
+	margin-right: 1em;
+}
+
+.content-tableau {
+	background-color: #dedfd1;
+}
+body {
+	max-width: 50em;
+}
+
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: italic;
+}
+
+.tags-page {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+.tags-page li {
+	float: left;
+	margin: 0 20px 10px 0;
+}
+
+/* Categories Page */
+.post-category {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: normal;
+	font-size: 1.2em;
+}
+
+/* 其他页面样式, 例如: 关于我 */
+blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post {
+	font-size: 18px;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
+/* 单行代码 */
+.page-post code {
+	font-size: 13px;
+	background-color: #F2EFE7;
+	word-break: break-all;
+	padding: 3px 5px;
+	margin: 0 4px;
+	border-radius: 5px;
+	color: #333333;
+	transition: all 500ms ease;
+	font-style: normal;
+}
+/**
+ * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
+ * Based on https://github.com/chriskempson/tomorrow-theme
+ * @author Rose Pritchard
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #ccc;
+	background: none;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #2d2d2d;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #999;
+}
+
+.token.punctuation {
+	color: #ccc;
+}
+
+.token.tag,
+.token.attr-name,
+.token.namespace,
+.token.deleted {
+	color: #e2777a;
+}
+
+.token.function-name {
+	color: #6196cc;
+}
+
+.token.boolean,
+.token.number,
+.token.function {
+	color: #f08d49;
+}
+
+.token.property,
+.token.class-name,
+.token.constant,
+.token.symbol {
+	color: #f8c555;
+}
+
+.token.selector,
+.token.important,
+.token.atrule,
+.token.keyword,
+.token.builtin {
+	color: #cc99cd;
+}
+
+.token.string,
+.token.char,
+.token.attr-value,
+.token.regex,
+.token.variable {
+	color: #7ec699;
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+	color: #67cdcc;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+
+.token.inserted {
+	color: green;
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/categories/">分类</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				<div class="post-content-with-toc">
+	<aside>
+		<div class="content-tableau">
+        <ul><li><a href="#tsconfig.json%EF%BC%9Atypescript-%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">tsconfig.json：TypeScript 项目的核心配置文件</a></li><li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81-tsconfig.json-%3F">为什么需要 tsconfig.json ?</a><ul><li><a href="#%E7%BB%9F%E4%B8%80%E7%BC%96%E8%AF%91%E8%A7%84%E5%88%99">统一编译规则</a></li><li><a href="#%E6%8E%A7%E5%88%B6%E4%BB%A3%E7%A0%81%E5%85%BC%E5%AE%B9%E6%80%A7.">控制代码兼容性.</a></li><li><a href="#%E6%8E%A7%E5%88%B6-typescript-%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5">控制 TypeScript 类型检查</a></li><li><a href="#%E6%8E%A7%E5%88%B6%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84">控制项目结构</a></li></ul></li><li><a href="#tsconfig.json-%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84">tsconfig.json 的基本结构</a></li><li><a href="#compileroptions-%E6%98%AF%E4%BB%80%E4%B9%88%3F">compilerOptions 是什么?</a><ul><li><a href="#target">target</a></li><li><a href="#module">module</a></li><li><a href="#moduleresolution">moduleResolution</a></li><li><a href="#strict">strict</a></li><li><a href="#esmoduleinterop">esModuleInterop</a></li><li><a href="#%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81-compileroptions">其他重要 compilerOptions</a><ul><li><a href="#rootdir">rootDir</a></li><li><a href="#outdir">outDir</a></li><li><a href="#sourcemap">sourceMap</a></li><li><a href="#skiplibcheck">skipLibCheck</a></li><li><a href="#resolvejsonmodule">resolveJsonModule</a></li><li><a href="#forceconsistentcasinginfilenames">forceConsistentCasingInFileNames</a></li><li><a href="#noemit">noEmit</a></li><li><a href="#paths">paths</a></li></ul></li></ul></li><li><a href="#include-%2F-exclude-%E6%98%AF%E4%BB%80%E4%B9%88-%3F">include / exclude 是什么 ?</a><ul><li><a href="#include">include</a></li><li><a href="#exclude">exclude</a></li></ul></li><li><a href="#extends-%E6%98%AF%E4%BB%80%E4%B9%88%3F">extends 是什么?</a></li><li><a href="#%E5%B8%B8%E8%A7%81%E7%9A%84-tsconfig-%E7%A4%BA%E4%BE%8B">常见的 tsconfig 示例</a></li></ul>
+      </div>
+	</aside>
+	<div class="post-only-content">
+		
+		
+		<h1>Fastify 模块化项目实战 - 你真的懂 tsconfig.json 吗?</h1>
+
+		<ul class="post-metadata">
+			<li><time datetime="2026-03-16">16 March 2026</time></li>
+			标签:
+			<li><a href="/sddtc.github.com/tags/Fastify/" class="post-tag">Fastify</a>, </li>
+			<li><a href="/sddtc.github.com/tags/Typescript/" class="post-tag">Typescript</a></li>
+		</ul>
+
+		<div class="page-post">
+		<h2 id="tsconfig.json%EF%BC%9Atypescript-%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6" tabindex="-1">tsconfig.json：TypeScript 项目的核心配置文件</h2>
+<p>在使用 TypeScript 开发 JavaScript 项目时，几乎所有项目都会有一个非常重要的文件：</p>
+<pre><code class="hljs">tsconfig.json
+</code></pre>
+<p>TypeScript 官方文档也说明：</p>
+<blockquote>
+<p>这个文件用于定义编译目标、模块系统、类型检查规则、输入文件范围等行为。 (<a href="https://www.typescriptlang.org/docs/handbook/modules/guides/choosing-compiler-options.html?utm_source=chatgpt.com" title="TypeScript: Documentation - Modules - Choosing Compiler Options">typescriptlang.org</a>)</p>
+</blockquote>
+<p>它决定了 TypeScript 编译器如何理解、检查和编译你的代码。如果说 TypeScript 编译器 <code>tsc</code> 是引擎，那么 tsconfig.json 就是控制引擎运行方式的配置中心。<br>
+一个最简单的例子：</p>
+<pre class="language-json" tabindex="0"><code class="hljs language-json"><span class="token punctuation">{</span>
+  <span class="token property">"compilerOptions"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"target"</span><span class="token operator">:</span> <span class="token string">"ES2023"</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>当 TypeScript 编译器运行时：</p>
+<pre class="language-shell" tabindex="0"><code class="hljs language-shell">tsc</code></pre>
+<p>它会自动读取当前目录的 <code>tsconfig.json</code> 并按照配置执行编译。</p>
+<h2 id="%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81-tsconfig.json-%3F" tabindex="-1">为什么需要 tsconfig.json ?</h2>
+<p>如果没有 <code>tsconfig.json</code>，TypeScript 仍然可以编译：</p>
+<pre class="language-shell" tabindex="0"><code class="hljs language-shell">tsc index.ts</code></pre>
+<p>但在真实项目中会出现很多问题：</p>
+<h3 id="%E7%BB%9F%E4%B8%80%E7%BC%96%E8%AF%91%E8%A7%84%E5%88%99" tabindex="-1">统一编译规则</h3>
+<p>不同开发者机器必须使用相同规则，例如：</p>
+<pre class="language-json" tabindex="0"><code class="hljs language-json">target<span class="token operator">:</span> ES2023
+strict<span class="token operator">:</span> <span class="token boolean">true</span>
+module<span class="token operator">:</span> ESNext</code></pre>
+<p>否则编译结果可能不同。</p>
+<h3 id="%E6%8E%A7%E5%88%B6%E4%BB%A3%E7%A0%81%E5%85%BC%E5%AE%B9%E6%80%A7." tabindex="-1">控制代码兼容性.</h3>
+<p>例如：</p>
+<pre class="language-json" tabindex="0"><code class="hljs language-json">target<span class="token operator">:</span> ES2017</code></pre>
+<p>意味着 TypeScript 不会输出 ES2023 的语法。<br>
+这样可以保证代码在旧环境中运行。 (<a href="https://typescriptdocs.com/modules-reference/guides/choosing-compiler-options.html?utm_source=chatgpt.com" title="Modules - Choosing Compiler Options | Typescript Docs">typescriptdocs.com</a>)</p>
+<h3 id="%E6%8E%A7%E5%88%B6-typescript-%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5" tabindex="-1">控制 TypeScript 类型检查</h3>
+<p>例如：</p>
+<pre class="language-json" tabindex="0"><code class="hljs language-json">strict<span class="token operator">:</span> <span class="token boolean">true</span></code></pre>
+<p>开启严格类型检查。</p>
+<h3 id="%E6%8E%A7%E5%88%B6%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84" tabindex="-1">控制项目结构</h3>
+<p>例如<code>src → 编译 → dist</code>:</p>
+<pre class="language-json" tabindex="0"><code class="hljs language-json"><span class="token punctuation">{</span>
+  <span class="token property">"rootDir"</span><span class="token operator">:</span> <span class="token string">"src"</span><span class="token punctuation">,</span>
+  <span class="token property">"outDir"</span><span class="token operator">:</span> <span class="token string">"dist"</span>
+<span class="token punctuation">}</span></code></pre>
+<p>由此可见, <code>tsconfig.json</code> 解决了编译规则统一、类型检查策略、项目结构管理三个核心问题。</p>
+<h2 id="tsconfig.json-%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84" tabindex="-1">tsconfig.json 的基本结构</h2>
+<p>一个典型的 <code>tsconfig.json</code>：</p>
+<pre class="language-json" tabindex="0"><code class="hljs language-json"><span class="token punctuation">{</span>
+  <span class="token property">"compilerOptions"</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"include"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">"exclude"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">"extends"</span><span class="token operator">:</span> <span class="token string">""</span>
+<span class="token punctuation">}</span></code></pre>
+<p>最核心的部分是 compilerOptions</p>
+<h2 id="compileroptions-%E6%98%AF%E4%BB%80%E4%B9%88%3F" tabindex="-1">compilerOptions 是什么?</h2>
+<p>compilerOptions 是 TypeScript 编译器选项集合，决定了：</p>
+<ul>
+<li>编译输出</li>
+<li>模块系统</li>
+<li>语言版本</li>
+<li>类型检查规则</li>
+<li>项目结构</li>
+</ul>
+<p>例如：</p>
+<pre class="language-json" tabindex="0"><code class="hljs language-json"><span class="token punctuation">{</span>
+  <span class="token property">"compilerOptions"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"target"</span><span class="token operator">:</span> <span class="token string">"ES2023"</span><span class="token punctuation">,</span>
+    <span class="token property">"module"</span><span class="token operator">:</span> <span class="token string">"ESNext"</span><span class="token punctuation">,</span>
+    <span class="token property">"moduleResolution"</span><span class="token operator">:</span> <span class="token string">"bundler"</span><span class="token punctuation">,</span>
+    <span class="token property">"strict"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token property">"esModuleInterop"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="target" tabindex="-1">target</h3>
+<pre class="language-json" tabindex="0"><code class="hljs language-json">target<span class="token operator">:</span> <span class="token string">"ES2023"</span></code></pre>
+<p>控制编译后的 JavaScript 版本。例如 TypeScript → JavaScript:<br>
+如果：</p>
+<pre class="language-json" tabindex="0"><code class="hljs language-json">target<span class="token operator">:</span> ES5</code></pre>
+<p>箭头函数会被转换:</p>
+<pre class="language-js" tabindex="0"><code class="hljs language-js"><span class="token keyword">const</span> <span class="token function-variable function">fn</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>
+<p>变成：</p>
+<pre class="language-js" tabindex="0"><code class="hljs language-js"><span class="token keyword">var</span> <span class="token function-variable function">fn</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>
+<p>官方建议：</p>
+<blockquote>
+<p>target 应设置为你支持的最低 JavaScript 版本。 (<a href="https://typescriptdocs.com/modules-reference/guides/choosing-compiler-options.html?utm_source=chatgpt.com" title="Modules - Choosing Compiler Options | Typescript Docs">typescriptdocs.com</a>).</p>
+</blockquote>
+<p>常见值：</p>
+<pre><code class="hljs">ES2017
+ES2020
+ES2022
+ESNext
+</code></pre>
+<h3 id="module" tabindex="-1">module</h3>
+<pre class="language-json" tabindex="0"><code class="hljs language-json">module<span class="token operator">:</span> <span class="token string">"ESNext"</span></code></pre>
+<p>控制模块系统。例如 import/export 最终编译为：</p>
+<ul>
+<li>ES Modules</li>
+<li>CommonJS</li>
+<li>AMD</li>
+</ul>
+<p>常见值：</p>
+<ul>
+<li>CommonJS</li>
+<li>ESNext</li>
+<li>NodeNext</li>
+<li>ES2020</li>
+</ul>
+<p>现代前端和 Node 项目通常使用 ESNext</p>
+<h3 id="moduleresolution" tabindex="-1">moduleResolution</h3>
+<pre class="language-json" tabindex="0"><code class="hljs language-json">moduleResolution<span class="token operator">:</span> <span class="token string">"bundler"</span></code></pre>
+<p>控制模块查找规则。例如：</p>
+<pre class="language-js" tabindex="0"><code class="hljs language-js"><span class="token keyword">import</span> foo <span class="token keyword">from</span> <span class="token string">"./foo"</span></code></pre>
+<p>控制 TypeScript 如何找到 foo。官方定义：</p>
+<ul>
+<li>bundler</li>
+<li>node16</li>
+<li>nodenext</li>
+<li>classic</li>
+</ul>
+<p>bundler 表示：</p>
+<blockquote>
+<p>让 bundler（Vite / Webpack / esbuild）负责解析模块路径。 (<a href="https://www.typescriptlang.org/tsconfig/moduleResolution.html?utm_source=chatgpt.com" title="TypeScript: TSConfig Option: moduleResolution">typescriptlang.org</a>)</p>
+</blockquote>
+<p>特点：</p>
+<ul>
+<li>不强制写 <code>.js</code> 扩展名</li>
+<li>支持 package.json exports</li>
+<li>更适合前端项目</li>
+</ul>
+<h3 id="strict" tabindex="-1">strict</h3>
+<pre class="language-json" tabindex="0"><code class="hljs language-json">strict<span class="token operator">:</span> <span class="token boolean">true</span></code></pre>
+<p>开启严格模式。这是 TypeScript 最重要的配置之一。它实际上包含多个规则：</p>
+<ul>
+<li>noImplicitAny</li>
+<li>strictNullChecks</li>
+<li>strictFunctionTypes</li>
+<li>strictBindCallApply</li>
+</ul>
+<p>作用：</p>
+<ul>
+<li>避免隐式 any</li>
+<li>避免 null 错误</li>
+<li>提高类型安全</li>
+</ul>
+<p>官方建议：</p>
+<blockquote>
+<p>始终开启 strict。 (<a href="https://typescript.tv/new-features/the-4-must-know-typescript-compiler-configs?utm_source=chatgpt.com" title="The 4 Must-Know TypeScript Compiler Configs">TypeScript TV</a>)</p>
+</blockquote>
+<h3 id="esmoduleinterop" tabindex="-1">esModuleInterop</h3>
+<pre class="language-json" tabindex="0"><code class="hljs language-json">esModuleInterop<span class="token operator">:</span> <span class="token boolean">true</span></code></pre>
+<p>用于解决 CommonJS 和 ES Module 互操作问题。例如：</p>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">import</span> express <span class="token keyword">from</span> <span class="token string">"express"</span></code></pre>
+<p>而 express 实际是：</p>
+<pre class="language-js" tabindex="0"><code class="hljs language-js">module<span class="token punctuation">.</span>exports <span class="token operator">=</span> express</code></pre>
+<p>没有这个配置就必须写：</p>
+<pre class="language-js" tabindex="0"><code class="hljs language-js"><span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> express <span class="token keyword">from</span> <span class="token string">"express"</span></code></pre>
+<p>开启后 default import 也可以使用。</p>
+<h3 id="%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81-compileroptions" tabindex="-1">其他重要 compilerOptions</h3>
+<p>以下也是常见配置：</p>
+<h4 id="rootdir" tabindex="-1">rootDir</h4>
+<pre class="language-json" tabindex="0"><code class="hljs language-json">rootDir<span class="token operator">:</span> <span class="token string">"src"</span></code></pre>
+<p>源码目录。</p>
+<h4 id="outdir" tabindex="-1">outDir</h4>
+<pre class="language-json" tabindex="0"><code class="hljs language-json">outDir<span class="token operator">:</span> <span class="token string">"dist"</span></code></pre>
+<p>编译输出目录。</p>
+<h4 id="sourcemap" tabindex="-1">sourceMap</h4>
+<pre class="language-json" tabindex="0"><code class="hljs language-json">sourceMap<span class="token operator">:</span> <span class="token boolean">true</span></code></pre>
+<p>生成 source map，方便调试。</p>
+<h4 id="skiplibcheck" tabindex="-1">skipLibCheck</h4>
+<pre class="language-json" tabindex="0"><code class="hljs language-json">skipLibCheck<span class="token operator">:</span> <span class="token boolean">true</span></code></pre>
+<p>跳过 node_modules 类型检查。大型项目非常常见。</p>
+<h4 id="resolvejsonmodule" tabindex="-1">resolveJsonModule</h4>
+<p>允许：</p>
+<pre class="language-js" tabindex="0"><code class="hljs language-js"><span class="token keyword">import</span> config <span class="token keyword">from</span> <span class="token string">"./config.json"</span></code></pre>
+<h4 id="forceconsistentcasinginfilenames" tabindex="-1">forceConsistentCasingInFileNames</h4>
+<p>避免：</p>
+<ul>
+<li>import User</li>
+<li>import user</li>
+</ul>
+<p>在不同系统出现问题。</p>
+<h4 id="noemit" tabindex="-1">noEmit</h4>
+<pre class="language-json" tabindex="0"><code class="hljs language-json">noEmit<span class="token operator">:</span> <span class="token boolean">true</span></code></pre>
+<p>让 TypeScript 只做类型检查。实际编译由：</p>
+<ul>
+<li>Vite</li>
+<li>Webpack</li>
+<li>esbuild</li>
+</ul>
+<p>完成。</p>
+<h4 id="paths" tabindex="-1">paths</h4>
+<p>大型项目常使用:</p>
+<pre class="language-json" tabindex="0"><code class="hljs language-json"><span class="token punctuation">{</span>
+  <span class="token property">"compilerOptions"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"baseUrl"</span><span class="token operator">:</span> <span class="token string">"."</span><span class="token punctuation">,</span>
+    <span class="token property">"paths"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"@/*"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"src/*"</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>这样可以写：</p>
+<pre class="language-js" tabindex="0"><code class="hljs language-js"><span class="token keyword">import</span> userService <span class="token keyword">from</span> <span class="token string">"@/services/user"</span></code></pre>
+<p>而不是：</p>
+<pre class="language-js" tabindex="0"><code class="hljs language-js"><span class="token keyword">import</span> userService <span class="token keyword">from</span> <span class="token string">"../../../services/user"</span></code></pre>
+<h2 id="include-%2F-exclude-%E6%98%AF%E4%BB%80%E4%B9%88-%3F" tabindex="-1">include / exclude 是什么 ?</h2>
+<p>TypeScript 需要知道哪些文件需要编译</p>
+<h3 id="include" tabindex="-1">include</h3>
+<pre class="language-json" tabindex="0"><code class="hljs language-json"><span class="token punctuation">{</span>
+  <span class="token property">"include"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"src/**/*"</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span></code></pre>
+<p>表示 src 目录下所有 ts 文件</p>
+<h3 id="exclude" tabindex="-1">exclude</h3>
+<pre class="language-json" tabindex="0"><code class="hljs language-json"><span class="token punctuation">{</span>
+  <span class="token property">"exclude"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"node_modules"</span><span class="token punctuation">,</span> <span class="token string">"dist"</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span></code></pre>
+<p>排除目录。</p>
+<h2 id="extends-%E6%98%AF%E4%BB%80%E4%B9%88%3F" tabindex="-1">extends 是什么?</h2>
+<p>extends 用于继承配置文件。例如：</p>
+<ul>
+<li>tsconfig.base.json</li>
+<li>tsconfig.json</li>
+</ul>
+<pre class="language-json" tabindex="0"><code class="hljs language-json"><span class="token punctuation">{</span>
+  <span class="token property">"extends"</span><span class="token operator">:</span> <span class="token string">"./tsconfig.base.json"</span>
+<span class="token punctuation">}</span></code></pre>
+<p>这样可以：</p>
+<ul>
+<li>monorepo 共享配置</li>
+<li>library / app 复用配置</li>
+</ul>
+<p>很多项目都会这样：</p>
+<ul>
+<li>tsconfig.base.json</li>
+<li>tsconfig.build.json</li>
+<li>tsconfig.test.json</li>
+</ul>
+<h2 id="%E5%B8%B8%E8%A7%81%E7%9A%84-tsconfig-%E7%A4%BA%E4%BE%8B" tabindex="-1">常见的 tsconfig 示例</h2>
+<pre class="language-json" tabindex="0"><code class="hljs language-json"><span class="token punctuation">{</span>
+  <span class="token property">"compilerOptions"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"target"</span><span class="token operator">:</span> <span class="token string">"ES2023"</span><span class="token punctuation">,</span>
+    <span class="token property">"module"</span><span class="token operator">:</span> <span class="token string">"ESNext"</span><span class="token punctuation">,</span>
+    <span class="token property">"moduleResolution"</span><span class="token operator">:</span> <span class="token string">"bundler"</span><span class="token punctuation">,</span>
+    <span class="token property">"strict"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token property">"esModuleInterop"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token property">"rootDir"</span><span class="token operator">:</span> <span class="token string">"src"</span><span class="token punctuation">,</span>
+    <span class="token property">"outDir"</span><span class="token operator">:</span> <span class="token string">"dist"</span><span class="token punctuation">,</span>
+    <span class="token property">"skipLibCheck"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token property">"sourceMap"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token property">"resolveJsonModule"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"include"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token string">"@types"</span><span class="token punctuation">,</span>
+      <span class="token string">"src/**/*.ts"</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span></code></pre>
+<p>那么, 最后的最后, 在哪里查看全部 tsconfig 选项呢? TypeScript 所有配置都在官方文档：</p>
+<p>👉 <a href="https://www.typescriptlang.org/tsconfig">https://www.typescriptlang.org/tsconfig</a></p>
+<p>一个好的 <code>tsconfig.json</code> 能让：</p>
+<ul>
+<li>项目类型更安全</li>
+<li>编译行为更一致</li>
+<li>工程结构更清晰</li>
+</ul>
+<p>以上。</p>
+
+		</div>
+		<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2026-03-04-fastify-modular-db-orm-intro/">Fastify 模块化项目实战(三)</a></li>
+		</ul>
+	</div>
+</div>
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © <span id="copyright-year"></span></p>
+		</footer>
+
+		
+
+    
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2026-03-16-fastify-modular-ts-config-file-intro/` was built on 2026-03-16T02:49:18.537Z -->
+		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
+	</body>
+</html>

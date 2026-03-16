@@ -578,23 +578,25 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				
-
-<h1>Twitter 高性能分布式日志系统架构解析</h1>
-
-<ul class="post-metadata">
-	<li><time datetime="2015-12-29">29 December 2015</time></li>
-	标签:
-	<li><a href="/sddtc.github.com/tags/log/" class="post-tag">log</a></li>
-</ul>
-
-<div class="page-post">
-<aside>
-  <div class="content-tableau">
+				<div class="post-content-with-toc">
+	<aside>
+		<div class="content-tableau">
         <ul><li><a href="#%E6%9C%AC%E6%96%87%E6%98%AF%E5%85%B3%E4%BA%8Etwitter-%E5%88%86%E5%B8%83%E5%BC%8F%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F-distributedlog%2Fbookkeeper%E7%9A%84%E6%91%98%E8%A6%81">本文是关于Twitter 分布式日志系统 DistributedLog/BookKeeper的摘要</a></li></ul>
       </div>
-</aside>
-  <h3 id="%E6%9C%AC%E6%96%87%E6%98%AF%E5%85%B3%E4%BA%8Etwitter-%E5%88%86%E5%B8%83%E5%BC%8F%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F-distributedlog%2Fbookkeeper%E7%9A%84%E6%91%98%E8%A6%81" tabindex="-1">本文是关于Twitter 分布式日志系统 DistributedLog/BookKeeper的摘要</h3>
+	</aside>
+	<div class="post-only-content">
+		
+		
+		<h1>Twitter 高性能分布式日志系统架构解析</h1>
+
+		<ul class="post-metadata">
+			<li><time datetime="2015-12-29">29 December 2015</time></li>
+			标签:
+			<li><a href="/sddtc.github.com/tags/log/" class="post-tag">log</a></li>
+		</ul>
+
+		<div class="page-post">
+		<h3 id="%E6%9C%AC%E6%96%87%E6%98%AF%E5%85%B3%E4%BA%8Etwitter-%E5%88%86%E5%B8%83%E5%BC%8F%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F-distributedlog%2Fbookkeeper%E7%9A%84%E6%91%98%E8%A6%81" tabindex="-1">本文是关于Twitter 分布式日志系统 DistributedLog/BookKeeper的摘要</h3>
 <p>Manhattan（Twitter的最终一致性分布式Key/Value数据库）<br>
 1.可以使用日志来序列化所有的请求。co-ordinator 将请求写到日志中。所有的 replicas 从日志中按顺序读取请求，并修改本地的状态。这种解决问题的思路叫做 Pub/Sub。而日志就是 Pub/Sub 模式的基础。<br>
 2.当数据被复制到多台机器上的时候，我们就需要保证数据的强一致性。否则，如果我们出现丢数据、数据不一致，那么势必影响到构建在分布式日志上的所有系统。如果日志都不能相信了，你的生活还能相信谁呢。<br>
@@ -612,10 +614,11 @@ Writes 和 tailing reads 在意的是延时 (latency)，因为它关系到一个
 主要因为 Apache BookKeeper 提供的三个核心特性：I/O 分离、并行复制和容易理解的一致性模型。它们能够很好地满足我们对于持久化、多副本和一致性的要求。</p>
 <p>摘自：<a href="http://mp.weixin.qq.com/s?__biz=MzAwMDU1MTE1OQ==&amp;mid=403051208&amp;idx=1&amp;sn=1694ac05acbcb5ca53c88bfac8a68856&amp;scene=1&amp;srcid=1224xZuQ9QQ4sRmiPVdHTppL#wechat_redirect">【年度案例】Twitter高性能分布式日志系统架构解析</a></p>
 
+		</div>
+		<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-12-28-all-years-note/">2015 年度总结</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2016-01-28-wechat-picture-catch/">wechat 通过抓包获取图片方法实践</a></li>
+		</ul>
+	</div>
 </div>
-<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2015-12-28-all-years-note/">2015 年度总结</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2016-01-28-wechat-picture-catch/">wechat 通过抓包获取图片方法实践</a></li>
-</ul>
-
 			</heading-anchors>
 		</main>
 
@@ -637,7 +640,7 @@ Writes 和 tailing reads 在意的是延时 (latency)，因为它关系到一个
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-12-29-twitter-log-bookkeeper/` was built on 2026-03-13T23:23:34.862Z -->
+		<!-- This page `/blog/2015-12-29-twitter-log-bookkeeper/` was built on 2026-03-16T02:49:18.524Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

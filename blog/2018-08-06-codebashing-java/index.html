@@ -578,23 +578,25 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				
-
-<h1>Codebashing</h1>
-
-<ul class="post-metadata">
-	<li><time datetime="2018-08-06">06 August 2018</time></li>
-	标签:
-	<li><a href="/sddtc.github.com/tags/java/" class="post-tag">java</a></li>
-</ul>
-
-<div class="page-post">
-<aside>
-  <div class="content-tableau">
+				<div class="post-content-with-toc">
+	<aside>
+		<div class="content-tableau">
         <ul><li><a href="#session-fixation">Session Fixation</a></li><li><a href="#dom-xss">Dom XSS</a></li><li><a href="#cross-site-request-forgery-post">Cross Site Request Forgery Post</a></li></ul>
       </div>
-</aside>
-  <h3 id="session-fixation" tabindex="-1">Session Fixation</h3>
+	</aside>
+	<div class="post-only-content">
+		
+		
+		<h1>Codebashing</h1>
+
+		<ul class="post-metadata">
+			<li><time datetime="2018-08-06">06 August 2018</time></li>
+			标签:
+			<li><a href="/sddtc.github.com/tags/java/" class="post-tag">java</a></li>
+		</ul>
+
+		<div class="page-post">
+		<h3 id="session-fixation" tabindex="-1">Session Fixation</h3>
 <p>The principle of defense in depth (combining multiple best practices) is necessary for defending against Session Fixation attacks. These include to:</p>
 <p>1.Ensure that only server generated session values are accepted by the application.<br>
 2.Upon a successful login, invalidate the original session value, and re-issue a new session value.<br>
@@ -612,10 +614,11 @@ Note You should recall that for Stored XSS and Reflected XSS injection takes pla
 <p>In essence it allows the application to determine the answer to this simple question: Was the form that the user POSTed legitimately created by the application (valid) or by an unknown third party (invalid)?’</p>
 <p>Note wherever cryptographically secure pseudo-random number generation (pRNG) is required, the wheel should not be re-invented. Correct use of java.security.SecureRandom is strongly preferred over bespoke/custom random number generation code, the latter being extremely prone to developer error.</p>
 
+		</div>
+		<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2018-08-05-why-typescript/">Why typescript ?</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2018-08-09-mjml-tips/">使用 mjml 指南</a></li>
+		</ul>
+	</div>
 </div>
-<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2018-08-05-why-typescript/">Why typescript ?</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2018-08-09-mjml-tips/">使用 mjml 指南</a></li>
-</ul>
-
 			</heading-anchors>
 		</main>
 
@@ -637,7 +640,7 @@ Note You should recall that for Stored XSS and Reflected XSS injection takes pla
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-08-06-codebashing-java/` was built on 2026-03-13T23:23:34.867Z -->
+		<!-- This page `/blog/2018-08-06-codebashing-java/` was built on 2026-03-16T02:49:18.530Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

@@ -578,23 +578,25 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				
-
-<h1>三月番外篇 - 你真的知道多线程在后端服务(SpringX)是如何被处理的吗?</h1>
-
-<ul class="post-metadata">
-	<li><time datetime="2026-03-02">02 March 2026</time></li>
-	标签:
-	<li><a href="/sddtc.github.com/tags/java/" class="post-tag">java</a></li>
-</ul>
-
-<div class="page-post">
-<aside>
-  <div class="content-tableau">
+				<div class="post-content-with-toc">
+	<aside>
+		<div class="content-tableau">
         <ul><li><a href="#1.-%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8F%91%E8%B5%B7-http%2Fhttps-%E8%AF%B7%E6%B1%82">1. 浏览器发起 HTTP/HTTPS 请求</a></li><li><a href="#2.-nginx-%E4%BD%9C%E4%B8%BA%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%EF%BC%88%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8-%26-%E9%9D%9E%E9%98%BB%E5%A1%9E%EF%BC%89">2. Nginx 作为反向代理（事件驱动 &amp; 非阻塞）</a></li><li><a href="#3.-web-%E5%AE%B9%E5%99%A8%EF%BC%88tomcat%2Fjetty%EF%BC%89">3. Web 容器（Tomcat/Jetty）</a><ul><li><a href="#connection-accepting-%E6%8E%A5%E6%94%B6%E8%AF%B7%E6%B1%82">Connection Accepting 接收请求</a></li><li><a href="#tomcat-thread-pool%EF%BC%9A%E4%B8%80%E4%B8%AA%E8%AF%B7%E6%B1%82%E8%A2%AB%E5%88%86%E9%85%8D%E7%BB%99%E4%B8%80%E4%B8%AA%E7%BA%BF%E7%A8%8B">Tomcat Thread Pool：一个请求被分配给一个线程</a></li></ul></li><li><a href="#4.-spring-dispatcherservlet-%26-controller%EF%BC%88%E5%8D%95%E4%BE%8B-%2B-%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%89">4. Spring DispatcherServlet &amp; Controller（单例 + 多线程）</a></li><li><a href="#5.-%E4%B8%8E-postgresql-%E4%BA%A4%E4%BA%92%EF%BC%88%E8%BF%9E%E6%8E%A5%E6%B1%A0-%2B-%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%89">5. 与 PostgreSQL 交互（连接池 + 多线程）</a></li><li><a href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%8D%8F%E4%BD%9C%EF%BC%88%E9%80%90%E5%B1%82%EF%BC%89">多线程协作（逐层）</a></li><li><a href="#%E7%BB%93%E8%AE%BA">结论</a></li></ul>
       </div>
-</aside>
-  <p>你也许听过一个问题, 用户在浏览器点击一个按钮, 都会发生什么?<br>
+	</aside>
+	<div class="post-only-content">
+		
+		
+		<h1>三月番外篇 - 你真的知道多线程在后端服务(SpringX)是如何被处理的吗?</h1>
+
+		<ul class="post-metadata">
+			<li><time datetime="2026-03-02">02 March 2026</time></li>
+			标签:
+			<li><a href="/sddtc.github.com/tags/java/" class="post-tag">java</a></li>
+		</ul>
+
+		<div class="page-post">
+		<p>你也许听过一个问题, 用户在浏览器点击一个按钮, 都会发生什么?<br>
 其实就是在问 HTTP 请求的全链路 Nginx + Tomcat/Jetty + Spring + MySQL/PostgreSQL. 作为一名后端工程师，当我们写好一个 Spring Boot 应用并部署到生产环境时，它背后承担着非常复杂的并发与状态管理机制。<br>
 这篇文章我会结合多线程机制, 解释每一步是如何并发处理请求并保证线程之间不会互相干扰。</p>
 <h2 id="1.-%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8F%91%E8%B5%B7-http%2Fhttps-%E8%AF%B7%E6%B1%82" tabindex="-1">1. 浏览器发起 HTTP/HTTPS 请求</h2>
@@ -833,10 +835,11 @@ DB Query Execution</code></pre>
 </tbody>
 </table>
 
+		</div>
+		<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2026-02-28-uses-typebox-in-fastify/">Fastify + TypeScript 中的 typebox</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2026-03-04-fastify-modular-db-orm-intro/">Fastify 模块化项目实战(三)</a></li>
+		</ul>
+	</div>
 </div>
-<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2026-02-28-uses-typebox-in-fastify/">Fastify + TypeScript 中的 typebox</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2026-03-04-fastify-modular-db-orm-intro/">Fastify 模块化项目实战(三)</a></li>
-</ul>
-
 			</heading-anchors>
 		</main>
 
@@ -858,7 +861,7 @@ DB Query Execution</code></pre>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2026-03-02-fanwai-multi-threads-travel-in-backend/` was built on 2026-03-13T23:23:34.877Z -->
+		<!-- This page `/blog/2026-03-02-fanwai-multi-threads-travel-in-backend/` was built on 2026-03-16T02:49:18.537Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

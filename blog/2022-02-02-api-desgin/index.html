@@ -578,23 +578,25 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				
-
-<h1>API 设计实践</h1>
-
-<ul class="post-metadata">
-	<li><time datetime="2022-02-02">02 February 2022</time></li>
-	标签:
-	<li><a href="/sddtc.github.com/tags/api/" class="post-tag">api</a></li>
-</ul>
-
-<div class="page-post">
-<aside>
-  <div class="content-tableau">
+				<div class="post-content-with-toc">
+	<aside>
+		<div class="content-tableau">
         <ul><li><a href="#%E8%AE%BE%E8%AE%A1-api-%E7%9A%84%E7%AE%80%E5%8D%95%E5%8E%9F%E5%88%99">设计 API 的简单原则</a><ul><li><a href="#%E4%B8%80%E8%87%B4%E6%80%A7">一致性</a></li><li><a href="#%E6%98%BE%E8%80%8C%E6%98%93%E8%A7%81%E6%80%A7">显而易见性</a></li><li><a href="#%E5%8F%AF%E7%BB%84%E5%90%88%E6%80%A7">可组合性</a></li><li><a href="#%E8%87%AA%E8%A7%A3%E9%87%8A">自解释</a></li><li><a href="#%E5%8F%AF%E8%BF%9B%E5%8C%96%E6%80%A7">可进化性</a></li></ul></li><li><a href="#%E8%B5%84%E6%BA%90%E7%9A%84%E5%91%BD%E5%90%8D">资源的命名</a><ul><li><a href="#%E9%9B%86%E5%90%88%EF%BC%9A%E4%BD%BF%E7%94%A8%E5%A4%8D%E6%95%B0%E5%90%8D%E8%AF%8D%EF%BC%8C-%E4%B8%8D%E5%8C%85%E5%90%AB%E5%94%AF%E4%B8%80%E6%A0%87%E8%AF%86%E7%AC%A6">集合：使用复数名词， 不包含唯一标识符</a></li><li><a href="#%E5%8D%95%E4%B8%80%E8%B5%84%E6%BA%90%EF%BC%9A%E4%BD%BF%E7%94%A8%E6%A0%87%E8%AF%86%E7%AC%A6%EF%BC%88*-%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8%E4%B8%BB%E9%94%AE%2F%E9%80%92%E5%A2%9E%E6%95%B0%E5%80%BC%EF%BC%89">单一资源：使用标识符（* 不要使用主键/递增数值）</a></li><li><a href="#%E5%B5%8C%E5%A5%97%E8%B5%84%E6%BA%90">嵌套资源</a></li><li><a href="#%E5%85%B7%E5%8C%96%E7%9A%84%E8%B5%84%E6%BA%90">具化的资源</a></li><li><a href="#%E9%9D%9E%E8%B5%84%E6%BA%90%E7%9A%84-endpoints">非资源的 endpoints</a></li></ul></li><li><a href="#%E5%85%B6%E5%AE%83">其它</a></li><li><a href="#api-%E7%89%88%E6%9C%AC%E5%8C%96">API 版本化</a></li><li><a href="#api-%E8%AE%A4%E8%AF%81">API 认证</a></li><li><a href="#api-%E7%BD%91%E5%85%B3">API 网关</a></li><li><a href="#api-%E7%AE%A1%E7%90%86">API 管理</a></li><li><a href="#api-%E6%96%87%E6%A1%A3">API 文档</a></li><li><a href="#%E5%B7%A5%E5%85%B7">工具</a></li><li><a href="#api-mocks">API Mocks</a></li><li><a href="#%E5%85%B6%E5%AE%83-1">其它</a></li></ul>
       </div>
-</aside>
-  <p>给系统设计一套 API 不是一件简单的事情。 原则是否能被所有人真正理解， 是否能准确通过 API 来表达对资源的正确处理都是学习的目的。</p>
+	</aside>
+	<div class="post-only-content">
+		
+		
+		<h1>API 设计实践</h1>
+
+		<ul class="post-metadata">
+			<li><time datetime="2022-02-02">02 February 2022</time></li>
+			标签:
+			<li><a href="/sddtc.github.com/tags/api/" class="post-tag">api</a></li>
+		</ul>
+
+		<div class="page-post">
+		<p>给系统设计一套 API 不是一件简单的事情。 原则是否能被所有人真正理解， 是否能准确通过 API 来表达对资源的正确处理都是学习的目的。</p>
 <h3 id="%E8%AE%BE%E8%AE%A1-api-%E7%9A%84%E7%AE%80%E5%8D%95%E5%8E%9F%E5%88%99" tabindex="-1">设计 API 的简单原则</h3>
 <ul>
 <li>一致性</li>
@@ -928,10 +930,11 @@ version payload 和 API 本身一样具有意义<br>
 </li>
 </ul>
 
+		</div>
+		<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2022-01-31-introduce-new-approach/">在团队中引入新技术的3个原则</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2022-02-13-my-annual-note-2021/">我的 2021 年度总结</a></li>
+		</ul>
+	</div>
 </div>
-<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2022-01-31-introduce-new-approach/">在团队中引入新技术的3个原则</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/blog/2022-02-13-my-annual-note-2021/">我的 2021 年度总结</a></li>
-</ul>
-
 			</heading-anchors>
 		</main>
 
@@ -953,7 +956,7 @@ version payload 和 API 本身一样具有意义<br>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2022-02-02-api-desgin/` was built on 2026-03-13T23:23:34.873Z -->
+		<!-- This page `/blog/2022-02-02-api-desgin/` was built on 2026-03-16T02:49:18.535Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>
