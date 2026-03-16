@@ -14,10 +14,10 @@ layout: layouts/base.njk
 	{%- endfor %}
 </ul>
 
-<div class="page-post">
 <aside>
   {{ content | toc(ul=true, wrapper='div', wrapperClass='content-tableau') | safe}}
 </aside>
+<div class="page-post">
   {{ content | safe }}
 </div>
 
