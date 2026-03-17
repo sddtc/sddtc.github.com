@@ -281,7 +281,7 @@ ESNext
 </content>
   </entry>
   <entry>
-    <title>Fastify 模块化项目实战(三)</title>
+    <title>Fastify 模块化项目实战(三) — 使用 prisma</title>
     <link href="https://www.sddtc.florist/sddtc.github.com/blog/2026-03-04-fastify-modular-db-orm-intro/" />
     <updated>2026-03-04T00:00:00Z</updated>
     <id>https://www.sddtc.florist/sddtc.github.com/blog/2026-03-04-fastify-modular-db-orm-intro/</id>
@@ -914,7 +914,7 @@ app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=
 </content>
   </entry>
   <entry>
-    <title>Fastify 模块化项目实战(二)</title>
+    <title>Fastify 模块化项目实战(二) — 初始化Fastify 项目</title>
     <link href="https://www.sddtc.florist/sddtc.github.com/blog/2026-02-26-fastify-modular-monolith-demo/" />
     <updated>2026-02-26T00:00:00Z</updated>
     <id>https://www.sddtc.florist/sddtc.github.com/blog/2026-02-26-fastify-modular-monolith-demo/</id>
@@ -1043,7 +1043,7 @@ app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=
 </content>
   </entry>
   <entry>
-    <title>Fastify 模块化项目实战(一)</title>
+    <title>Fastify 模块化项目实战(一) — 技术选型</title>
     <link href="https://www.sddtc.florist/sddtc.github.com/blog/2026-02-12-fastify-modules-tutorials-1/" />
     <updated>2026-02-12T00:00:00Z</updated>
     <id>https://www.sddtc.florist/sddtc.github.com/blog/2026-02-12-fastify-modules-tutorials-1/</id>
