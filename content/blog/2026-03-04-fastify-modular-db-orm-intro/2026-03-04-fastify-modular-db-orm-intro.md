@@ -1,5 +1,5 @@
 ---
-title: Fastify 模块化项目实战(三)
+title: Fastify 模块化项目实战(三) — 使用 prisma
 date: 2026-03-04
 tags: [Fastify, Typescript, ESM, 数据库]
 categories: [技术开发, 工程实践]

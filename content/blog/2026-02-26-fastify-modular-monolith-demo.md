@@ -1,5 +1,5 @@
 ---
-title: Fastify 模块化项目实战(二)
+title: Fastify 模块化项目实战(二) — 初始化Fastify 项目
 date: 2026-02-26
 tags: [Fastify, Typescript, ESM]
 categories: [工程实践, 技术开发]
