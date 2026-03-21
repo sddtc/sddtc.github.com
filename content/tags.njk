@@ -4,8 +4,9 @@ const eleventyNavigation = {
 	order: 3
 };
 ---
-
-<h2>标签列表</h2>
+<div class="page-title">
+	<h2>标签列表</h2>
+</div>
 
 <ul class="tags-page">
 {% for tag in collections | getKeys | filterTagList | sortAlphabetically %}

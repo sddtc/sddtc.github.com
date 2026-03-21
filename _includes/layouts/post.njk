@@ -1,11 +1,13 @@
 ---
 layout: layouts/base.njk
 ---
-<div class="post-content-with-toc">
-	<aside>
-		{{ content | toc(ul=true, wrapper='div', wrapperClass='content-tableau') | safe}}
-	</aside>
-	<div class="post-only-content">
+<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			{{ content | toc(ul=true, wrapper='div', wrapperClass='content-tableau') | safe}}
+		</aside>
+	</div>
+	<div class="post-content">
 		{# Only include the syntax highlighter CSS on blog posts, included with the CSS per-page bundle #}
 		<style>{% include "node_modules/prismjs/themes/prism-tomorrow.css" %}</style>
 		<h1>{{ title }}</h1>
@@ -20,7 +22,7 @@ layout: layouts/base.njk
 		</ul>
 
 		<div class="page-post">
-		{{ content | safe }}
+			{{ content | safe }}
 		</div>
 
 		{%- if collections.posts %}
