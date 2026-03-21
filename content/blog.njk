@@ -4,7 +4,9 @@ const eleventyNavigation = {
 	order: 4
 };
 ---
-<h2>文章列表</h2>
+<div class="page-title">
+	<h2>文章列表</h2>
+</div>
 
 {% set postslist = collections.posts %}
 {% include "postslist.njk" %}

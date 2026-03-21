@@ -17,9 +17,13 @@ const eleventyComputed = {
 	}
 };
 ---
-<h2>标签: {{ tag }}</h2>
+<div class="page-title">
+	<h2>标签: {{ tag }}</h2>
+</div>
 
 {% set postslist = collections[ tag ] %}
 {% include "postslist.njk" %}
 
-<p>See <a href="tags.njk">all tags</a>.</p>
+<div class="page-footer">
+	<p>See <a href="tags.njk">all tags</a>.</p>
+</div>

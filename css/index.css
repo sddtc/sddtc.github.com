@@ -58,10 +58,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -328,8 +324,4 @@ header {
 
 .post-metadata time {
 	margin-right: 1em;
-}
-
-.content-tableau {
-	background-color: #dedfd1;
 }
