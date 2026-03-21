@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,11 +607,13 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		
-	</aside>
-	<div class="post-only-content">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>Scrapy的 mac 安装 scrapy 实践</h1>
@@ -595,7 +626,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<p>以前用ubuntu的时候，装过scrapy，很顺利. 自己换了电脑之后，发现官网没有针对mac安装scrapy的说明，特此记录一下</p>
+			<p>以前用ubuntu的时候，装过scrapy，很顺利. 自己换了电脑之后，发现官网没有针对mac安装scrapy的说明，特此记录一下</p>
 <ol>
 <li>python2.7是电脑自带的，没卸载没重装过</li>
 <li>去官网下载(<a href="http://scrapy.org/download/">http://scrapy.org/download/</a>)zip包: 官网目前是1.0版本的zip找不到下载路径, 我下的是(the development branch)的zip版本. 安装完了显示是dev1.1版本</li>
@@ -637,7 +668,7 @@ sudo easy_install <span class="token operator">-</span><span class="token operat
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-11-03-mac-install-scrapy/` was built on 2026-03-21T10:30:08.747Z -->
+		<!-- This page `/blog/2015-11-03-mac-install-scrapy/` was built on 2026-03-21T12:37:35.829Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

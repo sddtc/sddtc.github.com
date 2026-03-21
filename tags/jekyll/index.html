@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }</style>
 		
 	</head>
@@ -456,24 +485,31 @@ blockquote {
 
 		<main id="main">
 			<heading-anchors>
-				<h2>标签: jekyll</h2>
+				
+<div class="home-container">
+    <div class="page-title">
+	<h2>标签: jekyll</h2>
+</div>
 
 
-<ol reversed="" class="postlist" style="--postlist-index: 3">
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-10-14-EI-capitan-jekyll-can-not-run/" class="postlist-link">Jekyll的EI Capitan jekyll can not run 解决方案</a>
-		<time class="postlist-date" datetime="2015-10-14">October 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-05-07-jekyll-highlight/" class="postlist-link">Jekyll我们都会喜欢的语法高亮</a>
-		<time class="postlist-date" datetime="2015-05-07">May 2015</time>
-	</li>
-</ol>
+<div class="postlist-container">
+	<ol reversed="" class="postlist" style="--postlist-index: 3">
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-10-14-EI-capitan-jekyll-can-not-run/" class="postlist-link">Jekyll的EI Capitan jekyll can not run 解决方案</a>
+			<time class="postlist-date" datetime="2015-10-14">October 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-05-07-jekyll-highlight/" class="postlist-link">Jekyll我们都会喜欢的语法高亮</a>
+			<time class="postlist-date" datetime="2015-05-07">May 2015</time>
+		</li>
+	</ol>
+</div>
 
+<div class="page-footer">
+	<p>See <a href="/sddtc.github.com/tags/">all tags</a>.</p>
+</div>
 
-<p>See <a href="/sddtc.github.com/tags/">all tags</a>.</p>
-
-
+</div>
 			</heading-anchors>
 		</main>
 
@@ -495,7 +531,7 @@ blockquote {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/tags/jekyll/` was built on 2026-03-21T10:30:09.253Z -->
+		<!-- This page `/tags/jekyll/` was built on 2026-03-21T12:37:36.313Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

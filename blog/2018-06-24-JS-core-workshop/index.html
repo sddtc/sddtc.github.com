@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#def.-1%3A-object%3A-an-object-is-a-collection-of-properties%2C-and-has-a-single-prototype-object.-the-prototype-may-be-either-an-object-or-the-null-value.">Def. 1: Object: An object is a collection of properties, and has a single prototype object. The prototype may be either an object or the null value.</a></li><li><a href="#def.-2%3A-prototype%3A-a-prototype-is-a-delegation-object-used-to-implement-prototype-based-inheritance.(%E5%8E%9F%E5%9E%8B%E6%98%AF%E7%94%A8%E4%BA%8E%E5%AE%9E%E7%8E%B0%E5%9F%BA%E4%BA%8E%E5%8E%9F%E5%9E%8B%E7%9A%84%E7%BB%A7%E6%89%BF%E7%9A%84%E5%A7%94%E6%89%98%E5%AF%B9%E8%B1%A1)">Def. 2: Prototype: A prototype is a delegation object used to implement prototype-based inheritance.(原型是用于实现基于原型的继承的委托对象)</a></li><li><a href="#def.-3%3A-prototype-chain%3A-a-prototype-chain-is-a-finite-chain-of-objects-used-to-implement-inheritance-and-shared-properties.">Def. 3: Prototype chain: A prototype chain is a finite chain of objects used to implement inheritance and shared properties.</a></li><li><a href="#def.-4%3A-delegation%3A-a-mechanism-used-to-resolve-a-property-in-the-inheritance-chain.-the-process-happens-at-runtime%2C-hence-is-also-called-dynamic-dispatch.">Def. 4: Delegation: a mechanism used to resolve a property in the inheritance chain. The process happens at runtime, hence is also called dynamic dispatch.</a></li><li><a href="#def.-5%3A-class%3A-a-class-is-a-formal-abstract-set-which-specifies-initial-state-and-behavior-of-its-objects.">Def. 5: Class: A class is a formal abstract set which specifies initial state and behavior of its objects.</a></li><li><a href="#def.-6%3A-constructor%3A-a-constructor-is-a-function-which-is-used-to-create-instances%2C-and-automatically-set-their-prototype.">Def. 6: Constructor: A constructor is a function which is used to create instances, and automatically set their prototype.</a></li><li><a href="#def.-7%3A-execution-context%3A-an-execution-context-is-a-specification-device-that-is-used-to-track-the-runtime-evaluation-of-the-code.">Def. 7: Execution context: An execution context is a specification device that is used to track the runtime evaluation of the code.</a></li><li><a href="#def.-8%3A-execution-context-stack%3A-an-execution-context-stack-is-a-lifo-structure-used-to-maintain-control-flow-and-order-of-execution.">Def. 8: Execution context stack: An execution context stack is a LIFO structure used to maintain control flow and order of execution.</a></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>JS The Core</h1>
@@ -596,7 +627,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<p><strong>This article covers ES2017+ runtime system.</strong></p>
+			<p><strong>This article covers ES2017+ runtime system.</strong></p>
 <p><a href="#Object">丨- Object</a><br>
 <a href="#Prototype">丨- Prototype</a><br>
 <a href="#Class">丨- Class</a><br>
@@ -824,7 +855,7 @@ console.log(
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-06-24-JS-core-workshop/` was built on 2026-03-21T10:30:08.754Z -->
+		<!-- This page `/blog/2018-06-24-JS-core-workshop/` was built on 2026-03-21T12:37:35.835Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

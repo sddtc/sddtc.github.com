@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }</style>
 		
 	</head>
@@ -456,36 +485,43 @@ blockquote {
 
 		<main id="main">
 			<heading-anchors>
-				<h2>标签: mysql</h2>
+				
+<div class="home-container">
+    <div class="page-title">
+	<h2>标签: mysql</h2>
+</div>
 
 
-<ol reversed="" class="postlist" style="--postlist-index: 6">
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-12-08-mysql-deadlock-transaction/" class="postlist-link">记一次mysql的Deadlock found when trying to get lock try restarting transaction</a>
-		<time class="postlist-date" datetime="2015-12-08">December 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-11-11-mysql-get-one-slave/" class="postlist-link">MYSQL搭建从库的方法教程</a>
-		<time class="postlist-date" datetime="2015-11-11">November 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-07-31-mysql-simple-cache-config/" class="postlist-link">MYSQL服务器端的高级优化实践</a>
-		<time class="postlist-date" datetime="2015-07-31">July 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-03-16-sqoop-base-and-advance/" class="postlist-link">Sqoop基本使用要点和mysql相关的一个Tip</a>
-		<time class="postlist-date" datetime="2015-03-16">March 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-03-16-mysql-base-and-practice/" class="postlist-link">MYSQL服务器配置文件的修改Tips</a>
-		<time class="postlist-date" datetime="2015-03-16">March 2015</time>
-	</li>
-</ol>
+<div class="postlist-container">
+	<ol reversed="" class="postlist" style="--postlist-index: 6">
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-12-08-mysql-deadlock-transaction/" class="postlist-link">记一次mysql的Deadlock found when trying to get lock try restarting transaction</a>
+			<time class="postlist-date" datetime="2015-12-08">December 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-11-11-mysql-get-one-slave/" class="postlist-link">MYSQL搭建从库的方法教程</a>
+			<time class="postlist-date" datetime="2015-11-11">November 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-07-31-mysql-simple-cache-config/" class="postlist-link">MYSQL服务器端的高级优化实践</a>
+			<time class="postlist-date" datetime="2015-07-31">July 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-03-16-sqoop-base-and-advance/" class="postlist-link">Sqoop基本使用要点和mysql相关的一个Tip</a>
+			<time class="postlist-date" datetime="2015-03-16">March 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-03-16-mysql-base-and-practice/" class="postlist-link">MYSQL服务器配置文件的修改Tips</a>
+			<time class="postlist-date" datetime="2015-03-16">March 2015</time>
+		</li>
+	</ol>
+</div>
 
+<div class="page-footer">
+	<p>See <a href="/sddtc.github.com/tags/">all tags</a>.</p>
+</div>
 
-<p>See <a href="/sddtc.github.com/tags/">all tags</a>.</p>
-
-
+</div>
 			</heading-anchors>
 		</main>
 
@@ -507,7 +543,7 @@ blockquote {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/tags/mysql/` was built on 2026-03-21T10:30:09.235Z -->
+		<!-- This page `/tags/mysql/` was built on 2026-03-21T12:37:36.296Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

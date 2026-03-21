@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#%E5%9B%BE%E7%9A%84%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2%E5%AE%9E%E7%8E%B0">图的广度优先搜索实现</a></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>图的广度优先搜索实现</h1>
@@ -596,7 +627,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<h3 id="%E5%9B%BE%E7%9A%84%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2%E5%AE%9E%E7%8E%B0" tabindex="-1">图的广度优先搜索实现</h3>
+			<h3 id="%E5%9B%BE%E7%9A%84%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2%E5%AE%9E%E7%8E%B0" tabindex="-1">图的广度优先搜索实现</h3>
 <pre class="language-java" tabindex="0"><code class="hljs language-java"><span class="token keyword">class</span> <span class="token class-name">GraphNode</span> <span class="token punctuation">{</span>
     <span class="token keyword">int</span> val<span class="token punctuation">;</span>
     <span class="token class-name">GraphNode</span> next<span class="token punctuation">;</span>
@@ -712,7 +743,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-11-22-graph-breath-first-search/` was built on 2026-03-21T10:30:08.748Z -->
+		<!-- This page `/blog/2015-11-22-graph-breath-first-search/` was built on 2026-03-21T12:37:35.830Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

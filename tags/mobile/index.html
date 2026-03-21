@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }</style>
 		
 	</head>
@@ -456,36 +485,43 @@ blockquote {
 
 		<main id="main">
 			<heading-anchors>
-				<h2>标签: mobile</h2>
+				
+<div class="home-container">
+    <div class="page-title">
+	<h2>标签: mobile</h2>
+</div>
 
 
-<ol reversed="" class="postlist" style="--postlist-index: 6">
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2021-02-22-maven-publish-plugin-in-android/" class="postlist-link">使用 Gradle 插件发布 Android library 到 maven 远程仓库</a>
-		<time class="postlist-date" datetime="2021-02-22">February 2021</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2021-01-11-kotlin-ktx/" class="postlist-link">Android KTX【卡通侠神马的</a>
-		<time class="postlist-date" datetime="2021-01-11">January 2021</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2020-12-10-android-core-viewmodel-overview/" class="postlist-link">再谈 ViewModel</a>
-		<time class="postlist-date" datetime="2020-12-10">December 2020</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2020-12-08-android-app-arch-best-practices/" class="postlist-link">最佳实践什么的 可太有魅力了</a>
-		<time class="postlist-date" datetime="2020-12-08">December 2020</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2020-12-01-android-core-applications-fundamentals/" class="postlist-link">Fundamentals 是基本原理的意思</a>
-		<time class="postlist-date" datetime="2020-12-01">December 2020</time>
-	</li>
-</ol>
+<div class="postlist-container">
+	<ol reversed="" class="postlist" style="--postlist-index: 6">
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2021-02-22-maven-publish-plugin-in-android/" class="postlist-link">使用 Gradle 插件发布 Android library 到 maven 远程仓库</a>
+			<time class="postlist-date" datetime="2021-02-22">February 2021</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2021-01-11-kotlin-ktx/" class="postlist-link">Android KTX【卡通侠神马的</a>
+			<time class="postlist-date" datetime="2021-01-11">January 2021</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2020-12-10-android-core-viewmodel-overview/" class="postlist-link">再谈 ViewModel</a>
+			<time class="postlist-date" datetime="2020-12-10">December 2020</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2020-12-08-android-app-arch-best-practices/" class="postlist-link">最佳实践什么的 可太有魅力了</a>
+			<time class="postlist-date" datetime="2020-12-08">December 2020</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2020-12-01-android-core-applications-fundamentals/" class="postlist-link">Fundamentals 是基本原理的意思</a>
+			<time class="postlist-date" datetime="2020-12-01">December 2020</time>
+		</li>
+	</ol>
+</div>
 
+<div class="page-footer">
+	<p>See <a href="/sddtc.github.com/tags/">all tags</a>.</p>
+</div>
 
-<p>See <a href="/sddtc.github.com/tags/">all tags</a>.</p>
-
-
+</div>
 			</heading-anchors>
 		</main>
 
@@ -507,7 +543,7 @@ blockquote {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/tags/mobile/` was built on 2026-03-21T10:30:09.318Z -->
+		<!-- This page `/tags/mobile/` was built on 2026-03-21T12:37:36.373Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

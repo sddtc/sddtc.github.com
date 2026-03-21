@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,11 +607,13 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		
-	</aside>
-	<div class="post-only-content">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>当你做技术选型时需要考虑的</h1>
@@ -593,7 +624,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<p>软件工程是手段,不是目的. 不论是做企业软件开发, 做产品验证 POC 还是个人产品开发, 你总会在不同的时刻考虑技术框架, 亦或是不用框架; 考虑使用某个工具 A 而非工具 B, 使用云平台 C 还是读取文件使用缓存策略, 都是基于现阶段, 以及未来(短期)可能会出现的可能性的考虑. 毕竟有句很火的话</p>
+			<p>软件工程是手段,不是目的. 不论是做企业软件开发, 做产品验证 POC 还是个人产品开发, 你总会在不同的时刻考虑技术框架, 亦或是不用框架; 考虑使用某个工具 A 而非工具 B, 使用云平台 C 还是读取文件使用缓存策略, 都是基于现阶段, 以及未来(短期)可能会出现的可能性的考虑. 毕竟有句很火的话</p>
 <blockquote>
 <p>先做一个垃圾出来</p>
 </blockquote>
@@ -673,7 +704,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2025-06-16-technology-selection/` was built on 2026-03-21T10:30:08.763Z -->
+		<!-- This page `/blog/2025-06-16-technology-selection/` was built on 2026-03-21T12:37:35.842Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

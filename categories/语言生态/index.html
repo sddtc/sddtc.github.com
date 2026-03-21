@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }</style>
 		
 	</head>
@@ -457,83 +486,89 @@ blockquote {
 		<main id="main">
 			<heading-anchors>
 				
-<h2>分类: 语言生态</h2>
+<div class="home-container">
+    <div class="page-title">
+	<h2>分类: 语言生态</h2>
+</div>
 
 
-<ol reversed="" class="postlist" style="--postlist-index: 18">
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2026-01-07-something-about-javassist/" class="postlist-link">Something About Javassist</a>
-		<time class="postlist-date" datetime="2026-01-07">January 2026</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2020-11-16-kotlin-compatibility-intro/" class="postlist-link">由 java.lang.NoSuchMethodError 引发的思考之二进制兼容性</a>
-		<time class="postlist-date" datetime="2020-11-16">November 2020</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2019-08-21-dig-out-timeout-errors-on-js/" class="postlist-link">浅淡 ETIMEDOUT &amp; ESOCKETTIMEDOUT &amp; Socket hang up</a>
-		<time class="postlist-date" datetime="2019-08-21">August 2019</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2018-08-06-codebashing-java/" class="postlist-link">Codebashing</a>
-		<time class="postlist-date" datetime="2018-08-06">August 2018</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2018-08-05-why-typescript/" class="postlist-link">Why typescript ?</a>
-		<time class="postlist-date" datetime="2018-08-05">August 2018</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2018-07-18-JS-core-workshop-2/" class="postlist-link">JS The Core (2)</a>
-		<time class="postlist-date" datetime="2018-07-18">July 2018</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2018-06-24-JS-core-workshop/" class="postlist-link">JS The Core</a>
-		<time class="postlist-date" datetime="2018-06-24">June 2018</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2017-08-01-tips-about-railsadmin/" class="postlist-link">关于 RA 的一些必须掌握的 tips</a>
-		<time class="postlist-date" datetime="2017-08-01">August 2017</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-12-23-concurrent-java/" class="postlist-link">concurrent 包部分解读</a>
-		<time class="postlist-date" datetime="2015-12-23">December 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-12-22-day-day-up-for-silent/" class="postlist-link">关于 Java 泛型特性的理解</a>
-		<time class="postlist-date" datetime="2015-12-22">December 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-10-14-java-binary-search/" class="postlist-link">Java 实现二分法回忆片段和解决方案</a>
-		<time class="postlist-date" datetime="2015-10-14">October 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-10-14-EI-capitan-jekyll-can-not-run/" class="postlist-link">Jekyll的EI Capitan jekyll can not run 解决方案</a>
-		<time class="postlist-date" datetime="2015-10-14">October 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-05-11-serialization-and-deserialization/" class="postlist-link">序列化与反序列化的选型</a>
-		<time class="postlist-date" datetime="2015-05-11">May 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-05-07-jekyll-highlight/" class="postlist-link">Jekyll我们都会喜欢的语法高亮</a>
-		<time class="postlist-date" datetime="2015-05-07">May 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-05-04-angular-js/" class="postlist-link">AngularJs的http请求要点和div的操作</a>
-		<time class="postlist-date" datetime="2015-05-04">May 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-03-27-something-about-python-web/" class="postlist-link">豆瓣和python的一个小故事</a>
-		<time class="postlist-date" datetime="2015-03-27">March 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-03-23-something-about-python/" class="postlist-link">关于Python的Thread介绍</a>
-		<time class="postlist-date" datetime="2015-03-23">March 2015</time>
-	</li>
-</ol>
+<div class="postlist-container">
+	<ol reversed="" class="postlist" style="--postlist-index: 18">
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2026-01-07-something-about-javassist/" class="postlist-link">Something About Javassist</a>
+			<time class="postlist-date" datetime="2026-01-07">January 2026</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2020-11-16-kotlin-compatibility-intro/" class="postlist-link">由 java.lang.NoSuchMethodError 引发的思考之二进制兼容性</a>
+			<time class="postlist-date" datetime="2020-11-16">November 2020</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2019-08-21-dig-out-timeout-errors-on-js/" class="postlist-link">浅淡 ETIMEDOUT &amp; ESOCKETTIMEDOUT &amp; Socket hang up</a>
+			<time class="postlist-date" datetime="2019-08-21">August 2019</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2018-08-06-codebashing-java/" class="postlist-link">Codebashing</a>
+			<time class="postlist-date" datetime="2018-08-06">August 2018</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2018-08-05-why-typescript/" class="postlist-link">Why typescript ?</a>
+			<time class="postlist-date" datetime="2018-08-05">August 2018</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2018-07-18-JS-core-workshop-2/" class="postlist-link">JS The Core (2)</a>
+			<time class="postlist-date" datetime="2018-07-18">July 2018</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2018-06-24-JS-core-workshop/" class="postlist-link">JS The Core</a>
+			<time class="postlist-date" datetime="2018-06-24">June 2018</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2017-08-01-tips-about-railsadmin/" class="postlist-link">关于 RA 的一些必须掌握的 tips</a>
+			<time class="postlist-date" datetime="2017-08-01">August 2017</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-12-23-concurrent-java/" class="postlist-link">concurrent 包部分解读</a>
+			<time class="postlist-date" datetime="2015-12-23">December 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-12-22-day-day-up-for-silent/" class="postlist-link">关于 Java 泛型特性的理解</a>
+			<time class="postlist-date" datetime="2015-12-22">December 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-10-14-java-binary-search/" class="postlist-link">Java 实现二分法回忆片段和解决方案</a>
+			<time class="postlist-date" datetime="2015-10-14">October 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-10-14-EI-capitan-jekyll-can-not-run/" class="postlist-link">Jekyll的EI Capitan jekyll can not run 解决方案</a>
+			<time class="postlist-date" datetime="2015-10-14">October 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-05-11-serialization-and-deserialization/" class="postlist-link">序列化与反序列化的选型</a>
+			<time class="postlist-date" datetime="2015-05-11">May 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-05-07-jekyll-highlight/" class="postlist-link">Jekyll我们都会喜欢的语法高亮</a>
+			<time class="postlist-date" datetime="2015-05-07">May 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-05-04-angular-js/" class="postlist-link">AngularJs的http请求要点和div的操作</a>
+			<time class="postlist-date" datetime="2015-05-04">May 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-03-27-something-about-python-web/" class="postlist-link">豆瓣和python的一个小故事</a>
+			<time class="postlist-date" datetime="2015-03-27">March 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-03-23-something-about-python/" class="postlist-link">关于Python的Thread介绍</a>
+			<time class="postlist-date" datetime="2015-03-23">March 2015</time>
+		</li>
+	</ol>
+</div>
 
-
-<p>See <a href="/sddtc.github.com/categories/">all categories</a>.</p>
-
+<div class="page-footer">
+	<p>See <a href="/sddtc.github.com/categories/">all categories</a>.</p>
+</div>
+</div>
 			</heading-anchors>
 		</main>
 
@@ -555,7 +590,7 @@ blockquote {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/categories/语言生态/` was built on 2026-03-21T10:30:09.223Z -->
+		<!-- This page `/categories/语言生态/` was built on 2026-03-21T12:37:36.286Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

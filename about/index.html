@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }</style>
 		
 	</head>
@@ -456,7 +485,9 @@ blockquote {
 
 		<main id="main">
 			<heading-anchors>
-				<h2 id="%E5%85%B3%E4%BA%8E%E6%88%91" tabindex="-1">关于我</h2>
+				
+<div class="home-container">
+    <h2 id="%E5%85%B3%E4%BA%8E%E6%88%91" tabindex="-1">关于我</h2>
 <blockquote>
 <p>“象棋的可能棋局数比宇宙中的原子的数量还多，没人能预料到一切，即便是你。<br>
 这也就是说，第一步会很令人害怕，因为它是距离结局最远的一步，在这一步与终点之间充满了无穷无尽的可能性。<br>
@@ -519,7 +550,7 @@ blockquote {
 <li><a href="https://philcalcado.com/">Phil Calçado</a></li>
 </ul>
 
-
+</div>
 			</heading-anchors>
 		</main>
 
@@ -541,7 +572,7 @@ blockquote {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/about/` was built on 2026-03-21T10:30:08.768Z -->
+		<!-- This page `/about/` was built on 2026-03-21T12:37:35.846Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#%E8%83%8C%E6%99%AF%3A">背景:</a></li><li><a href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E5%BC%8F%EF%BC%9A">解决方式：</a></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>MYSQL服务器端的高级优化实践</h1>
@@ -596,7 +627,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<h3 id="%E8%83%8C%E6%99%AF%3A" tabindex="-1">背景:</h3>
+			<h3 id="%E8%83%8C%E6%99%AF%3A" tabindex="-1">背景:</h3>
 <p>因为资源争用的问题,跑数据和业务的query迟迟很难执行完毕，都相对比较紧急，吃饭的运维的同学看到我的屏幕，说了一句。。mysql配置查询缓存了吗。。真是一语惊醒。。</p>
 <h3 id="%E8%A7%A3%E5%86%B3%E6%96%B9%E5%BC%8F%EF%BC%9A" tabindex="-1">解决方式：</h3>
 <p>上网查询了配置mysql缓存的方法，希望能1.检测服务器是否正确配置了缓存机制2.如果没有赶紧配上3.代码层面是解决的下一步方案，因为我在编写代码的时候每个sql都检查过索引和执行效果</p>
@@ -700,7 +731,7 @@ mysql<span class="token operator">></span><span class="token keyword">set</span>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-07-31-mysql-simple-cache-config/` was built on 2026-03-21T10:30:08.745Z -->
+		<!-- This page `/blog/2015-07-31-mysql-simple-cache-config/` was built on 2026-03-21T12:37:35.828Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#%E5%85%88%E8%AE%A8%E8%AE%BA%E6%96%B9%E6%A1%88-%3E-%E5%85%88%E5%AE%9E%E7%8E%B0%E5%8A%9F%E8%83%BD">先讨论方案 &gt; 先实现功能</a></li><li><a href="#%E9%80%82%E5%90%88%E4%B8%94%E7%AE%80%E5%8D%95%E7%9A%84%E6%96%B9%E6%A1%88-%3E-%E5%AE%8C%E6%95%B4%E4%B8%94%E7%81%B5%E6%B4%BB%E7%9A%84%E6%96%B9%E6%A1%88">适合且简单的方案 &gt; 完整且灵活的方案</a></li><li><a href="#%E6%B2%9F%E9%80%9A-%3E-%E6%BC%94%E7%A4%BA-demo">沟通 &gt; 演示 demo</a></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>在团队中引入新技术的3个原则</h1>
@@ -595,7 +626,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<p>对于 4-5 人的团队来说， 引入一项新技术是简单又不简单的一件事， 简单的是执行力强， 容易推进。 难的是充分让团队了解这项技术的优势， 难上加难的是<br>
+			<p>对于 4-5 人的团队来说， 引入一项新技术是简单又不简单的一件事， 简单的是执行力强， 容易推进。 难的是充分让团队了解这项技术的优势， 难上加难的是<br>
 语言差异，即在英语环境，而工程师的母语是中文。</p>
 <h3 id="%E5%85%88%E8%AE%A8%E8%AE%BA%E6%96%B9%E6%A1%88-%3E-%E5%85%88%E5%AE%9E%E7%8E%B0%E5%8A%9F%E8%83%BD" tabindex="-1">先讨论方案 &gt; 先实现功能</h3>
 <p>有些工程师动手能力很强， 能在 2-3 天之内实现一套方案。 或许是基于自己曾经的项目经验， 或许是基于自己曾经使用过的工具🔧。 然而如果实现之后再讨论<br>
@@ -638,7 +669,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2022-01-31-introduce-new-approach/` was built on 2026-03-21T10:30:08.761Z -->
+		<!-- This page `/blog/2022-01-31-introduce-new-approach/` was built on 2026-03-21T12:37:35.840Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

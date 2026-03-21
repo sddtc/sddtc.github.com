@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,11 +607,13 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		
-	</aside>
-	<div class="post-only-content">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>白社长的五月病很严重呢</h1>
@@ -594,7 +625,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<p>看了看频率大概整整一周都在忙工作，上班优化，上线之后的日子就是一直操心<br>
+			<p>看了看频率大概整整一周都在忙工作，上班优化，上线之后的日子就是一直操心<br>
 很多临时的变动，又有很多更高的要求，就仿佛你永远在奔跑，却永远都到不了的尽头无望感<br>
 大概是五月病吧。</p>
 <p>有很多经验的积累<br>
@@ -632,7 +663,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-05-15-little-white-five-month-sick/` was built on 2026-03-21T10:30:08.744Z -->
+		<!-- This page `/blog/2015-05-15-little-white-five-month-sick/` was built on 2026-03-21T12:37:35.827Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

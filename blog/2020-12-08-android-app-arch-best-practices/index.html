@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#mobile-%E7%9A%84%E7%94%A8%E6%88%B7%E4%BD%93%E9%AA%8C">Mobile 的用户体验</a></li><li><a href="#%E9%80%9A%E7%94%A8%E7%9A%84%E4%B8%A4%E4%B8%AA%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99">通用的两个设计原则</a><ul><li><a href="#%E5%85%B3%E6%B3%A8%E7%82%B9%E5%88%86%E7%A6%BB">关注点分离</a></li><li><a href="#%E4%BB%8E%E6%A8%A1%E5%9E%8B%E9%A9%B1%E5%8A%A8-ui">从模型驱动 UI</a></li></ul></li><li><a href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5">最佳实践</a><ul><li><a href="#avoid-designating-your-app%E2%80%99s-entry-points%E2%80%94such-as-activities%2C-services%2C-and-broadcast-receivers%E2%80%94as-sources-of-data.">Avoid designating your app’s entry points—such as activities, services, and broadcast receivers—as sources of data.</a></li><li><a href="#create-well-defined-boundaries-of-responsibility-between-various-modules-of-your-app.">Create well-defined boundaries of responsibility between various modules of your app.</a></li><li><a href="#expose-as-little-as-possible-from-each-module.">Expose as little as possible from each module.</a></li><li><a href="#consider-how-to-make-each-module-testable-in-isolation.">Consider how to make each module testable in isolation.</a></li><li><a href="#focus-on-the-unique-core-of-your-app-so-it-stands-out-from-other-apps.">Focus on the unique core of your app so it stands out from other apps.</a></li><li><a href="#persist-as-much-relevant-and-fresh-data-as-possible.">Persist as much relevant and fresh data as possible.</a></li><li><a href="#assign-one-data-source-to-be-the-single-source-of-truth.">Assign one data source to be the single source of truth.</a></li></ul></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>最佳实践什么的 可太有魅力了</h1>
@@ -596,7 +627,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<blockquote>
+			<blockquote>
 <p>Programming is a creative field, and building Android apps isn’t an exception.</p>
 </blockquote>
 <p>👏 编程是一个极具创造性的领域，构建 Android 应用程序也不例外呢。</p>
@@ -690,7 +721,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2020-12-08-android-app-arch-best-practices/` was built on 2026-03-21T10:30:08.757Z -->
+		<!-- This page `/blog/2020-12-08-android-app-arch-best-practices/` was built on 2026-03-21T12:37:35.838Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#tsconfig.json%EF%BC%9Atypescript-%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">tsconfig.json：TypeScript 项目的核心配置文件</a></li><li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81-tsconfig.json-%3F">为什么需要 tsconfig.json ?</a><ul><li><a href="#%E7%BB%9F%E4%B8%80%E7%BC%96%E8%AF%91%E8%A7%84%E5%88%99">统一编译规则</a></li><li><a href="#%E6%8E%A7%E5%88%B6%E4%BB%A3%E7%A0%81%E5%85%BC%E5%AE%B9%E6%80%A7.">控制代码兼容性.</a></li><li><a href="#%E6%8E%A7%E5%88%B6-typescript-%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5">控制 TypeScript 类型检查</a></li><li><a href="#%E6%8E%A7%E5%88%B6%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84">控制项目结构</a></li></ul></li><li><a href="#tsconfig.json-%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84">tsconfig.json 的基本结构</a></li><li><a href="#compileroptions-%E6%98%AF%E4%BB%80%E4%B9%88%3F">compilerOptions 是什么?</a><ul><li><a href="#target">target</a></li><li><a href="#module">module</a></li><li><a href="#moduleresolution">moduleResolution</a></li><li><a href="#strict">strict</a></li><li><a href="#esmoduleinterop">esModuleInterop</a></li><li><a href="#%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81-compileroptions">其他重要 compilerOptions</a><ul><li><a href="#rootdir">rootDir</a></li><li><a href="#outdir">outDir</a></li><li><a href="#sourcemap">sourceMap</a></li><li><a href="#skiplibcheck">skipLibCheck</a></li><li><a href="#resolvejsonmodule">resolveJsonModule</a></li><li><a href="#forceconsistentcasinginfilenames">forceConsistentCasingInFileNames</a></li><li><a href="#noemit">noEmit</a></li><li><a href="#paths">paths</a></li></ul></li></ul></li><li><a href="#include-%2F-exclude-%E6%98%AF%E4%BB%80%E4%B9%88-%3F">include / exclude 是什么 ?</a><ul><li><a href="#include">include</a></li><li><a href="#exclude">exclude</a></li></ul></li><li><a href="#extends-%E6%98%AF%E4%BB%80%E4%B9%88%3F">extends 是什么?</a></li><li><a href="#%E5%B8%B8%E8%A7%81%E7%9A%84-tsconfig-%E7%A4%BA%E4%BE%8B">常见的 tsconfig 示例</a></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>Fastify 模块化项目实战 - 你真的懂 tsconfig.json 吗?</h1>
@@ -597,7 +628,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<h2 id="tsconfig.json%EF%BC%9Atypescript-%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6" tabindex="-1">tsconfig.json：TypeScript 项目的核心配置文件</h2>
+			<h2 id="tsconfig.json%EF%BC%9Atypescript-%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6" tabindex="-1">tsconfig.json：TypeScript 项目的核心配置文件</h2>
 <p>在使用 TypeScript 开发 JavaScript 项目时，几乎所有项目都会有一个非常重要的文件：</p>
 <pre><code class="hljs">tsconfig.json
 </code></pre>
@@ -887,7 +918,7 @@ ESNext
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2026-03-16-fastify-modular-ts-config-file-intro/` was built on 2026-03-21T10:30:08.765Z -->
+		<!-- This page `/blog/2026-03-16-fastify-modular-ts-config-file-intro/` was built on 2026-03-21T12:37:35.844Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

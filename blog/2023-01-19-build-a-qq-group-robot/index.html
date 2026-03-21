@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,11 +607,13 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		
-	</aside>
-	<div class="post-only-content">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>站巨人肩膀之徒手开发QQ群机器人来满足帮会日常需求</h1>
@@ -594,7 +625,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<p>剑网3玩家会在平时关心很多事情, 他们有自己的社交群体, 有自己的时间管理计划, 有最强大的硬盘配置<br>
+			<p>剑网3玩家会在平时关心很多事情, 他们有自己的社交群体, 有自己的时间管理计划, 有最强大的硬盘配置<br>
 毕竟时至今日我仍然想不通自己为什么会下载一款 80G+ 的端游<br>
 到底是看不起软件开发的速度跟不上硬件发展的速度, 还是太看得起自己的经济实力</p>
 <p>但毫无疑问, 在活跃的各种 QQ 群里, 大家需要各种各样的信息, 例如:</p>
@@ -657,7 +688,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2023-01-19-build-a-qq-group-robot/` was built on 2026-03-21T10:30:08.761Z -->
+		<!-- This page `/blog/2023-01-19-build-a-qq-group-robot/` was built on 2026-03-21T12:37:35.840Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

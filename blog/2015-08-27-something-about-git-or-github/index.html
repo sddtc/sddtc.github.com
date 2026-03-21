@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#.gitignore-%E5%9C%A8%E6%9F%A5%E7%9C%8B-git-status-%E6%97%B6%E4%B8%8D%E8%83%BD%E8%BF%87%E6%BB%A4%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%A4%B9">.gitignore 在查看 git status 时不能过滤文件和文件夹</a></li><li><a href="#%E6%9C%AC%E5%9C%B0%E4%BF%AE%E6%94%B9%EF%BC%8C%E4%BD%86%E6%9B%B4%E6%96%B0%E5%BC%BA%E5%88%B6%E8%A6%86%E7%9B%96%E6%9C%AC%E5%9C%B0">本地修改，但更新强制覆盖本地</a></li><li><a href="#%E8%BF%9C%E7%A8%8B%E6%96%B0%E5%BB%BA%E5%88%86%E6%94%AF%EF%BC%8C%E6%8B%89%E5%8F%96%E5%88%B0%E6%9C%AC%E5%9C%B0">远程新建分支，拉取到本地</a></li><li><a href="#%E6%AF%94%E8%BE%83%E5%88%86%E6%94%AF">比较分支</a></li><li><a href="#%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF-a-%E6%96%87%E4%BB%B6%E5%88%B0%E5%88%86%E6%94%AF-b">合并分支 A 文件到分支 B</a></li><li><a href="#%E4%BB%8E-master-%E5%88%86%E6%94%AF%E6%9B%B4%E6%96%B0%E4%BB%A3%E7%A0%81%E5%88%B0-fork-%E5%88%86%E6%94%AF">从 master 分支更新代码到 fork 分支</a></li><li><a href="#git-pull-vs-git-fetch-then-git-rebase">git pull vs git fetch then git rebase</a></li><li><a href="#git-fetch-just-updates-your-repo-data%2C-but-a-git-pull-will-basically-perform-a-fetch-and-then-merge-the-branch-pulled.">Git fetch just updates your repo data, but a git pull will basically perform a fetch and then merge the branch pulled.</a></li><li><a href="#in-contrast%2C-rebasing-unifies-the-lines-of-development-by-re-writing-changes-from-the-source-branch-so-that-they-appear-as-children-of-the-destination-branch-%E2%80%93-effectively-pretending-that-those-commits-were-written-on-top-of-the-destination-branch-all-along.">In contrast, rebasing unifies the lines of development by re-writing changes from the source branch so that they appear as children of the destination branch – effectively pretending that those commits were written on top of the destination branch all along.</a></li><li><a href="#%E6%9F%A5%E7%9C%8B-git-log">查看 git log</a></li><li><a href="#terminal-skills">Terminal skills</a></li><li><a href="#merge-commits">Merge commits</a></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>Git版本管理相关命令合集</h1>
@@ -596,7 +627,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<h3 id=".gitignore-%E5%9C%A8%E6%9F%A5%E7%9C%8B-git-status-%E6%97%B6%E4%B8%8D%E8%83%BD%E8%BF%87%E6%BB%A4%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%A4%B9" tabindex="-1">.gitignore 在查看 <code>git status</code> 时不能过滤文件和文件夹</h3>
+			<h3 id=".gitignore-%E5%9C%A8%E6%9F%A5%E7%9C%8B-git-status-%E6%97%B6%E4%B8%8D%E8%83%BD%E8%BF%87%E6%BB%A4%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%A4%B9" tabindex="-1">.gitignore 在查看 <code>git status</code> 时不能过滤文件和文件夹</h3>
 <p>在 .gitignore 添加 .idea 文件夹以过滤该文件夹, 但通过 <code>git status</code> 查看仍显示 .idea 文件夹的状态.<br>
 原因: 在 git 库中已存在了这个文件, 之前 push 提交过该文件.<br>
 .gitignore 文件只对还没有加入版本管理的文件起作用, 如果之前已经用 git 把这些文件纳入了版本库, 就不起作用.<br>
@@ -706,7 +737,7 @@ For example, if your commit history is A-B-C-D-E-F with F as HEAD, and you want 
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-08-27-something-about-git-or-github/` was built on 2026-03-21T10:30:08.746Z -->
+		<!-- This page `/blog/2015-08-27-something-about-git-or-github/` was built on 2026-03-21T12:37:35.828Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

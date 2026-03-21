@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,11 +607,13 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		
-	</aside>
-	<div class="post-only-content">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>&lt;商业就是这样&gt;听后感</h1>
@@ -594,7 +625,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<p>去年 12 月下载了小宇宙. 在上下班的路上开始收听播客. 在此之前一直是网易云的日推陪伴我, 也偶尔为了学习英语听听开言的节目. 到今天为止我看了看自己 62 小时的总收听时长还是有些惊讶的,<br>
+			<p>去年 12 月下载了小宇宙. 在上下班的路上开始收听播客. 在此之前一直是网易云的日推陪伴我, 也偶尔为了学习英语听听开言的节目. 到今天为止我看了看自己 62 小时的总收听时长还是有些惊讶的,<br>
 当然不出意外的是我都只听了一款节目. 也就是标题所说. 遇见它也是靠着首页推荐啦, 感激.<br>
 两位主播我都很喜欢, 在节目一集一集的收听里, 不但能感受到他们表达见解时谦逊严谨的词语, 也同样感受到了每一期功课做的也是相当的充分. 商业就是这样讲的是各种各样不同领域的商业模式, 商业案例,<br>
 外行的我听起来新奇又感觉那每一个案例都充满着舒服的逻辑. 在身上同样会背负着写各种“案例”的压力之下, 听起来还是熟悉又陌生的.<br>
@@ -645,7 +676,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2024-02-03-reaction-to-thatisbiz.md/` was built on 2026-03-21T10:30:08.762Z -->
+		<!-- This page `/blog/2024-02-03-reaction-to-thatisbiz.md/` was built on 2026-03-21T12:37:35.841Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BA-fastify-%E9%A1%B9%E7%9B%AE">开始搭建 Fastify 项目</a><ul><li><a href="#%E5%88%9B%E5%BB%BA-app-%E5%B9%B6%E7%9B%91%E5%90%AC%E7%AB%AF%E5%8F%A3">创建 app 并监听端口</a></li><li><a href="#%E5%88%9B%E5%BB%BA%E6%A8%A1%E5%9D%97a">创建模块a</a><ul><li><a href="#%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%B8%80%E4%B8%AAapi(api-a.ts)%3A">创建第一个api(api-a.ts):</a></li><li><a href="#%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%BA%8C%E4%B8%AAapi(api-b.ts)%3A">创建第二个api(api-b.ts):</a></li><li><a href="#%E6%95%B4%E5%90%88%E5%A4%9A%E4%B8%AAapi%E5%88%B0index.ts%E4%B8%AD(%E5%8F%AF%E9%80%89)">整合多个API到index.ts中(可选)</a></li></ul></li><li><a href="#%E6%B3%A8%E5%86%8C%E5%88%B0-app">注册到 app</a></li><li><a href="#%E4%BD%BF%E7%94%A8-%40fastify%2Fautoload-%E5%B9%B6%E6%90%AD%E9%85%8D-prefix">使用 @fastify/autoload 并搭配 prefix</a></li></ul></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>Fastify 模块化项目实战(二) — 初始化Fastify 项目</h1>
@@ -598,7 +629,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<h2 id="%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BA-fastify-%E9%A1%B9%E7%9B%AE" tabindex="-1">开始搭建 Fastify 项目</h2>
+			<h2 id="%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BA-fastify-%E9%A1%B9%E7%9B%AE" tabindex="-1">开始搭建 Fastify 项目</h2>
 <p>Fastify最吸引我的特性有两个, 一个是高性能, 另一个就是“一切接插件”的理念, 插件的特点就是可拔插, 可快速替换, 快速集成等. 所以这篇文章会简单介绍如何利用这一特性来快速启动一个modular monolith项目.<br>
 首先我们心里大概构思出项目结构, 如下所示:</p>
 <pre class="language-txt" tabindex="0"><code class="hljs language-txt">src/
@@ -747,7 +778,7 @@ app<span class="token punctuation">.</span><span class="token function">register
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2026-02-26-fastify-modular-monolith-demo/` was built on 2026-03-21T10:30:08.765Z -->
+		<!-- This page `/blog/2026-02-26-fastify-modular-monolith-demo/` was built on 2026-03-21T12:37:35.843Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

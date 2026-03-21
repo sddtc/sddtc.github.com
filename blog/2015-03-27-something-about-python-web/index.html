@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#%E4%BB%A5%E4%B8%8B%E5%BC%95%E7%94%A8%E7%9A%84%E6%98%AF%E5%AF%B9%E4%BA%8E%E6%B4%AA%E5%BC%BA%E5%AE%81%E5%85%B3%E4%BA%8E%E8%B1%86%E7%93%A3%E6%9E%B6%E6%9E%84%E7%9A%84%E5%9B%9E%E7%AD%94%EF%BC%9A">以下引用的是对于洪强宁关于豆瓣架构的回答：</a></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>豆瓣和python的一个小故事</h1>
@@ -596,7 +627,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<h3 id="%E4%BB%A5%E4%B8%8B%E5%BC%95%E7%94%A8%E7%9A%84%E6%98%AF%E5%AF%B9%E4%BA%8E%E6%B4%AA%E5%BC%BA%E5%AE%81%E5%85%B3%E4%BA%8E%E8%B1%86%E7%93%A3%E6%9E%B6%E6%9E%84%E7%9A%84%E5%9B%9E%E7%AD%94%EF%BC%9A" tabindex="-1">以下引用的是对于洪强宁关于豆瓣架构的回答：</h3>
+			<h3 id="%E4%BB%A5%E4%B8%8B%E5%BC%95%E7%94%A8%E7%9A%84%E6%98%AF%E5%AF%B9%E4%BA%8E%E6%B4%AA%E5%BC%BA%E5%AE%81%E5%85%B3%E4%BA%8E%E8%B1%86%E7%93%A3%E6%9E%B6%E6%9E%84%E7%9A%84%E5%9B%9E%E7%AD%94%EF%BC%9A" tabindex="-1">以下引用的是对于洪强宁关于豆瓣架构的回答：</h3>
 <p>本刊记者：还有一个问题,，有一种说法，认为Python比较慢，在性能方面会不会有问题？<br>
 洪强宁：<br>
 这个问题可以分两个方面说，<br>
@@ -634,7 +665,7 @@ Web网站一般会有很多对IO的操作，比如对数据库的访问，对硬
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-03-27-something-about-python-web/` was built on 2026-03-21T10:30:08.743Z -->
+		<!-- This page `/blog/2015-03-27-something-about-python-web/` was built on 2026-03-21T12:37:35.826Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

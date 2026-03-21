@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }</style>
 		
 	</head>
@@ -456,36 +485,43 @@ blockquote {
 
 		<main id="main">
 			<heading-anchors>
-				<h2>标签: auth</h2>
+				
+<div class="home-container">
+    <div class="page-title">
+	<h2>标签: auth</h2>
+</div>
 
 
-<ol reversed="" class="postlist" style="--postlist-index: 6">
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2021-03-28-new-sso-platform/" class="postlist-link">登录系统的蜕变之路</a>
-		<time class="postlist-date" datetime="2021-03-28">March 2021</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2019-09-10-rbac-and-abac/" class="postlist-link">RBAC 与 ABAC</a>
-		<time class="postlist-date" datetime="2019-09-10">September 2019</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2019-06-01-authentication-platform/" class="postlist-link">7大平台的第三方登录参考手册</a>
-		<time class="postlist-date" datetime="2019-06-01">June 2019</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2019-05-25-authentication-guide/" class="postlist-link">身份认证生存指南</a>
-		<time class="postlist-date" datetime="2019-05-25">May 2019</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2018-08-28-openid-well-known-one/" class="postlist-link">关于 .well-known 规范的那些事 (1)</a>
-		<time class="postlist-date" datetime="2018-08-28">August 2018</time>
-	</li>
-</ol>
+<div class="postlist-container">
+	<ol reversed="" class="postlist" style="--postlist-index: 6">
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2021-03-28-new-sso-platform/" class="postlist-link">登录系统的蜕变之路</a>
+			<time class="postlist-date" datetime="2021-03-28">March 2021</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2019-09-10-rbac-and-abac/" class="postlist-link">RBAC 与 ABAC</a>
+			<time class="postlist-date" datetime="2019-09-10">September 2019</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2019-06-01-authentication-platform/" class="postlist-link">7大平台的第三方登录参考手册</a>
+			<time class="postlist-date" datetime="2019-06-01">June 2019</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2019-05-25-authentication-guide/" class="postlist-link">身份认证生存指南</a>
+			<time class="postlist-date" datetime="2019-05-25">May 2019</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2018-08-28-openid-well-known-one/" class="postlist-link">关于 .well-known 规范的那些事 (1)</a>
+			<time class="postlist-date" datetime="2018-08-28">August 2018</time>
+		</li>
+	</ol>
+</div>
 
+<div class="page-footer">
+	<p>See <a href="/sddtc.github.com/tags/">all tags</a>.</p>
+</div>
 
-<p>See <a href="/sddtc.github.com/tags/">all tags</a>.</p>
-
-
+</div>
 			</heading-anchors>
 		</main>
 
@@ -507,7 +543,7 @@ blockquote {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/tags/auth/` was built on 2026-03-21T10:30:09.309Z -->
+		<!-- This page `/tags/auth/` was built on 2026-03-21T12:37:36.366Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

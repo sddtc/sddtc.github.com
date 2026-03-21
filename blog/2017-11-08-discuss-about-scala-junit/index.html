@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#%E8%83%8C%E6%99%AF">背景</a></li><li><a href="#%E5%93%B2%E5%AD%A6">哲学</a></li><li><a href="#scala%E7%9A%84%E5%AE%9A%E4%BD%8D">Scala的定位</a></li><li><a href="#scalatest-vs-scala-specs">ScalaTest vs Scala Specs</a></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>关于 Scala 这门语言的理解和它的测试框架</h1>
@@ -596,7 +627,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<h3 id="%E8%83%8C%E6%99%AF" tabindex="-1">背景</h3>
+			<h3 id="%E8%83%8C%E6%99%AF" tabindex="-1">背景</h3>
 <p>事情大概要从那个让我花费了足足3天写了一个功能和功能的单元测试开始…<br>
 自我感觉非常良好的写了一个自以为完美的集成测试, 和同事争论到了下班- -<br>
 有一个晚上看了关于 <code>trait</code> 的 <code>test</code> 资料, 却并没有太多可以实际使用的技能<br>
@@ -642,7 +673,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2017-11-08-discuss-about-scala-junit/` was built on 2026-03-21T10:30:08.752Z -->
+		<!-- This page `/blog/2017-11-08-discuss-about-scala-junit/` was built on 2026-03-21T12:37:35.834Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

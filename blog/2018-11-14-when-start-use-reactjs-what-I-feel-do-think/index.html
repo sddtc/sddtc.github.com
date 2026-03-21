@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#%E8%83%8C%E6%99%AF">背景</a></li><li><a href="#%E5%BF%83%E8%B7%AF%E5%8E%86%E7%A8%8B">心路历程</a><ul><li><a href="#%E6%84%9F%E8%A7%A6%E4%B8%80">感触一</a></li><li><a href="#%E5%BC%AF%E8%B7%AF%E4%B8%80">弯路一</a></li><li><a href="#%E7%9B%B4%E7%90%83%E4%B8%80">直球一</a></li><li><a href="#%E6%84%9F%E8%A7%A6%E4%BA%8C">感触二</a></li><li><a href="#%E5%BC%AF%E8%B7%AF%E4%BA%8C">弯路二</a></li><li><a href="#%E7%9B%B4%E7%90%83%E4%BA%8C">直球二</a></li><li><a href="#%E6%84%9F%E8%A7%A6%E4%B8%89">感触三</a></li></ul></li><li><a href="#%E6%80%BB%E7%BB%93">总结</a></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>当我在写 React 我在写什么</h1>
@@ -596,7 +627,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<h3 id="%E8%83%8C%E6%99%AF" tabindex="-1">背景</h3>
+			<h3 id="%E8%83%8C%E6%99%AF" tabindex="-1">背景</h3>
 <p>如果你有这样的经历，要在一周左右的时间对一个功能小而美的代码库添加一个完整的功能模块。<br>
 而你没有相关的技术栈经验，该怎么样去整理保证最快的实践曲线呢？我有了一些小小的感触。</p>
 <h3 id="%E5%BF%83%E8%B7%AF%E5%8E%86%E7%A8%8B" tabindex="-1">心路历程</h3>
@@ -654,7 +685,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-11-14-when-start-use-reactjs-what-I-feel-do-think/` was built on 2026-03-21T10:30:08.755Z -->
+		<!-- This page `/blog/2018-11-14-when-start-use-reactjs-what-I-feel-do-think/` was built on 2026-03-21T12:37:35.836Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

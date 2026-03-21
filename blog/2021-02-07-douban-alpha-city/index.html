@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,11 +607,13 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		
-	</aside>
-	<div class="post-only-content">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>记忆中的乌托邦 - 豆瓣阿尔法城</h1>
@@ -594,7 +625,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<p>最近弃看《使女的故事》了，看到了第二季的第10集。 反乌托邦这个词我一开始不是很理解，直到我决定放弃补这部剧。 于是我试图找点甜甜的东西来安抚自己的情绪，大概就是我想记录点关于<br>
+			<p>最近弃看《使女的故事》了，看到了第二季的第10集。 反乌托邦这个词我一开始不是很理解，直到我决定放弃补这部剧。 于是我试图找点甜甜的东西来安抚自己的情绪，大概就是我想记录点关于<br>
 豆瓣阿尔法城的缘由惹。<s>惹，你竟然敢说惹.jpg</s><br>
 我对豆瓣这个网站的感情很奇妙，从前从前我是深度用户。深深喜欢着豆瓣 FM，喜欢豆邮，喜欢东西，喜欢豆瓣实验室，喜欢阿尔法城。喜欢的时候我天天都在玩，堪称教科书般的行动派。<br>
 虽然但是，我喜欢的这些现在都不在了。于是我脱坑了。现在，我用它来记录电影和书籍，也仅此而已。</p>
@@ -638,7 +669,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2021-02-07-douban-alpha-city/` was built on 2026-03-21T10:30:08.759Z -->
+		<!-- This page `/blog/2021-02-07-douban-alpha-city/` was built on 2026-03-21T12:37:35.839Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

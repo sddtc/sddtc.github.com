@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81-authentication">身份认证 Authentication</a></li><li><a href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5">基本概念</a></li><li><a href="#%E9%89%B4%E6%9D%83-authorization">鉴权 Authorization</a></li><li><a href="#%E4%BB%A4%E7%89%8C-token-overload">令牌 Token overload</a></li><li><a href="#%E8%BA%AB%E4%BB%BD%E6%8F%90%E4%BE%9B%E5%95%86-identity-provider">身份提供商 Identity provider</a></li><li><a href="#%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D-digital-signature">数字签名 Digital Signature</a></li><li><a href="#%E6%8E%88%E6%9D%83%E6%A1%86%E6%9E%B6---oauth-2.0">授权框架 - OAuth 2.0</a></li><li><a href="#%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%8D%8F%E8%AE%AE---openid-connect">身份认证协议 - OpenID Connect</a></li><li><a href="#%E5%AD%98%E5%82%A8-storage">存储 Storage</a></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>身份认证生存指南</h1>
@@ -596,7 +627,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<p>身份认证一直是一个复杂的主题，如果你认为不复杂那么有一点Too young too simple，因为最终你会发现它其实会令人头秃。<br>
+			<p>身份认证一直是一个复杂的主题，如果你认为不复杂那么有一点Too young too simple，因为最终你会发现它其实会令人头秃。<br>
 这个主题有大量的技术实现方案，各种协议和概念，还有该做什么/不该做什么。最重要的是，我们很难去追踪所有不断被发现的最佳实践，亦或是已经过时的概念和术语。</p>
 <p>如果你恰好是一位想要了解身份认证领域相关知识的人，这篇文章会帮你了解一些相关协议，形式，概念或者常用术语；<br>
 对于那些正处于实现工作的开发人员，这篇文章可以帮助你了解怎样重新设计身份认证系统，亦或者是解决一些疑惑。</p>
@@ -742,7 +773,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2019-05-25-authentication-guide/` was built on 2026-03-21T10:30:08.756Z -->
+		<!-- This page `/blog/2019-05-25-authentication-guide/` was built on 2026-03-21T12:37:35.837Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

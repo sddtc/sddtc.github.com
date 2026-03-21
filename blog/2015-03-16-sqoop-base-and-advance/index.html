@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#sqoop-%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%3A">sqoop 相关命令使用:</a></li><li><a href="#mysql%E5%92%8Csqoop%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BA%A4%E4%BA%92%E9%97%AE%E9%A2%98%3A">mysql和sqoop之间的交互问题:</a></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>Sqoop基本使用要点和mysql相关的一个Tip</h1>
@@ -596,7 +627,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<h3 id="sqoop-%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%3A" tabindex="-1">sqoop 相关命令使用:</h3>
+			<h3 id="sqoop-%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%3A" tabindex="-1">sqoop 相关命令使用:</h3>
 <ul>
 <li>sqoop的export命令（hdfs—&gt;mysql)<br>
 导出操作有几点需要注意的地方：<br>
@@ -652,7 +683,7 @@ mysql<span class="token operator">></span>grant <span class="token keyword">all<
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-03-16-sqoop-base-and-advance/` was built on 2026-03-21T10:30:08.742Z -->
+		<!-- This page `/blog/2015-03-16-sqoop-base-and-advance/` was built on 2026-03-21T12:37:35.825Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

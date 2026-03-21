@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#%E5%A4%AA%E5%A4%9A%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E9%9C%80%E6%B1%82">太多的第三方需求</a></li><li><a href="#%E7%89%88%E6%9C%AC%E7%9A%84%E5%8D%87%E7%BA%A7%E9%BB%91%E6%B4%9E">版本的升级黑洞</a></li><li><a href="#%E6%8A%80%E6%9C%AF%E5%80%BA%E7%9A%84%E2%80%9C%E9%A6%99%E5%91%B3%E2%80%9D">技术债的“香味”</a></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>为什么我不喜欢工作在维护型大型工程上?</h1>
@@ -595,7 +626,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<p>陈旧的, 停止演进的系统就像一个长满细菌的怪兽一样. 今年才把《<a href="https://movie.douban.com/subject/2150220/">白色巨塔</a><br>
+			<p>陈旧的, 停止演进的系统就像一个长满细菌的怪兽一样. 今年才把《<a href="https://movie.douban.com/subject/2150220/">白色巨塔</a><br>
 》看完,顿时觉得医疗剧里面的医生和那种为大型旧系统维护的工程师之间或多或少有些共通之处.</p>
 <h3 id="%E5%A4%AA%E5%A4%9A%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E9%9C%80%E6%B1%82" tabindex="-1">太多的第三方需求</h3>
 <p>理论上一个很多用户使用的系统本是一件令人开心的事情, 越多人使用说明产品越重要, 能帮助更多的人解决很多问题.<br>
@@ -661,7 +692,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2023-05-28-why-i-do-not-like-working-on-huge-legacy-system/` was built on 2026-03-21T10:30:08.762Z -->
+		<!-- This page `/blog/2023-05-28-why-i-do-not-like-working-on-huge-legacy-system/` was built on 2026-03-21T12:37:35.841Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

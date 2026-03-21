@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,11 +607,13 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		
-	</aside>
-	<div class="post-only-content">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>我的 2020 年度总结</h1>
@@ -594,7 +625,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<p>又到了一年的末尾，做年度总结<s>白色相薄</s>的季节。刚才回顾了自己从 2016 年到 2019 年的总结，还是很微妙的，很多事情在变化，很多事情又没有变化。没有变化的那些，大概就是能构成<br>
+			<p>又到了一年的末尾，做年度总结<s>白色相薄</s>的季节。刚才回顾了自己从 2016 年到 2019 年的总结，还是很微妙的，很多事情在变化，很多事情又没有变化。没有变化的那些，大概就是能构成<br>
 &quot;人格&quot;的东西。 比如我一直在玩剑三 😂，比如我的手机两代都是谷歌亲儿子，比如我一直都在看动画，比如我一直很在意自己有没有好好读书，比如我一直都很喜欢含有咖啡因/酒精的饮料。</p>
 <p>今年发生了很多事情，因为新冠的原因没有和全家人一起过除夕，年假也是睡醒了通知你需要再多放一天睡醒了通知你延长上班时间最终开始漫长的 WFH 时期。 大概也是那个时候体会到国家真的强大了，<br>
 那种对生命的尊重，那种执行的魄力，到经济受挫餐馆商场无法正常营业，甚至也切实的感觉到了公司因此受到的冲击，这种严峻时期的啊，感觉自己真的是渺小。</p>
@@ -643,7 +674,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2020-12-27-my-annual-rank-2020/` was built on 2026-03-21T10:30:08.758Z -->
+		<!-- This page `/blog/2020-12-27-my-annual-rank-2020/` was built on 2026-03-21T12:37:35.838Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

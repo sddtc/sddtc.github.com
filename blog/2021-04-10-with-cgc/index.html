@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,11 +607,13 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		
-	</aside>
-	<div class="post-only-content">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>Coding Girls Club 和我</h1>
@@ -593,7 +624,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<p>总是在想写点东西的时候发现肚子里的墨水真的好少。还是想聊聊自己从一个旁观者变成参与者的一些感触。</p>
+			<p>总是在想写点东西的时候发现肚子里的墨水真的好少。还是想聊聊自己从一个旁观者变成参与者的一些感触。</p>
 <p>第一个影响我的人，大概是我的奶奶。我的奶奶是一名小学老师，在我上小学的时候，虽然奶奶已经退休了，然而她很多同事在我上小学的时候都相当的关照我。奶奶一直希望我也成为一名老师，叛逆期的我总是说不要。然而教书育人，传承知识的基因大概一直都在我的身体里。<br>
 高中之后我开始喜欢孙燕姿【<s>暴露年龄系列</s>，至今忘不掉那个炎热的夏天在六楼的家里，🎧 传来慵懒的&lt;&lt;一样的夏天&gt;&gt;那首歌，燕姿的声音，才华，性格同样潜移默化的影响着我。<br>
 毕业之后我去了北京，那个时候家人能放心我一个人单挑 Boss 的主要原因还是因为姐姐在北京已经闯荡出了一片天地。姐姐同样是在奶奶的小皮鞭鞭策之下成长起来的，且是我身边最让我崇拜的人之一。没错我是个隐形姐控。她也是现在最支持我的人之一，我非常感激。<br>
@@ -650,7 +681,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2021-04-10-with-cgc/` was built on 2026-03-21T10:30:08.760Z -->
+		<!-- This page `/blog/2021-04-10-with-cgc/` was built on 2026-03-21T12:37:35.839Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

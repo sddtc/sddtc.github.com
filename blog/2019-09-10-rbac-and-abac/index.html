@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#abac-%E8%BF%98%E6%98%AF-rbac-%3F">ABAC 还是 RBAC ?</a></li><li><a href="#rbac">RBAC</a></li><li><a href="#abac">ABAC</a></li><li><a href="#%E7%9C%8B%E8%B5%B7%E6%9D%A5-abac-ko-rbac%EF%BC%8C%E4%BD%A0%E8%A7%89%E5%BE%97%E5%91%A2-%3F">看起来 ABAC KO RBAC，你觉得呢 ?</a></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>RBAC 与 ABAC</h1>
@@ -596,7 +627,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<h2 id="abac-%E8%BF%98%E6%98%AF-rbac-%3F" tabindex="-1">ABAC 还是 RBAC ?</h2>
+			<h2 id="abac-%E8%BF%98%E6%98%AF-rbac-%3F" tabindex="-1">ABAC 还是 RBAC ?</h2>
 <p>Role Based Access Control 是从 1970 年发起的，被行业很好的接受并成为业内标准。然而伴随着 Attribute Based Access Control 的到来，许多公司将注意力转移到 ABAC 上来，因为他们体会到了这种粒度更加细致的权限分配所带来的优势。</p>
 <p>在深入了解 ABAC 之前，让我们先分别了解一下他们。</p>
 <h2 id="rbac" tabindex="-1">RBAC</h2>
@@ -656,7 +687,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2019-09-10-rbac-and-abac/` was built on 2026-03-21T10:30:08.757Z -->
+		<!-- This page `/blog/2019-09-10-rbac-and-abac/` was built on 2026-03-21T12:37:35.838Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

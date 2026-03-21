@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#impala%E7%9B%B8%E5%AF%B9%E4%BA%8Ehive%E6%89%80%E4%BD%BF%E7%94%A8%E7%9A%84%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF">Impala相对于Hive所使用的优化技术</a></li><li><a href="#impala%E4%B8%8Ehive%E7%9A%84%E5%BC%82%E5%90%8C">Impala与Hive的异同</a></li><li><a href="#impala%E5%88%86%E5%8C%BA">impala分区</a></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>Impala和Hive的异同比较</h1>
@@ -597,7 +628,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<h3 id="impala%E7%9B%B8%E5%AF%B9%E4%BA%8Ehive%E6%89%80%E4%BD%BF%E7%94%A8%E7%9A%84%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF" tabindex="-1">Impala相对于Hive所使用的优化技术</h3>
+			<h3 id="impala%E7%9B%B8%E5%AF%B9%E4%BA%8Ehive%E6%89%80%E4%BD%BF%E7%94%A8%E7%9A%84%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF" tabindex="-1">Impala相对于Hive所使用的优化技术</h3>
 <p>1.没有使用MapReduce进行并行计算，虽然MapReduce是非常好的并行计算框架，但它更多的面向批处理模式，而不是面向交互式的SQL执行。与MapReduce相比：Impala把整个查询分成一执行计划树，而不是一连串的MapReduce任务，在分发执行计划后，Impala使用拉式获取数据的方式获取结果，把结果数据组成按执行树流式传递汇集，减少的了把中间结果写入磁盘的步骤，再从磁盘读取数据的开销。Impala使用服务的方式避免每次执行查询都需要启动的开销，即相比Hive没了MapReduce启动时间。<br>
 2.使用LLVM产生运行代码，针对特定查询生成特定代码，同时使用Inline的方式减少函数调用的开销，加快执行效率。<br>
 3.充分利用可用的硬件指令（SSE4.2）。<br>
@@ -663,7 +694,7 @@ alter table test add <span class="token builtin">columns</span> <span class="tok
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-04-29-about-impala-and-hive/` was built on 2026-03-21T10:30:08.744Z -->
+		<!-- This page `/blog/2015-04-29-about-impala-and-hive/` was built on 2026-03-21T12:37:35.827Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

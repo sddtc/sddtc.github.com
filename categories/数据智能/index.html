@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }</style>
 		
 	</head>
@@ -457,119 +486,125 @@ blockquote {
 		<main id="main">
 			<heading-anchors>
 				
-<h2>分类: 数据智能</h2>
+<div class="home-container">
+    <div class="page-title">
+	<h2>分类: 数据智能</h2>
+</div>
 
 
-<ol reversed="" class="postlist" style="--postlist-index: 27">
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/" class="postlist-link">Agent AI: Surveying the Horizons of Multimodal Interaction 读后感</a>
-		<time class="postlist-date" datetime="2025-08-01">August 2025</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2018-04-01-ml-ninja-c2-w1-quiz/" class="postlist-link">Coursera 第二阶段第一课 Quiz</a>
-		<time class="postlist-date" datetime="2018-04-01">April 2018</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2018-01-21-c1w2-ml-ninja/" class="postlist-link">Coursera 第一阶段第二课总结</a>
-		<time class="postlist-date" datetime="2018-01-21">January 2018</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2017-04-25-weibo-auto-get-code-login/" class="postlist-link">新浪微博自动登录脚本</a>
-		<time class="postlist-date" datetime="2017-04-25">April 2017</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2016-11-17-rdb-aof/" class="postlist-link">Redis 的 RDB&amp;AOF 理解</a>
-		<time class="postlist-date" datetime="2016-11-17">November 2016</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2016-04-17-distributed-cache-in-mapreduce/" class="postlist-link">分布式缓存在 MapReduce 上的使用</a>
-		<time class="postlist-date" datetime="2016-04-17">April 2016</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2016-01-28-wechat-picture-catch/" class="postlist-link">wechat 通过抓包获取图片方法实践</a>
-		<time class="postlist-date" datetime="2016-01-28">January 2016</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-12-24-heap-sort/" class="postlist-link">堆排序特点解读和最佳实践</a>
-		<time class="postlist-date" datetime="2015-12-24">December 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-12-17-leetcode-combinations/" class="postlist-link">Combinations解决方案</a>
-		<time class="postlist-date" datetime="2015-12-17">December 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-12-08-mysql-deadlock-transaction/" class="postlist-link">记一次mysql的Deadlock found when trying to get lock try restarting transaction</a>
-		<time class="postlist-date" datetime="2015-12-08">December 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-12-01-leetcode-sort-colors/" class="postlist-link">Sort Colors 解决方案</a>
-		<time class="postlist-date" datetime="2015-12-01">December 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-11-26-google-word2vec/" class="postlist-link">解读 word2vec 项目</a>
-		<time class="postlist-date" datetime="2015-11-26">November 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-11-25-leetcode-triangle-solution/" class="postlist-link">动态规划合集</a>
-		<time class="postlist-date" datetime="2015-11-25">November 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-11-22-graph-breath-first-search/" class="postlist-link">图的广度优先搜索实现</a>
-		<time class="postlist-date" datetime="2015-11-22">November 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-11-11-mysql-get-one-slave/" class="postlist-link">MYSQL搭建从库的方法教程</a>
-		<time class="postlist-date" datetime="2015-11-11">November 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-09-23-insertion-sort-list/" class="postlist-link">Insertion Sort List 解决方案</a>
-		<time class="postlist-date" datetime="2015-09-23">September 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-07-31-mysql-simple-cache-config/" class="postlist-link">MYSQL服务器端的高级优化实践</a>
-		<time class="postlist-date" datetime="2015-07-31">July 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-07-20-part-about-notes_about_distributed_system_and_The_log/" class="postlist-link">关于The-Log这篇文章的摘要</a>
-		<time class="postlist-date" datetime="2015-07-20">July 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-07-01-kafka-concept-and-framework/" class="postlist-link">Kafka概念详解与架构特性</a>
-		<time class="postlist-date" datetime="2015-07-01">July 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-06-30-recently-little-knowledge/" class="postlist-link">Storm介绍和kafka相关命令脚本</a>
-		<time class="postlist-date" datetime="2015-06-30">June 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-06-09-kafka-consumer/" class="postlist-link">kafka的consumer的主要流程讲解</a>
-		<time class="postlist-date" datetime="2015-06-09">June 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-04-29-about-impala-and-hive/" class="postlist-link">Impala和Hive的异同比较</a>
-		<time class="postlist-date" datetime="2015-04-29">April 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-04-20-datanode-prob/" class="postlist-link">datanode存储空间溢出解决</a>
-		<time class="postlist-date" datetime="2015-04-20">April 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-04-07-mr/" class="postlist-link">非常重要的 MapReduce 本质理解</a>
-		<time class="postlist-date" datetime="2015-04-07">April 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-03-16-sqoop-base-and-advance/" class="postlist-link">Sqoop基本使用要点和mysql相关的一个Tip</a>
-		<time class="postlist-date" datetime="2015-03-16">March 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-03-16-mysql-base-and-practice/" class="postlist-link">MYSQL服务器配置文件的修改Tips</a>
-		<time class="postlist-date" datetime="2015-03-16">March 2015</time>
-	</li>
-</ol>
+<div class="postlist-container">
+	<ol reversed="" class="postlist" style="--postlist-index: 27">
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/" class="postlist-link">Agent AI: Surveying the Horizons of Multimodal Interaction 读后感</a>
+			<time class="postlist-date" datetime="2025-08-01">August 2025</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2018-04-01-ml-ninja-c2-w1-quiz/" class="postlist-link">Coursera 第二阶段第一课 Quiz</a>
+			<time class="postlist-date" datetime="2018-04-01">April 2018</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2018-01-21-c1w2-ml-ninja/" class="postlist-link">Coursera 第一阶段第二课总结</a>
+			<time class="postlist-date" datetime="2018-01-21">January 2018</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2017-04-25-weibo-auto-get-code-login/" class="postlist-link">新浪微博自动登录脚本</a>
+			<time class="postlist-date" datetime="2017-04-25">April 2017</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2016-11-17-rdb-aof/" class="postlist-link">Redis 的 RDB&amp;AOF 理解</a>
+			<time class="postlist-date" datetime="2016-11-17">November 2016</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2016-04-17-distributed-cache-in-mapreduce/" class="postlist-link">分布式缓存在 MapReduce 上的使用</a>
+			<time class="postlist-date" datetime="2016-04-17">April 2016</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2016-01-28-wechat-picture-catch/" class="postlist-link">wechat 通过抓包获取图片方法实践</a>
+			<time class="postlist-date" datetime="2016-01-28">January 2016</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-12-24-heap-sort/" class="postlist-link">堆排序特点解读和最佳实践</a>
+			<time class="postlist-date" datetime="2015-12-24">December 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-12-17-leetcode-combinations/" class="postlist-link">Combinations解决方案</a>
+			<time class="postlist-date" datetime="2015-12-17">December 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-12-08-mysql-deadlock-transaction/" class="postlist-link">记一次mysql的Deadlock found when trying to get lock try restarting transaction</a>
+			<time class="postlist-date" datetime="2015-12-08">December 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-12-01-leetcode-sort-colors/" class="postlist-link">Sort Colors 解决方案</a>
+			<time class="postlist-date" datetime="2015-12-01">December 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-11-26-google-word2vec/" class="postlist-link">解读 word2vec 项目</a>
+			<time class="postlist-date" datetime="2015-11-26">November 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-11-25-leetcode-triangle-solution/" class="postlist-link">动态规划合集</a>
+			<time class="postlist-date" datetime="2015-11-25">November 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-11-22-graph-breath-first-search/" class="postlist-link">图的广度优先搜索实现</a>
+			<time class="postlist-date" datetime="2015-11-22">November 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-11-11-mysql-get-one-slave/" class="postlist-link">MYSQL搭建从库的方法教程</a>
+			<time class="postlist-date" datetime="2015-11-11">November 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-09-23-insertion-sort-list/" class="postlist-link">Insertion Sort List 解决方案</a>
+			<time class="postlist-date" datetime="2015-09-23">September 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-07-31-mysql-simple-cache-config/" class="postlist-link">MYSQL服务器端的高级优化实践</a>
+			<time class="postlist-date" datetime="2015-07-31">July 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-07-20-part-about-notes_about_distributed_system_and_The_log/" class="postlist-link">关于The-Log这篇文章的摘要</a>
+			<time class="postlist-date" datetime="2015-07-20">July 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-07-01-kafka-concept-and-framework/" class="postlist-link">Kafka概念详解与架构特性</a>
+			<time class="postlist-date" datetime="2015-07-01">July 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-06-30-recently-little-knowledge/" class="postlist-link">Storm介绍和kafka相关命令脚本</a>
+			<time class="postlist-date" datetime="2015-06-30">June 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-06-09-kafka-consumer/" class="postlist-link">kafka的consumer的主要流程讲解</a>
+			<time class="postlist-date" datetime="2015-06-09">June 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-04-29-about-impala-and-hive/" class="postlist-link">Impala和Hive的异同比较</a>
+			<time class="postlist-date" datetime="2015-04-29">April 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-04-20-datanode-prob/" class="postlist-link">datanode存储空间溢出解决</a>
+			<time class="postlist-date" datetime="2015-04-20">April 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-04-07-mr/" class="postlist-link">非常重要的 MapReduce 本质理解</a>
+			<time class="postlist-date" datetime="2015-04-07">April 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-03-16-sqoop-base-and-advance/" class="postlist-link">Sqoop基本使用要点和mysql相关的一个Tip</a>
+			<time class="postlist-date" datetime="2015-03-16">March 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-03-16-mysql-base-and-practice/" class="postlist-link">MYSQL服务器配置文件的修改Tips</a>
+			<time class="postlist-date" datetime="2015-03-16">March 2015</time>
+		</li>
+	</ol>
+</div>
 
-
-<p>See <a href="/sddtc.github.com/categories/">all categories</a>.</p>
-
+<div class="page-footer">
+	<p>See <a href="/sddtc.github.com/categories/">all categories</a>.</p>
+</div>
+</div>
 			</heading-anchors>
 		</main>
 
@@ -591,7 +626,7 @@ blockquote {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/categories/数据智能/` was built on 2026-03-21T10:30:09.219Z -->
+		<!-- This page `/categories/数据智能/` was built on 2026-03-21T12:37:36.283Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

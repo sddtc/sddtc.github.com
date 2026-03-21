@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#%E4%B8%80%E3%80%81%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2">一、登录页面</a></li><li><a href="#%E4%BA%8C%E3%80%81%E7%99%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E5%90%8E%E5%8F%B0">二、登录系统后台</a></li><li><a href="#%E4%B8%89%E3%80%81%E4%BB%A4%E7%89%8C">三、令牌</a></li><li><a href="#%E4%B8%80%E3%80%81%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B">一、技术选型</a></li><li><a href="#%E4%BA%8C%E3%80%81%E7%94%A8%E6%88%B7%E8%BF%81%E7%A7%BB">二、用户迁移</a></li><li><a href="#%E4%B8%89%E3%80%81%E7%91%95%E7%96%B5">三、瑕疵</a></li><li><a href="#%E4%B8%8A%E7%BA%BF%E4%B9%8B%E5%A4%9C">上线之夜</a></li><li><a href="#%E5%90%8E%E8%AE%B0">后记</a></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>登录系统的蜕变之路</h1>
@@ -596,7 +627,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<blockquote>
+			<blockquote>
 <p>“破壳而出是小鸡的生命哲学，打破旧有的阻碍和桎梏，因而得以获得新生” 一来自网络</p>
 </blockquote>
 <p>某房产领域的大型在线网站日增用户大概是五千，网站支持用户不需要登录就能搜索，浏览，分享自己心仪的房产。如果你需要咨询房屋的中介，则需要通过登录来完成一些定制化需求：填写申请租房信息，<br>
@@ -717,7 +748,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2021-03-28-new-sso-platform/` was built on 2026-03-21T10:30:08.760Z -->
+		<!-- This page `/blog/2021-03-28-new-sso-platform/` was built on 2026-03-21T12:37:35.839Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

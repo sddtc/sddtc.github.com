@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }</style>
 		
 	</head>
@@ -457,43 +486,49 @@ blockquote {
 		<main id="main">
 			<heading-anchors>
 				
-<h2>分类: 云与架构</h2>
+<div class="home-container">
+    <div class="page-title">
+	<h2>分类: 云与架构</h2>
+</div>
 
 
-<ol reversed="" class="postlist" style="--postlist-index: 8">
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2026-03-02-fanwai-multi-threads-travel-in-backend/" class="postlist-link">三月番外篇 - 你真的知道多线程在后端服务(SpringX)是如何被处理的吗?</a>
-		<time class="postlist-date" datetime="2026-03-02">March 2026</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/" class="postlist-link">SS+Trojan-Qt5+colima 配置docker proxy从而正常下载docker images</a>
-		<time class="postlist-date" datetime="2025-08-05">August 2025</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2019-09-06-simple-understanding-about-xss-cors/" class="postlist-link">对于简单的 XSS 攻击的概念梳理</a>
-		<time class="postlist-date" datetime="2019-09-06">September 2019</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2018-08-22-what-does-sddtc-say-one/" class="postlist-link">AWS Serverless 应用实践学习(1)</a>
-		<time class="postlist-date" datetime="2018-08-22">August 2018</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2018-03-28-dont-believe-consumer-input/" class="postlist-link">论&#39;永远不要相信用户的输入&#39;</a>
-		<time class="postlist-date" datetime="2018-03-28">March 2018</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2017-11-27-auto-scaling-sidekiq/" class="postlist-link">Sidekiq的How to autoscale instances depending upon Sidekiq queue size</a>
-		<time class="postlist-date" datetime="2017-11-27">November 2017</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2017-01-12-introduction-terraform/" class="postlist-link">Terraform基础设施即代码的概念理解</a>
-		<time class="postlist-date" datetime="2017-01-12">January 2017</time>
-	</li>
-</ol>
+<div class="postlist-container">
+	<ol reversed="" class="postlist" style="--postlist-index: 8">
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2026-03-02-fanwai-multi-threads-travel-in-backend/" class="postlist-link">三月番外篇 - 你真的知道多线程在后端服务(SpringX)是如何被处理的吗?</a>
+			<time class="postlist-date" datetime="2026-03-02">March 2026</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2025-08-05-docker-proxy-setup/" class="postlist-link">SS+Trojan-Qt5+colima 配置docker proxy从而正常下载docker images</a>
+			<time class="postlist-date" datetime="2025-08-05">August 2025</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2019-09-06-simple-understanding-about-xss-cors/" class="postlist-link">对于简单的 XSS 攻击的概念梳理</a>
+			<time class="postlist-date" datetime="2019-09-06">September 2019</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2018-08-22-what-does-sddtc-say-one/" class="postlist-link">AWS Serverless 应用实践学习(1)</a>
+			<time class="postlist-date" datetime="2018-08-22">August 2018</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2018-03-28-dont-believe-consumer-input/" class="postlist-link">论&#39;永远不要相信用户的输入&#39;</a>
+			<time class="postlist-date" datetime="2018-03-28">March 2018</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2017-11-27-auto-scaling-sidekiq/" class="postlist-link">Sidekiq的How to autoscale instances depending upon Sidekiq queue size</a>
+			<time class="postlist-date" datetime="2017-11-27">November 2017</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2017-01-12-introduction-terraform/" class="postlist-link">Terraform基础设施即代码的概念理解</a>
+			<time class="postlist-date" datetime="2017-01-12">January 2017</time>
+		</li>
+	</ol>
+</div>
 
-
-<p>See <a href="/sddtc.github.com/categories/">all categories</a>.</p>
-
+<div class="page-footer">
+	<p>See <a href="/sddtc.github.com/categories/">all categories</a>.</p>
+</div>
+</div>
 			</heading-anchors>
 		</main>
 
@@ -515,7 +550,7 @@ blockquote {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/categories/云与架构/` was built on 2026-03-21T10:30:09.232Z -->
+		<!-- This page `/categories/云与架构/` was built on 2026-03-21T12:37:36.293Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

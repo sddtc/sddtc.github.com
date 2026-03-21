@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D">背景介绍</a><ul><li><a href="#kafka%E7%AE%80%E4%BB%8B">Kafka简介</a></li><li><a href="#kafka%2Fjafka">Kafka/Jafka</a></li></ul></li><li><a href="#kafka%E8%A7%A3%E6%9E%90">Kafka解析</a></li><li><a href="#kafka%E6%9E%B6%E6%9E%84">Kafka架构</a><ul><li><a href="#push-vs.-pull">Push vs. Pull</a></li><li><a href="#topic-%26-partition">Topic &amp; Partition</a></li></ul></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>Kafka概念详解与架构特性</h1>
@@ -596,7 +627,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<h3 id="%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D" tabindex="-1">背景介绍</h3>
+			<h3 id="%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D" tabindex="-1">背景介绍</h3>
 <h4 id="kafka%E7%AE%80%E4%BB%8B" tabindex="-1">Kafka简介</h4>
 <p>Kafka是一种分布式的，基于发布/订阅的消息系统。<br>
 主要设计目标如下：以时间复杂度为O(1)的方式提供消息持久化能力，即使对TB级以上数据也能保证常数时间的访问性能高吞吐率。即使在非常廉价的商用机器上也能做到单机支持每秒100K条消息的传输,支持Kafka Server间的消息分区，及分布式消费，同时保证每个partition内的消息顺序传输,同时支持离线数据处理和实时数据处理</p>
@@ -657,7 +688,7 @@ payload ： n bytes</p>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-07-01-kafka-concept-and-framework/` was built on 2026-03-21T10:30:08.745Z -->
+		<!-- This page `/blog/2015-07-01-kafka-concept-and-framework/` was built on 2026-03-21T12:37:35.828Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

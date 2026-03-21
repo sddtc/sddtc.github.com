@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#%E8%83%8C%E6%99%AF">背景</a></li><li><a href="#%E8%AF%B4%E6%98%8E">说明</a></li><li><a href="#model-test">Model Test</a></li><li><a href="#service-test">Service Test</a></li><li><a href="#migration">Migration</a></li><li><a href="#belongs_to-%26-has_many">belongs_to &amp; has_many</a></li><li><a href="#%E5%85%B6%E5%AE%83">其它</a></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>用 TDD 进行 rails_admin 开发</h1>
@@ -596,7 +627,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<h3 id="%E8%83%8C%E6%99%AF" tabindex="-1">背景</h3>
+			<h3 id="%E8%83%8C%E6%99%AF" tabindex="-1">背景</h3>
 <p>最近在做一个小而有趣的项目, 用到了rails去搭建后台. 在RailsAdmin和ActiveAdmin中选择了前者, 理由除了RA的全自动化之外, 还有它本身作为管理后台的核心思想: 既是提供一套UI, 并使所有模块可直接使用. 在我看来, ActiveAdmin需要二次开发的灵活性更大所以开发工作更多. 那么这次就用TDD的思想来做一次完整的功能开发ヾ(=･ω･=)o</p>
 <h3 id="%E8%AF%B4%E6%98%8E" tabindex="-1">说明</h3>
 <p>首先, 我们创建两个model: brand&amp;product; 其次, 引用了mocha这个测试框架:</p>
@@ -680,7 +711,7 @@ Brand<span class="token punctuation">.</span>class_eval <span class="token keywo
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2017-07-22-tdd-with-rails_admin/` was built on 2026-03-21T10:30:08.752Z -->
+		<!-- This page `/blog/2017-07-22-tdd-with-rails_admin/` was built on 2026-03-21T12:37:35.833Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

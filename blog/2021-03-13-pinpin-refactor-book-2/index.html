@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#reference">Reference</a></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>品品《重构》这本书嗷 - 中</h1>
@@ -595,7 +626,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<p><picture><source type="image/avif" srcset="/sddtc.github.com/blog/2021-03-13-pinpin-refactor-book-2/-j8xPo9AgI-320.avif 320w"><source type="image/webp" srcset="/sddtc.github.com/blog/2021-03-13-pinpin-refactor-book-2/-j8xPo9AgI-320.webp 320w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2021-03-13-pinpin-refactor-book-2/-j8xPo9AgI-320.png" alt="2021-02-02-OB7st5-6Qdhz1" width="320" height="237"></picture></p>
+			<p><picture><source type="image/avif" srcset="/sddtc.github.com/blog/2021-03-13-pinpin-refactor-book-2/-j8xPo9AgI-320.avif 320w"><source type="image/webp" srcset="/sddtc.github.com/blog/2021-03-13-pinpin-refactor-book-2/-j8xPo9AgI-320.webp 320w"><img loading="lazy" decoding="async" src="/sddtc.github.com/blog/2021-03-13-pinpin-refactor-book-2/-j8xPo9AgI-320.png" alt="2021-02-02-OB7st5-6Qdhz1" width="320" height="237"></picture></p>
 <p>一个分层良好的系统, 应该将处理用户界面和处理业务逻辑的代码分开. 之所以决定把读书笔记分出来写是因为最近写 <code>Android</code> 发现分层真的很难良好. <code>viewmodel</code> 的责任太容易越线了.<br>
 首先作者提出为什么把界面和业务逻辑分开是好的实践:</p>
 <ul>
@@ -635,7 +666,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2021-03-13-pinpin-refactor-book-2/` was built on 2026-03-21T10:30:08.760Z -->
+		<!-- This page `/blog/2021-03-13-pinpin-refactor-book-2/` was built on 2026-03-21T12:37:35.839Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

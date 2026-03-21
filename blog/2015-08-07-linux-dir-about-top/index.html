@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#top%E5%91%BD%E4%BB%A4%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90%3A">top命令关键参数解析:</a></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>Linux关于top命令的说明</h1>
@@ -596,7 +627,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<h3 id="top%E5%91%BD%E4%BB%A4%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90%3A" tabindex="-1">top命令关键参数解析:</h3>
+			<h3 id="top%E5%91%BD%E4%BB%A4%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90%3A" tabindex="-1">top命令关键参数解析:</h3>
 <pre class="language-vim" tabindex="0"><code class="hljs language-vim"><span class="token builtin">top</span> <span class="token operator">-</span> <span class="token number">15</span><span class="token punctuation">:</span><span class="token number">44</span><span class="token punctuation">:</span><span class="token number">40</span> <span class="token keyword">up</span>  <span class="token number">5</span><span class="token punctuation">:</span><span class="token number">49</span><span class="token punctuation">,</span>  <span class="token number">5</span> users<span class="token punctuation">,</span>
 load average<span class="token punctuation">:</span> <span class="token number">2.01</span><span class="token punctuation">,</span> <span class="token number">2.22</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token operator">.</span><span class="token function">15</span><span class="token punctuation">(</span>系统负载<span class="token punctuation">,</span>三个数值分别为 <span class="token number">1</span>分钟、<span class="token number">5</span>分钟、<span class="token number">15</span>分钟前到现在务队列的平均长度<span class="token punctuation">)</span>
 Tasks<span class="token punctuation">:</span> <span class="token number">263</span> total<span class="token punctuation">,</span>   <span class="token number">1</span> running<span class="token punctuation">,</span> <span class="token number">262</span> sleeping<span class="token punctuation">,</span>   <span class="token number">0</span> stopped<span class="token punctuation">,</span>   <span class="token number">0</span> zombie
@@ -649,7 +680,7 @@ TIME<span class="token operator">+</span> COMMAND</code></pre>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-08-07-linux-dir-about-top/` was built on 2026-03-21T10:30:08.746Z -->
+		<!-- This page `/blog/2015-08-07-linux-dir-about-top/` was built on 2026-03-21T12:37:35.828Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

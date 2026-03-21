@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#consumer%E4%B8%BB%E8%A6%81%E6%B5%81%E7%A8%8B%E5%A6%82%E4%B8%8B%3A">Consumer主要流程如下:</a></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>kafka的consumer的主要流程讲解</h1>
@@ -596,7 +627,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<h3 id="consumer%E4%B8%BB%E8%A6%81%E6%B5%81%E7%A8%8B%E5%A6%82%E4%B8%8B%3A" tabindex="-1">Consumer主要流程如下:</h3>
+			<h3 id="consumer%E4%B8%BB%E8%A6%81%E6%B5%81%E7%A8%8B%E5%A6%82%E4%B8%8B%3A" tabindex="-1">Consumer主要流程如下:</h3>
 <ol>
 <li>加载并解析命令行参数，唯一的必要参数(Required)是zookeeper</li>
 <li><a href="http://xn--group-su2hr9ky8urw2a8gb403a.id">如果没有传入group.id</a>，<a href="http://xn--ConsoleConsumergroup-px51bw6xj0xur8hckhv83f.id">ConsoleConsumer将生成自己的group.id</a>，即console-consumer-[10万以内的一个随机数]</li>
@@ -643,7 +674,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-06-09-kafka-consumer/` was built on 2026-03-21T10:30:08.745Z -->
+		<!-- This page `/blog/2015-06-09-kafka-consumer/` was built on 2026-03-21T12:37:35.827Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

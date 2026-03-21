@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#%40sinclair%2Ftypebox">@sinclair/typebox</a></li><li><a href="#%E6%88%91%E4%BB%AC%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8-typebox%EF%BC%9F">我们为什么用 TypeBox？</a></li><li><a href="#typebox-%E7%9A%84%E4%B8%BB%E8%A6%81%E7%94%A8%E6%B3%95">TypeBox 的主要用法</a><ul><li><a href="#type%3A-schema-%E6%9E%84%E9%80%A0%E5%99%A8">Type: Schema 构造器</a></li><li><a href="#static%3A-%E6%8E%A8%E6%96%AD-typescript-%E7%B1%BB%E5%9E%8B">Static: 推断 TypeScript 类型</a></li><li><a href="#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95">常用方法</a><ul><li><a href="#type.object%3A-%E5%AE%9A%E4%B9%89%E5%AF%B9%E8%B1%A1%E7%BB%93%E6%9E%84">Type.Object: 定义对象结构</a></li><li><a href="#type.array%3A-%E5%AE%9A%E4%B9%89%E6%95%B0%E7%BB%84">Type.Array: 定义数组</a></li><li><a href="#%E5%AE%9A%E4%B9%89%E6%9E%9A%E4%B8%BE-(enum)">定义枚举 (Enum)</a></li><li><a href="#optional">Optional</a></li><li><a href="#type.literal%EF%BC%9A%E5%AE%9A%E4%B9%89%E5%85%B7%E4%BD%93%E7%9A%84%E5%B8%B8%E9%87%8F%E5%80%BC%E7%B1%BB%E5%9E%8B">Type.Literal：定义具体的常量值类型</a></li><li><a href="#type.union%EF%BC%9A%E6%9E%84%E9%80%A0%E5%A4%9A%E4%B8%AA%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%81%94%E5%90%88">Type.Union：构造多个类型的联合</a></li><li><a href="#type.union-%2B-type.literal-%E7%9A%84%E5%B8%B8%E8%A7%81%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F">Type.Union + Type.Literal 的常见组合模式</a></li></ul></li></ul></li><li><a href="#%E5%85%B7%E4%BD%93%E7%A4%BA%E4%BE%8B">具体示例</a></li><li><a href="#%E4%B8%8E-typescript-%E7%9A%84%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB">与 TypeScript 的映射关系</a></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>Fastify + TypeScript 中的 typebox</h1>
@@ -599,7 +630,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<h2 id="%40sinclair%2Ftypebox" tabindex="-1">@sinclair/typebox</h2>
+			<h2 id="%40sinclair%2Ftypebox" tabindex="-1">@sinclair/typebox</h2>
 <p><code>@sinclair/typebox</code>（也常简称为 <code>TypeBox</code>）是一个用于构建 JSON Schema 的库，同时能将这些 Schema 映射成 TypeScript 类型。这意味着你可以利用同一套定义既做静态类型检查，又做运行时验证（与 AJV 等库配合统一类型与 schema)。<br>
 它在 Fastify 社区非常流行，Fastify 使用 JSON Schema 来验证请求/响应，而 TypeBox 能把该 Schema 与 TS 类型无缝融合。</p>
 <p>它的官方文档: <a href="https://sinclairzx81.github.io/typebox/#/docs">TypeBox Docs</a></p>
@@ -805,7 +836,7 @@ app<span class="token punctuation">.</span><span class="token function">listen</
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2026-02-28-uses-typebox-in-fastify/` was built on 2026-03-21T10:30:08.765Z -->
+		<!-- This page `/blog/2026-02-28-uses-typebox-in-fastify/` was built on 2026-03-21T12:37:35.843Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,11 +607,13 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		
-	</aside>
-	<div class="post-only-content">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>当我沉迷每个赛季的竞技场的时候我在沉迷什么</h1>
@@ -594,7 +625,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<p>我是一个剑网三玩家，剑网三玩家有好多好多的 🏷️ : PVE, PVP, PV阵营, PV金, PV截图, PV贴吧, PV资历, PV奇遇…  由于工作时间的约束, 我大概转 PVP 很久了, 刚开始的时候<br>
+			<p>我是一个剑网三玩家，剑网三玩家有好多好多的 🏷️ : PVE, PVP, PV阵营, PV金, PV截图, PV贴吧, PV资历, PV奇遇…  由于工作时间的约束, 我大概转 PVP 很久了, 刚开始的时候<br>
 经常大攻防和战场. 那时候竞技场要组排, 我没有入坑. 直到后来开启了散排模式, 一发不可收拾的开始沉迷散排的竞技世界.<br>
 那个时候什么都不在乎, 没有输赢的执念, 离铁分奴相距甚远, 享受和不同心法的随机排列组合. 哪怕我很清楚官配这种东西, 我也没有刻意的追求最优配置组排上分. 可能还是因为心态有点佛, 佛的原因<br>
 是因为我知道自己投入不了太多的精力.<br>
@@ -642,7 +673,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2020-11-23-jx3-jjc-thoughts/` was built on 2026-03-21T10:30:08.757Z -->
+		<!-- This page `/blog/2020-11-23-jx3-jjc-thoughts/` was built on 2026-03-21T12:37:35.838Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

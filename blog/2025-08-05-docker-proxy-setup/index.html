@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#%E7%A2%8E%E7%A2%8E%E5%BF%B5%3A">碎碎念:</a></li><li><a href="#%E7%A1%AE%E4%BF%9D%E4%BD%A0%E5%B7%B2%E7%BB%8F%E5%85%B7%E5%A4%87%E7%9A%84%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6%3A">确保你已经具备的前提条件:</a></li><li><a href="#%E9%85%8D%E7%BD%AEwifi-%E7%9A%84-vpn-proxy.pac">配置WIFI 的 VPN proxy.pac</a></li><li><a href="#%E5%AE%9A%E4%B9%89-colima-%E9%BB%98%E8%AE%A4-docker">定义 Colima 默认 Docker</a></li><li><a href="#%E9%85%8D%E7%BD%AE-docker-proxies">配置 Docker proxies</a></li><li><a href="#%E4%BF%AE%E5%A4%8D-docker-proxy-url">修复 Docker proxy url</a></li><li><a href="#iterm2-%E9%85%8D%E7%BD%AE-proxy-%E5%BC%80%E5%85%B3">iTerm2 配置 proxy 开关</a></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>SS+Trojan-Qt5+colima 配置docker proxy从而正常下载docker images</h1>
@@ -597,7 +628,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<h3 id="%E7%A2%8E%E7%A2%8E%E5%BF%B5%3A" tabindex="-1">碎碎念:</h3>
+			<h3 id="%E7%A2%8E%E7%A2%8E%E5%BF%B5%3A" tabindex="-1">碎碎念:</h3>
 <p>虽然 docker desktop app 个人免费, 有友好的 UI 界面且下载 images 也很快, 但是当重新配置 CPU 和 memory 的时候, 一旦运行一些 container 会经常造成卡顿, 导致我的电脑很容易无响应. 再加上个人觉得命令行模式简单易用, 于是克服了之前 colima+docker 无法下载 docker images 的问题. 本文详细介绍了解决方案.</p>
 <h2 id="%E7%A1%AE%E4%BF%9D%E4%BD%A0%E5%B7%B2%E7%BB%8F%E5%85%B7%E5%A4%87%E7%9A%84%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6%3A" tabindex="-1">确保你已经具备的前提条件:</h2>
 <ul>
@@ -705,7 +736,7 @@ colima 启动 docker 虚拟机的时候, 利用 <code>colima template</code> 进
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2025-08-05-docker-proxy-setup/` was built on 2026-03-21T10:30:08.766Z -->
+		<!-- This page `/blog/2025-08-05-docker-proxy-setup/` was built on 2026-03-21T12:37:35.844Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

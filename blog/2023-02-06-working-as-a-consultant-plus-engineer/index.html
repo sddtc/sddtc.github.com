@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#%E5%9B%A0%E6%AD%A4%E5%9C%A8%E4%B8%80%E5%BC%80%E5%A7%8B%E6%9C%8D%E5%8A%A1%E5%AE%A2%E6%88%B7%E7%9A%84%E6%97%B6%E5%80%99%2C">因此在一开始服务客户的时候,</a><ul><li><a href="#%E4%BA%86%E8%A7%A3%E5%9B%A2%E9%98%9F%E8%83%BD%E5%8A%9B%E8%B5%84%E4%BA%A7">了解团队能力资产</a></li><li><a href="#%E4%BA%86%E8%A7%A3%E5%9B%A2%E9%98%9F%E4%B8%AA%E4%BA%BA%E7%9A%84%E7%89%B9%E7%82%B9">了解团队个人的特点</a></li></ul></li><li><a href="#%E5%9C%A8%E5%BE%97%E5%88%B0%E5%AE%A2%E6%88%B7%E5%8F%8D%E9%A6%88%E7%9A%84%E6%97%B6%E5%80%99%2C">在得到客户反馈的时候,</a></li><li><a href="#%E5%9C%A8%E5%B0%86%E8%A6%81%E7%BB%93%E6%9D%9F%E5%AF%B9%E5%AE%A2%E6%88%B7%E7%9A%84%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%97%B6%E5%80%99%2C">在将要结束对客户的服务的时候,</a></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>伴君如伴虎, 那些略感遗憾的事</h1>
@@ -595,7 +626,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<p>在知道自己是 ESTJ 之前, 我在以前的文章里不止一次提到过胜负欲, 工作狂, 喜欢计划等, 后来看了 ESTJ 的分析, 除了侧面验证了一些对于自己那些特点的了解, 同样也明白了自己的共情能力有多么的堪忧.<br>
+			<p>在知道自己是 ESTJ 之前, 我在以前的文章里不止一次提到过胜负欲, 工作狂, 喜欢计划等, 后来看了 ESTJ 的分析, 除了侧面验证了一些对于自己那些特点的了解, 同样也明白了自己的共情能力有多么的堪忧.<br>
 前阵子经历了一些事, 大概就是没有好好地了解一个人, 那个人恰好共情能力极强. 恐怕是不断忍让我, 而我又真的真的不知道怎么表达内心世界. 互相的不理解, 哪怕说着同一种语言. 总算是自愈了一些, 我知道我还需要时间, 很感激生活治愈我的一切.</p>
 <p>人常说, 生命的长河我们要尽量把视野放宽, 当下经历了什么, 放眼望去, 在一辈子这么长的范围里, 很多事又显得不那么重要了. 要我说, 那不是不重要, 而是太多当下看不清的事总是在某个时刻突然清晰起来<br>
 人处在不同的位置, 会考虑不同的事情, 因此处境, 挑战会激发人的潜力. 同样, 波澜不惊的节奏同样让人略微感到麻木.<br>
@@ -643,7 +674,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2023-02-06-working-as-a-consultant-plus-engineer/` was built on 2026-03-21T10:30:08.762Z -->
+		<!-- This page `/blog/2023-02-06-working-as-a-consultant-plus-engineer/` was built on 2026-03-21T12:37:35.841Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

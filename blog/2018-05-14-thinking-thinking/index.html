@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,11 +607,13 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		
-	</aside>
-	<div class="post-only-content">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>《少有人走的路》 读书笔记</h1>
@@ -593,7 +624,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<p>最近一直在研读 <a href="https://book.douban.com/series/8110">少有人走的路</a>, 越往后看越豁然开朗, 似乎越来越与自己的思想密切相关了, 分享和记录书中一些段落</p>
+			<p>最近一直在研读 <a href="https://book.douban.com/series/8110">少有人走的路</a>, 越往后看越豁然开朗, 似乎越来越与自己的思想密切相关了, 分享和记录书中一些段落</p>
 <hr>
 <p>倾听孩子讲话的时间本就有限, 许多父母在这有限的时间里也不肯用心倾听. 他们可能认为, 假装倾听和有选择地倾听, 已经是真正的倾听了. 其实, 这是在自我欺骗. 目的是为了掩盖他们自己的懒惰. 真正的倾听, 不论时间多么短暂, 都需要付出相当大的努力。</p>
 <hr>
@@ -654,7 +685,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2018-05-14-thinking-thinking/` was built on 2026-03-21T10:30:08.754Z -->
+		<!-- This page `/blog/2018-05-14-thinking-thinking/` was built on 2026-03-21T12:37:35.835Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

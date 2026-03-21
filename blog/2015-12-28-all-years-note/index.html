@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#2015%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93">2015年终总结</a></li><li><a href="#%E6%96%B0%E7%95%AA%E5%92%8C%E5%89%A7">新番和剧</a></li><li><a href="#%E5%89%91%E4%B8%89">剑三</a></li><li><a href="#github">Github</a></li><li><a href="#google">Google</a></li><li><a href="#%E8%8B%B9%E6%9E%9C">苹果</a></li><li><a href="#%E5%AE%B6%E4%BA%BA%E5%92%8C%E6%81%8B%E4%BA%BA">家人和恋人</a></li><li><a href="#%E8%87%AA%E5%B7%B1">自己</a></li><li><a href="#cp%E4%BB%AC">CP们</a><ul><li><a href="#%E9%98%BF%E5%B0%94%E6%B3%95%E5%9F%8E">阿尔法城</a></li><li><a href="#%E6%B3%B0%E5%9B%BD">泰国</a></li></ul></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>2015 年度总结</h1>
@@ -596,7 +627,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<h3 id="2015%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93" tabindex="-1">2015年终总结</h3>
+			<h3 id="2015%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93" tabindex="-1">2015年终总结</h3>
 <p>2015年就要过去了，如果说用简单的几个字来总结，想想看，应该是苦辣酸甜<br>
 其实学生时代的我应该是一个相当感性的人，也许那时候，家人惯着，奶奶爷爷宠着，我根本不需要争取什么，害怕什么<br>
 今年当然也发生了相当大的事，奶奶的身体越来越不好，大概是10月更早开始的事情<br>
@@ -673,7 +704,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-12-28-all-years-note/` was built on 2026-03-21T10:30:08.749Z -->
+		<!-- This page `/blog/2015-12-28-all-years-note/` was built on 2026-03-21T12:37:35.831Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

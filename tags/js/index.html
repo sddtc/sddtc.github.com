@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }</style>
 		
 	</head>
@@ -456,56 +485,63 @@ blockquote {
 
 		<main id="main">
 			<heading-anchors>
-				<h2>标签: js</h2>
+				
+<div class="home-container">
+    <div class="page-title">
+	<h2>标签: js</h2>
+</div>
 
 
-<ol reversed="" class="postlist" style="--postlist-index: 11">
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2025-07-24-websocket-chat-room/" class="postlist-link">搭建基于websocket的在线多人聊天室</a>
-		<time class="postlist-date" datetime="2025-07-24">July 2025</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2025-07-22-bye-jekyll-hi-11ty/" class="postlist-link">博客静态页面生成工具从jekyll切换为11ty, 告别ruby 拥抱js</a>
-		<time class="postlist-date" datetime="2025-07-22">July 2025</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/" class="postlist-link">Github - JavaScript Game Engines 使用指南</a>
-		<time class="postlist-date" datetime="2021-02-10">February 2021</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2019-08-21-dig-out-timeout-errors-on-js/" class="postlist-link">浅淡 ETIMEDOUT &amp; ESOCKETTIMEDOUT &amp; Socket hang up</a>
-		<time class="postlist-date" datetime="2019-08-21">August 2019</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2018-12-03-ie11-features/" class="postlist-link">关于 window.opener &amp; window.postMessage</a>
-		<time class="postlist-date" datetime="2018-12-03">December 2018</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2018-09-07-js-winston-config/" class="postlist-link">winston 日志设置指南</a>
-		<time class="postlist-date" datetime="2018-09-07">September 2018</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2018-08-05-why-typescript/" class="postlist-link">Why typescript ?</a>
-		<time class="postlist-date" datetime="2018-08-05">August 2018</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2018-07-18-JS-core-workshop-2/" class="postlist-link">JS The Core (2)</a>
-		<time class="postlist-date" datetime="2018-07-18">July 2018</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2018-06-24-JS-core-workshop/" class="postlist-link">JS The Core</a>
-		<time class="postlist-date" datetime="2018-06-24">June 2018</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-05-04-angular-js/" class="postlist-link">AngularJs的http请求要点和div的操作</a>
-		<time class="postlist-date" datetime="2015-05-04">May 2015</time>
-	</li>
-</ol>
+<div class="postlist-container">
+	<ol reversed="" class="postlist" style="--postlist-index: 11">
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2025-07-24-websocket-chat-room/" class="postlist-link">搭建基于websocket的在线多人聊天室</a>
+			<time class="postlist-date" datetime="2025-07-24">July 2025</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2025-07-22-bye-jekyll-hi-11ty/" class="postlist-link">博客静态页面生成工具从jekyll切换为11ty, 告别ruby 拥抱js</a>
+			<time class="postlist-date" datetime="2025-07-22">July 2025</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2021-02-10-spike-2d-js-tools/" class="postlist-link">Github - JavaScript Game Engines 使用指南</a>
+			<time class="postlist-date" datetime="2021-02-10">February 2021</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2019-08-21-dig-out-timeout-errors-on-js/" class="postlist-link">浅淡 ETIMEDOUT &amp; ESOCKETTIMEDOUT &amp; Socket hang up</a>
+			<time class="postlist-date" datetime="2019-08-21">August 2019</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2018-12-03-ie11-features/" class="postlist-link">关于 window.opener &amp; window.postMessage</a>
+			<time class="postlist-date" datetime="2018-12-03">December 2018</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2018-09-07-js-winston-config/" class="postlist-link">winston 日志设置指南</a>
+			<time class="postlist-date" datetime="2018-09-07">September 2018</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2018-08-05-why-typescript/" class="postlist-link">Why typescript ?</a>
+			<time class="postlist-date" datetime="2018-08-05">August 2018</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2018-07-18-JS-core-workshop-2/" class="postlist-link">JS The Core (2)</a>
+			<time class="postlist-date" datetime="2018-07-18">July 2018</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2018-06-24-JS-core-workshop/" class="postlist-link">JS The Core</a>
+			<time class="postlist-date" datetime="2018-06-24">June 2018</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-05-04-angular-js/" class="postlist-link">AngularJs的http请求要点和div的操作</a>
+			<time class="postlist-date" datetime="2015-05-04">May 2015</time>
+		</li>
+	</ol>
+</div>
 
+<div class="page-footer">
+	<p>See <a href="/sddtc.github.com/tags/">all tags</a>.</p>
+</div>
 
-<p>See <a href="/sddtc.github.com/tags/">all tags</a>.</p>
-
-
+</div>
 			</heading-anchors>
 		</main>
 
@@ -527,7 +563,7 @@ blockquote {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/tags/js/` was built on 2026-03-21T10:30:09.249Z -->
+		<!-- This page `/tags/js/` was built on 2026-03-21T12:37:36.309Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

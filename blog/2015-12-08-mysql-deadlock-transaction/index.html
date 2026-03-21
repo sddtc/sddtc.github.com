@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
@@ -578,13 +607,15 @@ pre[class*="language-"] {
 
 		<main id="main">
 			<heading-anchors>
-				<div class="post-content-with-toc">
-	<aside>
-		<div class="content-tableau">
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
         <ul><li><a href="#%E5%9C%BA%E6%99%AF%E8%AF%B4%E6%98%8E%EF%BC%9A">场景说明：</a></li><li><a href="#jdbc%E7%9A%84%E6%93%8D%E4%BD%9C%EF%BC%8C%E5%85%B3%E4%BA%8E%E4%BA%8B%E5%8A%A1%E6%9C%89%E4%BB%80%E4%B9%88%E7%89%B9%E5%88%AB%E7%9A%84%E5%9C%B0%E6%96%B9%3F%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%BC%80%E5%90%AF%E4%BA%8B%E5%8A%A1%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E7%BB%93%E6%9D%9F%3F">jdbc的操作，关于事务有什么特别的地方?什么时候开启事务，什么时候结束?</a></li><li><a href="#settransactionisolation">setTransactionIsolation</a></li><li><a href="#%E6%AD%BB%E9%94%81%E5%8F%91%E7%94%9F%E7%9A%84%E9%A2%91%E7%8E%87%E4%B8%8D%E6%98%AF%E5%BE%88%E5%A4%A7%EF%BC%8C%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%EF%BC%9F">死锁发生的频率不是很大，如何避免？</a></li><li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88insert%E8%A1%A8a%E5%92%8Cinsert%E8%A1%A8b%E5%B9%B6%E4%B8%94select%E8%A1%A8a%E4%BC%9A%E4%BA%A7%E7%94%9F%E6%AD%BB%E9%94%81%EF%BC%9F">为什么insert表A和insert表B并且select表A会产生死锁？</a></li><li><a href="#%E6%9C%80%E7%BB%88%EF%BC%8C%E6%88%91%E8%87%AA%E5%B7%B1%E6%89%93%E7%AE%97%E5%B0%9D%E8%AF%95%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95%E6%9C%89%E5%87%A0%E7%A7%8D%EF%BC%9A">最终，我自己打算尝试的解决方法有几种：</a></li><li><a href="#%E7%84%B6%E8%80%8C%E5%91%A8%E4%BA%8C%E5%86%99%E4%B8%8B%E4%B8%8A%E9%9D%A23%E4%B8%AA%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%EF%BC%8C%E5%91%A8%E5%9B%9B%E5%8F%91%E7%8E%B0%E6%88%91%E8%BF%98%E6%98%AF%E8%BF%87%E4%BA%8E%E5%A4%A9%E7%9C%9F%E3%80%82">然而周二写下上面3个解决办法，周四发现我还是过于天真。</a></li><li><a href="#%E5%90%8E%E7%BB%AD%EF%BC%9A">后续：</a></li><li><a href="#insert-%E2%80%A6select-%E2%80%A6%E5%B8%A6%E6%9D%A5%E7%9A%84%E9%97%AE%E9%A2%98">insert …select …带来的问题</a></li></ul>
       </div>
-	</aside>
-	<div class="post-only-content">
+		</aside>
+	</div>
+	<div class="post-content">
 		
 		
 		<h1>记一次mysql的Deadlock found when trying to get lock try restarting transaction</h1>
@@ -596,7 +627,7 @@ pre[class*="language-"] {
 		</ul>
 
 		<div class="page-post">
-		<p>本来，窝是一个天天开开心心，无忧无虑的少年. 直到有一天，遇见了名为deadlock的恐惧:). 周二发现的问题，直到周四才告一段落，对此我要写下泪の总结: 珍爱生命，远离事务</p>
+			<p>本来，窝是一个天天开开心心，无忧无虑的少年. 直到有一天，遇见了名为deadlock的恐惧:). 周二发现的问题，直到周四才告一段落，对此我要写下泪の总结: 珍爱生命，远离事务</p>
 <h3 id="%E5%9C%BA%E6%99%AF%E8%AF%B4%E6%98%8E%EF%BC%9A" tabindex="-1">场景说明：</h3>
 <p>有一个消费者实时消费消息，并且实时将记录插入mysql数据库中，为了高效，采用jdbc的批量插入batch模式，开启了事务，完成时commit，抛出异常时rollback。<br>
 每一步都记录了log日志。最近发生了奇怪的事情，就是error日志中出现了如下异常:</p>
@@ -775,7 +806,7 @@ Message<span class="token punctuation">:</span> Transaction level <span class="t
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/blog/2015-12-08-mysql-deadlock-transaction/` was built on 2026-03-21T10:30:08.748Z -->
+		<!-- This page `/blog/2015-12-08-mysql-deadlock-transaction/` was built on 2026-03-21T12:37:35.830Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

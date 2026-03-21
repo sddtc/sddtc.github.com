@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }</style>
 		
 	</head>
@@ -457,43 +486,49 @@ blockquote {
 		<main id="main">
 			<heading-anchors>
 				
-<h2>分类: 读书笔记</h2>
+<div class="home-container">
+    <div class="page-title">
+	<h2>分类: 读书笔记</h2>
+</div>
 
 
-<ol reversed="" class="postlist" style="--postlist-index: 8">
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/" class="postlist-link">Agent AI: Surveying the Horizons of Multimodal Interaction 读后感</a>
-		<time class="postlist-date" datetime="2025-08-01">August 2025</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2021-03-13-pinpin-refactor-book-2/" class="postlist-link">品品《重构》这本书嗷 - 中</a>
-		<time class="postlist-date" datetime="2021-03-13">March 2021</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2021-02-28-this-is-software-engineer/" class="postlist-link">读 《这就是软件工程师》 有感</a>
-		<time class="postlist-date" datetime="2021-02-28">February 2021</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2020-12-18-pinpin-refactor-book/" class="postlist-link">品品《重构》这本书嗷</a>
-		<time class="postlist-date" datetime="2020-12-18">December 2020</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2019-02-07-function-program-intro/" class="postlist-link">《函数式编程思维》 读书笔记</a>
-		<time class="postlist-date" datetime="2019-02-07">February 2019</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2016-06-26-netflix-recsys-methods/" class="postlist-link">Netflix 推荐系统的最新解读：算法、商业价值与创新</a>
-		<time class="postlist-date" datetime="2016-06-26">June 2016</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-07-20-part-about-notes_about_distributed_system_and_The_log/" class="postlist-link">关于The-Log这篇文章的摘要</a>
-		<time class="postlist-date" datetime="2015-07-20">July 2015</time>
-	</li>
-</ol>
+<div class="postlist-container">
+	<ol reversed="" class="postlist" style="--postlist-index: 8">
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2025-08-01-reaction-to-agent-ai-surveying-the-horizons-of-multimodal-interaction/" class="postlist-link">Agent AI: Surveying the Horizons of Multimodal Interaction 读后感</a>
+			<time class="postlist-date" datetime="2025-08-01">August 2025</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2021-03-13-pinpin-refactor-book-2/" class="postlist-link">品品《重构》这本书嗷 - 中</a>
+			<time class="postlist-date" datetime="2021-03-13">March 2021</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2021-02-28-this-is-software-engineer/" class="postlist-link">读 《这就是软件工程师》 有感</a>
+			<time class="postlist-date" datetime="2021-02-28">February 2021</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2020-12-18-pinpin-refactor-book/" class="postlist-link">品品《重构》这本书嗷</a>
+			<time class="postlist-date" datetime="2020-12-18">December 2020</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2019-02-07-function-program-intro/" class="postlist-link">《函数式编程思维》 读书笔记</a>
+			<time class="postlist-date" datetime="2019-02-07">February 2019</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2016-06-26-netflix-recsys-methods/" class="postlist-link">Netflix 推荐系统的最新解读：算法、商业价值与创新</a>
+			<time class="postlist-date" datetime="2016-06-26">June 2016</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-07-20-part-about-notes_about_distributed_system_and_The_log/" class="postlist-link">关于The-Log这篇文章的摘要</a>
+			<time class="postlist-date" datetime="2015-07-20">July 2015</time>
+		</li>
+	</ol>
+</div>
 
-
-<p>See <a href="/sddtc.github.com/categories/">all categories</a>.</p>
-
+<div class="page-footer">
+	<p>See <a href="/sddtc.github.com/categories/">all categories</a>.</p>
+</div>
+</div>
 			</heading-anchors>
 		</main>
 
@@ -515,7 +550,7 @@ blockquote {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/categories/读书笔记/` was built on 2026-03-21T10:30:09.230Z -->
+		<!-- This page `/categories/读书笔记/` was built on 2026-03-21T12:37:36.291Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>

@@ -69,10 +69,6 @@ html {
 	overflow-y: scroll;
 }
 
-body {
-	max-width: 40em;
-}
-
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
 .visually-hidden:not(:focus):not(:active) {
 	clip: rect(0 0 0 0);
@@ -340,14 +336,6 @@ header {
 .post-metadata time {
 	margin-right: 1em;
 }
-
-.content-tableau {
-	background-color: #dedfd1;
-}
-body {
-	max-width: 50em;
-}
-
 :root {
 	--color-gray-20: #e0e0e0;
 	--color-gray-50: #C0C0C0;
@@ -434,6 +422,47 @@ blockquote {
 	color: #333333;
 	transition: all 500ms ease;
 	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
 }</style>
 		
 	</head>
@@ -456,52 +485,59 @@ blockquote {
 
 		<main id="main">
 			<heading-anchors>
-				<h2>标签: shell</h2>
+				
+<div class="home-container">
+    <div class="page-title">
+	<h2>标签: shell</h2>
+</div>
 
 
-<ol reversed="" class="postlist" style="--postlist-index: 10">
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2018-08-12-best-practices-for-writing-bash-scripts/" class="postlist-link">Best Practices For Writing Bash scripts</a>
-		<time class="postlist-date" datetime="2018-08-12">August 2018</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2017-01-24-something-about-shell/" class="postlist-link">Shell正常和异常退出的控制命令</a>
-		<time class="postlist-date" datetime="2017-01-24">January 2017</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-10-08-linux-custom-date/" class="postlist-link">Shell自定义 date 命令</a>
-		<time class="postlist-date" datetime="2015-10-08">October 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-08-27-something-about-git-or-github/" class="postlist-link">Git版本管理相关命令合集</a>
-		<time class="postlist-date" datetime="2015-08-27">August 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-08-14-mac-codex/" class="postlist-link">Mac的zsh和bash的切换</a>
-		<time class="postlist-date" datetime="2015-08-14">August 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-08-07-linux-dir-about-top/" class="postlist-link">Linux关于top命令的说明</a>
-		<time class="postlist-date" datetime="2015-08-07">August 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-08-01-mac-profile-path/" class="postlist-link">Mac终端的配置文件定义与修改</a>
-		<time class="postlist-date" datetime="2015-08-01">August 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-04-27-vimrc/" class="postlist-link">vimrc总结的一份可通用样式</a>
-		<time class="postlist-date" datetime="2015-04-27">April 2015</time>
-	</li>
-	<li class="postlist-item">
-		<a href="/sddtc.github.com/blog/2015-04-14-linux-dirs/" class="postlist-link">shell常用压缩命令</a>
-		<time class="postlist-date" datetime="2015-04-14">April 2015</time>
-	</li>
-</ol>
+<div class="postlist-container">
+	<ol reversed="" class="postlist" style="--postlist-index: 10">
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2018-08-12-best-practices-for-writing-bash-scripts/" class="postlist-link">Best Practices For Writing Bash scripts</a>
+			<time class="postlist-date" datetime="2018-08-12">August 2018</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2017-01-24-something-about-shell/" class="postlist-link">Shell正常和异常退出的控制命令</a>
+			<time class="postlist-date" datetime="2017-01-24">January 2017</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-10-08-linux-custom-date/" class="postlist-link">Shell自定义 date 命令</a>
+			<time class="postlist-date" datetime="2015-10-08">October 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-08-27-something-about-git-or-github/" class="postlist-link">Git版本管理相关命令合集</a>
+			<time class="postlist-date" datetime="2015-08-27">August 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-08-14-mac-codex/" class="postlist-link">Mac的zsh和bash的切换</a>
+			<time class="postlist-date" datetime="2015-08-14">August 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-08-07-linux-dir-about-top/" class="postlist-link">Linux关于top命令的说明</a>
+			<time class="postlist-date" datetime="2015-08-07">August 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-08-01-mac-profile-path/" class="postlist-link">Mac终端的配置文件定义与修改</a>
+			<time class="postlist-date" datetime="2015-08-01">August 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-04-27-vimrc/" class="postlist-link">vimrc总结的一份可通用样式</a>
+			<time class="postlist-date" datetime="2015-04-27">April 2015</time>
+		</li>
+		<li class="postlist-item">
+			<a href="/sddtc.github.com/blog/2015-04-14-linux-dirs/" class="postlist-link">shell常用压缩命令</a>
+			<time class="postlist-date" datetime="2015-04-14">April 2015</time>
+		</li>
+	</ol>
+</div>
 
+<div class="page-footer">
+	<p>See <a href="/sddtc.github.com/tags/">all tags</a>.</p>
+</div>
 
-<p>See <a href="/sddtc.github.com/tags/">all tags</a>.</p>
-
-
+</div>
 			</heading-anchors>
 		</main>
 
@@ -523,7 +559,7 @@ blockquote {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/tags/shell/` was built on 2026-03-21T10:30:09.241Z -->
+		<!-- This page `/tags/shell/` was built on 2026-03-21T12:37:36.302Z -->
 		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
 	</body>
 </html>
