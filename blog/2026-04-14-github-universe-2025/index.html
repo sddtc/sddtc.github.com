@@ -1,0 +1,720 @@
+<!doctype html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>品鉴 GitHub Universe 2025 大会</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.5">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+
+html {
+	overflow-y: scroll;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img {
+	max-width: 100%;
+}
+
+img[width][height] {
+	height: auto;
+}
+
+img[src$=".svg"] {
+	width: 100%;
+	height: auto;
+	max-width: none;
+}
+
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+
+.links-nextprev>* {
+	flex-grow: 1;
+}
+
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	/* Merges borders */
+	margin-bottom: 1rem;
+}
+
+th,
+td {
+	padding: 12px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+}
+
+th {
+	background-color: var(--background-color);
+	color: #333;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375;
+	/* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+
+.home-link {
+	flex-grow: 1;
+	font-size: 1em;
+	/* 16px /16 */
+	font-weight: 700;
+}
+
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.nav-item {
+	display: inline-block;
+}
+
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em;
+	/* 13px /16 */
+	color: var(--color-gray-90);
+}
+
+.postlist-date {
+	word-spacing: -0.5px;
+}
+
+.postlist-link {
+	font-size: 1.1875em;
+	/* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags in article */
+.postlist-item>.post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.post-metadata time {
+	margin-right: 1em;
+}
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #EEEFE0;
+
+	--text-color: #525B44;
+	--text-color-link: #819A91;
+	--text-color-link-active: #A7C1A8;
+	--text-color-link-visited: #819A91;
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* Tags */
+.post-tag {
+	font-style: italic;
+}
+
+.tags-page {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+.tags-page li {
+	float: left;
+	margin: 0 20px 10px 0;
+}
+
+/* Categories Page */
+.post-category {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: normal;
+	font-size: 1.2em;
+}
+
+/* 其他页面样式, 例如: 关于我 */
+blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
+/* 文章内部样式 */
+.page-post {
+	margin: 10px 0;
+}
+
+.page-post {
+	font-size: 18px;
+}
+
+.page-post a {
+	text-decoration: none;
+	color: #8AA624;
+	border-bottom: 1px solid #8AA624
+}
+
+/* 引用 */
+.page-post blockquote {
+	border-left: 3px solid #333333;
+	background-color: #F2EFE7;
+	padding: 9px 9px 9px 15px;
+}
+
+/* 单行代码 */
+.page-post code {
+	font-size: 13px;
+	background-color: #F2EFE7;
+	word-break: break-all;
+	padding: 3px 5px;
+	margin: 0 4px;
+	border-radius: 5px;
+	color: #333333;
+	transition: all 500ms ease;
+	font-style: normal;
+}
+
+.post-main {
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	height: 100%;
+}
+
+.post-toc {
+	flex: 0 0 20em;
+	padding-right: 2em;
+	flex-shrink: 0;
+}
+
+.post-content {
+	flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+	.post-toc {
+		display: none !important;
+		/* 强制隐藏 */
+	}
+}
+
+.home-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-title {
+	align-self: center;
+}
+
+.postlist-container {
+	align-self: center;
+}
+
+.page-footer {
+	align-self: center;
+}
+/**
+ * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
+ * Based on https://github.com/chriskempson/tomorrow-theme
+ * @author Rose Pritchard
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #ccc;
+	background: none;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #2d2d2d;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #999;
+}
+
+.token.punctuation {
+	color: #ccc;
+}
+
+.token.tag,
+.token.attr-name,
+.token.namespace,
+.token.deleted {
+	color: #e2777a;
+}
+
+.token.function-name {
+	color: #6196cc;
+}
+
+.token.boolean,
+.token.number,
+.token.function {
+	color: #f08d49;
+}
+
+.token.property,
+.token.class-name,
+.token.constant,
+.token.symbol {
+	color: #f8c555;
+}
+
+.token.selector,
+.token.important,
+.token.atrule,
+.token.keyword,
+.token.builtin {
+	color: #cc99cd;
+}
+
+.token.string,
+.token.char,
+.token.attr-value,
+.token.regex,
+.token.variable {
+	color: #7ec699;
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+	color: #67cdcc;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+
+.token.inserted {
+	color: green;
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/sddtc.github.com/" class="home-link">大蜕</a>
+			<nav>
+				<h2 class="visually-hidden">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/sddtc.github.com/">主页</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/categories/">分类</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/tags/">标签</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/blog/">文章</a></li>
+					<li class="nav-item"><a href="/sddtc.github.com/about/">关于我</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				<div class="post-main">
+	<div class="post-toc">
+		<aside>
+			<div class="content-tableau">
+        <ul><li><a href="#mcp-server-%E7%8E%B0%E5%9C%BA%E6%BC%94%E7%A4%BA">MCP Server 现场演示</a></li><li><a href="#vibe-coding-%E6%80%8E%E4%B9%88%E3%80%8C%E8%B4%9F%E8%B4%A3%E4%BB%BB%E5%9C%B0%E3%80%8D%E7%8E%A9">Vibe Coding 怎么「负责任地」玩</a></li><li><a href="#cvs-health-%E7%9A%84%E5%B7%A5%E5%85%B7%E8%BF%81%E7%A7%BB%E6%95%85%E4%BA%8B">CVS Health 的工具迁移故事</a></li><li><a href="#ai-%E6%97%B6%E4%BB%A3%EF%BC%8C%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%80%8E%E4%B9%88%E7%AE%A1">AI 时代，代码质量怎么管</a></li><li><a href="#github-next-%E8%81%8A%E7%9A%84-continuous-ai">GitHub Next 聊的 Continuous AI</a></li><li><a href="#copilot-%E6%99%BA%E8%83%BD%E4%BD%93%E6%9D%A5%E5%B8%AE%E4%BD%A0%E8%BF%98%E6%8A%80%E6%9C%AF%E5%80%BA">Copilot 智能体来帮你还技术债</a></li><li><a href="#%E4%B8%8A%E4%B8%8B%E6%96%87%E5%B7%A5%E7%A8%8B%EF%BC%9A%E8%AE%A9-copilot-%E7%9C%9F%E6%AD%A3%E7%90%86%E8%A7%A3%E4%BD%A0%E7%9A%84%E9%A1%B9%E7%9B%AE">上下文工程：让 Copilot 真正理解你的项目</a></li><li><a href="#copilot-%E6%95%B0%E6%8D%AE%E6%80%8E%E4%B9%88%E5%8F%98%E6%88%90%E4%B8%9A%E5%8A%A1-roi">Copilot 数据怎么变成业务 ROI</a></li><li><a href="#30-%E5%88%86%E9%92%9F%E4%BB%8E%E9%9B%B6%E6%9E%84%E5%BB%BA%E7%94%9F%E4%BA%A7%E7%BA%A7%E5%BA%94%E7%94%A8%EF%BC%9Avs-code-%2B-copilot-%2B-agent-framework">30 分钟从零构建生产级应用：VS Code + Copilot + Agent Framework</a></li><li><a href="#%E6%80%BB%E7%BB%93">总结</a></li></ul>
+      </div>
+		</aside>
+	</div>
+	<div class="post-content">
+		
+		
+		<h1>品鉴 GitHub Universe 2025 大会</h1>
+
+		<ul class="post-metadata">
+			<li><time datetime="2026-04-14">14 April 2026</time></li>
+			标签:
+			<li><a href="/sddtc.github.com/tags/MCP/" class="post-tag">MCP</a>, </li>
+			<li><a href="/sddtc.github.com/tags/copilot/" class="post-tag">copilot</a>, </li>
+			<li><a href="/sddtc.github.com/tags/agent-ai/" class="post-tag">agent-ai</a></li>
+		</ul>
+
+		<div class="page-post">
+			<p>10 月底 GitHub Universe 2025 在旧金山开完了，我陆陆续续把感兴趣的 session 看完了，趁现在还有印象，记录一下。</p>
+<p>说实话，今年 GitHub 发布的东西很多，信息量密度挺高的，但主线其实很清晰 — 所有事情都在往智能体（Agent）这个方向使劲。不是 AI 辅助写代码，而是 AI 开始自己规划、自己做事、你来审核。</p>
+<h2 id="mcp-server-%E7%8E%B0%E5%9C%BA%E6%BC%94%E7%A4%BA" tabindex="-1">MCP Server 现场演示</h2>
+<p>GitHub 推出了 GitHub MCP Registry，直接集成在 VS Code 里，开发者只需单击一下，就能发现并启用 Stripe、Figma、Sentry 等 MCP Server。MCP 是让智能体与第三方服务交互的基础标准，赋予它们访问外部实时数据和能力的工具权限。<br>
+开发者可以创建拥有专属系统提示与工具集的自定义智能体，精确定义 Copilot 的工作方式。</p>
+<h2 id="vibe-coding-%E6%80%8E%E4%B9%88%E3%80%8C%E8%B4%9F%E8%B4%A3%E4%BB%BB%E5%9C%B0%E3%80%8D%E7%8E%A9" tabindex="-1">Vibe Coding 怎么「负责任地」玩</h2>
+<p>这个标题起得很吸引人。session 想说的是 AI 写代码这件事，不是扔给它然后等结果，而是要有意识地设计你跟 AI 协作的方式。<br>
+讲师提出了三个关键维度：Power（选对模型）、Context（给够上下文），以及治理（Governance）。MCP 这类协议就是把这三件事落地的工具。<br>
+其中选对模型这个点我觉得特别值得记一下 — 不是模型越大越好。改个变量名、加个注释，用轻量模型完全够用，速度还快、成本还低。非得上最强模型，出了问题也是最大规模的问题。</p>
+<blockquote>
+<p>毕竟新增容易，但是删除的成本是巨大的。</p>
+</blockquote>
+<p>这句话套在 AI 工具的使用上也挺合适的 😄</p>
+<h2 id="cvs-health-%E7%9A%84%E5%B7%A5%E5%85%B7%E8%BF%81%E7%A7%BB%E6%95%85%E4%BA%8B" tabindex="-1">CVS Health 的工具迁移故事</h2>
+<p>这是一个&quot;企业案例&quot;类型的 session。<br>
+CVS 是美国最大的医疗零售商之一，工程体量很大，他们分享的是如何在一个组织里真正推动工具链的现代化 — 不只是技术问题，更多是人的问题：怎么说服团队、怎么量化收益、怎么在合规要求下一步步引入 Copilot。<br>
+感受是：大公司的工程改造，技术反而是最简单的那个环节，难的是怎么让所有人理解「为什么要这么做」。</p>
+<blockquote>
+<p>如果测试能解决问题，存在就是合理的。</p>
+</blockquote>
+<p>推广 AI 工具也是一样。</p>
+<h2 id="ai-%E6%97%B6%E4%BB%A3%EF%BC%8C%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%80%8E%E4%B9%88%E7%AE%A1" tabindex="-1">AI 时代，代码质量怎么管</h2>
+<p>这个 session 刚好是我最近一直在想的一个问题：AI 帮我们写了更多代码，但这些代码质量谁来负责？<br>
+GitHub 发布了 Code Quality 功能（目前开放试用阶段），直接集成在 PR 流程里，能识别技术债务、给出说明，并支持一键 Copilot Autofix。<br>
+它结合了 AI 分析和 CodeQL 静态检查，生成仓库级别的质量评分，团队可以自定义规则集来执行编码标准。<br>
+“LGTM” 不等于代码健康，这是 session 里反复强调的一句话。说实话这句话以前也是真的，只是 AI 写代码之后这个问题被放大了 — 人工审查本来就跟不上代码产出速度，更何况现在代码量又上去了一个数量级。<br>
+有个可量化的质量看板，用数据说话</p>
+<h2 id="github-next-%E8%81%8A%E7%9A%84-continuous-ai" tabindex="-1">GitHub Next 聊的 Continuous AI</h2>
+<p>GitHub 的 R&amp;D 实验室 GitHub Next 的分享，是这几个 session 里最&quot;概念性&quot;的一场。<br>
+主讲者探讨了 AI 智能体正在如何重塑软件开发 — 不再是开发者偶尔调用的工具，而是像水电一样持续在后台运转的基础设施。<br>
+Continuous AI 这个词挺有意思 — 类比 Continuous Integration，CI 是让测试持续运行，Continuous AI 是让 AI 持续参与整个开发周期。文档更新、依赖检测、代码审查，都可以变成后台自动运转的任务。</p>
+<h2 id="copilot-%E6%99%BA%E8%83%BD%E4%BD%93%E6%9D%A5%E5%B8%AE%E4%BD%A0%E8%BF%98%E6%8A%80%E6%9C%AF%E5%80%BA" tabindex="-1">Copilot 智能体来帮你还技术债</h2>
+<p>技术债这个东西，我相信每个工程团队都有，只是多少的问题。这个 session 给出了一个挺实用的思路。<br>
+Copilot 编码智能体（Coding Agent）已经正式发布了，能自主起草 PR、修复 Bug、处理技术债务、补测试补文档，与 GitHub 平台及主流 IDE 无缝集成。<br>
+核心操作是：在 <code>.github/copilot-instructions.md</code> 里写清楚团队的编码规范，然后开一个 GitHub Issue 描述具体的重构任务，把 Issue 指派给 Copilot，让它跑去干。你要做的就是 Review PR。<br>
+这个模式说实话我挺喜欢的——把重复性、规则性强的重构任务外包给 AI，人专注在架构决策和 Review 上。分工还挺合理。</p>
+<h2 id="%E4%B8%8A%E4%B8%8B%E6%96%87%E5%B7%A5%E7%A8%8B%EF%BC%9A%E8%AE%A9-copilot-%E7%9C%9F%E6%AD%A3%E7%90%86%E8%A7%A3%E4%BD%A0%E7%9A%84%E9%A1%B9%E7%9B%AE" tabindex="-1">上下文工程：让 Copilot 真正理解你的项目</h2>
+<p>这个 session 讲的是如何让 Copilot 给出更符合你项目实际情况的建议，核心概念是上下文工程（Context Engineering）。<br>
+团队可以通过 <a href="http://AGENTS.md">AGENTS.md</a> 文件定义智能体的行为边界，执行编码标准并进行版本管理，确保整个团队的 AI 辅助开发保持一致。<br>
+实操层面，几个关键文件：<code>copilot-instructions.md</code> 写团队规范，<code>AGENTS.md</code> 定义智能体行为，自定义 Agent 可以给特定任务（测试、文档、安全扫描）创建专属角色。<br>
+这让我想起一个道理：你给 AI 的上下文质量，决定了你拿到的输出质量。这和写好一个 Issue 描述其实是同一件事 — Garbage In, Garbage Out。</p>
+<h2 id="copilot-%E6%95%B0%E6%8D%AE%E6%80%8E%E4%B9%88%E5%8F%98%E6%88%90%E4%B8%9A%E5%8A%A1-roi" tabindex="-1">Copilot 数据怎么变成业务 ROI</h2>
+<p>这个 session 是给工程 leader 看的，核心问题是：怎么向老板证明 Copilot 值这个钱？<br>
+GitHub Copilot 使用指标仪表盘和 API 现已进入开放试用阶段，帮助团队从我们有没有在用 AI的问题，升级到我们 AI 用得有多好的数据分析。<br>
+企业仪表盘提供 Copilot 使用情况的聚合视图，涵盖活跃用户数、功能采用率、模型分布与代码贡献量等指标。<br>
+代码接受率、开发者参与深度、技术债务变化趋势——这些指标组合在一起，能讲出一个比较完整的故事。<br>
+我觉得这个功能对于推广阶段的团队来说挺有价值的。毕竟说&quot;感觉有用&quot;和&quot;数据显示接受率 35%、交付周期缩短 20%&quot; 是两种完全不同的对话。</p>
+<h2 id="30-%E5%88%86%E9%92%9F%E4%BB%8E%E9%9B%B6%E6%9E%84%E5%BB%BA%E7%94%9F%E4%BA%A7%E7%BA%A7%E5%BA%94%E7%94%A8%EF%BC%9Avs-code-%2B-copilot-%2B-agent-framework" tabindex="-1">30 分钟从零构建生产级应用：VS Code + Copilot + Agent Framework</h2>
+<p>这是技术含量最高、也最&quot;秀&quot;的一场演示。<br>
+微软团队在主舞台现场展示了如何仅凭自然语言、编辑器与 AI，在 30 分钟内从一个想法构建出一款云原生生产级应用，全程使用 VS Code、GitHub Copilot 与 Microsoft Agent Framework。<br>
+流程大概是：用 Spec Kit 工具把一句话需求扩展成产品规格文档 → 自动生成任务列表 → Copilot 逐任务实现 → 部署上线 → 一个 AI SRE 智能体在后台持续监控，发现问题自动提 PR 修复。<br>
+VS Code 的 AI Toolkit 让开发者可以在编写代码的同时直接探索模型并构建智能体，基于 Microsoft Agent Framework 的 Prompt-First 开发模式，让创建和迭代生产就绪的智能体变得更快更直观。<br>
+Demo 做得很漂亮，30 分钟的限制本身就是一种表达方式 — 在说这已经不是未来，是现在。<br>
+当然，真实项目里有 30 年的历史包袱、有各种奇怪的依赖、有各种奇怪的人，那就是另一个故事了 😎</p>
+<h2 id="%E6%80%BB%E7%BB%93" tabindex="-1">总结</h2>
+<p>看完这几个 session 的整体感受是：GitHub 今年真的在押注智能体方向，而且已经不是画大饼了，Agent HQ、MCP Registry、Copilot Coding Agent GA，都是实际能用的东西。</p>
+<p>选一两个最贴合你当前痛点的功能试试，比看完所有 session 然后什么都不做要有价值得多。</p>
+<p>以上。</p>
+
+		</div>
+		<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/blog/2026-03-16-fastify-modular-ts-config-file-intro/">Fastify 模块化项目实战 - 你真的懂 tsconfig.json 吗?</a></li>
+		</ul>
+	</div>
+</div>
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>Copyright © <span id="copyright-year"></span></p>
+		</footer>
+
+		
+
+    
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/blog/2026-04-14-github-universe-2025/` was built on 2026-04-14T10:42:01.054Z -->
+		<script type="module" src="/sddtc.github.com/dist/UgeZB_NEmy.js"></script>
+	</body>
+</html>
