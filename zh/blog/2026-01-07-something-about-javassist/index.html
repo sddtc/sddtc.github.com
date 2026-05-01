@@ -1,0 +1,1196 @@
+
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Something About Javassist</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.5">
+		<link rel="canonical" href="https://www.sddtc.florist/zh/blog/2026-01-07-something-about-javassist/">
+		<link rel="alternate" hreflang="zh" href="https://www.sddtc.florist/zh/blog/2026-01-07-something-about-javassist/">
+		<link rel="alternate" hreflang="en" href="https://www.sddtc.florist/en/blog/2026-01-07-something-about-javassist/">
+		<link rel="alternate" hreflang="x-default" href="https://www.sddtc.florist/">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+
+html {
+	overflow-y: scroll;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img {
+	max-width: 100%;
+}
+
+img[width][height] {
+	height: auto;
+}
+
+img[src$=".svg"] {
+	width: 100%;
+	height: auto;
+	max-width: none;
+}
+
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+
+.links-nextprev>* {
+	flex-grow: 1;
+}
+
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	/* Merges borders */
+	margin-bottom: 1rem;
+}
+
+th,
+td {
+	padding: 12px;
+	text-align: left;
+	border-bottom: 1px solid var(--color-gray-20);
+}
+
+th {
+	background-color: var(--background-color);
+	color: var(--color-gray-90);
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375;
+	/* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+
+.home-link {
+	flex-grow: 1;
+	font-size: 1em;
+	/* 16px /16 */
+	font-weight: 700;
+}
+
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.nav-item {
+	display: inline-block;
+}
+
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em;
+	/* 13px /16 */
+	color: var(--color-gray-90);
+}
+
+.postlist-date {
+	word-spacing: -0.5px;
+}
+
+.postlist-link {
+	font-size: 1.1875em;
+	/* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags in article */
+.postlist-item>.post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.post-metadata time {
+	margin-right: 1em;
+}
+:root {
+	/* Palette (colorhunt: c0e1d2-e5eee4-f6f4e8-dc9b9b) */
+	--c-mint:    #C0E1D2;
+	--c-bg:      #E5EEE4;
+	--c-surface: #F6F4E8;
+	--c-pink:    #DC9B9B;
+
+	/* Neutrals */
+	--c-text:      #4F625D;
+	--c-text-soft: #6E7674;
+	--c-border:    rgba(192, 225, 210, 0.7);
+
+	/* Role mapping (overrides index.css defaults) */
+	--background-color:        var(--c-bg);
+	--text-color:              var(--c-text);
+	--text-color-link:         var(--c-pink);
+	--text-color-link-active:  var(--c-text);
+	--text-color-link-visited: var(--c-pink);
+
+	--color-gray-20: var(--c-border);
+	--color-gray-50: var(--c-text-soft);
+	--color-gray-90: var(--c-text);
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* —— Tag pills —— */
+.post-tag {
+	display: inline-block;
+	padding: 0.2em 0.65em;
+	background: var(--c-mint);
+	color: var(--c-text);
+	border-radius: 6px;
+	font-style: normal;
+	font-size: 1rem;
+	text-decoration: none;
+	border: none;
+}
+
+a.post-tag[href]:visited {
+	color: var(--c-text);
+}
+
+a.post-tag[href]:hover,
+a.post-tag[href]:active {
+	background: var(--c-pink);
+	color: #fff;
+	text-decoration: none;
+}
+
+.tags-page {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+.tags-page li {
+	float: left;
+	margin: 0 20px 10px 0;
+}
+
+/* Categories Page */
+.post-category {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: normal;
+	font-size: 1.2em;
+}
+
+/* —— Article body —— */
+.page-post {
+	font-size: 1.0625rem;
+	line-height: 1.75;
+	margin: 1rem auto;
+	max-width: 720px;
+}
+
+.page-post p {
+	margin: 0 0 1em;
+}
+
+.page-post a {
+	color: var(--c-pink);
+	text-decoration: none;
+	border-bottom: 1px solid var(--c-pink);
+}
+
+.page-post a:hover {
+	color: var(--c-text);
+	border-bottom-color: var(--c-text);
+}
+
+/* Inline code */
+.page-post code,
+code {
+	font-size: 0.9em;
+	background: var(--c-surface);
+	border: 1px solid var(--c-mint);
+	color: var(--c-pink);
+	padding: 0.1em 0.4em;
+	margin: 0 2px;
+	border-radius: 4px;
+	font-style: normal;
+	word-break: break-all;
+}
+
+/* Pre block (Prism token colors stay; container restyled) */
+.page-post pre[class*="language-"],
+pre[class*="language-"] {
+	border-radius: 8px;
+	box-shadow: 0 2px 0 var(--c-mint);
+	margin: 1.25em 0;
+}
+
+.page-post pre.code-copy-enabled,
+pre.code-copy-enabled {
+	position: relative;
+	padding-top: 3.25em;
+}
+
+.code-copy-button {
+	position: absolute;
+	top: 0.75rem;
+	right: 0.75rem;
+	z-index: 1;
+	min-width: 3.75rem;
+	padding: 0.35rem 0.65rem;
+	border: 1px solid var(--c-mint);
+	border-radius: 6px;
+	background: var(--c-mint);
+	color: var(--c-text);
+	font: 600 0.75rem var(--font-family);
+	line-height: 1.2;
+	cursor: pointer;
+	transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.code-copy-button:hover,
+.code-copy-button:focus-visible {
+	background: var(--c-pink);
+	border-color: var(--c-pink);
+	color: #fff;
+	outline: none;
+}
+
+/* Code inside pre: reset inline-code styling */
+pre[class*="language-"] code {
+	background: transparent;
+	border: none;
+	color: inherit;
+	padding: 0;
+	margin: 0;
+	border-radius: 0;
+}
+
+/* Blockquote */
+blockquote,
+.page-post blockquote {
+	background: var(--c-surface);
+	border-left: 4px solid var(--c-pink);
+	padding: 0.9em 1.1em;
+	border-radius: 0 6px 6px 0;
+	color: var(--c-text-soft);
+	margin: 1em 0;
+}
+
+.page-post blockquote p:last-child {
+	margin-bottom: 0;
+}
+
+/* —— Post layout —— */
+.post-layout {
+	display: grid;
+	grid-template-columns: minmax(0, 720px) 220px;
+	gap: 2rem;
+	justify-content: center;
+	align-items: start;
+}
+
+.post-content {
+	min-width: 0;
+}
+
+.post-content h1 {
+	margin-top: 0.5rem;
+}
+
+.post-metadata {
+	color: var(--c-text-soft);
+	font-size: 0.875rem;
+}
+
+.post-toc {
+	position: sticky;
+	top: 1.5rem;
+	width: 220px;
+	max-height: calc(100vh - 3rem);
+	overflow-y: auto;
+	padding: 1rem;
+	background: var(--c-surface);
+	border-radius: 8px;
+	border: 1px solid var(--c-border);
+	font-size: 0.875rem;
+}
+
+.post-toc:not(:has(a)) {
+	background: transparent;
+	border: none;
+	padding: 0;
+}
+
+.post-toc a {
+	color: var(--c-text);
+	text-decoration: none;
+}
+
+.post-toc a:hover {
+	color: var(--c-pink);
+	text-decoration: underline;
+}
+
+.post-toc ul {
+	padding-left: 1.1em;
+	margin: 0.25em 0;
+}
+
+@media (max-width: 1100px) {
+	.post-layout {
+		grid-template-columns: minmax(0, 720px);
+	}
+	.post-toc {
+		display: none;
+	}
+}
+
+@media (min-width: 1101px) {
+	main > .page-wrap:has(.post-layout) {
+		max-width: none;
+		padding-left: 0;
+		padding-right: 0;
+	}
+	.post-layout {
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 0 1.25rem;
+	}
+}
+
+/* —— Global layout & typography —— */
+.page-wrap {
+	max-width: 720px;
+	margin: 0 auto;
+	padding: 0 1.25rem;
+}
+
+body {
+	line-height: 1.7;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: var(--c-text);
+	font-weight: 700;
+	line-height: 1.35;
+}
+
+h1 { font-size: 2rem; line-height: 1.3; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; line-height: 1.4; }
+
+a[href]:hover,
+a[href]:active {
+	text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+	.page-wrap {
+		padding: 0 1rem;
+	}
+}
+
+/* —— Header & nav —— */
+header {
+	display: block;
+	padding: 0;
+	border-bottom: 1px solid var(--c-border);
+}
+
+.header-inner {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+
+.home-link {
+	color: var(--c-text);
+	font-size: 1.25rem;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.nav {
+	font-size: 0.9375rem;
+	font-weight: 500;
+}
+
+.nav-item a {
+	color: var(--c-text);
+	text-decoration: none;
+	padding: 0.25em 0.5em;
+	border-radius: 999px;
+	transition: background 0.15s, color 0.15s;
+}
+
+.nav-item a:hover {
+	color: var(--c-pink);
+	text-decoration: none;
+}
+
+.nav a[href][aria-current="page"] {
+	background: var(--c-text);
+	color: #fff;
+	padding: 0.25em 0.75em;
+	text-decoration: none;
+}
+
+.language-switcher {
+	display: flex;
+	align-items: center;
+	gap: 0.35rem;
+	font-size: 0.875rem;
+}
+
+.language-switcher a {
+	color: var(--c-text-soft);
+	padding: 0.2em 0.55em;
+	border-radius: 6px;
+	text-decoration: none;
+}
+
+.language-switcher a:hover {
+	background: var(--c-mint);
+	color: var(--c-text);
+	text-decoration: none;
+}
+
+.language-switcher a[aria-current="true"] {
+	background: var(--c-text);
+	color: #fff;
+}
+
+.language-entry {
+	margin-top: 3rem;
+	text-align: center;
+}
+
+.language-entry h1 {
+	margin-top: 0;
+}
+
+.language-entry a {
+	color: var(--c-pink);
+	font-size: 1.125rem;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.language-entry a:hover {
+	color: var(--c-text);
+	text-decoration: underline;
+}
+
+/* —— Surface card —— */
+.surface-card {
+	background: var(--c-surface);
+	border-radius: 8px;
+	padding: 2rem 2.25rem;
+}
+
+@media (max-width: 768px) {
+	.surface-card {
+		padding: 1.25rem;
+		border-radius: 6px;
+	}
+}
+
+/* —— Page title (home, listing pages) —— */
+.page-title {
+	margin: 1.5rem 0 1rem;
+}
+
+.page-title h2 {
+	margin: 0;
+}
+
+/* —— Postlist —— */
+.postlist {
+	margin: 0;
+}
+
+.postlist-item {
+	padding-bottom: 1em;
+	margin-bottom: 1.25em;
+	border-bottom: 1px dashed var(--c-border);
+}
+
+.postlist-item:last-child {
+	border-bottom: none;
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+.postlist-item:before {
+	color: var(--c-pink);
+	font-weight: 700;
+	font-size: 0.8125em;
+}
+
+.postlist-date {
+	color: var(--c-text-soft);
+	font-size: 0.875rem;
+}
+
+.postlist-link {
+	color: var(--c-text);
+	font-size: 1.125rem;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.postlist-link:hover {
+	color: var(--c-pink);
+	text-decoration: underline;
+}
+
+.page-footer {
+	margin-top: 1.5rem;
+	text-align: center;
+	color: var(--c-text-soft);
+	font-size: 0.9375rem;
+}
+
+/* —— Prev / next links —— */
+.links-nextprev {
+	border-top: 1px solid var(--c-border);
+	margin-top: 2rem;
+	padding-top: 1rem;
+}
+
+.links-nextprev > li {
+	padding: 0.75em 1em;
+	border-radius: 6px;
+	transition: background 0.15s;
+}
+
+.links-nextprev > li:hover {
+	background: var(--c-surface);
+}
+
+.links-nextprev a {
+	color: var(--c-text);
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.links-nextprev a:hover {
+	color: var(--c-pink);
+	text-decoration: underline;
+}
+
+/* —— Footer —— */
+footer {
+	margin-top: 3rem;
+	border-top: 1px solid var(--c-border);
+}
+
+footer .page-wrap {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	text-align: center;
+	color: var(--c-text-soft);
+	font-size: 0.875rem;
+}
+
+footer p {
+	margin: 0;
+}
+
+/* —— Generic page content (about, etc.) —— */
+.page-content {
+	max-width: 720px;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 1rem;
+	line-height: 1.75;
+}
+
+.page-content h2 {
+	margin-top: 0;
+}
+
+.page-content a {
+	color: var(--c-pink);
+	text-decoration: none;
+	border-bottom: 1px solid var(--c-pink);
+}
+
+.page-content a:hover {
+	color: var(--c-text);
+	border-bottom-color: var(--c-text);
+}
+
+.page-content blockquote {
+	background: var(--c-bg);
+	border-left: 4px solid var(--c-pink);
+	padding: 0.9em 1.1em;
+	border-radius: 0 6px 6px 0;
+	color: var(--c-text-soft);
+	margin: 1em 0;
+}
+
+/* —— Categories list page —— */
+.categories-page {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem 1rem;
+}
+
+.categories-page .post-category {
+	background: var(--c-mint);
+	color: var(--c-text);
+	padding: 0.4em 1em;
+	border-radius: 999px;
+	font-size: 1rem;
+	text-decoration: none;
+	transition: background 0.15s, color 0.15s;
+}
+
+.categories-page .post-category:hover {
+	background: var(--c-pink);
+	color: #fff;
+}
+/**
+ * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
+ * Based on https://github.com/chriskempson/tomorrow-theme
+ * @author Rose Pritchard
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #ccc;
+	background: none;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #2d2d2d;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #999;
+}
+
+.token.punctuation {
+	color: #ccc;
+}
+
+.token.tag,
+.token.attr-name,
+.token.namespace,
+.token.deleted {
+	color: #e2777a;
+}
+
+.token.function-name {
+	color: #6196cc;
+}
+
+.token.boolean,
+.token.number,
+.token.function {
+	color: #f08d49;
+}
+
+.token.property,
+.token.class-name,
+.token.constant,
+.token.symbol {
+	color: #f8c555;
+}
+
+.token.selector,
+.token.important,
+.token.atrule,
+.token.keyword,
+.token.builtin {
+	color: #cc99cd;
+}
+
+.token.string,
+.token.char,
+.token.attr-value,
+.token.regex,
+.token.variable {
+	color: #7ec699;
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+	color: #67cdcc;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+
+.token.inserted {
+	color: green;
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<div class="page-wrap header-inner">
+				<a href="/sddtc.github.com/zh/" class="home-link">大蜕</a>
+
+				<nav>
+					<h2 class="visually-hidden">Top level navigation menu</h2>
+					<ul class="nav">
+						
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/zh/">主页</a></li>
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/zh/categories/">分类</a></li>
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/zh/tags/">标签</a></li>
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/zh/blog/" aria-current="page">文章</a></li>
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/zh/about/">关于我</a></li>
+					</ul>
+				</nav>
+
+				<div class="language-switcher" aria-label="语言">
+					<a href="/sddtc.github.com/zh/blog/2026-01-07-something-about-javassist/" aria-current="true" onclick="window.blog && window.blog.storeLanguagePreference('zh')">中文</a>
+					<a href="/sddtc.github.com/en/blog/2026-01-07-something-about-javassist/" onclick="window.blog && window.blog.storeLanguagePreference('en')">English</a>
+				</div>
+			</div>
+		</header>
+
+		<main id="main">
+			<div class="page-wrap">
+				<heading-anchors>
+					<div class="post-layout">
+	<article class="post-content">
+		
+		
+		<h1>Something About Javassist</h1>
+
+		<ul class="post-metadata">
+			<li><time datetime="2026-01-07">07 January 2026</time></li>
+			标签:
+			<li><a href="/sddtc.github.com/zh/tags/java/" class="post-tag">java</a></li>
+		</ul>
+
+		<div class="page-post surface-card">
+			<h2 id="%E4%BB%80%E4%B9%88%E6%98%AF-javassist%EF%BC%9F" tabindex="-1">什么是 Javassist？</h2>
+<p>Javassist（Java 编程助手）是一个用于编辑 Java 字节码的类库。它允许 Java 程序在运行时定义新类，并在 JVM 加载类文件时对其进行修改。</p>
+<h3 id="%E4%B8%A4%E7%A7%8D-api-%E7%BA%A7%E5%88%AB" tabindex="-1">两种 API 级别</h3>
+<p>Javassist 提供两种 API 级别：</p>
+<ul>
+<li><strong>源代码级别 API</strong>：使用 Java 语言词汇表，无需了解字节码规范即可编辑类文件。可以以源代码文本形式指定要插入的字节码，Javassist 会实时编译。</li>
+<li><strong>字节码级别 API</strong>：直接编辑类文件，与其他字节码编辑器类似。</li>
+</ul>
+<h2 id="%E8%AF%BB%E5%8F%96%E5%92%8C%E5%86%99%E5%85%A5%E5%AD%97%E8%8A%82%E7%A0%81" tabindex="-1">读取和写入字节码</h2>
+<h3 id="%E8%8E%B7%E5%8F%96-ctclass-%E5%AF%B9%E8%B1%A1" tabindex="-1">获取 CtClass 对象</h3>
+<p>使用 <code>ClassPool</code> 获取 <code>CtClass</code> 对象：</p>
+<pre class="language-java" tabindex="0"><code class="hljs language-java"><span class="token comment">// 创建类池</span>
+<span class="token keyword">final</span> <span class="token class-name">ClassPool</span> classPool <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ClassPool</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 通过系统类加载器加载类</span>
+classPool<span class="token punctuation">.</span><span class="token function">appendClassPath</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">LoaderClassPath</span><span class="token punctuation">(</span><span class="token class-name">ClassLoader</span><span class="token punctuation">.</span><span class="token function">getSystemClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 通过自定义类加载器加载类</span>
+classPool<span class="token punctuation">.</span><span class="token function">appendClassPath</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">LoaderClassPath</span><span class="token punctuation">(</span>loader<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h3 id="%E4%BF%AE%E6%94%B9%E7%B1%BB%E5%AE%9A%E4%B9%89" tabindex="-1">修改类定义</h3>
+<p>向类中添加新字段：</p>
+<pre class="language-java" tabindex="0"><code class="hljs language-java"><span class="token class-name">CtClass</span> cc <span class="token operator">=</span> xxx<span class="token punctuation">;</span>
+<span class="token class-name">CtField</span> f <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">CtField</span><span class="token punctuation">(</span><span class="token class-name">CtClass</span><span class="token punctuation">.</span>intType<span class="token punctuation">,</span> <span class="token string">"newField"</span><span class="token punctuation">,</span> cc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+cc<span class="token punctuation">.</span><span class="token function">addField</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h3 id="classpool-%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84" tabindex="-1">ClassPool 的层次结构</h3>
+<p><code>ClassPool</code> 支持层次结构。如果子 <code>ClassPool</code> 在本地找不到类文件，它会委托父 <code>ClassPool</code> 查找。</p>
+<p><strong>使用场景</strong>：为每个类加载器创建一个子 <code>ClassPool</code>，并让它们共享一个公共的父 <code>ClassPool</code>。这样，不同类加载器加载的类可以共享相同的 <code>CtClass</code> 对象。</p>
+<h2 id="%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8" tabindex="-1">类加载器</h2>
+<h3 id="%E4%BD%BF%E7%94%A8-toclass()-%E6%96%B9%E6%B3%95" tabindex="-1">使用 toClass() 方法</h3>
+<p><code>CtClass.toClass()</code> 方法将 <code>CtClass</code> 对象转换为 <code>java.lang.Class</code> 对象，供 Java 应用程序使用。</p>
+<p><strong>注意</strong>：调用者的类加载器必须能够加载 <code>CtClass</code> 对象所表示的类，否则会抛出 <code>ClassNotFoundException</code>。</p>
+<pre class="language-kotlin" tabindex="0"><code class="hljs language-kotlin"><span class="token keyword">val</span> instance <span class="token operator">=</span> ctClass<span class="token punctuation">.</span><span class="token function">toClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getDeclaredConstructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">newInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h3 id="%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8" tabindex="-1">自定义类加载器</h3>
+<p>如果需要更复杂的类加载行为，可以定义自己的类加载器：</p>
+<pre class="language-java" tabindex="0"><code class="hljs language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyLoader</span> <span class="token keyword">extends</span> <span class="token class-name">ClassLoader</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token class-name">ClassPool</span> pool<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">MyLoader</span><span class="token punctuation">(</span><span class="token class-name">ClassPool</span> pool<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>pool <span class="token operator">=</span> pool<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">protected</span> <span class="token class-name">Class</span> <span class="token function">findClass</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">ClassNotFoundException</span> <span class="token punctuation">{</span>
+        <span class="token class-name">CtClass</span> cc <span class="token operator">=</span> pool<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 修改 cc...</span>
+        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> b <span class="token operator">=</span> cc<span class="token punctuation">.</span><span class="token function">toBytecode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token function">defineClass</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> b<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> b<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h2 id="%E4%BF%AE%E6%94%B9%E7%8E%B0%E6%9C%89%E7%B1%BB" tabindex="-1">修改现有类</h2>
+<h3 id="%E5%9C%A8%E6%96%B9%E6%B3%95%E4%BD%93%E4%B8%AD%E6%8F%92%E5%85%A5%E4%BB%A3%E7%A0%81" tabindex="-1">在方法体中插入代码</h3>
+<p><code>CtMethod</code> 和 <code>CtConstructor</code> 提供以下方法用于在方法体中插入代码：</p>
+<ul>
+<li><code>insertBefore()</code>：在方法体开头插入代码</li>
+<li><code>insertAfter()</code>：在方法体结尾插入代码</li>
+<li><code>addCatch()</code>：添加异常处理代码</li>
+</ul>
+<p>这些方法接受一个表示 Java 代码块的字符串参数：</p>
+<pre class="language-java" tabindex="0"><code class="hljs language-java"><span class="token class-name">CtMethod</span> m <span class="token operator">=</span> xxx<span class="token punctuation">;</span>
+m<span class="token punctuation">.</span><span class="token function">insertBefore</span><span class="token punctuation">(</span><span class="token string">"{ System.out.println(\"start\"); }"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p><strong>重要</strong>：插入的代码块可以访问方法的局部变量和参数。</p>
+<h3 id="%E6%B7%BB%E5%8A%A0%E6%96%B0%E6%96%B9%E6%B3%95" tabindex="-1">添加新方法</h3>
+<p>使用 <code>addMethod()</code> 方法向类中添加新方法：</p>
+<pre class="language-java" tabindex="0"><code class="hljs language-java"><span class="token class-name">CtClass</span> cc <span class="token operator">=</span> xxx<span class="token punctuation">;</span>
+<span class="token class-name">CtMethod</span> newMethod <span class="token operator">=</span> <span class="token class-name">CtNewMethod</span><span class="token punctuation">.</span><span class="token function">make</span><span class="token punctuation">(</span>
+    <span class="token string">"public int newMethod(int x) { return x * 2; }"</span><span class="token punctuation">,</span>
+    cc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+cc<span class="token punctuation">.</span><span class="token function">addMethod</span><span class="token punctuation">(</span>newMethod<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h3 id="%E5%BC%95%E7%94%A8%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0" tabindex="-1">引用方法参数</h3>
+<p>在插入的代码中，使用以下符号引用方法参数：</p>
+<ul>
+<li><code>$0</code>：<code>this</code> 对象（实例方法）或 <code>null</code>（静态方法）</li>
+<li><code>$1</code>：第一个参数</li>
+<li><code>$2</code>：第二个参数</li>
+<li>以此类推</li>
+</ul>
+<p>示例：</p>
+<pre class="language-java" tabindex="0"><code class="hljs language-java">m<span class="token punctuation">.</span><span class="token function">insertBefore</span><span class="token punctuation">(</span><span class="token string">"{ System.out.println($1); }"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p><strong>注意</strong>：对于递归方法，使用参数引用（如 <code>$1</code>）而不是方法名，可以避免插入的代码被递归调用导致无限循环。</p>
+<p><strong>应用场景</strong>：Javassist 可用于在方法调用前后插入代码，在 J2EE 中用于实现拦截器。</p>
+<h2 id="%E7%94%9F%E6%88%90%E6%96%B0%E7%B1%BB%E5%92%8C%E6%96%B9%E6%B3%95" tabindex="-1">生成新类和方法</h2>
+<h3 id="%E5%88%9B%E5%BB%BA%E6%96%B0%E7%B1%BB" tabindex="-1">创建新类</h3>
+<p>使用 <code>ClassPool.makeClass()</code> 方法创建新类：</p>
+<pre class="language-java" tabindex="0"><code class="hljs language-java"><span class="token class-name">ClassPool</span> pool <span class="token operator">=</span> <span class="token class-name">ClassPool</span><span class="token punctuation">.</span><span class="token function">getDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">CtClass</span> cc <span class="token operator">=</span> pool<span class="token punctuation">.</span><span class="token function">makeClass</span><span class="token punctuation">(</span><span class="token string">"Apple"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h3 id="%E6%B7%BB%E5%8A%A0%E5%AD%97%E6%AE%B5%E5%92%8C%E6%96%B9%E6%B3%95" tabindex="-1">添加字段和方法</h3>
+<p>创建类后，使用 <code>CtClass</code> 的方法添加字段和方法：</p>
+<pre class="language-java" tabindex="0"><code class="hljs language-java"><span class="token class-name">CtMethod</span> m <span class="token operator">=</span> <span class="token class-name">CtNewMethod</span><span class="token punctuation">.</span><span class="token function">make</span><span class="token punctuation">(</span>
+    <span class="token string">"public String getColor() { return color; }"</span><span class="token punctuation">,</span>
+    cc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+cc<span class="token punctuation">.</span><span class="token function">addMethod</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h2 id="%E8%B0%83%E8%AF%95" tabindex="-1">调试</h2>
+<h3 id="%E5%A4%84%E7%90%86%E7%BC%96%E8%AF%91%E9%94%99%E8%AF%AF" tabindex="-1">处理编译错误</h3>
+<p>如果插入的代码无法编译，Javassist 会抛出 <code>CannotCompileException</code>。调用 <code>CannotCompileException.getReason()</code> 获取编译错误的原因。</p>
+<h3 id="%E6%A3%80%E6%9F%A5%E5%AD%97%E8%8A%82%E7%A0%81" tabindex="-1">检查字节码</h3>
+<p>调用 <code>CtMethod</code> 的 <code>instrument()</code> 方法检查插入代码的字节码。</p>
+<h2 id="%E5%8F%82%E8%80%83%E8%B5%84%E6%BA%90" tabindex="-1">参考资源</h2>
+<ul>
+<li><a href="https://www.javassist.org/">Javassist 官方网站</a></li>
+</ul>
+
+		</div>
+		<ul class="links-nextprev"><li class="links-nextprev-prev">← 上一篇<br> <a href="/sddtc.github.com/zh/blog/2025-08-05-docker-proxy-setup/">SS+Trojan-Qt5+colima 配置docker proxy从而正常下载docker images</a></li><li class="links-nextprev-next">下一篇 →<br><a href="/sddtc.github.com/zh/blog/2026-02-12-fastify-modules-tutorials-1/">Fastify 模块化项目实战(一) — 技术选型</a></li>
+		</ul>
+	</article>
+	<aside class="post-toc">
+		<div class="content-tableau">
+        <ul><li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF-javassist%EF%BC%9F">什么是 Javassist？</a><ul><li><a href="#%E4%B8%A4%E7%A7%8D-api-%E7%BA%A7%E5%88%AB">两种 API 级别</a></li></ul></li><li><a href="#%E8%AF%BB%E5%8F%96%E5%92%8C%E5%86%99%E5%85%A5%E5%AD%97%E8%8A%82%E7%A0%81">读取和写入字节码</a><ul><li><a href="#%E8%8E%B7%E5%8F%96-ctclass-%E5%AF%B9%E8%B1%A1">获取 CtClass 对象</a></li><li><a href="#%E4%BF%AE%E6%94%B9%E7%B1%BB%E5%AE%9A%E4%B9%89">修改类定义</a></li><li><a href="#classpool-%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84">ClassPool 的层次结构</a></li></ul></li><li><a href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8">类加载器</a><ul><li><a href="#%E4%BD%BF%E7%94%A8-toclass()-%E6%96%B9%E6%B3%95">使用 toClass() 方法</a></li><li><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8">自定义类加载器</a></li></ul></li><li><a href="#%E4%BF%AE%E6%94%B9%E7%8E%B0%E6%9C%89%E7%B1%BB">修改现有类</a><ul><li><a href="#%E5%9C%A8%E6%96%B9%E6%B3%95%E4%BD%93%E4%B8%AD%E6%8F%92%E5%85%A5%E4%BB%A3%E7%A0%81">在方法体中插入代码</a></li><li><a href="#%E6%B7%BB%E5%8A%A0%E6%96%B0%E6%96%B9%E6%B3%95">添加新方法</a></li><li><a href="#%E5%BC%95%E7%94%A8%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0">引用方法参数</a></li></ul></li><li><a href="#%E7%94%9F%E6%88%90%E6%96%B0%E7%B1%BB%E5%92%8C%E6%96%B9%E6%B3%95">生成新类和方法</a><ul><li><a href="#%E5%88%9B%E5%BB%BA%E6%96%B0%E7%B1%BB">创建新类</a></li><li><a href="#%E6%B7%BB%E5%8A%A0%E5%AD%97%E6%AE%B5%E5%92%8C%E6%96%B9%E6%B3%95">添加字段和方法</a></li></ul></li><li><a href="#%E8%B0%83%E8%AF%95">调试</a><ul><li><a href="#%E5%A4%84%E7%90%86%E7%BC%96%E8%AF%91%E9%94%99%E8%AF%AF">处理编译错误</a></li><li><a href="#%E6%A3%80%E6%9F%A5%E5%AD%97%E8%8A%82%E7%A0%81">检查字节码</a></li></ul></li><li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%BA%90">参考资源</a></li></ul>
+      </div>
+	</aside>
+</div>
+
+				</heading-anchors>
+			</div>
+		</main>
+
+		<footer>
+			<div class="page-wrap">
+				<p>Copyright © <span id="copyright-year"></span></p>
+			</div>
+		</footer>
+
+		
+
+    
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/zh/blog/2026-01-07-something-about-javassist/` was built on 2026-05-01T10:59:18.281Z -->
+		<script type="module" src="/sddtc.github.com/dist/9UoH1FTAXT.js"></script>
+	</body>
+</html>

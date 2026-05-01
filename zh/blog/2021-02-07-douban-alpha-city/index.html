@@ -1,0 +1,1114 @@
+
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>记忆中的乌托邦 - 豆瓣阿尔法城</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.5">
+		<link rel="canonical" href="https://www.sddtc.florist/zh/blog/2021-02-07-douban-alpha-city/">
+		<link rel="alternate" hreflang="zh" href="https://www.sddtc.florist/zh/blog/2021-02-07-douban-alpha-city/">
+		<link rel="alternate" hreflang="en" href="https://www.sddtc.florist/en/blog/2021-02-07-douban-alpha-city/">
+		<link rel="alternate" hreflang="x-default" href="https://www.sddtc.florist/">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+
+html {
+	overflow-y: scroll;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img {
+	max-width: 100%;
+}
+
+img[width][height] {
+	height: auto;
+}
+
+img[src$=".svg"] {
+	width: 100%;
+	height: auto;
+	max-width: none;
+}
+
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+
+.links-nextprev>* {
+	flex-grow: 1;
+}
+
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	/* Merges borders */
+	margin-bottom: 1rem;
+}
+
+th,
+td {
+	padding: 12px;
+	text-align: left;
+	border-bottom: 1px solid var(--color-gray-20);
+}
+
+th {
+	background-color: var(--background-color);
+	color: var(--color-gray-90);
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375;
+	/* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+
+.home-link {
+	flex-grow: 1;
+	font-size: 1em;
+	/* 16px /16 */
+	font-weight: 700;
+}
+
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.nav-item {
+	display: inline-block;
+}
+
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em;
+	/* 13px /16 */
+	color: var(--color-gray-90);
+}
+
+.postlist-date {
+	word-spacing: -0.5px;
+}
+
+.postlist-link {
+	font-size: 1.1875em;
+	/* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags in article */
+.postlist-item>.post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.post-metadata time {
+	margin-right: 1em;
+}
+:root {
+	/* Palette (colorhunt: c0e1d2-e5eee4-f6f4e8-dc9b9b) */
+	--c-mint:    #C0E1D2;
+	--c-bg:      #E5EEE4;
+	--c-surface: #F6F4E8;
+	--c-pink:    #DC9B9B;
+
+	/* Neutrals */
+	--c-text:      #4F625D;
+	--c-text-soft: #6E7674;
+	--c-border:    rgba(192, 225, 210, 0.7);
+
+	/* Role mapping (overrides index.css defaults) */
+	--background-color:        var(--c-bg);
+	--text-color:              var(--c-text);
+	--text-color-link:         var(--c-pink);
+	--text-color-link-active:  var(--c-text);
+	--text-color-link-visited: var(--c-pink);
+
+	--color-gray-20: var(--c-border);
+	--color-gray-50: var(--c-text-soft);
+	--color-gray-90: var(--c-text);
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* —— Tag pills —— */
+.post-tag {
+	display: inline-block;
+	padding: 0.2em 0.65em;
+	background: var(--c-mint);
+	color: var(--c-text);
+	border-radius: 6px;
+	font-style: normal;
+	font-size: 1rem;
+	text-decoration: none;
+	border: none;
+}
+
+a.post-tag[href]:visited {
+	color: var(--c-text);
+}
+
+a.post-tag[href]:hover,
+a.post-tag[href]:active {
+	background: var(--c-pink);
+	color: #fff;
+	text-decoration: none;
+}
+
+.tags-page {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+.tags-page li {
+	float: left;
+	margin: 0 20px 10px 0;
+}
+
+/* Categories Page */
+.post-category {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: normal;
+	font-size: 1.2em;
+}
+
+/* —— Article body —— */
+.page-post {
+	font-size: 1.0625rem;
+	line-height: 1.75;
+	margin: 1rem auto;
+	max-width: 720px;
+}
+
+.page-post p {
+	margin: 0 0 1em;
+}
+
+.page-post a {
+	color: var(--c-pink);
+	text-decoration: none;
+	border-bottom: 1px solid var(--c-pink);
+}
+
+.page-post a:hover {
+	color: var(--c-text);
+	border-bottom-color: var(--c-text);
+}
+
+/* Inline code */
+.page-post code,
+code {
+	font-size: 0.9em;
+	background: var(--c-surface);
+	border: 1px solid var(--c-mint);
+	color: var(--c-pink);
+	padding: 0.1em 0.4em;
+	margin: 0 2px;
+	border-radius: 4px;
+	font-style: normal;
+	word-break: break-all;
+}
+
+/* Pre block (Prism token colors stay; container restyled) */
+.page-post pre[class*="language-"],
+pre[class*="language-"] {
+	border-radius: 8px;
+	box-shadow: 0 2px 0 var(--c-mint);
+	margin: 1.25em 0;
+}
+
+.page-post pre.code-copy-enabled,
+pre.code-copy-enabled {
+	position: relative;
+	padding-top: 3.25em;
+}
+
+.code-copy-button {
+	position: absolute;
+	top: 0.75rem;
+	right: 0.75rem;
+	z-index: 1;
+	min-width: 3.75rem;
+	padding: 0.35rem 0.65rem;
+	border: 1px solid var(--c-mint);
+	border-radius: 6px;
+	background: var(--c-mint);
+	color: var(--c-text);
+	font: 600 0.75rem var(--font-family);
+	line-height: 1.2;
+	cursor: pointer;
+	transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.code-copy-button:hover,
+.code-copy-button:focus-visible {
+	background: var(--c-pink);
+	border-color: var(--c-pink);
+	color: #fff;
+	outline: none;
+}
+
+/* Code inside pre: reset inline-code styling */
+pre[class*="language-"] code {
+	background: transparent;
+	border: none;
+	color: inherit;
+	padding: 0;
+	margin: 0;
+	border-radius: 0;
+}
+
+/* Blockquote */
+blockquote,
+.page-post blockquote {
+	background: var(--c-surface);
+	border-left: 4px solid var(--c-pink);
+	padding: 0.9em 1.1em;
+	border-radius: 0 6px 6px 0;
+	color: var(--c-text-soft);
+	margin: 1em 0;
+}
+
+.page-post blockquote p:last-child {
+	margin-bottom: 0;
+}
+
+/* —— Post layout —— */
+.post-layout {
+	display: grid;
+	grid-template-columns: minmax(0, 720px) 220px;
+	gap: 2rem;
+	justify-content: center;
+	align-items: start;
+}
+
+.post-content {
+	min-width: 0;
+}
+
+.post-content h1 {
+	margin-top: 0.5rem;
+}
+
+.post-metadata {
+	color: var(--c-text-soft);
+	font-size: 0.875rem;
+}
+
+.post-toc {
+	position: sticky;
+	top: 1.5rem;
+	width: 220px;
+	max-height: calc(100vh - 3rem);
+	overflow-y: auto;
+	padding: 1rem;
+	background: var(--c-surface);
+	border-radius: 8px;
+	border: 1px solid var(--c-border);
+	font-size: 0.875rem;
+}
+
+.post-toc:not(:has(a)) {
+	background: transparent;
+	border: none;
+	padding: 0;
+}
+
+.post-toc a {
+	color: var(--c-text);
+	text-decoration: none;
+}
+
+.post-toc a:hover {
+	color: var(--c-pink);
+	text-decoration: underline;
+}
+
+.post-toc ul {
+	padding-left: 1.1em;
+	margin: 0.25em 0;
+}
+
+@media (max-width: 1100px) {
+	.post-layout {
+		grid-template-columns: minmax(0, 720px);
+	}
+	.post-toc {
+		display: none;
+	}
+}
+
+@media (min-width: 1101px) {
+	main > .page-wrap:has(.post-layout) {
+		max-width: none;
+		padding-left: 0;
+		padding-right: 0;
+	}
+	.post-layout {
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 0 1.25rem;
+	}
+}
+
+/* —— Global layout & typography —— */
+.page-wrap {
+	max-width: 720px;
+	margin: 0 auto;
+	padding: 0 1.25rem;
+}
+
+body {
+	line-height: 1.7;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: var(--c-text);
+	font-weight: 700;
+	line-height: 1.35;
+}
+
+h1 { font-size: 2rem; line-height: 1.3; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; line-height: 1.4; }
+
+a[href]:hover,
+a[href]:active {
+	text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+	.page-wrap {
+		padding: 0 1rem;
+	}
+}
+
+/* —— Header & nav —— */
+header {
+	display: block;
+	padding: 0;
+	border-bottom: 1px solid var(--c-border);
+}
+
+.header-inner {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+
+.home-link {
+	color: var(--c-text);
+	font-size: 1.25rem;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.nav {
+	font-size: 0.9375rem;
+	font-weight: 500;
+}
+
+.nav-item a {
+	color: var(--c-text);
+	text-decoration: none;
+	padding: 0.25em 0.5em;
+	border-radius: 999px;
+	transition: background 0.15s, color 0.15s;
+}
+
+.nav-item a:hover {
+	color: var(--c-pink);
+	text-decoration: none;
+}
+
+.nav a[href][aria-current="page"] {
+	background: var(--c-text);
+	color: #fff;
+	padding: 0.25em 0.75em;
+	text-decoration: none;
+}
+
+.language-switcher {
+	display: flex;
+	align-items: center;
+	gap: 0.35rem;
+	font-size: 0.875rem;
+}
+
+.language-switcher a {
+	color: var(--c-text-soft);
+	padding: 0.2em 0.55em;
+	border-radius: 6px;
+	text-decoration: none;
+}
+
+.language-switcher a:hover {
+	background: var(--c-mint);
+	color: var(--c-text);
+	text-decoration: none;
+}
+
+.language-switcher a[aria-current="true"] {
+	background: var(--c-text);
+	color: #fff;
+}
+
+.language-entry {
+	margin-top: 3rem;
+	text-align: center;
+}
+
+.language-entry h1 {
+	margin-top: 0;
+}
+
+.language-entry a {
+	color: var(--c-pink);
+	font-size: 1.125rem;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.language-entry a:hover {
+	color: var(--c-text);
+	text-decoration: underline;
+}
+
+/* —— Surface card —— */
+.surface-card {
+	background: var(--c-surface);
+	border-radius: 8px;
+	padding: 2rem 2.25rem;
+}
+
+@media (max-width: 768px) {
+	.surface-card {
+		padding: 1.25rem;
+		border-radius: 6px;
+	}
+}
+
+/* —— Page title (home, listing pages) —— */
+.page-title {
+	margin: 1.5rem 0 1rem;
+}
+
+.page-title h2 {
+	margin: 0;
+}
+
+/* —— Postlist —— */
+.postlist {
+	margin: 0;
+}
+
+.postlist-item {
+	padding-bottom: 1em;
+	margin-bottom: 1.25em;
+	border-bottom: 1px dashed var(--c-border);
+}
+
+.postlist-item:last-child {
+	border-bottom: none;
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+.postlist-item:before {
+	color: var(--c-pink);
+	font-weight: 700;
+	font-size: 0.8125em;
+}
+
+.postlist-date {
+	color: var(--c-text-soft);
+	font-size: 0.875rem;
+}
+
+.postlist-link {
+	color: var(--c-text);
+	font-size: 1.125rem;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.postlist-link:hover {
+	color: var(--c-pink);
+	text-decoration: underline;
+}
+
+.page-footer {
+	margin-top: 1.5rem;
+	text-align: center;
+	color: var(--c-text-soft);
+	font-size: 0.9375rem;
+}
+
+/* —— Prev / next links —— */
+.links-nextprev {
+	border-top: 1px solid var(--c-border);
+	margin-top: 2rem;
+	padding-top: 1rem;
+}
+
+.links-nextprev > li {
+	padding: 0.75em 1em;
+	border-radius: 6px;
+	transition: background 0.15s;
+}
+
+.links-nextprev > li:hover {
+	background: var(--c-surface);
+}
+
+.links-nextprev a {
+	color: var(--c-text);
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.links-nextprev a:hover {
+	color: var(--c-pink);
+	text-decoration: underline;
+}
+
+/* —— Footer —— */
+footer {
+	margin-top: 3rem;
+	border-top: 1px solid var(--c-border);
+}
+
+footer .page-wrap {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	text-align: center;
+	color: var(--c-text-soft);
+	font-size: 0.875rem;
+}
+
+footer p {
+	margin: 0;
+}
+
+/* —— Generic page content (about, etc.) —— */
+.page-content {
+	max-width: 720px;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 1rem;
+	line-height: 1.75;
+}
+
+.page-content h2 {
+	margin-top: 0;
+}
+
+.page-content a {
+	color: var(--c-pink);
+	text-decoration: none;
+	border-bottom: 1px solid var(--c-pink);
+}
+
+.page-content a:hover {
+	color: var(--c-text);
+	border-bottom-color: var(--c-text);
+}
+
+.page-content blockquote {
+	background: var(--c-bg);
+	border-left: 4px solid var(--c-pink);
+	padding: 0.9em 1.1em;
+	border-radius: 0 6px 6px 0;
+	color: var(--c-text-soft);
+	margin: 1em 0;
+}
+
+/* —— Categories list page —— */
+.categories-page {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem 1rem;
+}
+
+.categories-page .post-category {
+	background: var(--c-mint);
+	color: var(--c-text);
+	padding: 0.4em 1em;
+	border-radius: 999px;
+	font-size: 1rem;
+	text-decoration: none;
+	transition: background 0.15s, color 0.15s;
+}
+
+.categories-page .post-category:hover {
+	background: var(--c-pink);
+	color: #fff;
+}
+/**
+ * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
+ * Based on https://github.com/chriskempson/tomorrow-theme
+ * @author Rose Pritchard
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #ccc;
+	background: none;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #2d2d2d;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #999;
+}
+
+.token.punctuation {
+	color: #ccc;
+}
+
+.token.tag,
+.token.attr-name,
+.token.namespace,
+.token.deleted {
+	color: #e2777a;
+}
+
+.token.function-name {
+	color: #6196cc;
+}
+
+.token.boolean,
+.token.number,
+.token.function {
+	color: #f08d49;
+}
+
+.token.property,
+.token.class-name,
+.token.constant,
+.token.symbol {
+	color: #f8c555;
+}
+
+.token.selector,
+.token.important,
+.token.atrule,
+.token.keyword,
+.token.builtin {
+	color: #cc99cd;
+}
+
+.token.string,
+.token.char,
+.token.attr-value,
+.token.regex,
+.token.variable {
+	color: #7ec699;
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+	color: #67cdcc;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+
+.token.inserted {
+	color: green;
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<div class="page-wrap header-inner">
+				<a href="/sddtc.github.com/zh/" class="home-link">大蜕</a>
+
+				<nav>
+					<h2 class="visually-hidden">Top level navigation menu</h2>
+					<ul class="nav">
+						
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/zh/">主页</a></li>
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/zh/categories/">分类</a></li>
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/zh/tags/">标签</a></li>
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/zh/blog/" aria-current="page">文章</a></li>
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/zh/about/">关于我</a></li>
+					</ul>
+				</nav>
+
+				<div class="language-switcher" aria-label="语言">
+					<a href="/sddtc.github.com/zh/blog/2021-02-07-douban-alpha-city/" aria-current="true" onclick="window.blog && window.blog.storeLanguagePreference('zh')">中文</a>
+					<a href="/sddtc.github.com/en/blog/2021-02-07-douban-alpha-city/" onclick="window.blog && window.blog.storeLanguagePreference('en')">English</a>
+				</div>
+			</div>
+		</header>
+
+		<main id="main">
+			<div class="page-wrap">
+				<heading-anchors>
+					<div class="post-layout">
+	<article class="post-content">
+		
+		
+		<h1>记忆中的乌托邦 - 豆瓣阿尔法城</h1>
+
+		<ul class="post-metadata">
+			<li><time datetime="2021-02-07">07 February 2021</time></li>
+			标签:
+			<li><a href="/sddtc.github.com/zh/tags/碎碎念/" class="post-tag">碎碎念</a></li>
+		</ul>
+
+		<div class="page-post surface-card">
+			<p>最近弃看《使女的故事》了，看到了第二季的第10集。 反乌托邦这个词我一开始不是很理解，直到我决定放弃补这部剧。 于是我试图找点甜甜的东西来安抚自己的情绪，大概就是我想记录点关于<br>
+豆瓣阿尔法城的缘由惹。<s>惹，你竟然敢说惹.jpg</s><br>
+我对豆瓣这个网站的感情很奇妙，从前从前我是深度用户。深深喜欢着豆瓣 FM，喜欢豆邮，喜欢东西，喜欢豆瓣实验室，喜欢阿尔法城。喜欢的时候我天天都在玩，堪称教科书般的行动派。<br>
+虽然但是，我喜欢的这些现在都不在了。于是我脱坑了。现在，我用它来记录电影和书籍，也仅此而已。</p>
+<p><picture><source type="image/avif" srcset="/sddtc.github.com/zh/blog/2021-02-07-douban-alpha-city/3oAfXeVKgO-2214.avif 2214w"><source type="image/webp" srcset="/sddtc.github.com/zh/blog/2021-02-07-douban-alpha-city/3oAfXeVKgO-2214.webp 2214w"><img loading="lazy" decoding="async" src="/sddtc.github.com/zh/blog/2021-02-07-douban-alpha-city/3oAfXeVKgO-2214.png" alt="image" width="2214" height="1382"></picture></p>
+<p>我已经忘记我住在哪个区，哪条街，忘记了我的邻居都是谁，谁会经常在路上说话。 但我忘不掉我在虚拟社区里的感觉，那种豆瓣营造出的友邻氛围。那种大家都好无聊，装饰着自己的家，社区<br>
+投票如火如荼，还有模有样的打造各种各样类型的建筑。我的天，&quot;无聊&quot;的做着一些事，真的可爱到爆了。<br>
+大家到底有多无聊呢</p>
+<p>介样<br>
+<picture><source type="image/avif" srcset="/sddtc.github.com/zh/blog/2021-02-07-douban-alpha-city/RsB84H4n6d-1918.avif 1918w"><source type="image/webp" srcset="/sddtc.github.com/zh/blog/2021-02-07-douban-alpha-city/RsB84H4n6d-1918.webp 1918w"><img loading="lazy" decoding="async" src="/sddtc.github.com/zh/blog/2021-02-07-douban-alpha-city/RsB84H4n6d-1918.png" alt="2021-02-07-VzAVRE-i7rZ3G" width="1918" height="1118"></picture></p>
+<p>介样<br>
+<picture><source type="image/avif" srcset="/sddtc.github.com/zh/blog/2021-02-07-douban-alpha-city/s3pPD_fnJG-1092.avif 1092w"><source type="image/webp" srcset="/sddtc.github.com/zh/blog/2021-02-07-douban-alpha-city/s3pPD_fnJG-1092.webp 1092w"><img loading="lazy" decoding="async" src="/sddtc.github.com/zh/blog/2021-02-07-douban-alpha-city/s3pPD_fnJG-1092.png" alt="2021-02-07-6MEZ2A-bWAuds" width="1092" height="544"></picture></p>
+<p><picture><source type="image/avif" srcset="/sddtc.github.com/zh/blog/2021-02-07-douban-alpha-city/897rnp_NmZ-1202.avif 1202w"><source type="image/webp" srcset="/sddtc.github.com/zh/blog/2021-02-07-douban-alpha-city/897rnp_NmZ-1202.webp 1202w"><img loading="lazy" decoding="async" src="/sddtc.github.com/zh/blog/2021-02-07-douban-alpha-city/897rnp_NmZ-1202.png" alt="2021-02-07-lTMNGV-kOiS4a" width="1202" height="992"></picture></p>
+<p>害有介样<br>
+<picture><source type="image/avif" srcset="/sddtc.github.com/zh/blog/2021-02-07-douban-alpha-city/TS2vPfcqB0-1436.avif 1436w"><source type="image/webp" srcset="/sddtc.github.com/zh/blog/2021-02-07-douban-alpha-city/TS2vPfcqB0-1436.webp 1436w"><img loading="lazy" decoding="async" src="/sddtc.github.com/zh/blog/2021-02-07-douban-alpha-city/TS2vPfcqB0-1436.png" alt="2021-02-07-SPq98D-mXqk5E" width="1436" height="646"></picture></p>
+<p>突然意识到，到现在如此喜欢社区文化的我，原来早有雏形啊。</p>
+<p>废话说了这么多，其实我就是在寻找能实现阿尔法城类似 UI 的工具。我还记得这个人 qvq. <a href="https://github.com/dexteryy/OzJS">dexteryy- OzJS</a>. 👴青回</p>
+
+		</div>
+		<ul class="links-nextprev"><li class="links-nextprev-prev">← 上一篇<br> <a href="/sddtc.github.com/zh/blog/2021-02-05-use-gists-in-blog-to-show-code-snapshot/">运用 Gists 来进行嵌套代码块管理</a></li><li class="links-nextprev-next">下一篇 →<br><a href="/sddtc.github.com/zh/blog/2021-02-10-spike-2d-js-tools/">Github - JavaScript Game Engines 使用指南</a></li>
+		</ul>
+	</article>
+	<aside class="post-toc">
+		
+	</aside>
+</div>
+
+				</heading-anchors>
+			</div>
+		</main>
+
+		<footer>
+			<div class="page-wrap">
+				<p>Copyright © <span id="copyright-year"></span></p>
+			</div>
+		</footer>
+
+		
+
+    
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/zh/blog/2021-02-07-douban-alpha-city/` was built on 2026-05-01T10:58:54.715Z -->
+		<script type="module" src="/sddtc.github.com/dist/9UoH1FTAXT.js"></script>
+	</body>
+</html>

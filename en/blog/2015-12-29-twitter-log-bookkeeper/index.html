@@ -1,0 +1,1116 @@
+
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Twitter 高性能分布式日志系统架构解析</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.5">
+		<link rel="canonical" href="https://www.sddtc.florist/en/blog/2015-12-29-twitter-log-bookkeeper/">
+		<link rel="alternate" hreflang="zh" href="https://www.sddtc.florist/zh/blog/2015-12-29-twitter-log-bookkeeper/">
+		<link rel="alternate" hreflang="en" href="https://www.sddtc.florist/en/blog/2015-12-29-twitter-log-bookkeeper/">
+		<link rel="alternate" hreflang="x-default" href="https://www.sddtc.florist/">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+
+html {
+	overflow-y: scroll;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img {
+	max-width: 100%;
+}
+
+img[width][height] {
+	height: auto;
+}
+
+img[src$=".svg"] {
+	width: 100%;
+	height: auto;
+	max-width: none;
+}
+
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+
+.links-nextprev>* {
+	flex-grow: 1;
+}
+
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	/* Merges borders */
+	margin-bottom: 1rem;
+}
+
+th,
+td {
+	padding: 12px;
+	text-align: left;
+	border-bottom: 1px solid var(--color-gray-20);
+}
+
+th {
+	background-color: var(--background-color);
+	color: var(--color-gray-90);
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375;
+	/* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+
+.home-link {
+	flex-grow: 1;
+	font-size: 1em;
+	/* 16px /16 */
+	font-weight: 700;
+}
+
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.nav-item {
+	display: inline-block;
+}
+
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em;
+	/* 13px /16 */
+	color: var(--color-gray-90);
+}
+
+.postlist-date {
+	word-spacing: -0.5px;
+}
+
+.postlist-link {
+	font-size: 1.1875em;
+	/* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags in article */
+.postlist-item>.post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.post-metadata time {
+	margin-right: 1em;
+}
+:root {
+	/* Palette (colorhunt: c0e1d2-e5eee4-f6f4e8-dc9b9b) */
+	--c-mint:    #C0E1D2;
+	--c-bg:      #E5EEE4;
+	--c-surface: #F6F4E8;
+	--c-pink:    #DC9B9B;
+
+	/* Neutrals */
+	--c-text:      #4F625D;
+	--c-text-soft: #6E7674;
+	--c-border:    rgba(192, 225, 210, 0.7);
+
+	/* Role mapping (overrides index.css defaults) */
+	--background-color:        var(--c-bg);
+	--text-color:              var(--c-text);
+	--text-color-link:         var(--c-pink);
+	--text-color-link-active:  var(--c-text);
+	--text-color-link-visited: var(--c-pink);
+
+	--color-gray-20: var(--c-border);
+	--color-gray-50: var(--c-text-soft);
+	--color-gray-90: var(--c-text);
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* —— Tag pills —— */
+.post-tag {
+	display: inline-block;
+	padding: 0.2em 0.65em;
+	background: var(--c-mint);
+	color: var(--c-text);
+	border-radius: 6px;
+	font-style: normal;
+	font-size: 1rem;
+	text-decoration: none;
+	border: none;
+}
+
+a.post-tag[href]:visited {
+	color: var(--c-text);
+}
+
+a.post-tag[href]:hover,
+a.post-tag[href]:active {
+	background: var(--c-pink);
+	color: #fff;
+	text-decoration: none;
+}
+
+.tags-page {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+.tags-page li {
+	float: left;
+	margin: 0 20px 10px 0;
+}
+
+/* Categories Page */
+.post-category {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: normal;
+	font-size: 1.2em;
+}
+
+/* —— Article body —— */
+.page-post {
+	font-size: 1.0625rem;
+	line-height: 1.75;
+	margin: 1rem auto;
+	max-width: 720px;
+}
+
+.page-post p {
+	margin: 0 0 1em;
+}
+
+.page-post a {
+	color: var(--c-pink);
+	text-decoration: none;
+	border-bottom: 1px solid var(--c-pink);
+}
+
+.page-post a:hover {
+	color: var(--c-text);
+	border-bottom-color: var(--c-text);
+}
+
+/* Inline code */
+.page-post code,
+code {
+	font-size: 0.9em;
+	background: var(--c-surface);
+	border: 1px solid var(--c-mint);
+	color: var(--c-pink);
+	padding: 0.1em 0.4em;
+	margin: 0 2px;
+	border-radius: 4px;
+	font-style: normal;
+	word-break: break-all;
+}
+
+/* Pre block (Prism token colors stay; container restyled) */
+.page-post pre[class*="language-"],
+pre[class*="language-"] {
+	border-radius: 8px;
+	box-shadow: 0 2px 0 var(--c-mint);
+	margin: 1.25em 0;
+}
+
+.page-post pre.code-copy-enabled,
+pre.code-copy-enabled {
+	position: relative;
+	padding-top: 3.25em;
+}
+
+.code-copy-button {
+	position: absolute;
+	top: 0.75rem;
+	right: 0.75rem;
+	z-index: 1;
+	min-width: 3.75rem;
+	padding: 0.35rem 0.65rem;
+	border: 1px solid var(--c-mint);
+	border-radius: 6px;
+	background: var(--c-mint);
+	color: var(--c-text);
+	font: 600 0.75rem var(--font-family);
+	line-height: 1.2;
+	cursor: pointer;
+	transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.code-copy-button:hover,
+.code-copy-button:focus-visible {
+	background: var(--c-pink);
+	border-color: var(--c-pink);
+	color: #fff;
+	outline: none;
+}
+
+/* Code inside pre: reset inline-code styling */
+pre[class*="language-"] code {
+	background: transparent;
+	border: none;
+	color: inherit;
+	padding: 0;
+	margin: 0;
+	border-radius: 0;
+}
+
+/* Blockquote */
+blockquote,
+.page-post blockquote {
+	background: var(--c-surface);
+	border-left: 4px solid var(--c-pink);
+	padding: 0.9em 1.1em;
+	border-radius: 0 6px 6px 0;
+	color: var(--c-text-soft);
+	margin: 1em 0;
+}
+
+.page-post blockquote p:last-child {
+	margin-bottom: 0;
+}
+
+/* —— Post layout —— */
+.post-layout {
+	display: grid;
+	grid-template-columns: minmax(0, 720px) 220px;
+	gap: 2rem;
+	justify-content: center;
+	align-items: start;
+}
+
+.post-content {
+	min-width: 0;
+}
+
+.post-content h1 {
+	margin-top: 0.5rem;
+}
+
+.post-metadata {
+	color: var(--c-text-soft);
+	font-size: 0.875rem;
+}
+
+.post-toc {
+	position: sticky;
+	top: 1.5rem;
+	width: 220px;
+	max-height: calc(100vh - 3rem);
+	overflow-y: auto;
+	padding: 1rem;
+	background: var(--c-surface);
+	border-radius: 8px;
+	border: 1px solid var(--c-border);
+	font-size: 0.875rem;
+}
+
+.post-toc:not(:has(a)) {
+	background: transparent;
+	border: none;
+	padding: 0;
+}
+
+.post-toc a {
+	color: var(--c-text);
+	text-decoration: none;
+}
+
+.post-toc a:hover {
+	color: var(--c-pink);
+	text-decoration: underline;
+}
+
+.post-toc ul {
+	padding-left: 1.1em;
+	margin: 0.25em 0;
+}
+
+@media (max-width: 1100px) {
+	.post-layout {
+		grid-template-columns: minmax(0, 720px);
+	}
+	.post-toc {
+		display: none;
+	}
+}
+
+@media (min-width: 1101px) {
+	main > .page-wrap:has(.post-layout) {
+		max-width: none;
+		padding-left: 0;
+		padding-right: 0;
+	}
+	.post-layout {
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 0 1.25rem;
+	}
+}
+
+/* —— Global layout & typography —— */
+.page-wrap {
+	max-width: 720px;
+	margin: 0 auto;
+	padding: 0 1.25rem;
+}
+
+body {
+	line-height: 1.7;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: var(--c-text);
+	font-weight: 700;
+	line-height: 1.35;
+}
+
+h1 { font-size: 2rem; line-height: 1.3; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; line-height: 1.4; }
+
+a[href]:hover,
+a[href]:active {
+	text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+	.page-wrap {
+		padding: 0 1rem;
+	}
+}
+
+/* —— Header & nav —— */
+header {
+	display: block;
+	padding: 0;
+	border-bottom: 1px solid var(--c-border);
+}
+
+.header-inner {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+
+.home-link {
+	color: var(--c-text);
+	font-size: 1.25rem;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.nav {
+	font-size: 0.9375rem;
+	font-weight: 500;
+}
+
+.nav-item a {
+	color: var(--c-text);
+	text-decoration: none;
+	padding: 0.25em 0.5em;
+	border-radius: 999px;
+	transition: background 0.15s, color 0.15s;
+}
+
+.nav-item a:hover {
+	color: var(--c-pink);
+	text-decoration: none;
+}
+
+.nav a[href][aria-current="page"] {
+	background: var(--c-text);
+	color: #fff;
+	padding: 0.25em 0.75em;
+	text-decoration: none;
+}
+
+.language-switcher {
+	display: flex;
+	align-items: center;
+	gap: 0.35rem;
+	font-size: 0.875rem;
+}
+
+.language-switcher a {
+	color: var(--c-text-soft);
+	padding: 0.2em 0.55em;
+	border-radius: 6px;
+	text-decoration: none;
+}
+
+.language-switcher a:hover {
+	background: var(--c-mint);
+	color: var(--c-text);
+	text-decoration: none;
+}
+
+.language-switcher a[aria-current="true"] {
+	background: var(--c-text);
+	color: #fff;
+}
+
+.language-entry {
+	margin-top: 3rem;
+	text-align: center;
+}
+
+.language-entry h1 {
+	margin-top: 0;
+}
+
+.language-entry a {
+	color: var(--c-pink);
+	font-size: 1.125rem;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.language-entry a:hover {
+	color: var(--c-text);
+	text-decoration: underline;
+}
+
+/* —— Surface card —— */
+.surface-card {
+	background: var(--c-surface);
+	border-radius: 8px;
+	padding: 2rem 2.25rem;
+}
+
+@media (max-width: 768px) {
+	.surface-card {
+		padding: 1.25rem;
+		border-radius: 6px;
+	}
+}
+
+/* —— Page title (home, listing pages) —— */
+.page-title {
+	margin: 1.5rem 0 1rem;
+}
+
+.page-title h2 {
+	margin: 0;
+}
+
+/* —— Postlist —— */
+.postlist {
+	margin: 0;
+}
+
+.postlist-item {
+	padding-bottom: 1em;
+	margin-bottom: 1.25em;
+	border-bottom: 1px dashed var(--c-border);
+}
+
+.postlist-item:last-child {
+	border-bottom: none;
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+.postlist-item:before {
+	color: var(--c-pink);
+	font-weight: 700;
+	font-size: 0.8125em;
+}
+
+.postlist-date {
+	color: var(--c-text-soft);
+	font-size: 0.875rem;
+}
+
+.postlist-link {
+	color: var(--c-text);
+	font-size: 1.125rem;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.postlist-link:hover {
+	color: var(--c-pink);
+	text-decoration: underline;
+}
+
+.page-footer {
+	margin-top: 1.5rem;
+	text-align: center;
+	color: var(--c-text-soft);
+	font-size: 0.9375rem;
+}
+
+/* —— Prev / next links —— */
+.links-nextprev {
+	border-top: 1px solid var(--c-border);
+	margin-top: 2rem;
+	padding-top: 1rem;
+}
+
+.links-nextprev > li {
+	padding: 0.75em 1em;
+	border-radius: 6px;
+	transition: background 0.15s;
+}
+
+.links-nextprev > li:hover {
+	background: var(--c-surface);
+}
+
+.links-nextprev a {
+	color: var(--c-text);
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.links-nextprev a:hover {
+	color: var(--c-pink);
+	text-decoration: underline;
+}
+
+/* —— Footer —— */
+footer {
+	margin-top: 3rem;
+	border-top: 1px solid var(--c-border);
+}
+
+footer .page-wrap {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	text-align: center;
+	color: var(--c-text-soft);
+	font-size: 0.875rem;
+}
+
+footer p {
+	margin: 0;
+}
+
+/* —— Generic page content (about, etc.) —— */
+.page-content {
+	max-width: 720px;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 1rem;
+	line-height: 1.75;
+}
+
+.page-content h2 {
+	margin-top: 0;
+}
+
+.page-content a {
+	color: var(--c-pink);
+	text-decoration: none;
+	border-bottom: 1px solid var(--c-pink);
+}
+
+.page-content a:hover {
+	color: var(--c-text);
+	border-bottom-color: var(--c-text);
+}
+
+.page-content blockquote {
+	background: var(--c-bg);
+	border-left: 4px solid var(--c-pink);
+	padding: 0.9em 1.1em;
+	border-radius: 0 6px 6px 0;
+	color: var(--c-text-soft);
+	margin: 1em 0;
+}
+
+/* —— Categories list page —— */
+.categories-page {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem 1rem;
+}
+
+.categories-page .post-category {
+	background: var(--c-mint);
+	color: var(--c-text);
+	padding: 0.4em 1em;
+	border-radius: 999px;
+	font-size: 1rem;
+	text-decoration: none;
+	transition: background 0.15s, color 0.15s;
+}
+
+.categories-page .post-category:hover {
+	background: var(--c-pink);
+	color: #fff;
+}
+/**
+ * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
+ * Based on https://github.com/chriskempson/tomorrow-theme
+ * @author Rose Pritchard
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #ccc;
+	background: none;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #2d2d2d;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #999;
+}
+
+.token.punctuation {
+	color: #ccc;
+}
+
+.token.tag,
+.token.attr-name,
+.token.namespace,
+.token.deleted {
+	color: #e2777a;
+}
+
+.token.function-name {
+	color: #6196cc;
+}
+
+.token.boolean,
+.token.number,
+.token.function {
+	color: #f08d49;
+}
+
+.token.property,
+.token.class-name,
+.token.constant,
+.token.symbol {
+	color: #f8c555;
+}
+
+.token.selector,
+.token.important,
+.token.atrule,
+.token.keyword,
+.token.builtin {
+	color: #cc99cd;
+}
+
+.token.string,
+.token.char,
+.token.attr-value,
+.token.regex,
+.token.variable {
+	color: #7ec699;
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+	color: #67cdcc;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+
+.token.inserted {
+	color: green;
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<div class="page-wrap header-inner">
+				<a href="/sddtc.github.com/en/" class="home-link">Da Tui</a>
+
+				<nav>
+					<h2 class="visually-hidden">Top level navigation menu</h2>
+					<ul class="nav">
+						
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/en/">Home</a></li>
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/en/categories/">Categories</a></li>
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/en/tags/">Tags</a></li>
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/en/blog/" aria-current="page">Posts</a></li>
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/en/about/">About</a></li>
+					</ul>
+				</nav>
+
+				<div class="language-switcher" aria-label="Language">
+					<a href="/sddtc.github.com/zh/blog/2015-12-29-twitter-log-bookkeeper/" onclick="window.blog && window.blog.storeLanguagePreference('zh')">中文</a>
+					<a href="/sddtc.github.com/en/blog/2015-12-29-twitter-log-bookkeeper/" aria-current="true" onclick="window.blog && window.blog.storeLanguagePreference('en')">English</a>
+				</div>
+			</div>
+		</header>
+
+		<main id="main">
+			<div class="page-wrap">
+				<heading-anchors>
+					<div class="post-layout">
+	<article class="post-content">
+		
+		
+		<h1>Twitter 高性能分布式日志系统架构解析</h1>
+
+		<ul class="post-metadata">
+			<li><time datetime="2015-12-29">29 December 2015</time></li>
+			Tags:
+			<li><a href="/sddtc.github.com/en/tags/log/" class="post-tag">log</a></li>
+		</ul>
+
+		<div class="page-post surface-card">
+			<h3 id="%E6%9C%AC%E6%96%87%E6%98%AF%E5%85%B3%E4%BA%8Etwitter-%E5%88%86%E5%B8%83%E5%BC%8F%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F-distributedlog%2Fbookkeeper%E7%9A%84%E6%91%98%E8%A6%81" tabindex="-1">本文是关于Twitter 分布式日志系统 DistributedLog/BookKeeper的摘要</h3>
+<p>Manhattan（Twitter的最终一致性分布式Key/Value数据库）<br>
+1.可以使用日志来序列化所有的请求。co-ordinator 将请求写到日志中。所有的 replicas 从日志中按顺序读取请求，并修改本地的状态。这种解决问题的思路叫做 Pub/Sub。而日志就是 Pub/Sub 模式的基础。<br>
+2.当数据被复制到多台机器上的时候，我们就需要保证数据的强一致性。否则，如果我们出现丢数据、数据不一致，那么势必影响到构建在分布式日志上的所有系统。如果日志都不能相信了，你的生活还能相信谁呢。<br>
+3.为什么持久化 (durability)、多副本 (replication) 和强一致性 (consistency)，对我们来说这么重要呢？</p>
+<p>比如 Kestrel（用于在线系统）、Kafka（用于离线分析）这些系统都不支持严格的持久化，或者在支持持久化的情况下性能极差。<br>
+它们采用定期回刷 (periodic flush) 磁盘或者依赖于文件系统 (pdflush) 来持久化数据。</p>
+<p>4.日志系统的核心负载可以归为三类：writes，tailing reads 和 catch-up reads。<br>
+Writes 就是将数据追加到一个日志中，tailing reads 就是从日志的尾部读最新的东西，而 catch-up reads 则是从比较早的位置开始读日志（比如数据库中重建副本）。<br>
+Writes 和 tailing reads 在意的是延时 (latency)，因为它关系到一个消息能多快地从被写入到被读到。<br>
+而 catch-up reads 在意的则是高吞吐量，因为它关系到是否能追赶到日志的尾部。<br>
+在一个“完美”的世界中，系统应该只有两种负载，writes 和 tailing reads。而且大部分现有系统对于这两种负载可以很好地应付。<br>
+但是，在现实世界里，这基本不可能。尤其在一个多租户的环境里，catch-up reads 通常成为影响系统的重要因素。<br>
+举个例子，以流式计算为例，用户可能重启一个 topology。而这个 topology 可能从很早地位置开始大量读数据，从而引入大量的 catch-up reads。而这些 catch-up reads 在文件系统角度通常会表现为大批量的扫描，文件系统会进行大量的预读取到 Page Cache 里，从而挤掉最新的数据而影响写操作和 tailing read操作。<br>
+在设计这个分布式日志系统 DistributedLog 的时候，我们进行了各种调研。也同时基于运维已有系统 (kestrel, Kafka) 的经验，我们最终决定基于 Apache BookKeeper进行构建。<br>
+主要因为 Apache BookKeeper 提供的三个核心特性：I/O 分离、并行复制和容易理解的一致性模型。它们能够很好地满足我们对于持久化、多副本和一致性的要求。</p>
+<p>摘自：<a href="http://mp.weixin.qq.com/s?__biz=MzAwMDU1MTE1OQ==&amp;mid=403051208&amp;idx=1&amp;sn=1694ac05acbcb5ca53c88bfac8a68856&amp;scene=1&amp;srcid=1224xZuQ9QQ4sRmiPVdHTppL#wechat_redirect">【年度案例】Twitter高性能分布式日志系统架构解析</a></p>
+
+		</div>
+		<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/sddtc.github.com/en/blog/2015-12-28-all-years-note/">2015 年度总结</a></li><li class="links-nextprev-next">Next →<br><a href="/sddtc.github.com/en/blog/2016-01-28-wechat-picture-catch/">wechat 通过抓包获取图片方法实践</a></li>
+		</ul>
+	</article>
+	<aside class="post-toc">
+		<div class="content-tableau">
+        <ul><li><a href="#%E6%9C%AC%E6%96%87%E6%98%AF%E5%85%B3%E4%BA%8Etwitter-%E5%88%86%E5%B8%83%E5%BC%8F%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F-distributedlog%2Fbookkeeper%E7%9A%84%E6%91%98%E8%A6%81">本文是关于Twitter 分布式日志系统 DistributedLog/BookKeeper的摘要</a></li></ul>
+      </div>
+	</aside>
+</div>
+
+				</heading-anchors>
+			</div>
+		</main>
+
+		<footer>
+			<div class="page-wrap">
+				<p>Copyright © <span id="copyright-year"></span></p>
+			</div>
+		</footer>
+
+		
+
+    
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/en/blog/2015-12-29-twitter-log-bookkeeper/` was built on 2026-05-01T10:59:18.612Z -->
+		<script type="module" src="/sddtc.github.com/dist/9UoH1FTAXT.js"></script>
+	</body>
+</html>

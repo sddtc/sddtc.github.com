@@ -1,0 +1,1212 @@
+
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>再谈 ViewModel</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.5">
+		<link rel="canonical" href="https://www.sddtc.florist/zh/blog/2020-12-10-android-core-viewmodel-overview/">
+		<link rel="alternate" hreflang="zh" href="https://www.sddtc.florist/zh/blog/2020-12-10-android-core-viewmodel-overview/">
+		<link rel="alternate" hreflang="en" href="https://www.sddtc.florist/en/blog/2020-12-10-android-core-viewmodel-overview/">
+		<link rel="alternate" hreflang="x-default" href="https://www.sddtc.florist/">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+
+html {
+	overflow-y: scroll;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img {
+	max-width: 100%;
+}
+
+img[width][height] {
+	height: auto;
+}
+
+img[src$=".svg"] {
+	width: 100%;
+	height: auto;
+	max-width: none;
+}
+
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+
+.links-nextprev>* {
+	flex-grow: 1;
+}
+
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	/* Merges borders */
+	margin-bottom: 1rem;
+}
+
+th,
+td {
+	padding: 12px;
+	text-align: left;
+	border-bottom: 1px solid var(--color-gray-20);
+}
+
+th {
+	background-color: var(--background-color);
+	color: var(--color-gray-90);
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375;
+	/* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+
+.home-link {
+	flex-grow: 1;
+	font-size: 1em;
+	/* 16px /16 */
+	font-weight: 700;
+}
+
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.nav-item {
+	display: inline-block;
+}
+
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em;
+	/* 13px /16 */
+	color: var(--color-gray-90);
+}
+
+.postlist-date {
+	word-spacing: -0.5px;
+}
+
+.postlist-link {
+	font-size: 1.1875em;
+	/* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags in article */
+.postlist-item>.post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.post-metadata time {
+	margin-right: 1em;
+}
+:root {
+	/* Palette (colorhunt: c0e1d2-e5eee4-f6f4e8-dc9b9b) */
+	--c-mint:    #C0E1D2;
+	--c-bg:      #E5EEE4;
+	--c-surface: #F6F4E8;
+	--c-pink:    #DC9B9B;
+
+	/* Neutrals */
+	--c-text:      #4F625D;
+	--c-text-soft: #6E7674;
+	--c-border:    rgba(192, 225, 210, 0.7);
+
+	/* Role mapping (overrides index.css defaults) */
+	--background-color:        var(--c-bg);
+	--text-color:              var(--c-text);
+	--text-color-link:         var(--c-pink);
+	--text-color-link-active:  var(--c-text);
+	--text-color-link-visited: var(--c-pink);
+
+	--color-gray-20: var(--c-border);
+	--color-gray-50: var(--c-text-soft);
+	--color-gray-90: var(--c-text);
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* —— Tag pills —— */
+.post-tag {
+	display: inline-block;
+	padding: 0.2em 0.65em;
+	background: var(--c-mint);
+	color: var(--c-text);
+	border-radius: 6px;
+	font-style: normal;
+	font-size: 1rem;
+	text-decoration: none;
+	border: none;
+}
+
+a.post-tag[href]:visited {
+	color: var(--c-text);
+}
+
+a.post-tag[href]:hover,
+a.post-tag[href]:active {
+	background: var(--c-pink);
+	color: #fff;
+	text-decoration: none;
+}
+
+.tags-page {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+.tags-page li {
+	float: left;
+	margin: 0 20px 10px 0;
+}
+
+/* Categories Page */
+.post-category {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: normal;
+	font-size: 1.2em;
+}
+
+/* —— Article body —— */
+.page-post {
+	font-size: 1.0625rem;
+	line-height: 1.75;
+	margin: 1rem auto;
+	max-width: 720px;
+}
+
+.page-post p {
+	margin: 0 0 1em;
+}
+
+.page-post a {
+	color: var(--c-pink);
+	text-decoration: none;
+	border-bottom: 1px solid var(--c-pink);
+}
+
+.page-post a:hover {
+	color: var(--c-text);
+	border-bottom-color: var(--c-text);
+}
+
+/* Inline code */
+.page-post code,
+code {
+	font-size: 0.9em;
+	background: var(--c-surface);
+	border: 1px solid var(--c-mint);
+	color: var(--c-pink);
+	padding: 0.1em 0.4em;
+	margin: 0 2px;
+	border-radius: 4px;
+	font-style: normal;
+	word-break: break-all;
+}
+
+/* Pre block (Prism token colors stay; container restyled) */
+.page-post pre[class*="language-"],
+pre[class*="language-"] {
+	border-radius: 8px;
+	box-shadow: 0 2px 0 var(--c-mint);
+	margin: 1.25em 0;
+}
+
+.page-post pre.code-copy-enabled,
+pre.code-copy-enabled {
+	position: relative;
+	padding-top: 3.25em;
+}
+
+.code-copy-button {
+	position: absolute;
+	top: 0.75rem;
+	right: 0.75rem;
+	z-index: 1;
+	min-width: 3.75rem;
+	padding: 0.35rem 0.65rem;
+	border: 1px solid var(--c-mint);
+	border-radius: 6px;
+	background: var(--c-mint);
+	color: var(--c-text);
+	font: 600 0.75rem var(--font-family);
+	line-height: 1.2;
+	cursor: pointer;
+	transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.code-copy-button:hover,
+.code-copy-button:focus-visible {
+	background: var(--c-pink);
+	border-color: var(--c-pink);
+	color: #fff;
+	outline: none;
+}
+
+/* Code inside pre: reset inline-code styling */
+pre[class*="language-"] code {
+	background: transparent;
+	border: none;
+	color: inherit;
+	padding: 0;
+	margin: 0;
+	border-radius: 0;
+}
+
+/* Blockquote */
+blockquote,
+.page-post blockquote {
+	background: var(--c-surface);
+	border-left: 4px solid var(--c-pink);
+	padding: 0.9em 1.1em;
+	border-radius: 0 6px 6px 0;
+	color: var(--c-text-soft);
+	margin: 1em 0;
+}
+
+.page-post blockquote p:last-child {
+	margin-bottom: 0;
+}
+
+/* —— Post layout —— */
+.post-layout {
+	display: grid;
+	grid-template-columns: minmax(0, 720px) 220px;
+	gap: 2rem;
+	justify-content: center;
+	align-items: start;
+}
+
+.post-content {
+	min-width: 0;
+}
+
+.post-content h1 {
+	margin-top: 0.5rem;
+}
+
+.post-metadata {
+	color: var(--c-text-soft);
+	font-size: 0.875rem;
+}
+
+.post-toc {
+	position: sticky;
+	top: 1.5rem;
+	width: 220px;
+	max-height: calc(100vh - 3rem);
+	overflow-y: auto;
+	padding: 1rem;
+	background: var(--c-surface);
+	border-radius: 8px;
+	border: 1px solid var(--c-border);
+	font-size: 0.875rem;
+}
+
+.post-toc:not(:has(a)) {
+	background: transparent;
+	border: none;
+	padding: 0;
+}
+
+.post-toc a {
+	color: var(--c-text);
+	text-decoration: none;
+}
+
+.post-toc a:hover {
+	color: var(--c-pink);
+	text-decoration: underline;
+}
+
+.post-toc ul {
+	padding-left: 1.1em;
+	margin: 0.25em 0;
+}
+
+@media (max-width: 1100px) {
+	.post-layout {
+		grid-template-columns: minmax(0, 720px);
+	}
+	.post-toc {
+		display: none;
+	}
+}
+
+@media (min-width: 1101px) {
+	main > .page-wrap:has(.post-layout) {
+		max-width: none;
+		padding-left: 0;
+		padding-right: 0;
+	}
+	.post-layout {
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 0 1.25rem;
+	}
+}
+
+/* —— Global layout & typography —— */
+.page-wrap {
+	max-width: 720px;
+	margin: 0 auto;
+	padding: 0 1.25rem;
+}
+
+body {
+	line-height: 1.7;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: var(--c-text);
+	font-weight: 700;
+	line-height: 1.35;
+}
+
+h1 { font-size: 2rem; line-height: 1.3; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; line-height: 1.4; }
+
+a[href]:hover,
+a[href]:active {
+	text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+	.page-wrap {
+		padding: 0 1rem;
+	}
+}
+
+/* —— Header & nav —— */
+header {
+	display: block;
+	padding: 0;
+	border-bottom: 1px solid var(--c-border);
+}
+
+.header-inner {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+
+.home-link {
+	color: var(--c-text);
+	font-size: 1.25rem;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.nav {
+	font-size: 0.9375rem;
+	font-weight: 500;
+}
+
+.nav-item a {
+	color: var(--c-text);
+	text-decoration: none;
+	padding: 0.25em 0.5em;
+	border-radius: 999px;
+	transition: background 0.15s, color 0.15s;
+}
+
+.nav-item a:hover {
+	color: var(--c-pink);
+	text-decoration: none;
+}
+
+.nav a[href][aria-current="page"] {
+	background: var(--c-text);
+	color: #fff;
+	padding: 0.25em 0.75em;
+	text-decoration: none;
+}
+
+.language-switcher {
+	display: flex;
+	align-items: center;
+	gap: 0.35rem;
+	font-size: 0.875rem;
+}
+
+.language-switcher a {
+	color: var(--c-text-soft);
+	padding: 0.2em 0.55em;
+	border-radius: 6px;
+	text-decoration: none;
+}
+
+.language-switcher a:hover {
+	background: var(--c-mint);
+	color: var(--c-text);
+	text-decoration: none;
+}
+
+.language-switcher a[aria-current="true"] {
+	background: var(--c-text);
+	color: #fff;
+}
+
+.language-entry {
+	margin-top: 3rem;
+	text-align: center;
+}
+
+.language-entry h1 {
+	margin-top: 0;
+}
+
+.language-entry a {
+	color: var(--c-pink);
+	font-size: 1.125rem;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.language-entry a:hover {
+	color: var(--c-text);
+	text-decoration: underline;
+}
+
+/* —— Surface card —— */
+.surface-card {
+	background: var(--c-surface);
+	border-radius: 8px;
+	padding: 2rem 2.25rem;
+}
+
+@media (max-width: 768px) {
+	.surface-card {
+		padding: 1.25rem;
+		border-radius: 6px;
+	}
+}
+
+/* —— Page title (home, listing pages) —— */
+.page-title {
+	margin: 1.5rem 0 1rem;
+}
+
+.page-title h2 {
+	margin: 0;
+}
+
+/* —— Postlist —— */
+.postlist {
+	margin: 0;
+}
+
+.postlist-item {
+	padding-bottom: 1em;
+	margin-bottom: 1.25em;
+	border-bottom: 1px dashed var(--c-border);
+}
+
+.postlist-item:last-child {
+	border-bottom: none;
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+.postlist-item:before {
+	color: var(--c-pink);
+	font-weight: 700;
+	font-size: 0.8125em;
+}
+
+.postlist-date {
+	color: var(--c-text-soft);
+	font-size: 0.875rem;
+}
+
+.postlist-link {
+	color: var(--c-text);
+	font-size: 1.125rem;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.postlist-link:hover {
+	color: var(--c-pink);
+	text-decoration: underline;
+}
+
+.page-footer {
+	margin-top: 1.5rem;
+	text-align: center;
+	color: var(--c-text-soft);
+	font-size: 0.9375rem;
+}
+
+/* —— Prev / next links —— */
+.links-nextprev {
+	border-top: 1px solid var(--c-border);
+	margin-top: 2rem;
+	padding-top: 1rem;
+}
+
+.links-nextprev > li {
+	padding: 0.75em 1em;
+	border-radius: 6px;
+	transition: background 0.15s;
+}
+
+.links-nextprev > li:hover {
+	background: var(--c-surface);
+}
+
+.links-nextprev a {
+	color: var(--c-text);
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.links-nextprev a:hover {
+	color: var(--c-pink);
+	text-decoration: underline;
+}
+
+/* —— Footer —— */
+footer {
+	margin-top: 3rem;
+	border-top: 1px solid var(--c-border);
+}
+
+footer .page-wrap {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	text-align: center;
+	color: var(--c-text-soft);
+	font-size: 0.875rem;
+}
+
+footer p {
+	margin: 0;
+}
+
+/* —— Generic page content (about, etc.) —— */
+.page-content {
+	max-width: 720px;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 1rem;
+	line-height: 1.75;
+}
+
+.page-content h2 {
+	margin-top: 0;
+}
+
+.page-content a {
+	color: var(--c-pink);
+	text-decoration: none;
+	border-bottom: 1px solid var(--c-pink);
+}
+
+.page-content a:hover {
+	color: var(--c-text);
+	border-bottom-color: var(--c-text);
+}
+
+.page-content blockquote {
+	background: var(--c-bg);
+	border-left: 4px solid var(--c-pink);
+	padding: 0.9em 1.1em;
+	border-radius: 0 6px 6px 0;
+	color: var(--c-text-soft);
+	margin: 1em 0;
+}
+
+/* —— Categories list page —— */
+.categories-page {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem 1rem;
+}
+
+.categories-page .post-category {
+	background: var(--c-mint);
+	color: var(--c-text);
+	padding: 0.4em 1em;
+	border-radius: 999px;
+	font-size: 1rem;
+	text-decoration: none;
+	transition: background 0.15s, color 0.15s;
+}
+
+.categories-page .post-category:hover {
+	background: var(--c-pink);
+	color: #fff;
+}
+/**
+ * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
+ * Based on https://github.com/chriskempson/tomorrow-theme
+ * @author Rose Pritchard
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #ccc;
+	background: none;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #2d2d2d;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #999;
+}
+
+.token.punctuation {
+	color: #ccc;
+}
+
+.token.tag,
+.token.attr-name,
+.token.namespace,
+.token.deleted {
+	color: #e2777a;
+}
+
+.token.function-name {
+	color: #6196cc;
+}
+
+.token.boolean,
+.token.number,
+.token.function {
+	color: #f08d49;
+}
+
+.token.property,
+.token.class-name,
+.token.constant,
+.token.symbol {
+	color: #f8c555;
+}
+
+.token.selector,
+.token.important,
+.token.atrule,
+.token.keyword,
+.token.builtin {
+	color: #cc99cd;
+}
+
+.token.string,
+.token.char,
+.token.attr-value,
+.token.regex,
+.token.variable {
+	color: #7ec699;
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+	color: #67cdcc;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+
+.token.inserted {
+	color: green;
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<div class="page-wrap header-inner">
+				<a href="/sddtc.github.com/zh/" class="home-link">大蜕</a>
+
+				<nav>
+					<h2 class="visually-hidden">Top level navigation menu</h2>
+					<ul class="nav">
+						
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/zh/">主页</a></li>
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/zh/categories/">分类</a></li>
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/zh/tags/">标签</a></li>
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/zh/blog/" aria-current="page">文章</a></li>
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/zh/about/">关于我</a></li>
+					</ul>
+				</nav>
+
+				<div class="language-switcher" aria-label="语言">
+					<a href="/sddtc.github.com/zh/blog/2020-12-10-android-core-viewmodel-overview/" aria-current="true" onclick="window.blog && window.blog.storeLanguagePreference('zh')">中文</a>
+					<a href="/sddtc.github.com/en/blog/2020-12-10-android-core-viewmodel-overview/" onclick="window.blog && window.blog.storeLanguagePreference('en')">English</a>
+				</div>
+			</div>
+		</header>
+
+		<main id="main">
+			<div class="page-wrap">
+				<heading-anchors>
+					<div class="post-layout">
+	<article class="post-content">
+		
+		
+		<h1>再谈 ViewModel</h1>
+
+		<ul class="post-metadata">
+			<li><time datetime="2020-12-10">10 December 2020</time></li>
+			标签:
+			<li><a href="/sddtc.github.com/zh/tags/mobile/" class="post-tag">mobile</a></li>
+		</ul>
+
+		<div class="page-post surface-card">
+			<h4 id="%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86" tabindex="-1">背景知识</h4>
+<p>设计 <a href="https://developer.android.com/reference/androidx/lifecycle/ViewModel">ViewModel</a> 类的目的是为了以生命周期的方式来存储和管理 Android 应用中和 UI 相关的数据的。它帮助应用程序可以在屏幕旋转的时候仍然持有相关的数据， 换句话说， 想象一下你的应用程序可以显示出一个计数器并且可以点击一个按钮使它的值可以做加一操作，如果没有任何多余的代码逻辑处理， 当你旋转屏幕，你的应用界面适应了横屏模式，那么显示出来的累加值可能就会被清零了 😊， 因为数据的状态没有被正确的恢复。</p>
+<p>Android 框架负责管理 UI 控制器的生命周期，例如 Activities 的和 Fragments 的。 为了响应设备的事件或用户的操作, Android 框架本身可能会选择销毁或重新创建 UI 控制器， 而这些行为都不在你的控制之内。</p>
+<p>如果系统销毁或重新创建 UI 控制器，那么你存储在其中的所有与 UI 相关的临时数据都将丢失。 例如某个 Activity 包含了一个用户列表数据。 当配置更改了(例如旋转了屏幕)导致 Activity 被重新创建，那么该新创建出来的 Activity 必须重新获取用户列表。   对于结构简单数据， Activity 可以使用 <code>onSaveInstanceState()</code> 方法并从 <code>onCreate()</code> 中的 <code>bundle</code> 中还原其数据。 然而⚠️，此方法仅适用于可以先序列化然后反序列化的少量数据，而不适合潜在的大量数据： 例如用户列表或位图数据。</p>
+<p>另一个问题是，UI 控制器经常需要进行异步调用，那么这意味着请求可能需要一些时间才能返回。 UI 控制器需要管理这些调用，来确保系统在销毁后能将其清除以避免潜在的内存泄漏。 这种管理的维护工作相对而言非常昂贵，当配置更改了(例如旋转了屏幕)导致 Activity 被重新创建实际上也造成了资源的浪费： 因为对象可能不得不重新发出已经发出的调用。</p>
+<p>最后， UI 控制器（例如 Activities 和 Fragments）的指责已经很多了，比如说，显示 UI 数据，再比如说，对用户交互动作做出反应，另外还要处理操作系统的通信（例如权限请求）。 那么你若是还要 UI 控制器负责从数据库或网络加载数据是不是有点过分了咳咳。 它会给类增加膨胀的负担。 将过多的职责分配给 UI 控制器可能会导致一个类尝试单独处理应用程序的所有工作，而不是将工作委派给其他类。 以这种方式给 UI 控制器分配过多的责任也使测试变得更加困难。(永远不要忘了程序的可测试性 🐷)。</p>
+<p>综上所述， 从 UI 控制器中分离视图数据的所有权更高效更简洁。</p>
+<h4 id="%E4%B8%80%E4%B8%AA-viewmodel-%E7%9A%84%E5%AE%9E%E7%8E%B0" tabindex="-1">一个 ViewModel 的实现</h4>
+<p>Architecture Components 为 UI 控制器提供 ViewModel helper 类，该类负责为 UI 准备数据。 ViewModel 对象会在配置更改期间(例如屏幕旋转)自动保留，以便它们保存的数据可立即用于下一个 <code>Activity/Fragment</code> 的实例。<br>
+举例来讲，如果你需要在应用程序中显示一个用户列表，那么请保证你所获取并保留用户列表的实现逻辑处在 ViewModel 中，而不是 <code>Activity</code> 或者 <code>Fragment</code>，如以下示例代码所示：</p>
+<pre class="language-kotlin" tabindex="0"><code class="hljs language-kotlin"><span class="token keyword">class</span> MyViewModel <span class="token operator">:</span> <span class="token function">ViewModel</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">val</span> users<span class="token operator">:</span> MutableLiveData<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>User<span class="token operator">></span><span class="token operator">></span> <span class="token keyword">by</span> lazy <span class="token punctuation">{</span>
+        <span class="token function">MutableLiveData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
+            <span class="token function">loadUsers</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">fun</span> <span class="token function">getUsers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> LiveData<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>User<span class="token operator">></span><span class="token operator">></span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> users
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">fun</span> <span class="token function">loadUsers</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// Do an asynchronous operation to fetch users.</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>而你的 <code>Activity</code>:</p>
+<pre class="language-kotlin" tabindex="0"><code class="hljs language-kotlin"><span class="token keyword">class</span> MyActivity <span class="token operator">:</span> <span class="token function">AppCompatActivity</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">onCreate</span><span class="token punctuation">(</span>savedInstanceState<span class="token operator">:</span> Bundle<span class="token operator">?</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// Create a ViewModel the first time the system calls an activity's onCreate() method.</span>
+        <span class="token comment">// Re-created activities receive the same MyViewModel instance created by the first activity.</span>
+
+        <span class="token comment">// Use the 'by viewModels()' Kotlin property delegate</span>
+        <span class="token comment">// from the activity-ktx artifact</span>
+        <span class="token keyword">val</span> model<span class="token operator">:</span> MyViewModel <span class="token keyword">by</span> <span class="token function">viewModels</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        model<span class="token punctuation">.</span><span class="token function">getUsers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">observe</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> Observer<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>User<span class="token operator">></span><span class="token operator">></span><span class="token punctuation">{</span> users <span class="token operator">-></span>
+            <span class="token comment">// update UI</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>如果 一个 <code>Activity</code> 被重新创建了，那么它会接收到与第一个  <code>Activity</code>  所创建出来的 <code>MyViewModel</code> 实例。 当 <code>Activity </code> 完成它的工作之后，框架将调用 ViewModel 对象的<code>onCleared()</code> 方法，以便清理资源。</p>
+<p>❌ ViewModel 绝不能引用任何一个视图,  也不能引用 <a href="https://developer.android.com/reference/androidx/lifecycle/Lifecycle">Lifecycle 类</a>，总之是不能引用任何可能包含对 <code>activity</code> 上下文有引用的类。</p>
+<p><code>ViewModel</code> 对象是为了使 <code>Views</code> 或 <code>LifecycleOwners</code> 的实例寿命更长。这种设计还意味着你可以编写测试来更轻松地覆盖 <code>ViewModel</code>， 因为它不了解 <code>View</code> 和 <code>Lifecycle</code> 对象。<br>
+<code>ViewModel</code> 对象可以_包含_ <code>LifecycleObserver</code>，例如 <code>LiveData</code> 对象。 但是 <code>ViewModel</code> 对象绝不能 <em><code>observe</code></em> 有生命周期感知属性的可观察对象的更改（例如： <code>LiveData</code>）。<br>
+如果 <code>ViewModel</code> 需要 <code>Application</code> 上下文（例如，查找系统服务），则可以扩展 <code>AndroidViewModel</code> 类， 并构造一个接收 <code>Application</code> 的构造函数，因为 <code>Application</code> 类扩展了 <code>Context</code>。</p>
+<p><s>记住了没</s></p>
+<h4 id="viewmodel-%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F" tabindex="-1">ViewModel 的生命周期</h4>
+<p><code>ViewModel</code> 对象作用的的范围是从获取 <code>ViewModel</code> 时传递给 <code>ViewModelProvider</code> 的整个生命周期范围。 <code>ViewModel</code> 会被保留在内存中直到其生命周期范围永久的消亡：对于 <code>Activity</code> 而言是当它完成的时候; 对于 <code>Fragment</code> 而言，是当它 <code>deteched</code> 的时候。</p>
+<p><img src="content/media/img/viewmodel/viewmodel-lifecycle.png" alt="viewmodel-lifecycle"></p>
+<p>上面这张图说明了当一个 <code>Activity</code> 经历 <code>rotated</code>(屏幕旋转) 后结束时的各种生命周期状态。 它还在关联的 <code>Activity</code> 生命周期旁显示了 <code>ViewModel</code> 的生命周期。 它也同样适用于 <code>Fragment</code> 的生命周期。</p>
+<h4 id="fragments-%E4%B9%8B%E9%97%B4%E7%9A%84%E6%95%B0%E6%8D%AE%E5%85%B1%E4%BA%AB" tabindex="-1">Fragments 之间的数据共享</h4>
+<p>通常一个 <code>Activity</code> 中的两个或更多 <code>Fragments</code> 需要相互通信。 想象这样一个场景:<br>
+你有一个 <code>Fragment</code> 是允许用户从列表中选择一个项目，另一个 <code>Fragment</code> 显示了所选项目的内容。 这种情况绝非易事，因为两个 <code>Fragment</code> 都需要定义一些接口描述，并且 <code>Activity</code> 必须将这两个 <code>Fragments</code> 绑定在一起。 此外，两个 <code>Fragment</code> 都必须处理另一个 <code>Fragment</code> 尚未创建或不可见的情况。<br>
+那么这个时候你该怎么办呢？ 你可以通过使用 <code>ViewModel</code> 对象解决这样的痛点。 <code>Fragments</code> 可以共享 <code>ViewModel</code> 来处理此通信，通过使用 <code>ViewModel</code> 的各种生命周期函数。 如以下示例代码所示：</p>
+<pre class="language-kotlin" tabindex="0"><code class="hljs language-kotlin"><span class="token keyword">class</span> SharedViewModel <span class="token operator">:</span> <span class="token function">ViewModel</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> selected <span class="token operator">=</span> MutableLiveData<span class="token operator">&lt;</span>Item<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">fun</span> <span class="token function">select</span><span class="token punctuation">(</span>item<span class="token operator">:</span> Item<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        selected<span class="token punctuation">.</span>value <span class="token operator">=</span> item
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> MasterFragment <span class="token operator">:</span> <span class="token function">Fragment</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">lateinit</span> <span class="token keyword">var</span> itemSelector<span class="token operator">:</span> Selector
+
+    <span class="token comment">// Use the 'by activityViewModels()' Kotlin property delegate</span>
+    <span class="token comment">// from the fragment-ktx artifact</span>
+    <span class="token keyword">private</span> <span class="token keyword">val</span> model<span class="token operator">:</span> SharedViewModel <span class="token keyword">by</span> <span class="token function">activityViewModels</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">onViewCreated</span><span class="token punctuation">(</span>view<span class="token operator">:</span> View<span class="token punctuation">,</span> savedInstanceState<span class="token operator">:</span> Bundle<span class="token operator">?</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">onViewCreated</span><span class="token punctuation">(</span>view<span class="token punctuation">,</span> savedInstanceState<span class="token punctuation">)</span>
+        itemSelector<span class="token punctuation">.</span><span class="token function">setOnClickListener</span> <span class="token punctuation">{</span> item <span class="token operator">-></span>
+            <span class="token comment">// Update the UI</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> DetailFragment <span class="token operator">:</span> <span class="token function">Fragment</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">// Use the 'by activityViewModels()' Kotlin property delegate</span>
+    <span class="token comment">// from the fragment-ktx artifact</span>
+    <span class="token keyword">private</span> <span class="token keyword">val</span> model<span class="token operator">:</span> SharedViewModel <span class="token keyword">by</span> <span class="token function">activityViewModels</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">onViewCreated</span><span class="token punctuation">(</span>view<span class="token operator">:</span> View<span class="token punctuation">,</span> savedInstanceState<span class="token operator">:</span> Bundle<span class="token operator">?</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">onViewCreated</span><span class="token punctuation">(</span>view<span class="token punctuation">,</span> savedInstanceState<span class="token punctuation">)</span>
+        model<span class="token punctuation">.</span>selected<span class="token punctuation">.</span><span class="token function">observe</span><span class="token punctuation">(</span>viewLifecycleOwner<span class="token punctuation">,</span> Observer<span class="token operator">&lt;</span>Item<span class="token operator">></span> <span class="token punctuation">{</span> item <span class="token operator">-></span>
+            <span class="token comment">// Update the UI</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>我们可以注意到的是，<code>MasterFragment</code> 和 <code>DetailFragment</code> 都持有 <code>SharedViewModel</code>。 这样，当每个 <code>Fragment</code> 都获得 <code>ViewModelProvider</code> 时，它们将收到相同的 <code>SharedViewModel</code> 的实例，该实例的作用范围将是展示给用户的那个 <code>Activity</code>。</p>
+<p>使用这种方法具有以下优点：</p>
+<ul>
+<li><code>Activity</code> 无需执行任何操作也无需了解此通信。</li>
+<li>除了都持有 <code>SharedViewModel</code> 之外，<code>Fragments</code> 之间也不需要过多的了解彼此的细节。 如果其中一个 <code>Fragment</code> 消失了，则另一个 <code>Fragment</code> 仍然可以继续照常工作。</li>
+<li>每个 <code>Fragment</code> 都有自己的生命周期并且不受另一个 <code>Fragment</code> 的生命周期影响。 如果一个 <code>Fragment</code> 替换了另一个 <code>Fragment</code>， 则 UI 可以继续工作而不会出现任何问题。</li>
+</ul>
+<h4 id="replacing-loaders-with-viewmodel" tabindex="-1">Replacing Loaders with ViewModel</h4>
+<p>像 <code>CursorLoader</code> 这样的 Loader 类经常用于使应用程序 UI 中的数据与数据库保持同步。 你可以使用 ViewModel 和其他一些类来替换这种 Loader 类。 使用 ViewModel 可将 UI 控制器与数据加载的操作分离开来，这意味着类之间的强引用会变少。<br>
+在使用 <code>loader</code> 程序的一种常见方法中，应用程序可能会使用 <code>CursorLoader</code> 来观察数据库中的内容。 当数据库中的值发生更改时， <code>loader</code> 会自动触发数据的重新加载并更新 UI：</p>
+<p><img src="content/media/img/viewmodel/viewmodel-loader.png" alt="viewmodel-loader"></p>
+<p><code>ViewModel</code> 与 <code>Room</code> 和 <code>LiveData</code> 一起使用以替换 <code>loader</code>。 <code>ViewModel</code> 可以确保数据在设备配置更改后（例如旋转屏幕）仍然存在。 当数据库更改时，<code>Room</code> 会通知你的 <code>LiveData</code>，然后 <code>LiveData</code> 会使用修改后的数据更新 UI。</p>
+<p><img src="content/media/img/viewmodel/viewmodel-replace-loader.png" alt="viewmodel-replace-loader"></p>
+<h4 id="use-coroutines-with-viewmodel" tabindex="-1">Use coroutines with ViewModel</h4>
+<p><code>ViewModel</code> 还包含了对 <code>Kotlin</code> 协程的支持</p>
+<h4 id="%E6%9B%B4%E5%A4%9A%E7%9A%84%E4%BF%A1%E6%81%AF" tabindex="-1">更多的信息</h4>
+<p>随着数据变得越来越复杂，你可能会选择使用单独的类来加载数据。 <code>ViewModel</code> 的目的是为 UI 控制器封装数据，以使数据在配置更改后仍然可以被恢复。 所以如果你想要了解更多更多有关如何在配置更改后加载，保留和管理数据的信息，可以看看<a href="https://developer.android.com/topic/libraries/architecture/saving-states">这篇文章</a></p>
+<h4 id="%E4%B8%80%E4%BA%9B%E7%9B%B8%E5%85%B3%E7%9A%84%E8%B5%84%E6%BA%90" tabindex="-1">一些相关的资源</h4>
+<ul>
+<li><a href="https://github.com/android/architecture-components-samples/tree/main/BasicSample">Android Architecture Components basic sample</a></li>
+<li><a href="https://github.com/android/sunflower">Sunflower, a gardening app illustrating Android development best practices with Android Jetpack.</a></li>
+</ul>
+
+		</div>
+		<ul class="links-nextprev"><li class="links-nextprev-prev">← 上一篇<br> <a href="/sddtc.github.com/zh/blog/2020-12-08-android-app-arch-best-practices/">最佳实践什么的 可太有魅力了</a></li><li class="links-nextprev-next">下一篇 →<br><a href="/sddtc.github.com/zh/blog/2020-12-18-pinpin-refactor-book/">品品《重构》这本书嗷</a></li>
+		</ul>
+	</article>
+	<aside class="post-toc">
+		<div class="content-tableau">
+        <ul><li><a href="#%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86">背景知识</a></li><li><a href="#%E4%B8%80%E4%B8%AA-viewmodel-%E7%9A%84%E5%AE%9E%E7%8E%B0">一个 ViewModel 的实现</a></li><li><a href="#viewmodel-%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">ViewModel 的生命周期</a></li><li><a href="#fragments-%E4%B9%8B%E9%97%B4%E7%9A%84%E6%95%B0%E6%8D%AE%E5%85%B1%E4%BA%AB">Fragments 之间的数据共享</a></li><li><a href="#replacing-loaders-with-viewmodel">Replacing Loaders with ViewModel</a></li><li><a href="#use-coroutines-with-viewmodel">Use coroutines with ViewModel</a></li><li><a href="#%E6%9B%B4%E5%A4%9A%E7%9A%84%E4%BF%A1%E6%81%AF">更多的信息</a></li><li><a href="#%E4%B8%80%E4%BA%9B%E7%9B%B8%E5%85%B3%E7%9A%84%E8%B5%84%E6%BA%90">一些相关的资源</a></li></ul>
+      </div>
+	</aside>
+</div>
+
+				</heading-anchors>
+			</div>
+		</main>
+
+		<footer>
+			<div class="page-wrap">
+				<p>Copyright © <span id="copyright-year"></span></p>
+			</div>
+		</footer>
+
+		
+
+    
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/zh/blog/2020-12-10-android-core-viewmodel-overview/` was built on 2026-05-01T10:58:53.213Z -->
+		<script type="module" src="/sddtc.github.com/dist/9UoH1FTAXT.js"></script>
+	</body>
+</html>

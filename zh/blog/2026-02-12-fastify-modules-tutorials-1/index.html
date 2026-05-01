@@ -1,0 +1,1517 @@
+
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Fastify 模块化项目实战(一) — 技术选型</title>
+		<meta name="description" content="个人博客.">
+		<link rel="icon" href="/sddtc.github.com/img/favicon.ico">
+		<meta name="generator" content="Eleventy v3.1.5">
+		<link rel="canonical" href="https://www.sddtc.florist/zh/blog/2026-02-12-fastify-modules-tutorials-1/">
+		<link rel="alternate" hreflang="zh" href="https://www.sddtc.florist/zh/blog/2026-02-12-fastify-modules-tutorials-1/">
+		<link rel="alternate" hreflang="en" href="https://www.sddtc.florist/en/blog/2026-02-12-fastify-modules-tutorials-1/">
+		<link rel="alternate" hreflang="x-default" href="https://www.sddtc.florist/">
+		
+		
+		<style>/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+
+html {
+	overflow-y: scroll;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img {
+	max-width: 100%;
+}
+
+img[width][height] {
+	height: auto;
+}
+
+img[src$=".svg"] {
+	width: 100%;
+	height: auto;
+	max-width: none;
+}
+
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+
+.links-nextprev>* {
+	flex-grow: 1;
+}
+
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	/* Merges borders */
+	margin-bottom: 1rem;
+}
+
+th,
+td {
+	padding: 12px;
+	text-align: left;
+	border-bottom: 1px solid var(--color-gray-20);
+}
+
+th {
+	background-color: var(--background-color);
+	color: var(--color-gray-90);
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375;
+	/* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+
+.home-link {
+	flex-grow: 1;
+	font-size: 1em;
+	/* 16px /16 */
+	font-weight: 700;
+}
+
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.nav-item {
+	display: inline-block;
+}
+
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em;
+	/* 13px /16 */
+	color: var(--color-gray-90);
+}
+
+.postlist-date {
+	word-spacing: -0.5px;
+}
+
+.postlist-link {
+	font-size: 1.1875em;
+	/* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags in article */
+.postlist-item>.post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.post-metadata time {
+	margin-right: 1em;
+}
+:root {
+	/* Palette (colorhunt: c0e1d2-e5eee4-f6f4e8-dc9b9b) */
+	--c-mint:    #C0E1D2;
+	--c-bg:      #E5EEE4;
+	--c-surface: #F6F4E8;
+	--c-pink:    #DC9B9B;
+
+	/* Neutrals */
+	--c-text:      #4F625D;
+	--c-text-soft: #6E7674;
+	--c-border:    rgba(192, 225, 210, 0.7);
+
+	/* Role mapping (overrides index.css defaults) */
+	--background-color:        var(--c-bg);
+	--text-color:              var(--c-text);
+	--text-color-link:         var(--c-pink);
+	--text-color-link-active:  var(--c-text);
+	--text-color-link-visited: var(--c-pink);
+
+	--color-gray-20: var(--c-border);
+	--color-gray-50: var(--c-text-soft);
+	--color-gray-90: var(--c-text);
+
+	--syntax-tab-size: 2;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* —— Tag pills —— */
+.post-tag {
+	display: inline-block;
+	padding: 0.2em 0.65em;
+	background: var(--c-mint);
+	color: var(--c-text);
+	border-radius: 6px;
+	font-style: normal;
+	font-size: 1rem;
+	text-decoration: none;
+	border: none;
+}
+
+a.post-tag[href]:visited {
+	color: var(--c-text);
+}
+
+a.post-tag[href]:hover,
+a.post-tag[href]:active {
+	background: var(--c-pink);
+	color: #fff;
+	text-decoration: none;
+}
+
+.tags-page {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+.tags-page li {
+	float: left;
+	margin: 0 20px 10px 0;
+}
+
+/* Categories Page */
+.post-category {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: normal;
+	font-size: 1.2em;
+}
+
+/* —— Article body —— */
+.page-post {
+	font-size: 1.0625rem;
+	line-height: 1.75;
+	margin: 1rem auto;
+	max-width: 720px;
+}
+
+.page-post p {
+	margin: 0 0 1em;
+}
+
+.page-post a {
+	color: var(--c-pink);
+	text-decoration: none;
+	border-bottom: 1px solid var(--c-pink);
+}
+
+.page-post a:hover {
+	color: var(--c-text);
+	border-bottom-color: var(--c-text);
+}
+
+/* Inline code */
+.page-post code,
+code {
+	font-size: 0.9em;
+	background: var(--c-surface);
+	border: 1px solid var(--c-mint);
+	color: var(--c-pink);
+	padding: 0.1em 0.4em;
+	margin: 0 2px;
+	border-radius: 4px;
+	font-style: normal;
+	word-break: break-all;
+}
+
+/* Pre block (Prism token colors stay; container restyled) */
+.page-post pre[class*="language-"],
+pre[class*="language-"] {
+	border-radius: 8px;
+	box-shadow: 0 2px 0 var(--c-mint);
+	margin: 1.25em 0;
+}
+
+.page-post pre.code-copy-enabled,
+pre.code-copy-enabled {
+	position: relative;
+	padding-top: 3.25em;
+}
+
+.code-copy-button {
+	position: absolute;
+	top: 0.75rem;
+	right: 0.75rem;
+	z-index: 1;
+	min-width: 3.75rem;
+	padding: 0.35rem 0.65rem;
+	border: 1px solid var(--c-mint);
+	border-radius: 6px;
+	background: var(--c-mint);
+	color: var(--c-text);
+	font: 600 0.75rem var(--font-family);
+	line-height: 1.2;
+	cursor: pointer;
+	transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.code-copy-button:hover,
+.code-copy-button:focus-visible {
+	background: var(--c-pink);
+	border-color: var(--c-pink);
+	color: #fff;
+	outline: none;
+}
+
+/* Code inside pre: reset inline-code styling */
+pre[class*="language-"] code {
+	background: transparent;
+	border: none;
+	color: inherit;
+	padding: 0;
+	margin: 0;
+	border-radius: 0;
+}
+
+/* Blockquote */
+blockquote,
+.page-post blockquote {
+	background: var(--c-surface);
+	border-left: 4px solid var(--c-pink);
+	padding: 0.9em 1.1em;
+	border-radius: 0 6px 6px 0;
+	color: var(--c-text-soft);
+	margin: 1em 0;
+}
+
+.page-post blockquote p:last-child {
+	margin-bottom: 0;
+}
+
+/* —— Post layout —— */
+.post-layout {
+	display: grid;
+	grid-template-columns: minmax(0, 720px) 220px;
+	gap: 2rem;
+	justify-content: center;
+	align-items: start;
+}
+
+.post-content {
+	min-width: 0;
+}
+
+.post-content h1 {
+	margin-top: 0.5rem;
+}
+
+.post-metadata {
+	color: var(--c-text-soft);
+	font-size: 0.875rem;
+}
+
+.post-toc {
+	position: sticky;
+	top: 1.5rem;
+	width: 220px;
+	max-height: calc(100vh - 3rem);
+	overflow-y: auto;
+	padding: 1rem;
+	background: var(--c-surface);
+	border-radius: 8px;
+	border: 1px solid var(--c-border);
+	font-size: 0.875rem;
+}
+
+.post-toc:not(:has(a)) {
+	background: transparent;
+	border: none;
+	padding: 0;
+}
+
+.post-toc a {
+	color: var(--c-text);
+	text-decoration: none;
+}
+
+.post-toc a:hover {
+	color: var(--c-pink);
+	text-decoration: underline;
+}
+
+.post-toc ul {
+	padding-left: 1.1em;
+	margin: 0.25em 0;
+}
+
+@media (max-width: 1100px) {
+	.post-layout {
+		grid-template-columns: minmax(0, 720px);
+	}
+	.post-toc {
+		display: none;
+	}
+}
+
+@media (min-width: 1101px) {
+	main > .page-wrap:has(.post-layout) {
+		max-width: none;
+		padding-left: 0;
+		padding-right: 0;
+	}
+	.post-layout {
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 0 1.25rem;
+	}
+}
+
+/* —— Global layout & typography —— */
+.page-wrap {
+	max-width: 720px;
+	margin: 0 auto;
+	padding: 0 1.25rem;
+}
+
+body {
+	line-height: 1.7;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: var(--c-text);
+	font-weight: 700;
+	line-height: 1.35;
+}
+
+h1 { font-size: 2rem; line-height: 1.3; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; line-height: 1.4; }
+
+a[href]:hover,
+a[href]:active {
+	text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+	.page-wrap {
+		padding: 0 1rem;
+	}
+}
+
+/* —— Header & nav —— */
+header {
+	display: block;
+	padding: 0;
+	border-bottom: 1px solid var(--c-border);
+}
+
+.header-inner {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+
+.home-link {
+	color: var(--c-text);
+	font-size: 1.25rem;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.nav {
+	font-size: 0.9375rem;
+	font-weight: 500;
+}
+
+.nav-item a {
+	color: var(--c-text);
+	text-decoration: none;
+	padding: 0.25em 0.5em;
+	border-radius: 999px;
+	transition: background 0.15s, color 0.15s;
+}
+
+.nav-item a:hover {
+	color: var(--c-pink);
+	text-decoration: none;
+}
+
+.nav a[href][aria-current="page"] {
+	background: var(--c-text);
+	color: #fff;
+	padding: 0.25em 0.75em;
+	text-decoration: none;
+}
+
+.language-switcher {
+	display: flex;
+	align-items: center;
+	gap: 0.35rem;
+	font-size: 0.875rem;
+}
+
+.language-switcher a {
+	color: var(--c-text-soft);
+	padding: 0.2em 0.55em;
+	border-radius: 6px;
+	text-decoration: none;
+}
+
+.language-switcher a:hover {
+	background: var(--c-mint);
+	color: var(--c-text);
+	text-decoration: none;
+}
+
+.language-switcher a[aria-current="true"] {
+	background: var(--c-text);
+	color: #fff;
+}
+
+.language-entry {
+	margin-top: 3rem;
+	text-align: center;
+}
+
+.language-entry h1 {
+	margin-top: 0;
+}
+
+.language-entry a {
+	color: var(--c-pink);
+	font-size: 1.125rem;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.language-entry a:hover {
+	color: var(--c-text);
+	text-decoration: underline;
+}
+
+/* —— Surface card —— */
+.surface-card {
+	background: var(--c-surface);
+	border-radius: 8px;
+	padding: 2rem 2.25rem;
+}
+
+@media (max-width: 768px) {
+	.surface-card {
+		padding: 1.25rem;
+		border-radius: 6px;
+	}
+}
+
+/* —— Page title (home, listing pages) —— */
+.page-title {
+	margin: 1.5rem 0 1rem;
+}
+
+.page-title h2 {
+	margin: 0;
+}
+
+/* —— Postlist —— */
+.postlist {
+	margin: 0;
+}
+
+.postlist-item {
+	padding-bottom: 1em;
+	margin-bottom: 1.25em;
+	border-bottom: 1px dashed var(--c-border);
+}
+
+.postlist-item:last-child {
+	border-bottom: none;
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+.postlist-item:before {
+	color: var(--c-pink);
+	font-weight: 700;
+	font-size: 0.8125em;
+}
+
+.postlist-date {
+	color: var(--c-text-soft);
+	font-size: 0.875rem;
+}
+
+.postlist-link {
+	color: var(--c-text);
+	font-size: 1.125rem;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.postlist-link:hover {
+	color: var(--c-pink);
+	text-decoration: underline;
+}
+
+.page-footer {
+	margin-top: 1.5rem;
+	text-align: center;
+	color: var(--c-text-soft);
+	font-size: 0.9375rem;
+}
+
+/* —— Prev / next links —— */
+.links-nextprev {
+	border-top: 1px solid var(--c-border);
+	margin-top: 2rem;
+	padding-top: 1rem;
+}
+
+.links-nextprev > li {
+	padding: 0.75em 1em;
+	border-radius: 6px;
+	transition: background 0.15s;
+}
+
+.links-nextprev > li:hover {
+	background: var(--c-surface);
+}
+
+.links-nextprev a {
+	color: var(--c-text);
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.links-nextprev a:hover {
+	color: var(--c-pink);
+	text-decoration: underline;
+}
+
+/* —— Footer —— */
+footer {
+	margin-top: 3rem;
+	border-top: 1px solid var(--c-border);
+}
+
+footer .page-wrap {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	text-align: center;
+	color: var(--c-text-soft);
+	font-size: 0.875rem;
+}
+
+footer p {
+	margin: 0;
+}
+
+/* —— Generic page content (about, etc.) —— */
+.page-content {
+	max-width: 720px;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 1rem;
+	line-height: 1.75;
+}
+
+.page-content h2 {
+	margin-top: 0;
+}
+
+.page-content a {
+	color: var(--c-pink);
+	text-decoration: none;
+	border-bottom: 1px solid var(--c-pink);
+}
+
+.page-content a:hover {
+	color: var(--c-text);
+	border-bottom-color: var(--c-text);
+}
+
+.page-content blockquote {
+	background: var(--c-bg);
+	border-left: 4px solid var(--c-pink);
+	padding: 0.9em 1.1em;
+	border-radius: 0 6px 6px 0;
+	color: var(--c-text-soft);
+	margin: 1em 0;
+}
+
+/* —— Categories list page —— */
+.categories-page {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem 1rem;
+}
+
+.categories-page .post-category {
+	background: var(--c-mint);
+	color: var(--c-text);
+	padding: 0.4em 1em;
+	border-radius: 999px;
+	font-size: 1rem;
+	text-decoration: none;
+	transition: background 0.15s, color 0.15s;
+}
+
+.categories-page .post-category:hover {
+	background: var(--c-pink);
+	color: #fff;
+}
+/**
+ * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
+ * Based on https://github.com/chriskempson/tomorrow-theme
+ * @author Rose Pritchard
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #ccc;
+	background: none;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #2d2d2d;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #999;
+}
+
+.token.punctuation {
+	color: #ccc;
+}
+
+.token.tag,
+.token.attr-name,
+.token.namespace,
+.token.deleted {
+	color: #e2777a;
+}
+
+.token.function-name {
+	color: #6196cc;
+}
+
+.token.boolean,
+.token.number,
+.token.function {
+	color: #f08d49;
+}
+
+.token.property,
+.token.class-name,
+.token.constant,
+.token.symbol {
+	color: #f8c555;
+}
+
+.token.selector,
+.token.important,
+.token.atrule,
+.token.keyword,
+.token.builtin {
+	color: #cc99cd;
+}
+
+.token.string,
+.token.char,
+.token.attr-value,
+.token.regex,
+.token.variable {
+	color: #7ec699;
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+	color: #67cdcc;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+
+.token.inserted {
+	color: green;
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<div class="page-wrap header-inner">
+				<a href="/sddtc.github.com/zh/" class="home-link">大蜕</a>
+
+				<nav>
+					<h2 class="visually-hidden">Top level navigation menu</h2>
+					<ul class="nav">
+						
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/zh/">主页</a></li>
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/zh/categories/">分类</a></li>
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/zh/tags/">标签</a></li>
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/zh/blog/" aria-current="page">文章</a></li>
+							
+							
+							<li class="nav-item"><a href="/sddtc.github.com/zh/about/">关于我</a></li>
+					</ul>
+				</nav>
+
+				<div class="language-switcher" aria-label="语言">
+					<a href="/sddtc.github.com/zh/blog/2026-02-12-fastify-modules-tutorials-1/" aria-current="true" onclick="window.blog && window.blog.storeLanguagePreference('zh')">中文</a>
+					<a href="/sddtc.github.com/en/blog/2026-02-12-fastify-modules-tutorials-1/" onclick="window.blog && window.blog.storeLanguagePreference('en')">English</a>
+				</div>
+			</div>
+		</header>
+
+		<main id="main">
+			<div class="page-wrap">
+				<heading-anchors>
+					<div class="post-layout">
+	<article class="post-content">
+		
+		
+		<h1>Fastify 模块化项目实战(一) — 技术选型</h1>
+
+		<ul class="post-metadata">
+			<li><time datetime="2026-02-12">12 February 2026</time></li>
+			标签:
+			<li><a href="/sddtc.github.com/zh/tags/Fastify/" class="post-tag">Fastify</a>, </li>
+			<li><a href="/sddtc.github.com/zh/tags/Typescript/" class="post-tag">Typescript</a>, </li>
+			<li><a href="/sddtc.github.com/zh/tags/ESM/" class="post-tag">ESM</a></li>
+		</ul>
+
+		<div class="page-post surface-card">
+			<h2 id="%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-fastify-%E8%80%8C%E9%9D%9E-nestjs%2C-expressjs%2C-koa%3F" tabindex="-1">为什么选择 Fastify 而非 NestJS, ExpressJS, Koa?</h2>
+<p>按照我的个人经验, 之前使用 ExpressJS 来搭建项目, 项目结构基本如下所示:</p>
+<pre class="language-txt" tabindex="0"><code class="hljs language-txt">src/
+└───── infrastructures/
+    │   ├── db.js
+    │   └── server.js
+    │
+    ├── middlewares/
+    │   └── authMiddleware.js
+    │
+    ├── routes/
+    │   ├── authRoutes.js
+    │   └── messageRoutes.js
+    │
+    └── services/
+        ├── messagesService.js
+        ├── userService.js
+        └── authService.js</code></pre>
+<p>这次在构思模块化项目的时候, 想尝试一些新东西, 能够满足我的封装性高的需求, 首先对比了 NestJS 和 ExpressJS</p>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th><strong>NestJS</strong></th>
+<th><strong>ExpressJS</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>定位</strong></td>
+<td>进阶型全栈后端框架</td>
+<td>轻量级 Web 框架</td>
+</tr>
+<tr>
+<td><strong>架构风格</strong></td>
+<td>强制 MVC + 模块化 + DI（受 Angular 启发）</td>
+<td>无架构规范，自由度高</td>
+</tr>
+<tr>
+<td><strong>学习成本</strong></td>
+<td>🟠 中等偏高（需要理解装饰器/依赖注入）</td>
+<td>🟢 低（API 简洁易用）</td>
+</tr>
+<tr>
+<td><strong>TypeScript 支持</strong></td>
+<td>原生支持，强类型优先</td>
+<td>需要手动配置 TS</td>
+</tr>
+<tr>
+<td><strong>依赖注入（DI）</strong></td>
+<td>内置支持</td>
+<td>无（通常用单例/全局或自定义 DI）</td>
+</tr>
+<tr>
+<td><strong>路由定义</strong></td>
+<td>注解式控制</td>
+<td>手动配置路由</td>
+</tr>
+<tr>
+<td><strong>扩展性</strong></td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐</td>
+</tr>
+<tr>
+<td><strong>生态和插件</strong></td>
+<td>模块化（Auth、Cache、Swagger、GraphQL、Jobs）</td>
+<td>需要自行组合中间件</td>
+</tr>
+<tr>
+<td><strong>适合场景</strong></td>
+<td>企业级复杂业务、大团队合作</td>
+<td>小项目、快速原型、灵活业务流程</td>
+</tr>
+<tr>
+<td><strong>性能</strong></td>
+<td>接近 Express</td>
+<td>基于 Express / Fastify，性能优秀</td>
+</tr>
+<tr>
+<td><strong>社区 &amp; 文档</strong></td>
+<td>成熟活跃</td>
+<td>经典稳定</td>
+</tr>
+</tbody>
+</table>
+<p>在这之后又了解了 Fastify 和 Koa 框架:<br>
+<strong>Fastify</strong></p>
+<ul>
+<li>性能比 Express 更高</li>
+<li>插件机制</li>
+<li>原生支持超快 JSON 序列化</li>
+<li>适合高性能 API 服务</li>
+<li>学习成本略高于 Express</li>
+</ul>
+<p><strong>Koa</strong></p>
+<ul>
+<li>由 Express 核心团队打造</li>
+<li>Promise + async/await 原生支持</li>
+<li>更现代、更轻量</li>
+<li>中间件采用新版洋葱模型</li>
+</ul>
+<p>然而 Fastify 的高性能以及插件机制吸引了我, 于是我打算基于 Fastify 开始搭建项目</p>
+<h2 id="%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BA-fastify-%E9%A1%B9%E7%9B%AE%E4%B9%8B%E5%89%8D%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E7%9A%84%E4%B8%89%E4%BB%B6%E4%BA%8B" tabindex="-1">开始搭建 Fastify 项目之前需要考虑的三件事</h2>
+<h3 id="%E9%80%89%E6%8B%A9js%E8%BF%98%E6%98%AFts%3F" tabindex="-1">选择JS还是TS?</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>JS</th>
+<th>TS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>学习成本</td>
+<td>低</td>
+<td>中</td>
+</tr>
+<tr>
+<td>开发速度（短期）</td>
+<td>快</td>
+<td>稍慢</td>
+</tr>
+<tr>
+<td>维护成本（长期）</td>
+<td>高</td>
+<td>低</td>
+</tr>
+<tr>
+<td>重构安全性</td>
+<td>低</td>
+<td>高</td>
+</tr>
+<tr>
+<td>模块扩展能力</td>
+<td>中</td>
+<td>高</td>
+</tr>
+<tr>
+<td>工程化能力</td>
+<td>中</td>
+<td>极高</td>
+</tr>
+<tr>
+<td>架构演进能力</td>
+<td>弱</td>
+<td>强</td>
+</tr>
+<tr>
+<td>模板复用价值</td>
+<td>低</td>
+<td>高</td>
+</tr>
+<tr>
+<td>项目规模适配</td>
+<td>小项目</td>
+<td>中大型项目</td>
+</tr>
+<tr>
+<td>技术资产价值</td>
+<td>低</td>
+<td>高</td>
+</tr>
+</tbody>
+</table>
+<p>对于复用价值来说, 选择TS是必须的</p>
+<h3 id="%E9%80%89%E6%8B%A9common-js-%E8%BF%98%E6%98%AF-es-module%3F" tabindex="-1">选择Common JS 还是 ES Module?</h3>
+<p>我们都知道JS有两种模块系统</p>
+<blockquote>
+<p>ES Modules (ESM) 是 ECMAScript 标准化的现代 JavaScript 模块系统，使用 import/export，支持静态分析、异步加载和单例模式，适用于浏览器和新版 Node.js。CommonJS (CJS) 是 Node.js 传统的默认系统，使用 require/module.exports，同步加载模块，主要用于服务器端。</p>
+</blockquote>
+<p>所以它们之间的本质区别是底层机制的差异:<br>
+CSJ是运行时加载</p>
+<pre class="language-txt" tabindex="0"><code class="hljs language-txt">require() 是函数
+→ 运行到这行才加载
+→ 动态加载
+→ 无法静态分析依赖关系</code></pre>
+<p>而ESJ（编译期静态分析）</p>
+<pre class="language-txt" tabindex="0"><code class="hljs language-txt">import 是语法
+→ 编译期分析依赖
+→ 构建依赖图
+→ 支持 Tree-shaking
+→ 支持模块优化</code></pre>
+<p>在语法层面:<br>
+CommonJS:</p>
+<pre class="language-js" tabindex="0"><code class="hljs language-js"><span class="token comment">// 导入</span>
+<span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 导出</span>
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>ES Module:</p>
+<pre class="language-js" tabindex="0"><code class="hljs language-js"><span class="token comment">// 导入</span>
+<span class="token keyword">import</span> fs <span class="token keyword">from</span> <span class="token string">'fs'</span>
+
+<span class="token comment">// 导出</span>
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>
+<p>于是我选择了ESM来搭建项目模块, 这也是当下的工程趋势</p>
+<h3 id="%E9%80%89%E6%8B%A9node%E5%8E%9F%E7%94%9F%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E8%BF%98%E6%98%AF%E5%85%B6%E5%AE%83%3F" tabindex="-1">选择Node原生测试框架还是其它?</h3>
+<p>谈到JS测试框架, 立马能想到 Jest, Vitest, Mocha, Chai, 在JS生态里, 一般在前端会测试组件渲染, 在后端是一些简单的断言, 例如测试 Rest API 的请求, 工具库的单元测试等, 接触了 Fastify 我了解到了 Node 原生测试方法.</p>
+<table>
+<thead>
+<tr>
+<th>能力</th>
+<th>Jest</th>
+<th>Vitest</th>
+<th>node:test</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Runner</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Mock</td>
+<td>✅ 强</td>
+<td>✅ 强</td>
+<td>⚠️ 基础</td>
+</tr>
+<tr>
+<td>覆盖率</td>
+<td>✅</td>
+<td>✅</td>
+<td>⚠️ 外接</td>
+</tr>
+<tr>
+<td>Watch</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>快照测试</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>并发执行</td>
+<td>⚠️</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>ESM 支持</td>
+<td>⚠️ 配置复杂</td>
+<td>✅ 原生</td>
+<td>✅ 原生</td>
+</tr>
+<tr>
+<td>TS 支持</td>
+<td>⚠️ 依赖 ts-jest</td>
+<td>✅ 原生</td>
+<td>⚠️ 手动</td>
+</tr>
+<tr>
+<td>生态插件</td>
+<td>✅ 非常成熟</td>
+<td>🟡 成长中</td>
+<td>❌ 几乎无</td>
+</tr>
+</tbody>
+</table>
+<p>举几个简单的例子吧, 在 vitest 里:<br>
+前端的测试:</p>
+<pre class="language-js" tabindex="0"><code class="hljs language-js"><span class="token comment">// 使用 vitest 的方法</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> describe<span class="token punctuation">,</span> expect<span class="token punctuation">,</span> vi <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"vitest"</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> fireEvent<span class="token punctuation">,</span> render<span class="token punctuation">,</span> screen<span class="token punctuation">,</span> waitFor <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@testing-library/react"</span>
+<span class="token keyword">import</span> App <span class="token keyword">from</span> <span class="token string">"../../src/components/App"</span>
+
+<span class="token comment">// 通过 vi.hoisted 来 mock 方法</span>
+<span class="token keyword">const</span> <span class="token punctuation">{</span> mockGetNotes<span class="token punctuation">,</span> mockDeleteNote<span class="token punctuation">,</span> mockPutNote <span class="token punctuation">}</span> <span class="token operator">=</span> vi<span class="token punctuation">.</span><span class="token function">hoisted</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span> <span class="token literal-property property">mockGetNotes</span><span class="token operator">:</span> vi<span class="token punctuation">.</span><span class="token function">fn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token literal-property property">mockDeleteNote</span><span class="token operator">:</span> vi<span class="token punctuation">.</span><span class="token function">fn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token literal-property property">mockPutNote</span><span class="token operator">:</span> vi<span class="token punctuation">.</span><span class="token function">fn</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 使用上面的mock方法来替换后端的具体方法</span>
+vi<span class="token punctuation">.</span><span class="token function">mock</span><span class="token punctuation">(</span><span class="token string">'../../src/services/notesService'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    <span class="token keyword">default</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token literal-property property">getNotes</span><span class="token operator">:</span> mockGetNotes<span class="token punctuation">,</span> <span class="token literal-property property">deleteNote</span><span class="token operator">:</span> mockDeleteNote<span class="token punctuation">,</span> <span class="token literal-property property">putNote</span><span class="token operator">:</span> mockPutNote <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">"render app"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+  <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">"should show notes successfully"</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token comment">//mock实现</span>
+    mockGetNotes<span class="token punctuation">.</span><span class="token function">mockResolvedValue</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"fake note1"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token function">render</span><span class="token punctuation">(</span><span class="token operator">&lt;</span>App <span class="token operator">/</span><span class="token operator">></span><span class="token punctuation">)</span>
+    <span class="token keyword">await</span> <span class="token function">waitFor</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> screen<span class="token punctuation">.</span><span class="token function">getByText</span><span class="token punctuation">(</span><span class="token string">"fake note1"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token function">expect</span><span class="token punctuation">(</span>screen<span class="token punctuation">.</span><span class="token function">getByText</span><span class="token punctuation">(</span><span class="token string">"fake note1"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toBeInTheDocument</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">"should delete note successfully when click delete note button"</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    mockGetNotes<span class="token punctuation">.</span><span class="token function">mockResolvedValue</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"fake note1"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token function">render</span><span class="token punctuation">(</span><span class="token operator">&lt;</span>App <span class="token operator">/</span><span class="token operator">></span><span class="token punctuation">)</span>
+    <span class="token keyword">await</span> <span class="token function">waitFor</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> screen<span class="token punctuation">.</span><span class="token function">getByText</span><span class="token punctuation">(</span><span class="token string">"fake note1"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">const</span> deleteNoteBtn <span class="token operator">=</span> screen<span class="token punctuation">.</span><span class="token function">getByTestId</span><span class="token punctuation">(</span><span class="token string">"delete-note"</span><span class="token punctuation">)</span>
+    fireEvent<span class="token punctuation">.</span><span class="token function">click</span><span class="token punctuation">(</span>deleteNoteBtn<span class="token punctuation">)</span>
+
+    <span class="token function">expect</span><span class="token punctuation">(</span>mockDeleteNote<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toHaveBeenCalled</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
+<p>后端的测试例子:</p>
+<pre class="language-js" tabindex="0"><code class="hljs language-js"><span class="token comment">// vitest 的方法</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> beforeEach<span class="token punctuation">,</span> describe<span class="token punctuation">,</span> it<span class="token punctuation">,</span> vi<span class="token punctuation">,</span> expect <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"vitest"</span>
+<span class="token keyword">import</span> notesService <span class="token keyword">from</span> <span class="token string">"../../src/services/notesService"</span>
+
+<span class="token keyword">const</span> mockSelect <span class="token operator">=</span> vi<span class="token punctuation">.</span><span class="token function">fn</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> mockInsert <span class="token operator">=</span> vi<span class="token punctuation">.</span><span class="token function">fn</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> mockDelete <span class="token operator">=</span> vi<span class="token punctuation">.</span><span class="token function">fn</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> mockEq <span class="token operator">=</span> vi<span class="token punctuation">.</span><span class="token function">fn</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment">// mock 基础设施(DB)的 client 的相关方法</span>
+<span class="token keyword">const</span> <span class="token punctuation">{</span> supabaseMockClient <span class="token punctuation">}</span> <span class="token operator">=</span> vi<span class="token punctuation">.</span><span class="token function">hoisted</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">supabaseMockClient</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">from</span><span class="token operator">:</span> vi<span class="token punctuation">.</span><span class="token function">fn</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">(</span><span class="token punctuation">{</span>
+        <span class="token literal-property property">select</span><span class="token operator">:</span> mockSelect<span class="token punctuation">,</span>
+        <span class="token literal-property property">insert</span><span class="token operator">:</span> mockInsert<span class="token punctuation">,</span>
+        <span class="token keyword">delete</span><span class="token operator">:</span> vi<span class="token punctuation">.</span><span class="token function">fn</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">(</span><span class="token punctuation">{</span>
+          <span class="token literal-property property">eq</span><span class="token operator">:</span> mockEq
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 替换外部依赖的具体方法为mock方法</span>
+vi<span class="token punctuation">.</span><span class="token function">mock</span><span class="token punctuation">(</span><span class="token string">'@supabase/supabase-js'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token literal-property property">createClient</span><span class="token operator">:</span> vi<span class="token punctuation">.</span><span class="token function">fn</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> supabaseMockClient<span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">"notes service layer tests"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+  <span class="token function">beforeEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    vi<span class="token punctuation">.</span><span class="token function">clearAllMocks</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">"should return notes array"</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    mockSelect<span class="token punctuation">.</span><span class="token function">mockResolvedValue</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">data</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span> <span class="token literal-property property">note</span><span class="token operator">:</span> <span class="token string">'note1'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token literal-property property">note</span><span class="token operator">:</span> <span class="token string">'note2'</span> <span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token literal-property property">error</span><span class="token operator">:</span> <span class="token keyword">null</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token keyword">await</span> notesService<span class="token punctuation">.</span><span class="token function">getNotes</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token function">expect</span><span class="token punctuation">(</span>supabaseMockClient<span class="token punctuation">.</span>from<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toHaveBeenCalledWith</span><span class="token punctuation">(</span><span class="token string">'notes-online'</span><span class="token punctuation">)</span>
+    <span class="token function">expect</span><span class="token punctuation">(</span>supabaseMockClient<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>select<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toHaveBeenCalledWith</span><span class="token punctuation">(</span><span class="token string">'note'</span><span class="token punctuation">)</span>
+    <span class="token function">expect</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toEqual</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'note1'</span><span class="token punctuation">,</span> <span class="token string">'note2'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">"should return empty array when return error"</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    mockSelect<span class="token punctuation">.</span><span class="token function">mockResolvedValue</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">data</span><span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token literal-property property">error</span><span class="token operator">:</span> <span class="token string">"some errors"</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token keyword">await</span> notesService<span class="token punctuation">.</span><span class="token function">getNotes</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token function">expect</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toEqual</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">"should save note successfully"</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    mockInsert<span class="token punctuation">.</span><span class="token function">mockResolvedValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">await</span> notesService<span class="token punctuation">.</span><span class="token function">putNote</span><span class="token punctuation">(</span><span class="token string">"new fake note"</span><span class="token punctuation">)</span>
+
+    <span class="token function">expect</span><span class="token punctuation">(</span>supabaseMockClient<span class="token punctuation">.</span>from<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toHaveBeenCalledWith</span><span class="token punctuation">(</span><span class="token string">'notes-online'</span><span class="token punctuation">)</span>
+    <span class="token function">expect</span><span class="token punctuation">(</span>supabaseMockClient<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>insert<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toHaveBeenCalledWith</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">note</span><span class="token operator">:</span> <span class="token string">"new fake note"</span><span class="token punctuation">,</span> <span class="token literal-property property">creator</span><span class="token operator">:</span> <span class="token string">"anonymous"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token literal-property property">returning</span><span class="token operator">:</span> <span class="token string">'minimal'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">"should delete note successfully"</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    mockDelete<span class="token punctuation">.</span><span class="token function">mockResolvedValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    mockEq<span class="token punctuation">.</span><span class="token function">mockResolvedValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">await</span> notesService<span class="token punctuation">.</span><span class="token function">deleteNote</span><span class="token punctuation">(</span><span class="token string">"fake note"</span><span class="token punctuation">)</span>
+
+    <span class="token function">expect</span><span class="token punctuation">(</span>supabaseMockClient<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>eq<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toHaveBeenCalledWith</span><span class="token punctuation">(</span><span class="token string">'note'</span><span class="token punctuation">,</span> <span class="token string">'fake note'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
+<p>而最近使用了 node:test, 例如:</p>
+<pre class="language-ts" tabindex="0"><code class="hljs language-ts"><span class="token keyword">import</span> <span class="token punctuation">{</span> describe<span class="token punctuation">,</span> it <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'node:test'</span>
+<span class="token keyword">import</span> assert <span class="token keyword">from</span> <span class="token string">'node:assert'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> build<span class="token punctuation">,</span> expectValidationError <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'../../../../helper.js'</span>
+
+<span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">'Security api'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+  <span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">'POST /api/v1/auth/login'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'Transaction should rollback on error'</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+      <span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">build</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span>
+
+      <span class="token keyword">const</span> <span class="token punctuation">{</span> mock<span class="token operator">:</span> mockCompare <span class="token punctuation">}</span> <span class="token operator">=</span> t<span class="token punctuation">.</span>mock<span class="token punctuation">.</span><span class="token function">method</span><span class="token punctuation">(</span>app<span class="token punctuation">.</span>passwordManager<span class="token punctuation">,</span> <span class="token string">'compare'</span><span class="token punctuation">)</span>
+      mockCompare<span class="token punctuation">.</span><span class="token function">mockImplementationOnce</span><span class="token punctuation">(</span><span class="token punctuation">(</span>value<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span> hash<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+        <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">'Kaboom!'</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+      <span class="token keyword">const</span> <span class="token punctuation">{</span> mock<span class="token operator">:</span> mockLogError <span class="token punctuation">}</span> <span class="token operator">=</span> t<span class="token punctuation">.</span>mock<span class="token punctuation">.</span><span class="token function">method</span><span class="token punctuation">(</span>app<span class="token punctuation">.</span>log<span class="token punctuation">,</span> <span class="token string">'error'</span><span class="token punctuation">)</span>
+
+      <span class="token keyword">const</span> res <span class="token operator">=</span> <span class="token keyword">await</span> app<span class="token punctuation">.</span><span class="token function">inject</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        method<span class="token operator">:</span> <span class="token string">'POST'</span><span class="token punctuation">,</span>
+        url<span class="token operator">:</span> <span class="token string">'/api/v1/auth/login'</span><span class="token punctuation">,</span>
+        payload<span class="token operator">:</span> <span class="token punctuation">{</span>
+          email<span class="token operator">:</span> <span class="token string">'basic@example.com'</span><span class="token punctuation">,</span>
+          password<span class="token operator">:</span> <span class="token string">'Password123$'</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+      assert<span class="token punctuation">.</span><span class="token function">strictEqual</span><span class="token punctuation">(</span>mockCompare<span class="token punctuation">.</span><span class="token function">callCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+
+      <span class="token keyword">const</span> arg <span class="token operator">=</span> mockLogError<span class="token punctuation">.</span>calls<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>arguments<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token keyword">as</span> <span class="token builtin">unknown</span> <span class="token keyword">as</span> <span class="token punctuation">{</span>
+        err<span class="token operator">:</span> Error<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+
+      assert<span class="token punctuation">.</span><span class="token function">strictEqual</span><span class="token punctuation">(</span>res<span class="token punctuation">.</span>statusCode<span class="token punctuation">,</span> <span class="token number">500</span><span class="token punctuation">)</span>
+      assert<span class="token punctuation">.</span><span class="token function">deepStrictEqual</span><span class="token punctuation">(</span>arg<span class="token punctuation">.</span>err<span class="token punctuation">.</span>message<span class="token punctuation">,</span> <span class="token string">'Kaboom!'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
+<p>使用之后也很顺手, 一个是没有外部依赖, 另外也能满足需求, 所以目前我也并未使用其它测试框架.</p>
+
+		</div>
+		<ul class="links-nextprev"><li class="links-nextprev-prev">← 上一篇<br> <a href="/sddtc.github.com/zh/blog/2026-01-07-something-about-javassist/">Something About Javassist</a></li><li class="links-nextprev-next">下一篇 →<br><a href="/sddtc.github.com/zh/blog/2026-02-26-fastify-modular-monolith-demo/">Fastify 模块化项目实战(二) — 初始化Fastify 项目</a></li>
+		</ul>
+	</article>
+	<aside class="post-toc">
+		<div class="content-tableau">
+        <ul><li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-fastify-%E8%80%8C%E9%9D%9E-nestjs%2C-expressjs%2C-koa%3F">为什么选择 Fastify 而非 NestJS, ExpressJS, Koa?</a></li><li><a href="#%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BA-fastify-%E9%A1%B9%E7%9B%AE%E4%B9%8B%E5%89%8D%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E7%9A%84%E4%B8%89%E4%BB%B6%E4%BA%8B">开始搭建 Fastify 项目之前需要考虑的三件事</a><ul><li><a href="#%E9%80%89%E6%8B%A9js%E8%BF%98%E6%98%AFts%3F">选择JS还是TS?</a></li><li><a href="#%E9%80%89%E6%8B%A9common-js-%E8%BF%98%E6%98%AF-es-module%3F">选择Common JS 还是 ES Module?</a></li><li><a href="#%E9%80%89%E6%8B%A9node%E5%8E%9F%E7%94%9F%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E8%BF%98%E6%98%AF%E5%85%B6%E5%AE%83%3F">选择Node原生测试框架还是其它?</a></li></ul></li></ul>
+      </div>
+	</aside>
+</div>
+
+				</heading-anchors>
+			</div>
+		</main>
+
+		<footer>
+			<div class="page-wrap">
+				<p>Copyright © <span id="copyright-year"></span></p>
+			</div>
+		</footer>
+
+		
+
+    
+		
+
+		<!-- google analysis start -->
+		
+		<!-- google analysis start -->
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KVM27VFBYL"></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics end -->
+
+		<!-- This page `/zh/blog/2026-02-12-fastify-modules-tutorials-1/` was built on 2026-05-01T10:59:18.297Z -->
+		<script type="module" src="/sddtc.github.com/dist/9UoH1FTAXT.js"></script>
+	</body>
+</html>
