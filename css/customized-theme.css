@@ -213,7 +213,7 @@ blockquote,
 
 /* —— Global layout & typography —— */
 .page-wrap {
-	max-width: 800px;
+	max-width: 720px;
 	margin: 0 auto;
 	padding: 0 1.25rem;
 }
