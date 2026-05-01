@@ -9,10 +9,10 @@ layout: layouts/base.njk
 
 		<ul class="post-metadata">
 			<li><time datetime="{{ date | htmlDateString }}">{{ date | readableDate }}</time></li>
-			{{ "post.tags" | t(lang) }}:
+			<li class="post-metadata-label">{{ "post.tags" | t(lang) }}:</li>
 			{%- for tag in tags | filterTagList %}
 			{%- set tagUrl %}/tags/{{ tag }}/{% endset %}
-			<li><a href="{{ tagUrl | localizedUrl(lang) }}" class="post-tag">{{ tag | taxonomyName("tags", lang) }}</a>{%- if not loop.last %}, {% endif %}</li>
+			<li><a href="{{ tagUrl | localizedUrl(lang) }}" class="post-tag">{{ tag | taxonomyName("tags", lang) }}</a></li>
 			{%- endfor %}
 		</ul>
 
