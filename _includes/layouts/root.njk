@@ -9,6 +9,45 @@
 		<meta name="generator" content="{{ eleventy.generator }}">
 		<style>{% include "css/index.css" %}</style>
 		<style>{% include "css/customized-theme.css" %}</style>
+		<noscript><meta http-equiv="refresh" content="0; url=/zh/"></noscript>
+		<script eleventy:ignore>
+		; (function () {
+			function getStoredLanguage() {
+				try {
+					return window.localStorage && window.localStorage.getItem
+						? window.localStorage.getItem('preferredLanguage')
+						: ''
+				} catch (error) {
+					return ''
+				}
+			}
+
+			function pickLanguage(storedLanguage, browserLanguages) {
+				if (storedLanguage === 'zh' || storedLanguage === 'en') {
+					return storedLanguage
+				}
+
+				var languages = Array.isArray(browserLanguages) ? browserLanguages : []
+				for (var i = 0; i < languages.length; i++) {
+					if (String(languages[i]).toLowerCase().indexOf('zh') === 0) {
+						return 'zh'
+					}
+				}
+				for (var j = 0; j < languages.length; j++) {
+					if (String(languages[j]).toLowerCase().indexOf('en') === 0) {
+						return 'en'
+					}
+				}
+				return 'zh'
+			}
+
+			var browserLanguages = navigator.languages && navigator.languages.length
+				? navigator.languages
+				: [navigator.language]
+			var language = pickLanguage(getStoredLanguage(), browserLanguages)
+			window.location.replace({ zh: '/zh/', en: '/en/' }[language])
+		})()
+		</script>
 	</head>
 	<body>
 		<main id="main">
@@ -18,13 +57,6 @@
 		</main>
 
 		<script type="module">{% include "js/customized-bundle.js" %}</script>
-		<script>
-		; (function () {
-			if (window.blog && window.blog.initLanguageEntry) {
-				window.blog.initLanguageEntry({ zh: '/zh/', en: '/en/' })
-			}
-		})()
-		</script>
 		<script type="module" src="{% getBundleFileUrl "js" %}"></script>
 	</body>
 </html>
