@@ -29,9 +29,23 @@ a {
 	text-decoration: none;
 }
 
-/* Tags */
+/* —— Tag pills —— */
 .post-tag {
-	font-style: italic;
+	display: inline-block;
+	padding: 0.15em 0.6em;
+	background: var(--c-green-soft);
+	color: var(--c-text);
+	border-radius: 999px;
+	font-style: normal;
+	font-size: 0.8125em;
+	text-decoration: none;
+	border: none;
+}
+
+.post-tag:hover {
+	background: var(--c-yellow);
+	color: var(--c-text);
+	text-decoration: none;
 }
 
 .tags-page {
@@ -362,4 +376,32 @@ header {
 	text-align: center;
 	color: var(--c-text-soft);
 	font-size: 0.9375rem;
+}
+
+/* —— Prev / next links —— */
+.links-nextprev {
+	border-top: 1px solid var(--c-border);
+	margin-top: 2rem;
+	padding-top: 1rem;
+}
+
+.links-nextprev > li {
+	padding: 0.75em 1em;
+	border-radius: 6px;
+	transition: background 0.15s;
+}
+
+.links-nextprev > li:hover {
+	background: var(--c-surface);
+}
+
+.links-nextprev a {
+	color: var(--c-green-deep);
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.links-nextprev a:hover {
+	color: var(--c-orange);
+	text-decoration: underline;
 }
