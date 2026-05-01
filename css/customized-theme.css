@@ -56,46 +56,73 @@ a {
 	font-size: 1.2em;
 }
 
-/* 其他页面样式, 例如: 关于我 */
-blockquote {
-	border-left: 3px solid #333333;
-	background-color: #F2EFE7;
-	padding: 9px 9px 9px 15px;
+/* —— Article body —— */
+.page-post {
+	font-size: 1.0625rem;
+	line-height: 1.75;
+	margin: 1rem 0;
 }
 
-/* 文章内部样式 */
-.page-post {
-	margin: 10px 0;
-}
-
-.page-post {
-	font-size: 18px;
+.page-post p {
+	margin: 0 0 1em;
 }
 
 .page-post a {
+	color: var(--c-orange);
 	text-decoration: none;
-	color: #8AA624;
-	border-bottom: 1px solid #8AA624
+	border-bottom: 1px solid var(--c-orange);
 }
 
-/* 引用 */
-.page-post blockquote {
-	border-left: 3px solid #333333;
-	background-color: #F2EFE7;
-	padding: 9px 9px 9px 15px;
+.page-post a:hover {
+	color: var(--c-green-deep);
+	border-bottom-color: var(--c-green-deep);
 }
 
-/* 单行代码 */
-.page-post code {
-	font-size: 13px;
-	background-color: #F2EFE7;
-	word-break: break-all;
-	padding: 3px 5px;
-	margin: 0 4px;
-	border-radius: 5px;
-	color: #333333;
-	transition: all 500ms ease;
+/* Inline code */
+.page-post code,
+code {
+	font-size: 0.9em;
+	background: #FFE45F;
+	border: 1px solid var(--c-green-soft);
+	color: var(--c-green-deep);
+	padding: 0.1em 0.4em;
+	margin: 0 2px;
+	border-radius: 4px;
 	font-style: normal;
+	word-break: break-all;
+}
+
+/* Pre block (Prism token colors stay; container restyled) */
+.page-post pre[class*="language-"],
+pre[class*="language-"] {
+	border-radius: 8px;
+	box-shadow: 0 2px 0 var(--c-green-soft);
+	margin: 1.25em 0;
+}
+
+/* Code inside pre: reset inline-code styling */
+pre[class*="language-"] code {
+	background: transparent;
+	border: none;
+	color: inherit;
+	padding: 0;
+	margin: 0;
+	border-radius: 0;
+}
+
+/* Blockquote */
+blockquote,
+.page-post blockquote {
+	background: var(--c-surface);
+	border-left: 4px solid var(--c-orange);
+	padding: 0.9em 1.1em;
+	border-radius: 0 6px 6px 0;
+	color: var(--c-text-soft);
+	margin: 1em 0;
+}
+
+.page-post blockquote p:last-child {
+	margin-bottom: 0;
 }
 
 /* —— Post layout —— */
