@@ -1,12 +1,18 @@
+{% set currentLang = lang or i18n.defaultLanguage %}
+{% set currentHtmlLang = "zh-CN" if currentLang == "zh" else "en" %}
 <!doctype html>
-<html lang="{{ metadata.language }}">
+<html lang="{{ currentHtmlLang }}">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>{{ title or metadata.title }}</title>
+		<title>{{ title or ("siteTitle" | t(currentLang)) }}</title>
 		<meta name="description" content="{{ description or metadata.description }}">
 		<link rel="icon" href="/img/favicon.ico" />
 		<meta name="generator" content="{{ eleventy.generator }}">
+		<link rel="canonical" href="{{ metadata.url }}{{ page.url }}">
+		<link rel="alternate" hreflang="zh" href="{{ metadata.url }}{{ page.url | localizedUrl("zh") }}">
+		<link rel="alternate" hreflang="en" href="{{ metadata.url }}{{ page.url | localizedUrl("en") }}">
+		<link rel="alternate" hreflang="x-default" href="{{ metadata.url }}/">
 
 		{#- Add the contents of a file to the bundle #}
 		<style>{% include "css/index.css" %}</style>
@@ -26,17 +32,30 @@
 
 		<header>
 			<div class="page-wrap header-inner">
-				<a href="/" class="home-link">{{ metadata.title }}</a>
+				<a href="{{ "/" | localizedUrl(currentLang) }}" class="home-link">{{ "siteTitle" | t(currentLang) }}</a>
 
-				{#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
 				<nav>
 					<h2 class="visually-hidden">Top level navigation menu</h2>
 					<ul class="nav">
-					{%- for entry in collections.all | eleventyNavigation %}
-						<li class="nav-item"><a href="{{ entry.url }}"{% if entry.url == page.url %} aria-current="page"{% endif %}>{{ entry.title }}</a></li>
-					{%- endfor %}
+						{% set navItems = [
+							{ key: "nav.home", url: "/" },
+							{ key: "nav.categories", url: "/categories/" },
+							{ key: "nav.tags", url: "/tags/" },
+							{ key: "nav.blog", url: "/blog/" },
+							{ key: "nav.about", url: "/about/" }
+						] %}
+						{%- for item in navItems %}
+							{% set itemUrl = item.url | localizedUrl(currentLang) %}
+							{% set isCurrent = itemUrl == page.url or (item.url != "/" and page.url and page.url.indexOf(itemUrl) == 0) %}
+							<li class="nav-item"><a href="{{ itemUrl }}"{% if isCurrent %} aria-current="page"{% endif %}>{{ item.key | t(currentLang) }}</a></li>
+						{%- endfor %}
 					</ul>
 				</nav>
+
+				<div class="language-switcher" aria-label="{{ "language.switcher" | t(currentLang) }}">
+					<a href="{{ page.url | localizedUrl("zh") }}"{% if currentLang == "zh" %} aria-current="true"{% endif %} onclick="window.blog && window.blog.storeLanguagePreference('zh')">{{ "language.zh" | t(currentLang) }}</a>
+					<a href="{{ page.url | localizedUrl("en") }}"{% if currentLang == "en" %} aria-current="true"{% endif %} onclick="window.blog && window.blog.storeLanguagePreference('en')">{{ "language.en" | t(currentLang) }}</a>
+				</div>
 			</div>
 		</header>
 

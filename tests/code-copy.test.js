@@ -74,12 +74,29 @@ async function loadBlogScript() {
 			},
 		},
 		navigator: {
+			language: 'zh-CN',
+			languages: ['zh-CN'],
 			clipboard: {
 				writtenText: null,
 				writeText(text) {
 					this.writtenText = text;
 					return Promise.resolve();
 				},
+			},
+		},
+		localStorage: {
+			values: new Map(),
+			getItem(key) {
+				return this.values.get(key) || null;
+			},
+			setItem(key, value) {
+				this.values.set(key, value);
+			},
+		},
+		location: {
+			assignedUrl: null,
+			assign(url) {
+				this.assignedUrl = url;
 			},
 		},
 		setTimeout(callback) {
@@ -125,4 +142,24 @@ test('initCodeCopyButtons decorates code blocks and copies code text', async () 
 
 	context.runTimers();
 	assert.equal(button.textContent, '复制');
+});
+
+test('pickLanguage prefers stored language, then browser languages', async () => {
+	const context = await loadBlogScript();
+
+	assert.equal(context.blog.pickLanguage('en', ['zh-CN']), 'en');
+	assert.equal(context.blog.pickLanguage('', ['zh-CN']), 'zh');
+	assert.equal(context.blog.pickLanguage('', ['de-DE', 'en-US']), 'en');
+	assert.equal(context.blog.pickLanguage('', ['de-DE']), 'zh');
+});
+
+test('initLanguageEntry redirects and stores explicit language preferences', async () => {
+	const context = await loadBlogScript();
+
+	context.localStorage.setItem('preferredLanguage', 'en');
+	context.blog.initLanguageEntry({ zh: '/zh/', en: '/en/' });
+	assert.equal(context.location.assignedUrl, '/en/');
+
+	context.blog.storeLanguagePreference('zh');
+	assert.equal(context.localStorage.getItem('preferredLanguage'), 'zh');
 });

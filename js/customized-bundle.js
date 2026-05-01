@@ -89,6 +89,45 @@ blog.initCodeCopyButtons = function (root) {
 	})
 }
 
+blog.pickLanguage = function (storedLanguage, browserLanguages) {
+	if (storedLanguage === 'zh' || storedLanguage === 'en') {
+		return storedLanguage
+	}
+
+	var languages = Array.isArray(browserLanguages) ? browserLanguages : []
+	for (var i = 0; i < languages.length; i++) {
+		if (String(languages[i]).toLowerCase().indexOf('zh') === 0) {
+			return 'zh'
+		}
+	}
+	for (var j = 0; j < languages.length; j++) {
+		if (String(languages[j]).toLowerCase().indexOf('en') === 0) {
+			return 'en'
+		}
+	}
+	return 'zh'
+}
+
+blog.storeLanguagePreference = function (language) {
+	if (language !== 'zh' && language !== 'en') {
+		return
+	}
+	if (window.localStorage && window.localStorage.setItem) {
+		window.localStorage.setItem('preferredLanguage', language)
+	}
+}
+
+blog.initLanguageEntry = function (options) {
+	var storedLanguage = window.localStorage && window.localStorage.getItem
+		? window.localStorage.getItem('preferredLanguage')
+		: ''
+	var browserLanguages = navigator.languages && navigator.languages.length
+		? navigator.languages
+		: [navigator.language]
+	var language = blog.pickLanguage(storedLanguage, browserLanguages)
+	window.location.assign(options[language])
+}
+
 /**
  * 特效：点击页面文字冒出特效
  */

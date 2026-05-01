@@ -1,29 +1,25 @@
 ---js
-// <script>
 const pagination = {
-	data: "collections",
+	data: "collections.localizedTags",
 	size: 1,
-	alias: "tag",
-	filter: ["all", "posts"],
-	// addAllPagesToCollections: true,
+	alias: "localizedTag"
 };
 
 const eleventyExcludeFromCollections = true;
 
 const eleventyComputed = {
-	title: "{{ tag }}",
-	permalink: function(data) {
-		return `/tags/${data.tag}/`;
-	}
+	lang: data => data.localizedTag.locale.code,
+	title: data => data.localizedTag.tag,
+	permalink: data => data.localizedTag.url
 };
 ---
 <div class="page-title">
-	<h2>标签: {{ tag }}</h2>
+	<h2>{{ "nav.tags" | t(lang) }}: {{ localizedTag.tag | taxonomyName("tags", lang) }}</h2>
 </div>
 
-{% set postslist = collections[ tag ] %}
+{% set postslist = localizedTag.posts %}
 {% include "postslist.njk" %}
 
 <div class="page-footer">
-	<p>See <a href="tags.njk">all tags</a>.</p>
+	<p><a href="{{ "/tags/" | localizedUrl(lang) }}">{{ "tags.title" | t(lang) }}</a></p>
 </div>

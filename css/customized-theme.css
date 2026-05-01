@@ -334,6 +334,52 @@ header {
 	text-decoration: none;
 }
 
+.language-switcher {
+	display: flex;
+	align-items: center;
+	gap: 0.35rem;
+	font-size: 0.875rem;
+}
+
+.language-switcher a {
+	color: var(--c-text-soft);
+	padding: 0.2em 0.55em;
+	border-radius: 6px;
+	text-decoration: none;
+}
+
+.language-switcher a:hover {
+	background: var(--c-mint);
+	color: var(--c-text);
+	text-decoration: none;
+}
+
+.language-switcher a[aria-current="true"] {
+	background: var(--c-text);
+	color: #fff;
+}
+
+.language-entry {
+	margin-top: 3rem;
+	text-align: center;
+}
+
+.language-entry h1 {
+	margin-top: 0;
+}
+
+.language-entry a {
+	color: var(--c-pink);
+	font-size: 1.125rem;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.language-entry a:hover {
+	color: var(--c-text);
+	text-decoration: underline;
+}
+
 /* —— Surface card —— */
 .surface-card {
 	background: var(--c-surface);

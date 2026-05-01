@@ -1,32 +1,11 @@
----js
-const eleventyNavigation = {
-	key: "主页",
-	order: 1
-};
-
-const numberOfLatestPostsToShow = 15;
 ---
-{% set postsCount = collections.posts | length %}
-{% set latestPostsCount = postsCount | min(numberOfLatestPostsToShow) %}
-<div class="page-title">
-	<h2>最新的 {{ latestPostsCount }} 篇文章</h2>
+layout: layouts/root.njk
+permalink: /
+title: 大蜕
+eleventyExcludeFromCollections: true
+---
+<div class="language-entry surface-card">
+	<h1>{{ i18n.messages.zh.root.title }}</h1>
+	<p><a href="/zh/" data-language-choice="zh" onclick="window.blog && window.blog.storeLanguagePreference('zh')">{{ i18n.messages.zh.root.zh }}</a></p>
+	<p><a href="/en/" data-language-choice="en" onclick="window.blog && window.blog.storeLanguagePreference('en')">{{ i18n.messages.en.root.en }}</a></p>
 </div>
-{% set postslist = collections.posts | head(-1 * numberOfLatestPostsToShow) %}
-{% set postslistCounter = postsCount %}
-{% include "postslist.njk" %}
-
-{% set morePosts = postsCount - numberOfLatestPostsToShow %}
-{% if morePosts > 0 %}
-<div class="page-footer">
-	<p>{{ morePosts }} 更多文章可以从 <a href="blog.njk">这里</a> 找到</p>
-</div>
-{% endif %}
-
-{# List every content page in the project #}
-{#
-<ul>
-	{%- for entry in collections.all %}
-	<li><a href="{{ entry.url }}"><code>{{ entry.url }}</code></a></li>
-	{%- endfor %}
-</ul>
-#}

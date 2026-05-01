@@ -1,11 +1,18 @@
 ---js
-const eleventyNavigation = {
-	key: "文章",
-	order: 4
+const pagination = {
+	data: "i18n.languages",
+	size: 1,
+	alias: "locale"
+};
+
+const eleventyComputed = {
+	lang: data => data.locale.code,
+	permalink: data => `/${data.locale.code}/blog/`,
+	title: data => data.i18n.messages[data.locale.code].blog.title
 };
 ---
 <div class="page-title">
-	<h2>文章列表</h2>
+	<h2>{{ "blog.title" | t(lang) }}</h2>
 </div>
 
 {% set postslist = collections.posts %}

@@ -1,18 +1,28 @@
 ---js
-const eleventyNavigation = {
-	key: "标签",
-	order: 3
+const pagination = {
+	data: "i18n.languages",
+	size: 1,
+	alias: "locale"
+};
+
+const eleventyComputed = {
+	lang: data => data.locale.code,
+	permalink: data => `/${data.locale.code}/tags/`,
+	title: data => data.i18n.messages[data.locale.code].tags.title
 };
 ---
 <div class="page-title">
-	<h2>标签列表</h2>
+	<h2>{{ "tags.title" | t(lang) }}</h2>
 </div>
 
 <div class="surface-card">
 	<ul class="tags-page">
-	{% for tag in collections | getKeys | filterTagList | sortAlphabetically %}
-		{% set tagUrl %}/tags/{{ tag }}/{% endset %}
-		<li><a href="{{ tagUrl }}" class="post-tag">{{ tag }}</a></li>
+	{% for tag in collections.localizedTags %}
+		{% if tag.locale.code == lang %}
+		<li><a href="{{ tag.url }}" class="post-tag">{{ tag.tag | taxonomyName("tags", lang) }}</a></li>
+		{% endif %}
+	{% else %}
+		<li>{{ "tags.empty" | t(lang) }}</li>
 	{% endfor %}
 	</ul>
 </div>

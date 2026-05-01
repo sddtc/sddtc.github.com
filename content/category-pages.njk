@@ -1,27 +1,25 @@
 ---js
-// <script>
 const pagination = {
-	data: "collections.categories",
+	data: "collections.localizedCategories",
 	size: 1,
-	alias: "category"
+	alias: "localizedCategory"
 };
 
 const eleventyExcludeFromCollections = true;
 
 const eleventyComputed = {
-	title: "{{ category.title }}",
-	permalink: function(data) {
-		return `/categories/${data.category.title}/`;
-	}
+	lang: data => data.localizedCategory.locale.code,
+	title: data => data.localizedCategory.category,
+	permalink: data => data.localizedCategory.url
 };
 ---
 <div class="page-title">
-	<h2>分类: {{ category.title }}</h2>
+	<h2>{{ "nav.categories" | t(lang) }}: {{ localizedCategory.category | taxonomyName("categories", lang) }}</h2>
 </div>
 
-{% set postslist = category.posts %}
+{% set postslist = localizedCategory.posts %}
 {% include "postslist.njk" %}
 
 <div class="page-footer">
-	<p>See <a href="categories.njk">all categories</a>.</p>
+	<p><a href="{{ "/categories/" | localizedUrl(lang) }}">{{ "categories.title" | t(lang) }}</a></p>
 </div>

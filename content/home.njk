@@ -1,0 +1,30 @@
+---js
+const pagination = {
+	data: "i18n.languages",
+	size: 1,
+	alias: "locale"
+};
+
+const eleventyComputed = {
+	lang: data => data.locale.code,
+	permalink: data => `/${data.locale.code}/`,
+	title: data => data.i18n.messages[data.locale.code].siteTitle
+};
+
+const numberOfLatestPostsToShow = 15;
+---
+{% set postsCount = collections.posts | length %}
+{% set latestPostsCount = postsCount | min(numberOfLatestPostsToShow) %}
+<div class="page-title">
+	<h2>{{ "home.latest" | t(lang) }}</h2>
+</div>
+{% set postslist = collections.posts | head(-1 * numberOfLatestPostsToShow) %}
+{% set postslistCounter = postsCount %}
+{% include "postslist.njk" %}
+
+{% set morePosts = postsCount - numberOfLatestPostsToShow %}
+{% if morePosts > 0 %}
+<div class="page-footer">
+	<p>{{ morePosts }} {{ "home.more" | t(lang) }} <a href="{{ "/blog/" | localizedUrl(lang) }}">{{ "nav.blog" | t(lang) }}</a></p>
+</div>
+{% endif %}

@@ -1,9 +1,15 @@
 ---js
-const eleventyNavigation = {
-	key: "关于我",
-	order: 5
+const pagination = {
+	data: "i18n.languages",
+	size: 1,
+	alias: "locale"
 };
 const layout = "layouts/page.njk";
+const eleventyComputed = {
+	lang: data => data.locale.code,
+	permalink: data => `/${data.locale.code}/about/`,
+	title: data => data.i18n.messages[data.locale.code].nav.about
+};
 ---
 ## 关于我
 

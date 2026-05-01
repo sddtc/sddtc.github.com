@@ -1,17 +1,28 @@
 ---js
-const eleventyNavigation = {
-	key: "分类",
-	order: 2
+const pagination = {
+	data: "i18n.languages",
+	size: 1,
+	alias: "locale"
+};
+
+const eleventyComputed = {
+	lang: data => data.locale.code,
+	permalink: data => `/${data.locale.code}/categories/`,
+	title: data => data.i18n.messages[data.locale.code].categories.title
 };
 ---
 <div class="page-title">
-	<h2>分类列表</h2>
+	<h2>{{ "categories.title" | t(lang) }}</h2>
 </div>
 
 <div class="surface-card">
 	<ul class="categories-page">
-	{% for category in collections.categories %}
-		<li><a href="/categories/{{category.title}}/" class="post-category">{{ category.title }}</a></li>
+	{% for category in collections.localizedCategories %}
+		{% if category.locale.code == lang %}
+		<li><a href="{{ category.url }}" class="post-category">{{ category.category | taxonomyName("categories", lang) }}</a></li>
+		{% endif %}
+	{% else %}
+		<li>{{ "categories.empty" | t(lang) }}</li>
 	{% endfor %}
 	</ul>
 </div>

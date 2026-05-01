@@ -9,6 +9,7 @@ import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 
 import pluginFilters from "./_config/filters.js";
+import pluginI18n from "./_config/i18n.js";
 
 const mdOptions = {
 	html: true,
@@ -92,6 +93,7 @@ export default async function (eleventyConfig) {
 
 	// Filters
 	eleventyConfig.addPlugin(pluginFilters);
+	eleventyConfig.addPlugin(pluginI18n);
 
 	eleventyConfig.setLibrary(
 		'md',
@@ -107,7 +109,7 @@ export default async function (eleventyConfig) {
 		type: "atom", // or "rss", "json"
 		outputPath: "/feed.xml",
 		collection: {
-			name: "posts", // iterate over `collections.posts`
+			name: "feedPosts", // iterate over the canonical Chinese post URLs
 			limit: 10,     // 0 means no limit
 		},
 		metadata: {
