@@ -521,8 +521,20 @@ blockquote,
 }
 
 .post-metadata {
+	align-items: flex-end;
 	color: var(--c-text-soft);
 	font-size: 0.875rem;
+	gap: 0.5rem 0.75rem;
+	line-height: 1;
+}
+
+.post-metadata li {
+	display: inline-flex;
+	align-items: flex-end;
+}
+
+.post-metadata-label {
+	padding-bottom: 0.2em;
 }
 
 .post-toc {
@@ -1095,7 +1107,7 @@ pre[class*="language-"] {
 
 		<ul class="post-metadata">
 			<li><time datetime="2015-07-01">01 July 2015</time></li>
-			标签:
+			<li class="post-metadata-label">标签:</li>
 			<li><a href="/sddtc.github.com/zh/tags/kafka/" class="post-tag">kafka</a></li>
 		</ul>
 
@@ -1170,7 +1182,7 @@ payload ： n bytes</p>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/zh/blog/2015-07-01-kafka-concept-and-framework/` was built on 2026-05-01T11:05:05.712Z -->
+		<!-- This page `/zh/blog/2015-07-01-kafka-concept-and-framework/` was built on 2026-05-01T11:07:06.620Z -->
 		<script type="module" src="/sddtc.github.com/dist/9UoH1FTAXT.js"></script>
 	</body>
 </html>

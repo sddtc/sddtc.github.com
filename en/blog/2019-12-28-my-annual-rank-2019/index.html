@@ -521,8 +521,20 @@ blockquote,
 }
 
 .post-metadata {
+	align-items: flex-end;
 	color: var(--c-text-soft);
 	font-size: 0.875rem;
+	gap: 0.5rem 0.75rem;
+	line-height: 1;
+}
+
+.post-metadata li {
+	display: inline-flex;
+	align-items: flex-end;
+}
+
+.post-metadata-label {
+	padding-bottom: 0.2em;
 }
 
 .post-toc {
@@ -1095,7 +1107,7 @@ pre[class*="language-"] {
 
 		<ul class="post-metadata">
 			<li><time datetime="2019-12-28">28 December 2019</time></li>
-			Tags:
+			<li class="post-metadata-label">Tags:</li>
 			<li><a href="/sddtc.github.com/en/tags/年度总结/" class="post-tag">Year in Review</a></li>
 		</ul>
 
@@ -1153,7 +1165,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/en/blog/2019-12-28-my-annual-rank-2019/` was built on 2026-05-01T11:05:32.618Z -->
+		<!-- This page `/en/blog/2019-12-28-my-annual-rank-2019/` was built on 2026-05-01T11:07:33.133Z -->
 		<script type="module" src="/sddtc.github.com/dist/9UoH1FTAXT.js"></script>
 	</body>
 </html>

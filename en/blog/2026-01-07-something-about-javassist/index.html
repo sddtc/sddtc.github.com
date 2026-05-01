@@ -521,8 +521,20 @@ blockquote,
 }
 
 .post-metadata {
+	align-items: flex-end;
 	color: var(--c-text-soft);
 	font-size: 0.875rem;
+	gap: 0.5rem 0.75rem;
+	line-height: 1;
+}
+
+.post-metadata li {
+	display: inline-flex;
+	align-items: flex-end;
+}
+
+.post-metadata-label {
+	padding-bottom: 0.2em;
 }
 
 .post-toc {
@@ -1095,7 +1107,7 @@ pre[class*="language-"] {
 
 		<ul class="post-metadata">
 			<li><time datetime="2026-01-07">07 January 2026</time></li>
-			Tags:
+			<li class="post-metadata-label">Tags:</li>
 			<li><a href="/sddtc.github.com/en/tags/java/" class="post-tag">Java</a></li>
 		</ul>
 
@@ -1233,7 +1245,7 @@ cc<span class="token punctuation">.</span><span class="token function">addMethod
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/en/blog/2026-01-07-something-about-javassist/` was built on 2026-05-01T11:05:57.004Z -->
+		<!-- This page `/en/blog/2026-01-07-something-about-javassist/` was built on 2026-05-01T11:07:57.049Z -->
 		<script type="module" src="/sddtc.github.com/dist/9UoH1FTAXT.js"></script>
 	</body>
 </html>

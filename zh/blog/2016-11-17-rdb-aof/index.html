@@ -521,8 +521,20 @@ blockquote,
 }
 
 .post-metadata {
+	align-items: flex-end;
 	color: var(--c-text-soft);
 	font-size: 0.875rem;
+	gap: 0.5rem 0.75rem;
+	line-height: 1;
+}
+
+.post-metadata li {
+	display: inline-flex;
+	align-items: flex-end;
+}
+
+.post-metadata-label {
+	padding-bottom: 0.2em;
 }
 
 .post-toc {
@@ -1095,7 +1107,7 @@ pre[class*="language-"] {
 
 		<ul class="post-metadata">
 			<li><time datetime="2016-11-17">17 November 2016</time></li>
-			标签:
+			<li class="post-metadata-label">标签:</li>
 			<li><a href="/sddtc.github.com/zh/tags/redis/" class="post-tag">redis</a></li>
 		</ul>
 
@@ -1248,7 +1260,7 @@ Amazon S3和其他类似的服务是安装灾难恢复系统的好方法。只�
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/zh/blog/2016-11-17-rdb-aof/` was built on 2026-05-01T11:05:05.888Z -->
+		<!-- This page `/zh/blog/2016-11-17-rdb-aof/` was built on 2026-05-01T11:07:06.799Z -->
 		<script type="module" src="/sddtc.github.com/dist/9UoH1FTAXT.js"></script>
 	</body>
 </html>

@@ -521,8 +521,20 @@ blockquote,
 }
 
 .post-metadata {
+	align-items: flex-end;
 	color: var(--c-text-soft);
 	font-size: 0.875rem;
+	gap: 0.5rem 0.75rem;
+	line-height: 1;
+}
+
+.post-metadata li {
+	display: inline-flex;
+	align-items: flex-end;
+}
+
+.post-metadata-label {
+	padding-bottom: 0.2em;
 }
 
 .post-toc {
@@ -1095,8 +1107,8 @@ pre[class*="language-"] {
 
 		<ul class="post-metadata">
 			<li><time datetime="2015-10-14">14 October 2015</time></li>
-			标签:
-			<li><a href="/sddtc.github.com/zh/tags/ruby/" class="post-tag">ruby</a>, </li>
+			<li class="post-metadata-label">标签:</li>
+			<li><a href="/sddtc.github.com/zh/tags/ruby/" class="post-tag">ruby</a></li>
 			<li><a href="/sddtc.github.com/zh/tags/jekyll/" class="post-tag">jekyll</a></li>
 		</ul>
 
@@ -1207,7 +1219,7 @@ Successfully uninstalled celluloid<span class="token operator">-</span><span cla
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/zh/blog/2015-10-14-EI-capitan-jekyll-can-not-run/` was built on 2026-05-01T11:05:05.766Z -->
+		<!-- This page `/zh/blog/2015-10-14-EI-capitan-jekyll-can-not-run/` was built on 2026-05-01T11:07:06.675Z -->
 		<script type="module" src="/sddtc.github.com/dist/9UoH1FTAXT.js"></script>
 	</body>
 </html>

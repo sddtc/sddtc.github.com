@@ -521,8 +521,20 @@ blockquote,
 }
 
 .post-metadata {
+	align-items: flex-end;
 	color: var(--c-text-soft);
 	font-size: 0.875rem;
+	gap: 0.5rem 0.75rem;
+	line-height: 1;
+}
+
+.post-metadata li {
+	display: inline-flex;
+	align-items: flex-end;
+}
+
+.post-metadata-label {
+	padding-bottom: 0.2em;
 }
 
 .post-toc {
@@ -1095,7 +1107,7 @@ pre[class*="language-"] {
 
 		<ul class="post-metadata">
 			<li><time datetime="2015-03-23">23 March 2015</time></li>
-			标签:
+			<li class="post-metadata-label">标签:</li>
 			<li><a href="/sddtc.github.com/zh/tags/python/" class="post-tag">python</a></li>
 		</ul>
 
@@ -1156,7 +1168,7 @@ b <span class="token operator">=</span> commands<span class="token punctuation">
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/zh/blog/2015-03-23-something-about-python/` was built on 2026-05-01T11:05:05.641Z -->
+		<!-- This page `/zh/blog/2015-03-23-something-about-python/` was built on 2026-05-01T11:07:06.561Z -->
 		<script type="module" src="/sddtc.github.com/dist/9UoH1FTAXT.js"></script>
 	</body>
 </html>

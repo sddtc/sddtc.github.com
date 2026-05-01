@@ -521,8 +521,20 @@ blockquote,
 }
 
 .post-metadata {
+	align-items: flex-end;
 	color: var(--c-text-soft);
 	font-size: 0.875rem;
+	gap: 0.5rem 0.75rem;
+	line-height: 1;
+}
+
+.post-metadata li {
+	display: inline-flex;
+	align-items: flex-end;
+}
+
+.post-metadata-label {
+	padding-bottom: 0.2em;
 }
 
 .post-toc {
@@ -1095,7 +1107,7 @@ pre[class*="language-"] {
 
 		<ul class="post-metadata">
 			<li><time datetime="2024-02-03">03 February 2024</time></li>
-			标签:
+			<li class="post-metadata-label">标签:</li>
 			<li><a href="/sddtc.github.com/zh/tags/podcast/" class="post-tag">podcast</a></li>
 		</ul>
 
@@ -1158,7 +1170,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/zh/blog/2024-02-03-reaction-to-thatisbiz.md/` was built on 2026-05-01T11:05:31.999Z -->
+		<!-- This page `/zh/blog/2024-02-03-reaction-to-thatisbiz.md/` was built on 2026-05-01T11:07:32.553Z -->
 		<script type="module" src="/sddtc.github.com/dist/9UoH1FTAXT.js"></script>
 	</body>
 </html>
