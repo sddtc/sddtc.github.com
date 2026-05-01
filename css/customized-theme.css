@@ -1,14 +1,26 @@
 :root {
-	--color-gray-20: #e0e0e0;
-	--color-gray-50: #C0C0C0;
-	--color-gray-90: #333;
+	/* Palette */
+	--c-green-deep: #468432;
+	--c-green-soft: #9AD872;
+	--c-yellow:     #FFEF91;
+	--c-orange:     #FFA02E;
 
-	--background-color: #EEEFE0;
+	/* Derived */
+	--c-text:       #1F3A1A;
+	--c-text-soft:  #4A5E3F;
+	--c-surface:    #FFFDF5;
+	--c-border:     rgba(154, 216, 114, 0.45);
 
-	--text-color: #525B44;
-	--text-color-link: #819A91;
-	--text-color-link-active: #A7C1A8;
-	--text-color-link-visited: #819A91;
+	/* Role mapping (overrides index.css defaults) */
+	--background-color:        var(--c-yellow);
+	--text-color:              var(--c-text);
+	--text-color-link:         var(--c-orange);
+	--text-color-link-active:  var(--c-green-deep);
+	--text-color-link-visited: var(--c-orange);
+
+	--color-gray-20: var(--c-border);
+	--color-gray-50: var(--c-text-soft);
+	--color-gray-90: var(--c-text);
 
 	--syntax-tab-size: 2;
 }
