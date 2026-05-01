@@ -254,6 +254,76 @@ blog.addEvent = function (dom, eventName, func, useCapture) {
 	}
 }
 
+blog.copyText = function (text) {
+	if (navigator.clipboard && navigator.clipboard.writeText) {
+		return navigator.clipboard.writeText(text)
+	}
+
+	var textarea = document.createElement('textarea')
+	textarea.value = text
+	textarea.setAttribute('readonly', '')
+	textarea.style.position = 'fixed'
+	textarea.style.top = '-9999px'
+	document.body.appendChild(textarea)
+	textarea.select()
+
+	try {
+		document.execCommand('copy')
+		return Promise.resolve()
+	} catch (err) {
+		return Promise.reject(err)
+	} finally {
+		document.body.removeChild(textarea)
+	}
+}
+
+blog.initCodeCopyButtons = function (root) {
+	root = root || document
+	var blocks = root.querySelectorAll ? root.querySelectorAll('pre') : []
+
+	Array.prototype.forEach.call(blocks, function (pre) {
+		if (pre.querySelector('.code-copy-button')) {
+			return
+		}
+
+		var code = pre.querySelector('code')
+		if (!code) {
+			return
+		}
+
+		var button = document.createElement('button')
+		button.type = 'button'
+		button.classList.add('code-copy-button')
+		button.textContent = '复制'
+		button.setAttribute('aria-label', '复制代码')
+		button.setAttribute('title', '复制代码')
+
+		pre.classList.add('code-copy-enabled')
+		pre.appendChild(button)
+
+		blog.addEvent(button, 'click', function (ev) {
+			if (ev.preventDefault) ev.preventDefault()
+			if (ev.stopPropagation) ev.stopPropagation()
+
+			blog.copyText(code.textContent).then(function () {
+				button.textContent = '已复制'
+				button.setAttribute('aria-label', '代码已复制')
+				setTimeout(function () {
+					button.textContent = '复制'
+					button.setAttribute('aria-label', '复制代码')
+				}, 1600)
+			}).catch(function () {
+				button.textContent = '失败'
+				button.setAttribute('aria-label', '复制失败')
+				setTimeout(function () {
+					button.textContent = '复制'
+					button.setAttribute('aria-label', '复制代码')
+				}, 1600)
+			})
+		})
+	})
+}
+
 /**
  * 特效：点击页面文字冒出特效
  */
@@ -307,6 +377,7 @@ blog.initClickEffect = function (textArr) {
 }
 ; (function () {
 			var textArr = ['富强', '民主', '文明', '和谐', '自由', '平等', '公正', '法治', '爱国', '敬业', '诚信', '友善']
+			window.blog.initCodeCopyButtons()
 			window.blog.initClickEffect(textArr)
 		})()
 ; (function (i, s, o, g, r, a, m) {
