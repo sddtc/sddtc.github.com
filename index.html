@@ -9,21 +9,58 @@
 		<meta name="generator" content="Eleventy v3.1.5">
 		
 		
+		<noscript><meta http-equiv="refresh" content="0; url=/sddtc.github.com/zh/"></noscript>
+		<script>
+		; (function () {
+			function getStoredLanguage() {
+				try {
+					return window.localStorage && window.localStorage.getItem
+						? window.localStorage.getItem('preferredLanguage')
+						: ''
+				} catch (error) {
+					return ''
+				}
+			}
+
+			function pickLanguage(storedLanguage, browserLanguages) {
+				if (storedLanguage === 'zh' || storedLanguage === 'en') {
+					return storedLanguage
+				}
+
+				var languages = Array.isArray(browserLanguages) ? browserLanguages : []
+				for (var i = 0; i < languages.length; i++) {
+					if (String(languages[i]).toLowerCase().indexOf('zh') === 0) {
+						return 'zh'
+					}
+				}
+				for (var j = 0; j < languages.length; j++) {
+					if (String(languages[j]).toLowerCase().indexOf('en') === 0) {
+						return 'en'
+					}
+				}
+				return 'zh'
+			}
+
+			var browserLanguages = navigator.languages && navigator.languages.length
+				? navigator.languages
+				: [navigator.language]
+			var language = pickLanguage(getStoredLanguage(), browserLanguages)
+			window.location.replace({ zh: '/zh/', en: '/en/' }[language])
+		})()
+		</script>
 	</head>
 	<body>
 		<main id="main">
 			<div class="page-wrap">
-				<div class="language-entry surface-card">
-	<h1>选择语言</h1>
-	<p><a href="/sddtc.github.com/zh/" data-language-choice="zh" onclick="window.blog && window.blog.storeLanguagePreference('zh')">进入中文站点</a></p>
-	<p><a href="/sddtc.github.com/en/" data-language-choice="en" onclick="window.blog && window.blog.storeLanguagePreference('en')">Visit English site</a></p>
-</div>
+				<noscript>
+	<p><a href="/sddtc.github.com/zh/">进入中文站点</a></p>
+	<p><a href="/sddtc.github.com/en/">Visit English site</a></p>
+</noscript>
 
 			</div>
 		</main>
 
 		
-		
-		<script type="module" src="/sddtc.github.com/dist/AcISoLtmsP.js"></script>
+		<script type="module" src="/sddtc.github.com/dist/DY6ERr16YC.js"></script>
 	</body>
 </html>

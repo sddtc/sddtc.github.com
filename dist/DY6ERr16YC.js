@@ -179,8 +179,3 @@ blog.initClickEffect = function (textArr) {
 		}, 520)
 	})
 }
-; (function () {
-			if (window.blog && window.blog.initLanguageEntry) {
-				window.blog.initLanguageEntry({ zh: '/zh/', en: '/en/' })
-			}
-		})()
