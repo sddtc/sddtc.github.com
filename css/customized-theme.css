@@ -199,7 +199,7 @@ blockquote,
 }
 
 @media (min-width: 1101px) {
-	main > .page-wrap {
+	main > .page-wrap:has(.post-layout) {
 		max-width: none;
 		padding-left: 0;
 		padding-right: 0;
