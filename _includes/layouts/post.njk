@@ -1,13 +1,8 @@
 ---
 layout: layouts/base.njk
 ---
-<div class="post-main">
-	<div class="post-toc">
-		<aside>
-			{{ content | toc(ul=true, wrapper='div', wrapperClass='content-tableau') | safe}}
-		</aside>
-	</div>
-	<div class="post-content">
+<div class="post-layout">
+	<article class="post-content">
 		{# Only include the syntax highlighter CSS on blog posts, included with the CSS per-page bundle #}
 		<style>{% include "node_modules/prismjs/themes/prism-tomorrow.css" %}</style>
 		<h1>{{ title }}</h1>
@@ -21,7 +16,7 @@ layout: layouts/base.njk
 			{%- endfor %}
 		</ul>
 
-		<div class="page-post">
+		<div class="page-post surface-card">
 			{{ content | safe }}
 		</div>
 
@@ -35,5 +30,8 @@ layout: layouts/base.njk
 		</ul>
 		{%- endif %}
 		{%- endif %}
-	</div>
+	</article>
+	<aside class="post-toc">
+		{{ content | toc(ul=true, wrapper='div', wrapperClass='content-tableau') | safe }}
+	</aside>
 </div>
