@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npx @11ty/eleventy",
+    "test": "node --test",
     "start": "npx @11ty/eleventy --serve --quiet",
     "debugstart": "cross-env DEBUG=Eleventy* npx @11ty/eleventy --serve --quiet",
     "build-ghpages": "npx @11ty/eleventy --pathprefix=/sddtc.github.com/",

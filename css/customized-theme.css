@@ -6,7 +6,7 @@
 	--c-pink:    #DC9B9B;
 
 	/* Neutrals */
-	--c-text:      #3D4543;
+	--c-text:      #4F625D;
 	--c-text-soft: #6E7674;
 	--c-border:    rgba(192, 225, 210, 0.7);
 
@@ -31,17 +31,22 @@ a {
 /* —— Tag pills —— */
 .post-tag {
 	display: inline-block;
-	padding: 0.15em 0.6em;
+	padding: 0.2em 0.65em;
 	background: var(--c-mint);
 	color: var(--c-text);
-	border-radius: 999px;
+	border-radius: 6px;
 	font-style: normal;
-	font-size: 0.8125em;
+	font-size: 1rem;
 	text-decoration: none;
 	border: none;
 }
 
-.post-tag:hover {
+a.post-tag[href]:visited {
+	color: var(--c-text);
+}
+
+a.post-tag[href]:hover,
+a.post-tag[href]:active {
 	background: var(--c-pink);
 	color: #fff;
 	text-decoration: none;
@@ -112,6 +117,37 @@ pre[class*="language-"] {
 	border-radius: 8px;
 	box-shadow: 0 2px 0 var(--c-mint);
 	margin: 1.25em 0;
+}
+
+.page-post pre.code-copy-enabled,
+pre.code-copy-enabled {
+	position: relative;
+	padding-top: 3.25em;
+}
+
+.code-copy-button {
+	position: absolute;
+	top: 0.75rem;
+	right: 0.75rem;
+	z-index: 1;
+	min-width: 3.75rem;
+	padding: 0.35rem 0.65rem;
+	border: 1px solid var(--c-mint);
+	border-radius: 6px;
+	background: var(--c-mint);
+	color: var(--c-text);
+	font: 600 0.75rem var(--font-family);
+	line-height: 1.2;
+	cursor: pointer;
+	transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.code-copy-button:hover,
+.code-copy-button:focus-visible {
+	background: var(--c-pink);
+	border-color: var(--c-pink);
+	color: #fff;
+	outline: none;
 }
 
 /* Code inside pre: reset inline-code styling */
