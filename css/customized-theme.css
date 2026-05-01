@@ -6,8 +6,8 @@
 	--c-pink:    #DC9B9B;
 
 	/* Neutrals */
-	--c-text:      #1F1F1F;
-	--c-text-soft: #5A5A5A;
+	--c-text:      #3D4543;
+	--c-text-soft: #6E7674;
 	--c-border:    rgba(192, 225, 210, 0.7);
 
 	/* Role mapping (overrides index.css defaults) */
