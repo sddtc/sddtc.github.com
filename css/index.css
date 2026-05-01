@@ -236,7 +236,7 @@ header {
 }
 
 .nav a[href][aria-current="page"] {
-	text-decoration: underline;
+	text-decoration: none;
 }
 
 /* Posts list */
