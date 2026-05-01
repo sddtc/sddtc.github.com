@@ -211,22 +211,6 @@ blockquote,
 	}
 }
 
-.home-container {
-	display: flex;
-	flex-direction: column;
-}
-
-.page-title {
-	align-self: center;
-}
-
-.postlist-container {
-	align-self: center;
-}
-
-.page-footer {
-	align-self: center;
-}
 /* —— Global layout & typography —— */
 .page-wrap {
 	max-width: 720px;
@@ -404,4 +388,22 @@ header {
 .links-nextprev a:hover {
 	color: var(--c-orange);
 	text-decoration: underline;
+}
+
+/* —— Footer —— */
+footer {
+	margin-top: 3rem;
+	border-top: 1px solid var(--c-border);
+}
+
+footer .page-wrap {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	text-align: center;
+	color: var(--c-text-soft);
+	font-size: 0.875rem;
+}
+
+footer p {
+	margin: 0;
 }
