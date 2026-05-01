@@ -8,8 +8,10 @@ const eleventyNavigation = {
 	<h2>分类列表</h2>
 </div>
 
-<ul>
-{% for category in collections.categories %}
-    <li><a href="/categories/{{category.title}}/" class="post-category">{{ category.title }}</a></li>
-{% endfor %}
-</ul>
+<div class="surface-card">
+	<ul class="categories-page">
+	{% for category in collections.categories %}
+		<li><a href="/categories/{{category.title}}/" class="post-category">{{ category.title }}</a></li>
+	{% endfor %}
+	</ul>
+</div>

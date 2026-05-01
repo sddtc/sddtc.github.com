@@ -1,22 +1,21 @@
 :root {
-	/* Palette */
-	--c-green-deep: #468432;
-	--c-green-soft: #9AD872;
-	--c-yellow:     #FFEF91;
-	--c-orange:     #FFA02E;
+	/* Palette (colorhunt: c0e1d2-e5eee4-f6f4e8-dc9b9b) */
+	--c-mint:    #C0E1D2;
+	--c-bg:      #E5EEE4;
+	--c-surface: #F6F4E8;
+	--c-pink:    #DC9B9B;
 
-	/* Derived */
-	--c-text:       #1F3A1A;
-	--c-text-soft:  #4A5E3F;
-	--c-surface:    #FFFDF5;
-	--c-border:     rgba(154, 216, 114, 0.45);
+	/* Neutrals */
+	--c-text:      #1F1F1F;
+	--c-text-soft: #5A5A5A;
+	--c-border:    rgba(192, 225, 210, 0.7);
 
 	/* Role mapping (overrides index.css defaults) */
-	--background-color:        var(--c-yellow);
+	--background-color:        var(--c-bg);
 	--text-color:              var(--c-text);
-	--text-color-link:         var(--c-orange);
-	--text-color-link-active:  var(--c-green-deep);
-	--text-color-link-visited: var(--c-orange);
+	--text-color-link:         var(--c-pink);
+	--text-color-link-active:  var(--c-text);
+	--text-color-link-visited: var(--c-pink);
 
 	--color-gray-20: var(--c-border);
 	--color-gray-50: var(--c-text-soft);
@@ -33,7 +32,7 @@ a {
 .post-tag {
 	display: inline-block;
 	padding: 0.15em 0.6em;
-	background: var(--c-green-soft);
+	background: var(--c-mint);
 	color: var(--c-text);
 	border-radius: 999px;
 	font-style: normal;
@@ -43,8 +42,8 @@ a {
 }
 
 .post-tag:hover {
-	background: var(--c-yellow);
-	color: var(--c-text);
+	background: var(--c-pink);
+	color: #fff;
 	text-decoration: none;
 }
 
@@ -74,7 +73,8 @@ a {
 .page-post {
 	font-size: 1.0625rem;
 	line-height: 1.75;
-	margin: 1rem 0;
+	margin: 1rem auto;
+	max-width: 720px;
 }
 
 .page-post p {
@@ -82,23 +82,23 @@ a {
 }
 
 .page-post a {
-	color: var(--c-orange);
+	color: var(--c-pink);
 	text-decoration: none;
-	border-bottom: 1px solid var(--c-orange);
+	border-bottom: 1px solid var(--c-pink);
 }
 
 .page-post a:hover {
-	color: var(--c-green-deep);
-	border-bottom-color: var(--c-green-deep);
+	color: var(--c-text);
+	border-bottom-color: var(--c-text);
 }
 
 /* Inline code */
 .page-post code,
 code {
 	font-size: 0.9em;
-	background: #FFE45F;
-	border: 1px solid var(--c-green-soft);
-	color: var(--c-green-deep);
+	background: var(--c-surface);
+	border: 1px solid var(--c-mint);
+	color: var(--c-pink);
 	padding: 0.1em 0.4em;
 	margin: 0 2px;
 	border-radius: 4px;
@@ -110,7 +110,7 @@ code {
 .page-post pre[class*="language-"],
 pre[class*="language-"] {
 	border-radius: 8px;
-	box-shadow: 0 2px 0 var(--c-green-soft);
+	box-shadow: 0 2px 0 var(--c-mint);
 	margin: 1.25em 0;
 }
 
@@ -128,7 +128,7 @@ pre[class*="language-"] code {
 blockquote,
 .page-post blockquote {
 	background: var(--c-surface);
-	border-left: 4px solid var(--c-orange);
+	border-left: 4px solid var(--c-pink);
 	padding: 0.9em 1.1em;
 	border-radius: 0 6px 6px 0;
 	color: var(--c-text-soft);
@@ -175,12 +175,12 @@ blockquote,
 }
 
 .post-toc a {
-	color: var(--c-green-deep);
+	color: var(--c-text);
 	text-decoration: none;
 }
 
 .post-toc a:hover {
-	color: var(--c-orange);
+	color: var(--c-pink);
 	text-decoration: underline;
 }
 
@@ -213,7 +213,7 @@ blockquote,
 
 /* —— Global layout & typography —— */
 .page-wrap {
-	max-width: 720px;
+	max-width: 800px;
 	margin: 0 auto;
 	padding: 0 1.25rem;
 }
@@ -223,7 +223,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	color: var(--c-green-deep);
+	color: var(--c-text);
 	font-weight: 700;
 	line-height: 1.35;
 }
@@ -261,7 +261,7 @@ header {
 }
 
 .home-link {
-	color: var(--c-green-deep);
+	color: var(--c-text);
 	font-size: 1.25rem;
 	font-weight: 700;
 	text-decoration: none;
@@ -281,12 +281,12 @@ header {
 }
 
 .nav-item a:hover {
-	color: var(--c-orange);
+	color: var(--c-pink);
 	text-decoration: none;
 }
 
 .nav a[href][aria-current="page"] {
-	background: var(--c-green-deep);
+	background: var(--c-text);
 	color: #fff;
 	padding: 0.25em 0.75em;
 	text-decoration: none;
@@ -333,7 +333,7 @@ header {
 }
 
 .postlist-item:before {
-	color: var(--c-orange);
+	color: var(--c-pink);
 	font-weight: 700;
 	font-size: 0.8125em;
 }
@@ -351,7 +351,7 @@ header {
 }
 
 .postlist-link:hover {
-	color: var(--c-orange);
+	color: var(--c-pink);
 	text-decoration: underline;
 }
 
@@ -380,13 +380,13 @@ header {
 }
 
 .links-nextprev a {
-	color: var(--c-green-deep);
+	color: var(--c-text);
 	text-decoration: none;
 	font-weight: 600;
 }
 
 .links-nextprev a:hover {
-	color: var(--c-orange);
+	color: var(--c-pink);
 	text-decoration: underline;
 }
 
@@ -406,4 +406,62 @@ footer .page-wrap {
 
 footer p {
 	margin: 0;
+}
+
+/* —— Generic page content (about, etc.) —— */
+.page-content {
+	max-width: 720px;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 1rem;
+	line-height: 1.75;
+}
+
+.page-content h2 {
+	margin-top: 0;
+}
+
+.page-content a {
+	color: var(--c-pink);
+	text-decoration: none;
+	border-bottom: 1px solid var(--c-pink);
+}
+
+.page-content a:hover {
+	color: var(--c-text);
+	border-bottom-color: var(--c-text);
+}
+
+.page-content blockquote {
+	background: var(--c-bg);
+	border-left: 4px solid var(--c-pink);
+	padding: 0.9em 1.1em;
+	border-radius: 0 6px 6px 0;
+	color: var(--c-text-soft);
+	margin: 1em 0;
+}
+
+/* —— Categories list page —— */
+.categories-page {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem 1rem;
+}
+
+.categories-page .post-category {
+	background: var(--c-mint);
+	color: var(--c-text);
+	padding: 0.4em 1em;
+	border-radius: 999px;
+	font-size: 1rem;
+	text-decoration: none;
+	transition: background 0.15s, color 0.15s;
+}
+
+.categories-page .post-category:hover {
+	background: var(--c-pink);
+	color: #fff;
 }

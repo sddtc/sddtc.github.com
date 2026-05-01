@@ -3,6 +3,7 @@ const eleventyNavigation = {
 	key: "关于我",
 	order: 5
 };
+const layout = "layouts/page.njk";
 ---
 ## 关于我
 
