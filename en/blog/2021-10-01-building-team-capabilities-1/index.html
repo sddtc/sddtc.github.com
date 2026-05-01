@@ -665,26 +665,39 @@ header {
 .language-switcher {
 	display: flex;
 	align-items: center;
-	gap: 0.35rem;
+	gap: 0;
+	padding: 0.18rem;
+	background: rgba(246, 244, 232, 0.8);
+	border: 1px solid var(--c-mint);
+	border-radius: 8px;
 	font-size: 0.875rem;
+	font-weight: 700;
 }
 
 .language-switcher a {
 	color: var(--c-text-soft);
-	padding: 0.2em 0.55em;
+	padding: 0.28em 0.65em;
 	border-radius: 6px;
 	text-decoration: none;
+	transition: background 0.15s, color 0.15s;
+}
+
+.language-switcher a + a {
+	border-left: 1px solid var(--c-border);
+	margin-left: 0.18rem;
+	padding-left: 0.83em;
 }
 
 .language-switcher a:hover {
-	background: var(--c-mint);
+	background: rgba(192, 225, 210, 0.55);
 	color: var(--c-text);
 	text-decoration: none;
 }
 
 .language-switcher a[aria-current="true"] {
-	background: var(--c-text);
-	color: #fff;
+	background: var(--c-mint);
+	color: var(--c-text);
+	box-shadow: inset 0 0 0 1px rgba(79, 98, 93, 0.08);
 }
 
 .language-entry {
@@ -1125,7 +1138,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/en/blog/2021-10-01-building-team-capabilities-1/` was built on 2026-05-01T10:59:42.391Z -->
+		<!-- This page `/en/blog/2021-10-01-building-team-capabilities-1/` was built on 2026-05-01T11:03:27.313Z -->
 		<script type="module" src="/sddtc.github.com/dist/9UoH1FTAXT.js"></script>
 	</body>
 </html>
