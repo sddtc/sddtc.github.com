@@ -624,10 +624,20 @@ header {
 	display: flex;
 	gap: 1em;
 	flex-wrap: wrap;
-	justify-content: space-between;
+	justify-content: flex-start;
 	align-items: center;
+	position: relative;
+	max-width: none;
+	padding-left: max(1.25rem, calc((100vw - 720px) / 2));
+	padding-right: 1.25rem;
 	padding-top: 1em;
 	padding-bottom: 1em;
+}
+
+.header-inner nav {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 .home-link {
@@ -666,6 +676,7 @@ header {
 	display: flex;
 	align-items: center;
 	gap: 0;
+	margin-left: auto;
 	padding: 0.18rem;
 	background: rgba(246, 244, 232, 0.8);
 	border: 1px solid var(--c-mint);
@@ -698,6 +709,25 @@ header {
 	background: var(--c-mint);
 	color: var(--c-text);
 	box-shadow: inset 0 0 0 1px rgba(79, 98, 93, 0.08);
+}
+
+@media (max-width: 900px) {
+	.header-inner {
+		justify-content: space-between;
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+
+	.header-inner nav {
+		position: static;
+		order: 3;
+		width: 100%;
+		transform: none;
+	}
+
+	.nav {
+		justify-content: center;
+	}
 }
 
 .language-entry {
@@ -1304,7 +1334,7 @@ generator postClient <span class="token punctuation">{</span>
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/zh/blog/2026-03-04-fastify-modular-db-orm-intro/` was built on 2026-05-01T11:03:02.623Z -->
+		<!-- This page `/zh/blog/2026-03-04-fastify-modular-db-orm-intro/` was built on 2026-05-01T11:05:32.136Z -->
 		<script type="module" src="/sddtc.github.com/dist/9UoH1FTAXT.js"></script>
 	</body>
 </html>
