@@ -1119,13 +1119,13 @@ pre[class*="language-"] {
 新版本的登录系统势如破竹，如获新生。</p>
 <p><strong>登录系统的界面</strong>往往是用户使用一个网站的入口，为了让网站知道并记住 “我是谁”，进一步为我存储，展示，推荐更丰富的内容来满足我对于各种知识消费的需求。<br>
 一个简单的登录系界面可以是填写邮箱地址 + 密码来进行用户注册，之后用户可以使用这个凭证登录网站。</p>
-<p><picture><source type="image/avif" srcset="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/ROFAi6TtoM-1120.avif 1120w"><source type="image/webp" srcset="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/ROFAi6TtoM-1120.webp 1120w"><img loading="lazy" decoding="async" src="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/ROFAi6TtoM-1120.png" alt="2021-04-03-jWaug8-tb1" width="1120" height="600"></picture></p>
+<p><picture><source type="image/avif" srcset="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/ROFAi6TtoM-1120.avif"><source type="image/webp" srcset="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/ROFAi6TtoM-1120.webp"><img loading="lazy" decoding="async" src="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/ROFAi6TtoM-1120.png" alt="2021-04-03-jWaug8-tb1" width="1120" height="600"></picture></p>
 <p>那么登录系统的后台一般是什么样子呢？<br>
 <em>一个后台系统，一个数据库。</em></p>
 <p><strong>后台系统</strong>用于处理用户填写的邮箱地址和密码的正确性和有效性。例如在注册时检查邮箱地址是否已经存在， 密码是否符合网站密码策略。<br>
 在登录时检查邮箱地址和密码是否匹配。在一些复杂场景中，后台系统还负责通过邮件服务发送欢迎邮件，通过手机运营商服务发送验证码信息。</p>
 <p><strong>数据库</strong>用于存储用户的信息。例如一张用户表会存储用户唯一的用户 ID，邮箱地址，加密之后的密码，手机号码等。</p>
-<p><picture><source type="image/avif" srcset="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/18ocXlmCnW-1966.avif 1966w"><source type="image/webp" srcset="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/18ocXlmCnW-1966.webp 1966w"><img loading="lazy" decoding="async" src="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/18ocXlmCnW-1966.png" alt="2021-04-03-BRii9Q-2" width="1966" height="578"></picture></p>
+<p><picture><source type="image/avif" srcset="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/18ocXlmCnW-1966.avif"><source type="image/webp" srcset="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/18ocXlmCnW-1966.webp"><img loading="lazy" decoding="async" src="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/18ocXlmCnW-1966.png" alt="2021-04-03-BRii9Q-2" width="1966" height="578"></picture></p>
 <p>知道了这两个主要部分，我们需要知道另一个登录系统中重要的概念，<strong>令牌</strong>。<br>
 在这篇文章中，令牌是后台系统通过用户登录网站生成的一个登录凭证，存放在 <code>HTTP Cookie</code> 中。在房产网站的上下文里，登录用户想要申请租房，在填写完租房信息后点击申请按钮，<br>
 那么登录凭证会和用户填写的租房信息一并发送到后台系统，后台系统首先验证登录凭证是否正确有效，如果正确有效则用户成功申请租房。</p>
@@ -1138,7 +1138,7 @@ pre[class*="language-"] {
 <ol>
 <li>维护成本大。每个网站需要自己维护自己的登录系统。团队在日常实现新需求的同时还要解决各种登录相关的问题。</li>
 <li>同一个用户超过三十二个身份。用户同时使用了该企业不同网站的产品，造成一个用户有多个身份出现在该企业生态中，而企业却无法识别出这些用户，进而更加无法在生态中为用户构造统一的用户画像。对推荐，用户行为分析等业务场景造成阻碍。<br>
-<picture><source type="image/avif" srcset="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/1p2suIz0kc-1216.avif 1216w"><source type="image/webp" srcset="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/1p2suIz0kc-1216.webp 1216w"><img loading="lazy" decoding="async" src="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/1p2suIz0kc-1216.png" alt="2021-04-03-0xTjuf-3" width="1216" height="846"></picture></li>
+<picture><source type="image/avif" srcset="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/1p2suIz0kc-1216.avif"><source type="image/webp" srcset="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/1p2suIz0kc-1216.webp"><img loading="lazy" decoding="async" src="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/1p2suIz0kc-1216.png" alt="2021-04-03-0xTjuf-3" width="1216" height="846"></picture></li>
 <li>数据库和数据表需要改造。企业的大部分系统服务已经部署在云平台上，而企业其中一个主要的网站的用户表仍然存放并维护在物理服务器的数据库中，并有计划在一个合适的时机也迁移到云平台上。而这张用户表的设计也出现了一个些坏味道：</li>
 </ol>
 <ul>
@@ -1167,7 +1167,7 @@ pre[class*="language-"] {
 <li>有当前业界权威的身份认证和身份权限的标准做背书。例如，<code>OAuth2 &amp; OIDC</code></li>
 </ul>
 <p>新登录系统的架构基本如下：</p>
-<p><picture><source type="image/avif" srcset="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/pW_SrzGX7q-1342.avif 1342w"><source type="image/webp" srcset="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/pW_SrzGX7q-1342.webp 1342w"><img loading="lazy" decoding="async" src="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/pW_SrzGX7q-1342.png" alt="4" width="1342" height="846"></picture></p>
+<p><picture><source type="image/avif" srcset="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/pW_SrzGX7q-1342.avif"><source type="image/webp" srcset="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/pW_SrzGX7q-1342.webp"><img loading="lazy" decoding="async" src="/sddtc.github.com/en/blog/2021-03-28-new-sso-platform/pW_SrzGX7q-1342.png" alt="4" width="1342" height="846"></picture></p>
 <h4 id="%E4%BA%8C%E3%80%81%E7%94%A8%E6%88%B7%E8%BF%81%E7%A7%BB" tabindex="-1">二、用户迁移</h4>
 <p>什么是用户迁移呢？之前有说过其中一个网站的旧登录系统的所有用户都存储在物理服务器的数据库中，包括邮箱地址和密码。那么在新登录系统上线的时候，会出现几个问题：</p>
 <ul>
@@ -1240,7 +1240,7 @@ pre[class*="language-"] {
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/en/blog/2021-03-28-new-sso-platform/` was built on 2026-07-14T17:44:57.366Z -->
+		<!-- This page `/en/blog/2021-03-28-new-sso-platform/` was built on 2026-07-29T17:45:02.416Z -->
 		<script type="module" src="/sddtc.github.com/dist/9UoH1FTAXT.js"></script>
 	</body>
 </html>
