@@ -1126,12 +1126,12 @@ pre[class*="language-"] {
 <h2 id="%E9%85%8D%E7%BD%AEwifi-%E7%9A%84-vpn-proxy.pac" tabindex="-1">配置WIFI 的 VPN proxy.pac</h2>
 <p>如果你的 VPN 采用的是动态寻址(proxy.pac) - 有个白名单定义了哪些网址走 VPN, 哪些不走.<br>
 那么如果没有为WIFI配置代理, 下载 docker images 会访问失败(说到底是因为docker.io和docker.com在某些区域被限制访问🙂), 如图所示, 确保打开 Automatic proxy configuration, 在 URL 配置 proxy.pac:<br>
-<img src="content/2025-08-05_3.png" alt="proxies"></p>
+<img src="2025-08-05_3.png" alt="proxies"></p>
 <h2 id="%E5%AE%9A%E4%B9%89-colima-%E9%BB%98%E8%AE%A4-docker" tabindex="-1">定义 Colima 默认 Docker</h2>
 <p>笔者采用动态修改 docker container 配置的策略.<br>
 colima 启动 docker 虚拟机的时候, 利用 <code>colima template</code> 进行了自定义模版, 模版文件地址:<br>
 <code>/Users/sddtc/.colima/default/colima.yaml</code>(将sddtc替换为你的用户名)<br>
-<img src="content/2025-08-05_2.png" alt="colima-default"><br>
+<img src="2025-08-05_2.png" alt="colima-default"><br>
 配置文件的内容如上图所示:</p>
 <ul>
 <li>虚拟机架构是 x86_64</li>
@@ -1163,7 +1163,7 @@ colima 启动 docker 虚拟机的时候, 利用 <code>colima template</code> 进
 <ol>
 <li>启动/重新启动 colima: <code>colima start</code>/<code>colima restart</code></li>
 <li>使用 <code>colima ssh</code> 进入到虚拟机内部:<br>
-<img src="content/2025-08-05_4.png" alt="colima-ssh"></li>
+<img src="2025-08-05_4.png" alt="colima-ssh"></li>
 </ol>
 <p>这里你会发现url会被重写为!!!<code>192.168.5.2</code>!!!, 这是 colima 的一个 issue(最新版0.8.2也没有修复), 见</p>
 <ul>
@@ -1171,7 +1171,7 @@ colima 启动 docker 虚拟机的时候, 利用 <code>colima template</code> 进
 <li><a href="https://github.com/abiosoft/colima/issues/956">colima x86_64 daemon.json file has incorrect proxy</a></li>
 </ul>
 <p>查看colima版本:<br>
-<img src="content/2025-08-05_1.png" alt="colima-verison"></p>
+<img src="2025-08-05_1.png" alt="colima-verison"></p>
 <h2 id="%E4%BF%AE%E5%A4%8D-docker-proxy-url" tabindex="-1">修复 Docker proxy url</h2>
 <p>手动执行修复(评论提到可以使用provision脚本更新, 但我发现 template 并没有在重启后自动执行脚本):</p>
 <pre class="language-shell" tabindex="0"><code class="hljs language-shell">colima <span class="token function">ssh</span>
@@ -1228,7 +1228,7 @@ colima 启动 docker 虚拟机的时候, 利用 <code>colima template</code> 进
 		
 		<!-- Global site tag (gtag.js) - Google Analytics end -->
 
-		<!-- This page `/zh/blog/2025-08-05-docker-proxy-setup/` was built on 2026-10-19T17:46:54.549Z -->
+		<!-- This page `/zh/blog/2025-08-05-docker-proxy-setup/` was built on 2026-10-26T17:45:27.035Z -->
 		<script type="module" src="/sddtc.github.com/dist/9UoH1FTAXT.js"></script>
 	</body>
 </html>
